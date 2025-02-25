@@ -1,0 +1,90 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="../BigWigsVoiceGCP.Core/BigWigsVoiceGCP.Core.csproj"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting"/>
+    <PackageReference Include="Microsoft.Extensions.Http"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="SoundpathsLuaFile.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>SoundpathsLuaFile.cs</LastGenOutput>
+    </None>
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="CoreLuaFile.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CoreLuaFile.tt</DependentUpon>
+    </Compile>
+    <Compile Update="SoundpathsLuaFile.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SoundpathsLuaFile.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="SharedMedia_Causese_Sounds.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
+    <None Remove="SharedMedia\embeds.xml" />
+    <AdditionalFiles Include="SharedMedia\embeds.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
+    <None Remove="SharedMedia\texture\stop.blp" />
+    <AdditionalFiles Include="SharedMedia\texture\stop.blp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
+    <None Remove="SharedMedia\libs\LibStub\LibStub.toc" />
+    <AdditionalFiles Include="SharedMedia\libs\LibStub\LibStub.toc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
+    <None Remove="SharedMedia\libs\LibStub\LibStub.lua" />
+    <AdditionalFiles Include="SharedMedia\libs\LibStub\LibStub.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
+    <None Remove="SharedMedia\libs\LibSharedMedia-3.0\LibSharedMedia-3.0.lua" />
+    <AdditionalFiles Include="SharedMedia\libs\LibSharedMedia-3.0\LibSharedMedia-3.0.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
+    <None Remove="SharedMedia\libs\LibStub\tests\test4.lua" />
+    <AdditionalFiles Include="SharedMedia\libs\LibStub\tests\test4.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
+    <None Remove="SharedMedia\libs\LibStub\tests\test3.lua" />
+    <AdditionalFiles Include="SharedMedia\libs\LibStub\tests\test3.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
+    <None Remove="SharedMedia\libs\LibStub\tests\test2.lua" />
+    <AdditionalFiles Include="SharedMedia\libs\LibStub\tests\test2.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
+    <None Remove="SharedMedia\libs\LibStub\tests\test.lua" />
+    <AdditionalFiles Include="SharedMedia\libs\LibStub\tests\test.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
+    <None Remove="SharedMedia\libs\CallbackHandler-1.0\CallbackHandler-1.0.xml" />
+    <AdditionalFiles Include="SharedMedia\libs\CallbackHandler-1.0\CallbackHandler-1.0.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
+    <None Remove="SharedMedia\libs\CallbackHandler-1.0\CallbackHandler-1.0.lua" />
+    <AdditionalFiles Include="SharedMedia\libs\CallbackHandler-1.0\CallbackHandler-1.0.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
+    <None Remove="SharedMedia\libs\LibSharedMedia-3.0\lib.xml" />
+    <AdditionalFiles Include="SharedMedia\libs\LibSharedMedia-3.0\lib.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="SharedMedia\" />
+  </ItemGroup>
+
+</Project>

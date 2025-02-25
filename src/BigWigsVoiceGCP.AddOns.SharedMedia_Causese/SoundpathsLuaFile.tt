@@ -1,0 +1,15 @@
+<#@ template language="C#" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+-- -----
+--   SOUND
+-- -----
+
+<#
+    foreach (var sound in SoundFiles)
+    {
+#>
+LSM:Register("sound", "<#= sound.FormattedDisplayName #>", [[<#= GetSoundPath(sound) #>]])
+<#
+    }
+#>

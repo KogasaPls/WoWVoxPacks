@@ -1,0 +1,40 @@
+<#@ template language="C#" #>
+## Interface: <#= string.Join(", ", AddOn.Interfaces) #>
+
+## Title: <#= AddOn.Title #>
+## Version: <#= AddOn.Version #>
+<#
+    if (AddOn.PrimaryNote != null)
+    {
+#>
+## Notes: <#= AddOn.PrimaryNote.Text #>
+<#
+    }
+#>
+<#
+    foreach (var note in AddOn.AdditionalNotes)
+    {
+#>
+## Notes-<#= note.LanguageCode ?? string.Empty #>: <#= note.Text #>
+<#
+    }
+#>
+## Author: <#= AddOn.Author #>
+
+<#
+    foreach (var (key, value) in AddOn.AdditionalProperties)
+    {
+#>
+## <#= key #>: <#= value #>
+<#
+    }
+#>
+
+<#
+    foreach (var file in AddOn.Files)
+    {
+#>
+<#= file #>
+<#
+    }
+#>

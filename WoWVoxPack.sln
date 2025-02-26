@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{838BA0C0-56C4-4727-9F98-74C7A02540E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WoWVoxPack.Core", "src\WoWVoxPack.Core\WoWVoxPack.Core.csproj", "{115AB1A2-3676-4F8E-A757-AB95E38595AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WoWVoxPack.AddOns.BigWigs_Voice", "src\WoWVoxPack.AddOns.BigWigs_Voice\WoWVoxPack.AddOns.BigWigs_Voice.csproj", "{AA364963-0AFF-4EDA-9D2A-9A3E25A783D0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{BC165376-8404-4073-8551-C368A43D46C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WoWVoxPack.UnitTests", "tests\WoWVoxPack.UnitTests\WoWVoxPack.UnitTests.csproj", "{87B3C864-AD3C-454A-B230-8703D2F3B567}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WoWVoxPack.IntegrationTests", "tests\WoWVoxPack.IntegrationTests\WoWVoxPack.IntegrationTests.csproj", "{C3A01AEF-6262-4B7D-A2EE-7FF99F6D59FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WoWVoxPack.AddOns.SharedMedia_Causese", "src\WoWVoxPack.AddOns.SharedMedia_Causese\WoWVoxPack.AddOns.SharedMedia_Causese.csproj", "{172DF90F-0929-4D9C-9513-0BE600FCC1FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WoWVoxPack.Builder", "src\WoWVoxPack.Builder\WoWVoxPack.Builder.csproj", "{E880E272-DBB1-4888-9059-19E82799211B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{115AB1A2-3676-4F8E-A757-AB95E38595AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{115AB1A2-3676-4F8E-A757-AB95E38595AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{115AB1A2-3676-4F8E-A757-AB95E38595AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{115AB1A2-3676-4F8E-A757-AB95E38595AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87B3C864-AD3C-454A-B230-8703D2F3B567}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87B3C864-AD3C-454A-B230-8703D2F3B567}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87B3C864-AD3C-454A-B230-8703D2F3B567}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87B3C864-AD3C-454A-B230-8703D2F3B567}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3A01AEF-6262-4B7D-A2EE-7FF99F6D59FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3A01AEF-6262-4B7D-A2EE-7FF99F6D59FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3A01AEF-6262-4B7D-A2EE-7FF99F6D59FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3A01AEF-6262-4B7D-A2EE-7FF99F6D59FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA364963-0AFF-4EDA-9D2A-9A3E25A783D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA364963-0AFF-4EDA-9D2A-9A3E25A783D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA364963-0AFF-4EDA-9D2A-9A3E25A783D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA364963-0AFF-4EDA-9D2A-9A3E25A783D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{172DF90F-0929-4D9C-9513-0BE600FCC1FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{172DF90F-0929-4D9C-9513-0BE600FCC1FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{172DF90F-0929-4D9C-9513-0BE600FCC1FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{172DF90F-0929-4D9C-9513-0BE600FCC1FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E880E272-DBB1-4888-9059-19E82799211B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E880E272-DBB1-4888-9059-19E82799211B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E880E272-DBB1-4888-9059-19E82799211B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E880E272-DBB1-4888-9059-19E82799211B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{115AB1A2-3676-4F8E-A757-AB95E38595AE} = {838BA0C0-56C4-4727-9F98-74C7A02540E0}
+		{87B3C864-AD3C-454A-B230-8703D2F3B567} = {BC165376-8404-4073-8551-C368A43D46C1}
+		{C3A01AEF-6262-4B7D-A2EE-7FF99F6D59FB} = {BC165376-8404-4073-8551-C368A43D46C1}
+		{AA364963-0AFF-4EDA-9D2A-9A3E25A783D0} = {838BA0C0-56C4-4727-9F98-74C7A02540E0}
+		{172DF90F-0929-4D9C-9513-0BE600FCC1FF} = {838BA0C0-56C4-4727-9F98-74C7A02540E0}
+		{E880E272-DBB1-4888-9059-19E82799211B} = {838BA0C0-56C4-4727-9F98-74C7A02540E0}
+	EndGlobalSection
+EndGlobal

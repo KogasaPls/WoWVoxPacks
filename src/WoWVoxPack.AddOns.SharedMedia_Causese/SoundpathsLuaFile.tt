@@ -1,0 +1,15 @@
+<#@ template language="C#" #>
+local LSM = LibStub("LibSharedMedia-3.0")
+
+-- -----
+--   SOUND
+-- -----
+
+<#
+    foreach (var sound in SoundFiles)
+    {
+#>
+LSM:Register("sound", "<#= sound.FormattedDisplayName #>", [[<#= GetSoundPath(sound) #>]])
+<#
+    }
+#>

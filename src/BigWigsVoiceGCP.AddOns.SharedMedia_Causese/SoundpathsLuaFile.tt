@@ -1,6 +1,8 @@
 <#@ template language="C#" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
+local LSM = LibStub("LibSharedMedia-3.0")
+
 -- -----
 --   SOUND
 -- -----

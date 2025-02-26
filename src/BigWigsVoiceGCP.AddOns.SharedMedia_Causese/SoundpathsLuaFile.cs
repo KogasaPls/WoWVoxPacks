@@ -27,9 +27,9 @@ namespace BigWigsVoiceGCP.AddOns.SharedMedia_Causese
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("-- -----\n--   SOUND\n-- -----\n\n");
+            this.Write("local LSM = LibStub(\"LibSharedMedia-3.0\")\n\n-- -----\n--   SOUND\n-- -----\n\n");
             
-            #line 8 "/home/kogasa/git/BigWigsVoiceGCP/src/BigWigsVoiceGCP.AddOns.SharedMedia_Causese/SoundpathsLuaFile.tt"
+            #line 10 "/home/kogasa/git/BigWigsVoiceGCP/src/BigWigsVoiceGCP.AddOns.SharedMedia_Causese/SoundpathsLuaFile.tt"
 
     foreach (var sound in SoundFiles)
     {
@@ -39,21 +39,21 @@ namespace BigWigsVoiceGCP.AddOns.SharedMedia_Causese
             #line hidden
             this.Write("LSM:Register(\"sound\", \"");
             
-            #line 12 "/home/kogasa/git/BigWigsVoiceGCP/src/BigWigsVoiceGCP.AddOns.SharedMedia_Causese/SoundpathsLuaFile.tt"
+            #line 14 "/home/kogasa/git/BigWigsVoiceGCP/src/BigWigsVoiceGCP.AddOns.SharedMedia_Causese/SoundpathsLuaFile.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(sound.FormattedDisplayName));
             
             #line default
             #line hidden
             this.Write("\", [[");
             
-            #line 12 "/home/kogasa/git/BigWigsVoiceGCP/src/BigWigsVoiceGCP.AddOns.SharedMedia_Causese/SoundpathsLuaFile.tt"
+            #line 14 "/home/kogasa/git/BigWigsVoiceGCP/src/BigWigsVoiceGCP.AddOns.SharedMedia_Causese/SoundpathsLuaFile.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetSoundPath(sound)));
             
             #line default
             #line hidden
             this.Write("]])\n");
             
-            #line 13 "/home/kogasa/git/BigWigsVoiceGCP/src/BigWigsVoiceGCP.AddOns.SharedMedia_Causese/SoundpathsLuaFile.tt"
+            #line 15 "/home/kogasa/git/BigWigsVoiceGCP/src/BigWigsVoiceGCP.AddOns.SharedMedia_Causese/SoundpathsLuaFile.tt"
 
     }
 

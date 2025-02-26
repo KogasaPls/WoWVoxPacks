@@ -27,8 +27,8 @@ public class CauseseAddOnService(
 
     public async Task BuildAddOnAsync(string outputDirectory, CancellationToken cancellationToken = default)
     {
-        AddOnSettings.Title = $"SharedMedia_Causese {TtsSettings.Voice}";
-        outputDirectory = Path.Combine(outputDirectory, AddOnSettings.Title);
+        AddOnSettings.Title = $"SharedMedia_Causese_{TtsSettings.Voice}";
+        outputDirectory = Path.Combine(outputDirectory, AddOnSettings.Title.Replace(" ", "_"));
 
         CauseseAddOn addOn = new(AddOnSettings);
 

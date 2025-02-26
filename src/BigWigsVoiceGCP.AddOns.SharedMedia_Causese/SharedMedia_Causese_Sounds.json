@@ -159,7 +159,7 @@
     "DisplayName": "AoE",
     "FileName": "AoE.ogg",
     "FormattedDisplayName": "|cFFFF0000AoE|r",
-    "SSML": "<speak><say-as interpret-as=\"characters\"><prosody rate=\"1.2\">AOE</prosody></say-as></speak>"
+    "SSML": "<speak>AOE</speak>"
   },
   {
     "DisplayName": "Assist",
@@ -237,13 +237,13 @@
     "DisplayName": "CC",
     "FileName": "CC.ogg",
     "FormattedDisplayName": "|cFFFF0000CC|r",
-    "SSML": "<speak><say-as interpret-as=\"characters\"><prosody rate=\"1.2\">CC</prosody></say-as></speak>"
+    "SSML": "<speak>CC</speak>"
   },
   {
     "DisplayName": "CD",
     "FileName": "CD.ogg",
     "FormattedDisplayName": "|cFFFF0000CD|r",
-    "SSML": "<speak><say-as interpret-as=\"characters\"><prosody rate=\"1.2\">CD</prosody></say-as></speak>"
+    "SSML": "<speak>CD</speak>"
   },
   {
     "DisplayName": "Center",
@@ -399,7 +399,7 @@
     "DisplayName": "Healcd",
     "FileName": "Healcd.ogg",
     "FormattedDisplayName": "|cFFFF0000Healcd|r",
-    "SSML": "<speak>Heal <say-as interpret-as=\"characters\"><prosody rate=\"1.2\">CD</prosody></say-as></speak>"
+    "SSML": "<speak>Heal CD</speak>"
   },
   {
     "DisplayName": "Hide",
@@ -639,7 +639,7 @@
     "DisplayName": "Selfcd",
     "FileName": "Selfcd.ogg",
     "FormattedDisplayName": "|cFFFF0000Selfcd|r",
-    "SSML": "<speak>Self <say-as interpret-as=\"characters\"><prosody rate=\"1.2\">CD</prosody></say-as></speak>"
+    "SSML": "<speak>Self CD</speak>"
   },
   {
     "DisplayName": "Shield",

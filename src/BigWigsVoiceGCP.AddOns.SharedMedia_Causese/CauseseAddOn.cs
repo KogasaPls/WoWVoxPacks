@@ -19,6 +19,10 @@ public class CauseseAddOn : AddOn
             SoundpathsLuaFile sharedMediaCauseseLuaFile = new((CauseseAddOn)addon);
             return sharedMediaCauseseLuaFile.TransformText();
         });
+
+        AddFile(@"libs\LibStub\LibStub.lua");
+        AddFile(@"libs\CallbackHandler-1.0\CallbackHandler-1.0.lua");
+        AddFile("embeds.xml");
     }
 
     public override async Task WriteAllFilesAsync(string outputDirectory, CancellationToken cancellationToken = default)

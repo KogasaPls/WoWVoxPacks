@@ -6,9 +6,11 @@ public class AddOn
 {
     private readonly Note[] _additionalNotes;
     private readonly Dictionary<string, string> _additionalProperties;
-    private readonly string[] _interfaces;
 
-    private readonly Dictionary<string, Lazy<string>> _files = new(StringComparer.OrdinalIgnoreCase);
+    private readonly List<string> _files = [];
+
+    private readonly Dictionary<string, Lazy<string>> _filesWithContentFactory = new(StringComparer.OrdinalIgnoreCase);
+    private readonly string[] _interfaces;
 
     public AddOn(
         AddOnSettings settings)
@@ -35,18 +37,23 @@ public class AddOn
     public Note? PrimaryNote { get; }
     public IReadOnlyCollection<Note> AdditionalNotes => _additionalNotes;
     public IReadOnlyCollection<string> Interfaces => _interfaces;
-    public IReadOnlyCollection<string> Files => _files.Keys;
+    public IReadOnlyCollection<string> Files => _filesWithContentFactory.Keys.Concat(_files).ToArray();
 
     protected void AddFile(string fileName, Func<AddOn, string> contentFactory)
     {
-        _files.Add(fileName, new Lazy<string>(() => contentFactory(this)));
+        _filesWithContentFactory.Add(fileName, new Lazy<string>(() => contentFactory(this)));
+    }
+
+    protected void AddFile(string fileName)
+    {
+        _files.Add(fileName);
     }
 
     public virtual async Task WriteAllFilesAsync(string outputDirectory, CancellationToken cancellationToken = default)
     {
         await WriteTocFileAsync(outputDirectory, cancellationToken);
 
-        foreach ((string fileName, Lazy<string> contentLazy) in _files)
+        foreach ((string fileName, Lazy<string> contentLazy) in _filesWithContentFactory)
         {
             string fileContent = contentLazy.Value;
             string path = Path.Combine(outputDirectory, fileName);

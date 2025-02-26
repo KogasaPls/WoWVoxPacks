@@ -35,7 +35,7 @@ public sealed class BigWigsVoiceAddOnService(
         IEnumerable<SpellListFile> spellListFiles = await UpstreamClient.GetSpellListFiles();
 
         AddOnSettings.Title = $"BigWigs Voice GCP {TtsSettings.Voice}";
-        outputDirectory = Path.Combine(outputDirectory, AddOnSettings.Title);
+        outputDirectory = Path.Combine(outputDirectory, AddOnSettings.Title.Replace(" ", "_"));
 
         BigWigsVoiceAddon addOn = new(AddOnSettings);
 

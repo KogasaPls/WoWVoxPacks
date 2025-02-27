@@ -1,5 +1,7 @@
 using System.Xml.Linq;
 
+using WoWVoxPack.TTS;
+
 namespace WoWVoxPack.AddOns.BigWigs_Voice;
 
 public class BigWigsVoiceSoundFile(string spellId, string spellName)

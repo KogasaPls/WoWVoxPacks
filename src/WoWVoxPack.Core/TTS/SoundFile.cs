@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace WoWVoxPack;
+namespace WoWVoxPack.TTS;
 
 public class SoundFile
 {

@@ -1,3 +1,5 @@
+using WoWVoxPack.TTS;
+
 namespace WoWVoxPack.AddOns.SharedMedia_Causese;
 
 public partial class SoundpathsLuaFile

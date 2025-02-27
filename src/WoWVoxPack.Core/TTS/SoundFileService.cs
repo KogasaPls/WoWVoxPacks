@@ -10,6 +10,12 @@ public class SoundFileService(ITtsProvider ttsProvider) : ISoundFileService
     public async Task CreateSoundFileIfNotExistsAsync(SoundFile soundFile, string outputDirectory, TtsSettings settings,
         CancellationToken cancellationToken = default)
     {
+        if (!string.IsNullOrEmpty(soundFile.CopyFromPath))
+        {
+            File.Copy(soundFile.CopyFromPath, Path.Combine(outputDirectory, soundFile.FileName), true);
+            return;
+        }
+
         string filePathWithOggExtension =
             Path.Combine(outputDirectory, Path.ChangeExtension(soundFile.FileName, ".ogg"));
         if (File.Exists(filePathWithOggExtension))

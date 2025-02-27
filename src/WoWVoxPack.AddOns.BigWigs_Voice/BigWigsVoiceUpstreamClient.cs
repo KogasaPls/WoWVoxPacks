@@ -1,7 +1,7 @@
 using System.Collections.Concurrent;
-using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
-using System.Text.Json.Serialization;
+
+using Octokit;
 
 namespace WoWVoxPack.AddOns.BigWigs_Voice;
 
@@ -14,7 +14,7 @@ public sealed class BigWigsVoiceUpstreamClient(
     public async Task<IEnumerable<BigWigsVoiceSoundFile>> GetSoundFilesAsync(
         CancellationToken cancellationToken = default)
     {
-        ConcurrentBag<BigWigsVoiceSoundFile> soundFiles = new();
+        ConcurrentBag<BigWigsVoiceSoundFile> soundFiles = [];
 
         await foreach (SpellListFile spellListFile in GetSpellListFilesAsync(cancellationToken))
         {
@@ -32,66 +32,26 @@ public sealed class BigWigsVoiceUpstreamClient(
         HttpClient.Dispose();
     }
 
-    private async Task<SpellListFile> GetSpellListFileAsync(string fileName,
-        CancellationToken cancellationToken = default)
-    {
-        const string baseUrl = "https://github.com/BigWigsMods/BigWigs_Voice/raw/master/Tools/";
-
-        string fullUrl = Path.Combine(baseUrl, fileName);
-        string content = await HttpClient.GetStringAsync(fullUrl, cancellationToken);
-
-        return new SpellListFile(fileName, content);
-    }
-
-
     private async IAsyncEnumerable<SpellListFile> GetSpellListFilesAsync(
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        const string toolsUrl = "https://api.github.com/repos/BigWigsMods/BigWigs_Voice/contents/Tools";
+        GitHubClient github = new(new ProductHeaderValue("KogasaPls_WoWVoxPack"));
 
-        HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd("request");
-
-        List<GitHubFile>? response =
-            await HttpClient.GetFromJsonAsync<List<GitHubFile>>(toolsUrl, cancellationToken);
-        if (response == null)
+        IReadOnlyList<RepositoryContent>? toolDirectoryContent =
+            await github.Repository.Content.GetAllContents("BigWigsMods", "BigWigs_Voice", "Tools/");
+        if (toolDirectoryContent is null)
         {
-            throw new Exception("Failed to get spell list files from GitHub.");
+            throw new Exception("Failed to get directory content from GitHub.");
         }
 
-        foreach (GitHubFile file in
-                 response.Where(file => file.Name.StartsWith("spells") && file.Name.EndsWith(".txt")))
+        IEnumerable<RepositoryContent> spellFiles = toolDirectoryContent.Where(content =>
+            content.Name.StartsWith("spells") && content.Name.EndsWith(".txt"));
+        foreach (RepositoryContent spellFile in spellFiles)
         {
-            yield return await GetSpellListFileAsync(file.Name, cancellationToken);
+            string content = await HttpClient.GetStringAsync(spellFile.DownloadUrl, cancellationToken);
+            SpellListFile spellListFile = new(spellFile.Name, content);
+
+            yield return spellListFile;
         }
-    }
-
-    private class GitHubFile
-    {
-        [JsonPropertyName("name")]
-        public string Name { get; set; }
-
-        [JsonPropertyName("path")]
-        public string Path { get; set; }
-
-        [JsonPropertyName("sha")]
-        public string Sha { get; set; }
-
-        [JsonPropertyName("size")]
-        public int Size { get; set; }
-
-        [JsonPropertyName("url")]
-        public string Url { get; set; }
-
-        [JsonPropertyName("html_url")]
-        public string HtmlUrl { get; set; }
-
-        [JsonPropertyName("git_url")]
-        public string GitUrl { get; set; }
-
-        [JsonPropertyName("download_url")]
-        public string DownloadUrl { get; set; }
-
-        [JsonPropertyName("type")]
-        public string Type { get; set; }
     }
 }

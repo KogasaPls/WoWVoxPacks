@@ -9,6 +9,7 @@
     <PackageReference Include="Google.Cloud.TextToSpeech.V1"/>
     <PackageReference Include="Microsoft.Extensions.Logging"/>
     <PackageReference Include="Microsoft.Extensions.Options"/>
+    <PackageReference Include="Octokit"/>
     <PackageReference Include="RateLimiter"/>
   </ItemGroup>
 

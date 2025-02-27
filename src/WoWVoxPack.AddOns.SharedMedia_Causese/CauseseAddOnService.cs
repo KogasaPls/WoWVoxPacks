@@ -14,28 +14,25 @@ namespace WoWVoxPack.AddOns.SharedMedia_Causese;
 public class CauseseAddOnService(
     ILogger<CauseseAddOnService> logger,
     GoogleTtsClient googleTtsClient,
-    IOptionsSnapshot<AddOnSettings> addOnOptions,
-    IOptions<TtsSettings> ttsOptions)
+    IOptionsSnapshot<AddOnSettings> addOnOptions)
     : IAddOnService
 {
     private ILogger<CauseseAddOnService> Logger { get; } = logger;
 
     private GoogleTtsClient GoogleTtsClient { get; } = googleTtsClient;
 
-    private TtsSettings TtsSettings { get; } = ttsOptions.Value;
     private AddOnSettings AddOnSettings { get; } = addOnOptions.Get("SharedMedia_Causese");
 
-    public async Task BuildAddOnAsync(string outputDirectory, CancellationToken cancellationToken = default)
+    public async Task BuildAddOnAsync(string outputDirectoryBase, CancellationToken cancellationToken = default)
     {
-        AddOnSettings.Title = $"SharedMedia_Causese_{TtsSettings.Voice}";
-        outputDirectory = Path.Combine(outputDirectory, AddOnSettings.Title.Replace(" ", "_"));
-
         CauseseAddOn addOn = new(AddOnSettings);
+        var outputDirectory = Path.Combine(outputDirectoryBase, addOn.OutputDirectoryName);
+        string soundsDirectory = Path.Combine(outputDirectory, "Sounds");
+
+        Logger.LogInformation("Building {AddOnName} add-on in directory {OutputDirectory}", addOn.Title, outputDirectory);
 
         Directory.CreateDirectory(outputDirectory);
-        Directory.CreateDirectory(Path.Combine(outputDirectory, "Sounds"));
-
-        string soundsDirectory = Path.Combine(outputDirectory, "Sounds");
+        Directory.CreateDirectory(soundsDirectory);
 
         IEnumerable<Task<CauseseSoundFile>> soundFileTasks = addOn.SoundFiles
             .Where(file => !File.Exists(Path.Combine(soundsDirectory, file.FileName)))
@@ -80,7 +77,7 @@ public class CauseseAddOnService(
         if (soundFile.SSML is not null)
         {
             ByteString audioContent =
-                await GoogleTtsClient.SynthesizeSsml(soundFile.SSML, TtsSettings, AudioEncoding.Linear16,
+                await GoogleTtsClient.SynthesizeSsml(soundFile.SSML, AddOnSettings.TtsSettings, AudioEncoding.Linear16,
                     cancellationToken);
             return audioContent;
         }
@@ -88,7 +85,7 @@ public class CauseseAddOnService(
         if (soundFile.Text is not null)
         {
             ByteString audioContent =
-                await GoogleTtsClient.SynthesizeText(soundFile.Text, TtsSettings, AudioEncoding.Linear16,
+                await GoogleTtsClient.SynthesizeText(soundFile.Text, AddOnSettings.TtsSettings, AudioEncoding.Linear16,
                     cancellationToken);
             return audioContent;
         }

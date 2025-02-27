@@ -7,7 +7,7 @@
 //     the code is regenerated.
 // </auto-generated>
 // ------------------------------------------------------------------------------
-namespace BigWigsVoiceGCP.AddOns
+namespace WoWVoxPack.AddOns
 {
     using System;
     
@@ -15,7 +15,7 @@ namespace BigWigsVoiceGCP.AddOns
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "/home/kogasa/git/BigWigsVoiceGCP/src/BigWigsVoiceGCP.Core/AddOns/AddOnTocFile.tt"
+    #line 1 "/home/kogasa/git/WoWVoxPack/src/WoWVoxPack.Core/AddOns/AddOnTocFile.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
     public partial class AddOnTocFile : AddOnTocFileBase
     {
@@ -27,28 +27,28 @@ namespace BigWigsVoiceGCP.AddOns
         {
             this.Write("## Interface: ");
             
-            #line 2 "/home/kogasa/git/BigWigsVoiceGCP/src/BigWigsVoiceGCP.Core/AddOns/AddOnTocFile.tt"
+            #line 2 "/home/kogasa/git/WoWVoxPack/src/WoWVoxPack.Core/AddOns/AddOnTocFile.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(string.Join(", ", AddOn.Interfaces)));
             
             #line default
             #line hidden
             this.Write("\n\n## Title: ");
             
-            #line 4 "/home/kogasa/git/BigWigsVoiceGCP/src/BigWigsVoiceGCP.Core/AddOns/AddOnTocFile.tt"
+            #line 4 "/home/kogasa/git/WoWVoxPack/src/WoWVoxPack.Core/AddOns/AddOnTocFile.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(AddOn.Title));
             
             #line default
             #line hidden
             this.Write("\n## Version: ");
             
-            #line 5 "/home/kogasa/git/BigWigsVoiceGCP/src/BigWigsVoiceGCP.Core/AddOns/AddOnTocFile.tt"
+            #line 5 "/home/kogasa/git/WoWVoxPack/src/WoWVoxPack.Core/AddOns/AddOnTocFile.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(AddOn.Version));
             
             #line default
             #line hidden
             this.Write("\n");
             
-            #line 6 "/home/kogasa/git/BigWigsVoiceGCP/src/BigWigsVoiceGCP.Core/AddOns/AddOnTocFile.tt"
+            #line 6 "/home/kogasa/git/WoWVoxPack/src/WoWVoxPack.Core/AddOns/AddOnTocFile.tt"
 
     if (AddOn.PrimaryNote != null)
     {
@@ -58,14 +58,14 @@ namespace BigWigsVoiceGCP.AddOns
             #line hidden
             this.Write("## Notes: ");
             
-            #line 10 "/home/kogasa/git/BigWigsVoiceGCP/src/BigWigsVoiceGCP.Core/AddOns/AddOnTocFile.tt"
+            #line 10 "/home/kogasa/git/WoWVoxPack/src/WoWVoxPack.Core/AddOns/AddOnTocFile.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(AddOn.PrimaryNote.Text));
             
             #line default
             #line hidden
             this.Write("\n");
             
-            #line 11 "/home/kogasa/git/BigWigsVoiceGCP/src/BigWigsVoiceGCP.Core/AddOns/AddOnTocFile.tt"
+            #line 11 "/home/kogasa/git/WoWVoxPack/src/WoWVoxPack.Core/AddOns/AddOnTocFile.tt"
 
     }
 
@@ -73,7 +73,7 @@ namespace BigWigsVoiceGCP.AddOns
             #line default
             #line hidden
             
-            #line 14 "/home/kogasa/git/BigWigsVoiceGCP/src/BigWigsVoiceGCP.Core/AddOns/AddOnTocFile.tt"
+            #line 14 "/home/kogasa/git/WoWVoxPack/src/WoWVoxPack.Core/AddOns/AddOnTocFile.tt"
 
     foreach (var note in AddOn.AdditionalNotes)
     {
@@ -83,21 +83,21 @@ namespace BigWigsVoiceGCP.AddOns
             #line hidden
             this.Write("## Notes-");
             
-            #line 18 "/home/kogasa/git/BigWigsVoiceGCP/src/BigWigsVoiceGCP.Core/AddOns/AddOnTocFile.tt"
+            #line 18 "/home/kogasa/git/WoWVoxPack/src/WoWVoxPack.Core/AddOns/AddOnTocFile.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(note.LanguageCode ?? string.Empty));
             
             #line default
             #line hidden
             this.Write(": ");
             
-            #line 18 "/home/kogasa/git/BigWigsVoiceGCP/src/BigWigsVoiceGCP.Core/AddOns/AddOnTocFile.tt"
+            #line 18 "/home/kogasa/git/WoWVoxPack/src/WoWVoxPack.Core/AddOns/AddOnTocFile.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(note.Text));
             
             #line default
             #line hidden
             this.Write("\n");
             
-            #line 19 "/home/kogasa/git/BigWigsVoiceGCP/src/BigWigsVoiceGCP.Core/AddOns/AddOnTocFile.tt"
+            #line 19 "/home/kogasa/git/WoWVoxPack/src/WoWVoxPack.Core/AddOns/AddOnTocFile.tt"
 
     }
 
@@ -106,14 +106,14 @@ namespace BigWigsVoiceGCP.AddOns
             #line hidden
             this.Write("## Author: ");
             
-            #line 22 "/home/kogasa/git/BigWigsVoiceGCP/src/BigWigsVoiceGCP.Core/AddOns/AddOnTocFile.tt"
+            #line 22 "/home/kogasa/git/WoWVoxPack/src/WoWVoxPack.Core/AddOns/AddOnTocFile.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(AddOn.Author));
             
             #line default
             #line hidden
             this.Write("\n\n");
             
-            #line 24 "/home/kogasa/git/BigWigsVoiceGCP/src/BigWigsVoiceGCP.Core/AddOns/AddOnTocFile.tt"
+            #line 24 "/home/kogasa/git/WoWVoxPack/src/WoWVoxPack.Core/AddOns/AddOnTocFile.tt"
 
     foreach (var (key, value) in AddOn.AdditionalProperties)
     {
@@ -123,21 +123,21 @@ namespace BigWigsVoiceGCP.AddOns
             #line hidden
             this.Write("## ");
             
-            #line 28 "/home/kogasa/git/BigWigsVoiceGCP/src/BigWigsVoiceGCP.Core/AddOns/AddOnTocFile.tt"
+            #line 28 "/home/kogasa/git/WoWVoxPack/src/WoWVoxPack.Core/AddOns/AddOnTocFile.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(key));
             
             #line default
             #line hidden
             this.Write(": ");
             
-            #line 28 "/home/kogasa/git/BigWigsVoiceGCP/src/BigWigsVoiceGCP.Core/AddOns/AddOnTocFile.tt"
+            #line 28 "/home/kogasa/git/WoWVoxPack/src/WoWVoxPack.Core/AddOns/AddOnTocFile.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(value));
             
             #line default
             #line hidden
             this.Write("\n");
             
-            #line 29 "/home/kogasa/git/BigWigsVoiceGCP/src/BigWigsVoiceGCP.Core/AddOns/AddOnTocFile.tt"
+            #line 29 "/home/kogasa/git/WoWVoxPack/src/WoWVoxPack.Core/AddOns/AddOnTocFile.tt"
 
     }
 
@@ -146,7 +146,7 @@ namespace BigWigsVoiceGCP.AddOns
             #line hidden
             this.Write("\n");
             
-            #line 33 "/home/kogasa/git/BigWigsVoiceGCP/src/BigWigsVoiceGCP.Core/AddOns/AddOnTocFile.tt"
+            #line 33 "/home/kogasa/git/WoWVoxPack/src/WoWVoxPack.Core/AddOns/AddOnTocFile.tt"
 
     foreach (var file in AddOn.Files)
     {
@@ -155,14 +155,14 @@ namespace BigWigsVoiceGCP.AddOns
             #line default
             #line hidden
             
-            #line 37 "/home/kogasa/git/BigWigsVoiceGCP/src/BigWigsVoiceGCP.Core/AddOns/AddOnTocFile.tt"
+            #line 37 "/home/kogasa/git/WoWVoxPack/src/WoWVoxPack.Core/AddOns/AddOnTocFile.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(file));
             
             #line default
             #line hidden
             this.Write("\n");
             
-            #line 38 "/home/kogasa/git/BigWigsVoiceGCP/src/BigWigsVoiceGCP.Core/AddOns/AddOnTocFile.tt"
+            #line 38 "/home/kogasa/git/WoWVoxPack/src/WoWVoxPack.Core/AddOns/AddOnTocFile.tt"
 
     }
 

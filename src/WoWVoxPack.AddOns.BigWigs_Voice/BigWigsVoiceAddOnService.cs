@@ -17,7 +17,6 @@ public sealed class BigWigsVoiceAddOnService(
     ILogger<BigWigsVoiceAddOnService> logger,
     GoogleTtsClient googleTtsClient,
     IOptionsSnapshot<AddOnSettings> addOnOptions,
-    IOptions<TtsSettings> ttsOptions,
     IBigWigsVoiceUpstreamClient upstreamClient)
     : IAddOnService
 {
@@ -25,25 +24,23 @@ public sealed class BigWigsVoiceAddOnService(
 
     private GoogleTtsClient GoogleTtsClient { get; } = googleTtsClient;
 
-    private TtsSettings TtsSettings { get; } = ttsOptions.Value;
     private AddOnSettings AddOnSettings { get; } = addOnOptions.Get("BigWigs_Voice");
     private IBigWigsVoiceUpstreamClient UpstreamClient { get; } = upstreamClient;
 
 
-    public async Task BuildAddOnAsync(string outputDirectory, CancellationToken cancellationToken = default)
+    public async Task BuildAddOnAsync(string outputDirectoryBase, CancellationToken cancellationToken = default)
     {
         IEnumerable<SpellListFile> spellListFiles = await UpstreamClient.GetSpellListFiles();
 
-        AddOnSettings.Title = $"BigWigs Voice GCP {TtsSettings.Voice}";
-        outputDirectory = Path.Combine(outputDirectory, AddOnSettings.Title.Replace(" ", "_"));
-
         BigWigsVoiceAddon addOn = new(AddOnSettings);
+        var outputDirectory = Path.Combine(outputDirectoryBase, addOn.OutputDirectoryName);
+        var soundsDirectory = Path.Combine(outputDirectory, "Sounds");
 
         Directory.CreateDirectory(outputDirectory);
-        Directory.CreateDirectory(Path.Combine(outputDirectory, "Sounds"));
+        Directory.CreateDirectory(soundsDirectory);
 
         IEnumerable<Task<BigWigsVoiceSoundFile>> soundFileTasks = spellListFiles
-            .SelectMany(spellListFile => GetSoundFiles(spellListFile, outputDirectory))
+            .SelectMany(spellListFile => GetSoundFiles(spellListFile, soundsDirectory))
             .ToList();
 
         _ = await Task.WhenAll(soundFileTasks);
@@ -51,7 +48,8 @@ public sealed class BigWigsVoiceAddOnService(
         await addOn.WriteAllFilesAsync(outputDirectory, cancellationToken);
     }
 
-    private IEnumerable<Task<BigWigsVoiceSoundFile>> GetSoundFiles(SpellListFile spellListFile, string outputDirectory,
+    private IEnumerable<Task<BigWigsVoiceSoundFile>> GetSoundFiles(SpellListFile spellListFile,
+        string soundsDirectory,
         CancellationToken cancellationToken = default)
     {
         string content = spellListFile.Content;
@@ -79,9 +77,9 @@ public sealed class BigWigsVoiceAddOnService(
             string spellName = parts[1];
 
             string fileName = $"{spellId}.wav";
+            string filePath = Path.Combine(soundsDirectory, fileName);
 
-            string soundsDirectory = Path.Combine(outputDirectory, "Sounds");
-            if (File.Exists(Path.Combine(soundsDirectory, fileName)))
+            if (File.Exists(filePath))
             {
                 Logger.LogDebug("Skipping spell {SpellId} ({SpellName}) because it already exists", spellId, spellName);
                 continue;
@@ -94,8 +92,6 @@ public sealed class BigWigsVoiceAddOnService(
     private async Task<BigWigsVoiceSoundFile> CreateSoundFile(string spellId, string spellName, string outputDirectory,
         CancellationToken cancellationToken = default)
     {
-        Logger.LogInformation("Synthesizing text for spell {SpellId} ({SpellName})", spellId, spellName);
-
         ByteString audioContent = await SynthesizeTextForSpell(spellName, cancellationToken);
         BigWigsVoiceSoundFile file = new(spellId, spellName, audioContent);
 
@@ -120,7 +116,7 @@ public sealed class BigWigsVoiceAddOnService(
     private Task<ByteString> SynthesizeTextForSpell(string spellName, CancellationToken cancellationToken = default)
     {
         string ssml = GetSsml(spellName);
-        return GoogleTtsClient.SynthesizeSsml(ssml, TtsSettings, AudioEncoding.Linear16,
+        return GoogleTtsClient.SynthesizeSsml(ssml, AddOnSettings.TtsSettings, AudioEncoding.Linear16,
             cancellationToken);
     }
 

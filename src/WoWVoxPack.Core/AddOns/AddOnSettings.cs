@@ -16,10 +16,6 @@ public class AddOnSettings
 
     [Required] public List<string>? Interfaces { get; set; } = new();
 
-    [Required] public List<string>? LuaFiles { get; set; } = new();
-
-    [Required] public TtsSettings? TtsSettings { get; set; }
-
     public Dictionary<string, string>? AdditionalNotes
     {
         get;

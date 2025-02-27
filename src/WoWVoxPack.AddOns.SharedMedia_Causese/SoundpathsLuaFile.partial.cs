@@ -8,10 +8,9 @@ public partial class SoundpathsLuaFile
     }
 
     public CauseseAddOn AddOn { get; }
-    public List<SoundFile> SoundFiles => AddOn.SoundFiles;
 
     public string GetSoundPath(SoundFile file)
     {
-        return $@"{AddOn.SoundPath.Replace(@"\\", "\\")}\{file.FileName}";
+        return $@"{AddOn.SoundPath.Replace(@"\\", @"\")}\{file.FileName}";
     }
 }

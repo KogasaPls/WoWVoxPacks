@@ -1,4 +1,6 @@
+using System.Collections.Concurrent;
 using System.Net.Http.Json;
+using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
 
 namespace WoWVoxPack.AddOns.BigWigs_Voice;
@@ -9,32 +11,57 @@ public sealed class BigWigsVoiceUpstreamClient(
 {
     private HttpClient HttpClient { get; } = httpClient;
 
-    public async Task<IEnumerable<SpellListFile>> GetSpellListFiles(bool loadContent = true)
+    public async Task<IEnumerable<BigWigsVoiceSoundFile>> GetSoundFilesAsync(
+        CancellationToken cancellationToken = default)
     {
-        const string toolsUrl = "https://api.github.com/repos/BigWigsMods/BigWigs_Voice/contents/Tools";
+        var soundFiles = new ConcurrentBag<BigWigsVoiceSoundFile>();
 
-        HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd("request");
-
-        List<GitHubFile>? response = await HttpClient.GetFromJsonAsync<List<GitHubFile>>(toolsUrl);
-        if (response == null)
+        await foreach (var spellListFile in GetSpellListFilesAsync(cancellationToken: cancellationToken))
         {
-            throw new Exception("Failed to get spell list files from GitHub.");
+            foreach (var soundFile in spellListFile.SoundFiles)
+            {
+                soundFiles.Add(soundFile);
+            }
         }
 
-        List<SpellListFile> files = response.Where(file => file.Name.StartsWith("spells") && file.Name.EndsWith(".txt"))
-            .Select(file => new SpellListFile(file.Name)).ToList();
-
-        if (loadContent)
-        {
-            await Task.WhenAll(files.Select(file => _ = file.GetContentAsync()));
-        }
-
-        return files;
+        return soundFiles;
     }
 
     public void Dispose()
     {
         HttpClient.Dispose();
+    }
+
+    private async Task<SpellListFile> GetSpellListFileAsync(string fileName,
+        CancellationToken cancellationToken = default)
+    {
+        const string baseUrl = "https://github.com/BigWigsMods/BigWigs_Voice/raw/master/Tools/";
+
+        var fullUrl = Path.Combine(baseUrl, fileName);
+        var content = await HttpClient.GetStringAsync(fullUrl, cancellationToken);
+
+        return new SpellListFile(fileName, content);
+    }
+
+
+    private async IAsyncEnumerable<SpellListFile> GetSpellListFilesAsync(
+        [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    {
+        const string toolsUrl = "https://api.github.com/repos/BigWigsMods/BigWigs_Voice/contents/Tools";
+
+        HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd("request");
+
+        List<GitHubFile>? response =
+            await HttpClient.GetFromJsonAsync<List<GitHubFile>>(toolsUrl, cancellationToken: cancellationToken);
+        if (response == null)
+        {
+            throw new Exception("Failed to get spell list files from GitHub.");
+        }
+
+        foreach (var file in response.Where(file => file.Name.StartsWith("spells") && file.Name.EndsWith(".txt")))
+        {
+            yield return await GetSpellListFileAsync(file.Name, cancellationToken);
+        }
     }
 
     private class GitHubFile

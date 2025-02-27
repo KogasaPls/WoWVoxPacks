@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
+using WoWVoxPack;
 using WoWVoxPack.AddOns;
 using WoWVoxPack.AddOns.BigWigs_Voice;
 using WoWVoxPack.AddOns.SharedMedia_Causese;
@@ -15,9 +16,12 @@ IHostBuilder hostBuilder = Host.CreateDefaultBuilder(args)
     .ConfigureServices((_, services) =>
     {
         services.AddScoped<GoogleTtsClient>();
+        services.AddSingleton<ITtsProvider, GoogleTtsProvider>();
+        services.AddSingleton<ISoundFileService, SoundFileService>();
         services.AddHttpClient<IBigWigsVoiceUpstreamClient, BigWigsVoiceUpstreamClient>();
         services.TryAddEnumerable(ServiceDescriptor.Singleton<IAddOnService, BigWigsVoiceAddOnService>());
         services.TryAddEnumerable(ServiceDescriptor.Singleton<IAddOnService, CauseseAddOnService>());
+        services.AddOptionsWithValidateOnStart<TtsSettings>().BindConfiguration("TtsSettings");
         services.AddOptionsWithValidateOnStart<AddOnSettings>("BigWigs_Voice").BindConfiguration("AddOn:BigWigs_Voice")
             .BindConfiguration("AddOn");
         services.AddOptionsWithValidateOnStart<AddOnSettings>("SharedMedia_Causese")

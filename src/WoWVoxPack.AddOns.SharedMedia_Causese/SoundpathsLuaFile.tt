@@ -6,7 +6,7 @@ local LSM = LibStub("LibSharedMedia-3.0")
 -- -----
 
 <#
-    foreach (var sound in SoundFiles)
+    foreach (var sound in AddOn.SoundFiles)
     {
 #>
 LSM:Register("sound", "<#= sound.FormattedDisplayName #>", [[<#= GetSoundPath(sound) #>]])

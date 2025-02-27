@@ -4,36 +4,41 @@ namespace WoWVoxPack.AddOns.SharedMedia_Causese;
 
 public class CauseseAddOn : AddOn
 {
-    private readonly Lazy<List<SoundFile>> _soundFiles;
-
-    public CauseseAddOn(AddOnSettings settings) : base(settings)
+    public CauseseAddOn(string outputDirectory, AddOnSettings settings) : base(outputDirectory, settings)
     {
-        _soundFiles = new Lazy<List<SoundFile>>(() =>
-        {
-            string file = Path.Combine(AppContext.BaseDirectory, "SharedMedia_Causese_Sounds.json");
-            return JsonSerializer.Deserialize<List<SoundFile>>(File.ReadAllText(file)) ?? [];
-        });
-
+        AddFile(@"libs\LibStub\LibStub.lua");
+        AddFile(@"libs\CallbackHandler-1.0\CallbackHandler-1.0.lua");
+        AddFile("embeds.xml");
         AddFile("Soundpaths.lua", addon =>
         {
             SoundpathsLuaFile sharedMediaCauseseLuaFile = new((CauseseAddOn)addon);
             return sharedMediaCauseseLuaFile.TransformText();
         });
 
-        AddFile(@"libs\LibStub\LibStub.lua");
-        AddFile(@"libs\CallbackHandler-1.0\CallbackHandler-1.0.lua");
-        AddFile("embeds.xml");
+        string file = Path.Combine(AppContext.BaseDirectory, "SharedMedia_Causese_Sounds.json");
+
+        var soundFiles =
+            JsonSerializer.Deserialize<List<SoundFile>>(File.ReadAllText(file),
+                SoundFileJsonContext.Default.ListSoundFile);
+
+        if (soundFiles is null)
+        {
+            throw new InvalidOperationException("Failed to deserialize sound files.");
+        }
+
+        AddSoundFiles(soundFiles);
     }
 
-    public List<SoundFile> SoundFiles => _soundFiles.Value;
+    protected override string AddOnDirectoryName => "SharedMedia_Causese";
+    protected override string SoundDirectoryName => "sound";
 
-    public string SoundPath => $@"Interface\\AddOns\\{Title.Replace(" ", "_")}\\Sounds";
+    public string SoundPath => $@"Interface\\AddOns\\{AddOnDirectoryName}\\{SoundDirectoryName}";
 
-    public override async Task WriteAllFilesAsync(string outputDirectory, CancellationToken cancellationToken = default)
+    public override async Task WriteAllFilesAsync(CancellationToken cancellationToken = default)
     {
-        await base.WriteAllFilesAsync(outputDirectory, cancellationToken);
+        await base.WriteAllFilesAsync(cancellationToken);
 
-        CopyDirectory(Path.Combine(AppContext.BaseDirectory, "SharedMedia"), outputDirectory, true, true);
+        CopyDirectory(Path.Combine(AppContext.BaseDirectory, "SharedMedia"), AddOnDirectory, true, true);
     }
 
     private static void CopyDirectory(string sourceDir, string destinationDir, bool recursive, bool overwrite)

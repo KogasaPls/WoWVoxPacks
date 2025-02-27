@@ -1,9 +1,3 @@
-using FFMpegCore;
-using FFMpegCore.Enums;
-
-using Google.Cloud.TextToSpeech.V1;
-using Google.Protobuf;
-
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -24,7 +18,7 @@ public sealed class BigWigsVoiceAddOnService(
     public async Task<BigWigsVoiceAddon> BuildAddOnAsync(string outputDirectoryBase,
         CancellationToken cancellationToken)
     {
-        var soundFiles = await UpstreamClient.GetSoundFilesAsync(cancellationToken);
+        IEnumerable<BigWigsVoiceSoundFile> soundFiles = await UpstreamClient.GetSoundFilesAsync(cancellationToken);
 
         BigWigsVoiceAddon addOn = new(outputDirectoryBase, AddOnSettings, soundFiles);
 

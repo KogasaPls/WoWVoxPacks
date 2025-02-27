@@ -1,0 +1,21 @@
+<Project>
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)../StyleCop.ruleset</CodeAnalysisRuleSet>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)../stylecop.json">
+      <Link>stylecop.json</Link>
+    </AdditionalFiles>
+
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)../StyleCop.ruleset">
+      <Link>StyleCop.ruleset</Link>
+    </AdditionalFiles>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" PrivateAssets="All"/>
+  </ItemGroup>
+</Project>

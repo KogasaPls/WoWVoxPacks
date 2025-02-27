@@ -10,9 +10,10 @@ public class AddOn
     private readonly Dictionary<string, Lazy<string>?> _addOnFiles = new(StringComparer.OrdinalIgnoreCase);
     private readonly string[] _interfaces;
 
+    private readonly string _outputDirectoryBase;
+
     private readonly Dictionary<string, SoundFile> _soundFiles = new(StringComparer.OrdinalIgnoreCase);
 
-    private readonly string _outputDirectoryBase;
     protected AddOn(string outputDirectoryBase,
         AddOnSettings settings)
     {
@@ -93,7 +94,7 @@ public class AddOn
     }
 
 
-    private async Task WriteAddonFilesAsync( CancellationToken cancellationToken = default)
+    private async Task WriteAddonFilesAsync(CancellationToken cancellationToken = default)
     {
         foreach ((string fileName, Lazy<string>? contentLazy) in _addOnFiles.Where(f => f.Value is not null))
         {

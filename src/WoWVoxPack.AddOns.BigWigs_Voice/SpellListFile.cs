@@ -1,5 +1,3 @@
-using System.Xml.Linq;
-
 namespace WoWVoxPack.AddOns.BigWigs_Voice;
 
 internal class SpellListFile
@@ -19,7 +17,10 @@ internal class SpellListFile
 
     public IEnumerable<BigWigsVoiceSoundFile> SoundFiles => _soundFiles.Value;
 
-    private BigWigsVoiceSoundFile[] ParseSoundFilesToArray() => ParseSoundFiles().ToArray();
+    private BigWigsVoiceSoundFile[] ParseSoundFilesToArray()
+    {
+        return ParseSoundFiles().ToArray();
+    }
 
     private IEnumerable<BigWigsVoiceSoundFile> ParseSoundFiles()
     {

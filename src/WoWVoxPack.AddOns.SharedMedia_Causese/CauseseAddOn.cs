@@ -17,7 +17,7 @@ public class CauseseAddOn : AddOn
 
         string file = Path.Combine(AppContext.BaseDirectory, "SharedMedia_Causese_Sounds.json");
 
-        var soundFiles =
+        List<SoundFile>? soundFiles =
             JsonSerializer.Deserialize<List<SoundFile>>(File.ReadAllText(file),
                 SoundFileJsonContext.Default.ListSoundFile);
 

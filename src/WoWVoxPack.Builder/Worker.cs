@@ -40,17 +40,17 @@ public class Worker : IHostedService
     {
         foreach (IAddOnService addOnService in AddOnServices)
         {
-            var addOn = await addOnService.BuildAddOnAsync(OutputDirectoryBase, cancellationToken);
+            AddOn addOn = await addOnService.BuildAddOnAsync(OutputDirectoryBase, cancellationToken);
 
             Logger.LogInformation("Building {AddOnName} addon in directory {OutputDirectory}", addOn.Title,
                 addOn.AddOnDirectory);
 
             await addOn.WriteAllFilesAsync(cancellationToken);
 
-            var soundOutputDirectory = addOn.SoundDirectory;
+            string soundOutputDirectory = addOn.SoundDirectory;
             Directory.CreateDirectory(soundOutputDirectory);
 
-            foreach (var soundFile in addOn.SoundFiles)
+            foreach (SoundFile soundFile in addOn.SoundFiles)
             {
                 await SoundFileService.CreateSoundFileIfNotExistsAsync(soundFile, soundOutputDirectory,
                     TtsSettings, cancellationToken);

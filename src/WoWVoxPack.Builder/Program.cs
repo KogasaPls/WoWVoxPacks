@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-using WoWVoxPack;
 using WoWVoxPack.AddOns;
 using WoWVoxPack.AddOns.BigWigs_Voice;
 using WoWVoxPack.AddOns.SharedMedia_Causese;

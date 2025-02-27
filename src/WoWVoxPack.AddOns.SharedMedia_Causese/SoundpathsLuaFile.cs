@@ -29,7 +29,7 @@ namespace WoWVoxPack.AddOns.SharedMedia_Causese
             
             #line 8 "/home/kogasa/git/WoWVoxPack/src/WoWVoxPack.AddOns.SharedMedia_Causese/SoundpathsLuaFile.tt"
 
-    foreach (var sound in SoundFiles)
+    foreach (var sound in AddOn.SoundFiles)
     {
 
             

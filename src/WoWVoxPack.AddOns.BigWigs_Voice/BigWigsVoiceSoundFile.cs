@@ -1,20 +1,30 @@
-using Google.Protobuf;
+using System.Xml.Linq;
 
 namespace WoWVoxPack.AddOns.BigWigs_Voice;
 
-public record BigWigsVoiceSoundFile(string SpellId, string SpellName, ByteString AudioContent)
-    : AddOnSoundFile($"{SpellId}.wav", AudioContent)
+public class BigWigsVoiceSoundFile(string spellId, string spellName)
+    : SoundFile($"{spellId}.ogg", ssml: GetSsml(spellName), displayName: spellName)
 {
-    public string SpellId { get; } = SpellId;
+    public string SpellId { get; } = spellId;
 
-    public string SpellName
-    {
-        get;
-    } = SpellName;
+    public string SpellName { get; } = spellName;
 
-    public Task WriteToDiskAsync(string outputDirectory, CancellationToken cancellationToken = default)
+    private static string GetSsml(string text)
     {
-        string filePath = Path.Combine(outputDirectory, FileName);
-        return File.WriteAllBytesAsync(filePath, AudioContent.ToByteArray(), cancellationToken);
+        XNamespace ns = XNamespace.Get("http://www.w3.org/2001/10/synthesis");
+
+        return new XDocument(
+            new XElement(
+                ns + "speak",
+                new XAttribute("version", "1.0"),
+                new XAttribute(XNamespace.Xml + "lang", "en"),
+                text.Split([' '], StringSplitOptions.RemoveEmptyEntries)
+                    .Select(x => x.Split('='))
+                    .Select(x => new { Word = x.ElementAt(0) + " ", WordIpa = x.ElementAtOrDefault(1) })
+                    .Select(
+                        x => x.WordIpa == null
+                            ? new XText(x.Word) as XNode
+                            : new XElement(ns + "phoneme", new XAttribute("alphabet", "IPA"),
+                                new XAttribute("ph", x.WordIpa), x.Word)))).ToString();
     }
 }

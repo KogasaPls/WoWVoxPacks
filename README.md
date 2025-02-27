@@ -8,5 +8,7 @@ A collection of modern TTS voices for World of Warcraft addons.
 - SharedMedia_Causese
 
 ## Voices
+
 ### Google Cloud Text-to-Speech
+
 - Neural2_C (Female)

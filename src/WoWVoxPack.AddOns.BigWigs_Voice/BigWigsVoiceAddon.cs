@@ -1,8 +1,15 @@
 namespace WoWVoxPack.AddOns.BigWigs_Voice;
 
-internal sealed class BigWigsVoiceAddon : AddOn
+public sealed class BigWigsVoiceAddon : AddOn
 {
-    public BigWigsVoiceAddon(AddOnSettings settings) : base(settings)
+    public BigWigsVoiceAddon(string outputDirectory, AddOnSettings settings, IEnumerable<SoundFile> soundFiles) : base(
+        outputDirectory, settings)
+    {
+        AddCoreDotLuaFile();
+        AddSoundFiles(soundFiles);
+    }
+
+    private void AddCoreDotLuaFile()
     {
         AddFile("Core.lua", addon =>
         {

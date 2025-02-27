@@ -7,17 +7,18 @@ public class AddOn
     private readonly Note[] _additionalNotes;
     private readonly Dictionary<string, string> _additionalProperties;
 
-    private readonly List<string> _files = [];
-
-    private readonly Dictionary<string, Lazy<string>> _filesWithContentFactory = new(StringComparer.OrdinalIgnoreCase);
+    private readonly Dictionary<string, Lazy<string>?> _addOnFiles = new(StringComparer.OrdinalIgnoreCase);
     private readonly string[] _interfaces;
 
-    public string OutputDirectoryName => Title.Replace(' ', '_');
+    private readonly Dictionary<string, SoundFile> _soundFiles = new(StringComparer.OrdinalIgnoreCase);
 
-    public AddOn(
+    private readonly string _outputDirectoryBase;
+    protected AddOn(string outputDirectoryBase,
         AddOnSettings settings)
     {
-        Title = $"{Guard.Against.Null(settings.Title)}_{Guard.Against.Null(settings.TtsSettings?.Voice)}";
+        _outputDirectoryBase = outputDirectoryBase;
+        Settings = settings;
+        Title = Guard.Against.Null(settings.Title);
         Version = Guard.Against.Null(settings.Version);
         Author = Guard.Against.Null(settings.Author);
         PrimaryNote = settings.Notes is null ? null : new Note(null, settings.Notes);
@@ -28,49 +29,78 @@ public class AddOn
             StringComparer.OrdinalIgnoreCase);
     }
 
-    private string TocFileName => $"{Title.Replace(' ', '_')}.toc";
+    private AddOnSettings Settings { get; }
+
+    public string AddOnDirectory => Path.Combine(_outputDirectoryBase, AddOnDirectoryName);
+
+    public string SoundDirectory => Path.Combine(AddOnDirectory, SoundDirectoryName);
+    protected virtual string AddOnDirectoryName => Title.Replace(' ', '_');
+
+    protected virtual string SoundDirectoryName => "Sounds";
+
+    private string TocFileName => $"{AddOnDirectoryName}.toc";
 
     public string Title { get; }
 
     public string Version { get; }
     public string Author { get; }
 
+    public IEnumerable<SoundFile> SoundFiles => _soundFiles.Values;
+
     public IReadOnlyDictionary<string, string> AdditionalProperties => _additionalProperties.AsReadOnly();
     public Note? PrimaryNote { get; }
     public IReadOnlyCollection<Note> AdditionalNotes => _additionalNotes;
     public IReadOnlyCollection<string> Interfaces => _interfaces;
-    public IReadOnlyCollection<string> Files => _filesWithContentFactory.Keys.Concat(_files).ToArray();
+    public IReadOnlyCollection<string> Files => _addOnFiles.Keys;
 
     protected void AddFile(string fileName, Func<AddOn, string> contentFactory)
     {
-        _filesWithContentFactory.Add(fileName, new Lazy<string>(() => contentFactory(this)));
+        _addOnFiles.Add(fileName, new Lazy<string>(() => contentFactory(this)));
     }
 
     protected void AddFile(string fileName)
     {
-        _files.Add(fileName);
+        _addOnFiles.Add(fileName, null);
     }
 
-    public virtual async Task WriteAllFilesAsync(string outputDirectory, CancellationToken cancellationToken = default)
+    protected void AddSoundFile(SoundFile soundFile)
     {
-        await WriteTocFileAsync(outputDirectory, cancellationToken);
+        _soundFiles.Add(soundFile.FileName, soundFile);
+    }
 
-        foreach ((string fileName, Lazy<string> contentLazy) in _filesWithContentFactory)
+    protected void AddSoundFiles(IEnumerable<SoundFile> soundFiles)
+    {
+        foreach (SoundFile soundFile in soundFiles)
         {
-            string fileContent = contentLazy.Value;
-            string path = Path.Combine(outputDirectory, fileName);
-            await File.WriteAllTextAsync(path, fileContent, cancellationToken);
+            AddSoundFile(soundFile);
         }
     }
 
-    private async Task WriteTocFileAsync(string outputDirectory, CancellationToken cancellationToken = default)
+    public virtual async Task WriteAllFilesAsync(CancellationToken cancellationToken = default)
+    {
+        Directory.CreateDirectory(AddOnDirectory);
+
+        await WriteTocFileAsync(cancellationToken).ConfigureAwait(false);
+        await WriteAddonFilesAsync(cancellationToken).ConfigureAwait(false);
+    }
+
+    private async Task WriteTocFileAsync(CancellationToken cancellationToken = default)
     {
         AddOnTocFile addOnTocFile = CreateTocFile();
 
-        Directory.CreateDirectory(outputDirectory);
-
-        string tocFilePath = Path.Combine(outputDirectory, TocFileName);
+        string tocFilePath = Path.Combine(AddOnDirectory, TocFileName);
         await File.WriteAllTextAsync(tocFilePath, (string?)addOnTocFile.TransformText(), cancellationToken);
+    }
+
+
+    private async Task WriteAddonFilesAsync( CancellationToken cancellationToken = default)
+    {
+        foreach ((string fileName, Lazy<string>? contentLazy) in _addOnFiles.Where(f => f.Value is not null))
+        {
+            string fileContent = contentLazy!.Value;
+            string path = Path.Combine(AddOnDirectory, fileName);
+            await File.WriteAllTextAsync(path, fileContent, cancellationToken);
+        }
     }
 
     private AddOnTocFile CreateTocFile()

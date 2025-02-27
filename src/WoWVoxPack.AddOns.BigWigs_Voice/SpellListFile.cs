@@ -1,24 +1,47 @@
+using System.Xml.Linq;
+
 namespace WoWVoxPack.AddOns.BigWigs_Voice;
 
-public record SpellListFile(string FileName)
+internal class SpellListFile
 {
-    private const string BaseUrl = "https://github.com/BigWigsMods/BigWigs_Voice/raw/master/Tools/";
-    private string? _content;
+    private readonly Lazy<BigWigsVoiceSoundFile[]> _soundFiles;
 
-    public Uri Url => new(BaseUrl + FileName);
-
-    public string Content => _content ?? throw new InvalidOperationException("Content not loaded");
-
-    public async Task<string> GetContentAsync()
+    public SpellListFile(string fileName, string content)
     {
-        if (_content != null)
+        FileName = fileName;
+        Content = content;
+
+        _soundFiles = new Lazy<BigWigsVoiceSoundFile[]>(ParseSoundFilesToArray);
+    }
+
+    public string FileName { get; }
+    public string Content { get; }
+
+    public IEnumerable<BigWigsVoiceSoundFile> SoundFiles => _soundFiles.Value;
+
+    private BigWigsVoiceSoundFile[] ParseSoundFilesToArray() => ParseSoundFiles().ToArray();
+
+    private IEnumerable<BigWigsVoiceSoundFile> ParseSoundFiles()
+    {
+        using StringReader reader = new(Content);
+        while (reader.ReadLine() is { } line)
         {
-            return _content;
+            if (line.StartsWith(';') || string.IsNullOrWhiteSpace(line))
+            {
+                continue;
+            }
+
+            string[] parts = line.Split('\t');
+            if (parts.Length != 2)
+            {
+                continue;
+            }
+
+
+            string spellId = parts[0];
+            string spellName = parts[1];
+
+            yield return new BigWigsVoiceSoundFile(spellId, spellName);
         }
-
-        using HttpClient httpClient = new();
-        _content = await httpClient.GetStringAsync(Url);
-
-        return _content;
     }
 }

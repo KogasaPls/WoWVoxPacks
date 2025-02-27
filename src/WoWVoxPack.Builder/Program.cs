@@ -18,6 +18,7 @@ IHostBuilder hostBuilder = Host.CreateDefaultBuilder(args)
         services.AddSingleton<ITtsProvider, GoogleTtsProvider>();
         services.AddSingleton<ISoundFileService, SoundFileService>();
         services.AddHttpClient<IBigWigsVoiceUpstreamClient, BigWigsVoiceUpstreamClient>();
+        services.AddHttpClient<ICauseseUpstreamClient, CauseseUpstreamClient>();
         services.TryAddEnumerable(ServiceDescriptor.Singleton<IAddOnService, BigWigsVoiceAddOnService>());
         services.TryAddEnumerable(ServiceDescriptor.Singleton<IAddOnService, CauseseAddOnService>());
         services.AddOptionsWithValidateOnStart<TtsSettings>().BindConfiguration("TtsSettings");

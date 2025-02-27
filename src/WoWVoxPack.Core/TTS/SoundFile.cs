@@ -29,4 +29,6 @@ public class SoundFile
     public string FileName { get; set; }
 
     public bool IsSsml => !string.IsNullOrWhiteSpace(Ssml);
+
+    public string? CopyFromPath { get; set; }
 }

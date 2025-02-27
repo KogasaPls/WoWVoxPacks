@@ -1,13 +1,18 @@
 using System.Text.Json;
 
+using Ardalis.GuardClauses;
+
 using WoWVoxPack.TTS;
 
 namespace WoWVoxPack.AddOns.SharedMedia_Causese;
 
 public class CauseseAddOn : AddOn
 {
-    public CauseseAddOn(string outputDirectory, AddOnSettings settings) : base(outputDirectory, settings)
+    public CauseseAddOn(string outputDirectory, AddOnSettings settings, IEnumerable<SoundFile> soundFiles) : base(
+        outputDirectory, settings)
     {
+        soundFiles = soundFiles.ToArray();
+
         AddFile(@"libs\LibStub\LibStub.lua");
         AddFile(@"libs\CallbackHandler-1.0\CallbackHandler-1.0.lua");
         AddFile("embeds.xml");
@@ -19,16 +24,15 @@ public class CauseseAddOn : AddOn
 
         string file = Path.Combine(AppContext.BaseDirectory, "SharedMedia_Causese_Sounds.json");
 
-        List<SoundFile>? soundFiles =
-            JsonSerializer.Deserialize<List<SoundFile>>(File.ReadAllText(file),
-                TTS.SoundFileJsonContext.Default.ListSoundFile);
+        List<SoundFile> manualSoundFiles =
+            Guard.Against.Null(JsonSerializer.Deserialize<List<SoundFile>>(File.ReadAllText(file),
+                SoundFileJsonContext.Default.ListSoundFile));
 
-        if (soundFiles is null)
-        {
-            throw new InvalidOperationException("Failed to deserialize sound files.");
-        }
+        AddSoundFiles(manualSoundFiles);
 
-        AddSoundFiles(soundFiles);
+        List<SoundFile> newSoundFiles = soundFiles
+            .ExceptBy(manualSoundFiles.Select(s => s.FileName), s => s.FileName).ToList();
+        AddSoundFiles(newSoundFiles);
     }
 
     protected override string AddOnDirectoryName => "SharedMedia_Causese";

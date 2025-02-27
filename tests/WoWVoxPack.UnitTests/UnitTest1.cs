@@ -1,4 +1,4 @@
-﻿namespace BigWigsVoiceGCP.UnitTests;
+﻿namespace WoWVoxPack.UnitTests;
 
 public class UnitTest1
 {

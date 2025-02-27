@@ -15,7 +15,7 @@
 
     <Target Name="BeforeBuild">
         <ItemGroup>
-            <AssemblyAttributes Include="BigWigsVoiceGCP.SolutionFileAttribute">
+            <AssemblyAttributes Include="WoWVoxPack.SolutionFileAttribute">
                 <_Parameter1>$(SolutionPath)</_Parameter1>
             </AssemblyAttributes>
         </ItemGroup>

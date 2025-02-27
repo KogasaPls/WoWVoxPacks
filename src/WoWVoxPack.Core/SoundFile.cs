@@ -17,12 +17,16 @@ public class SoundFile
     }
 
     public string? Text { get; set; }
-    [JsonPropertyName("SSML")] public string? Ssml { get; set; }
+
+    [JsonPropertyName("SSML")]
+    public string? Ssml { get; set; }
 
     public string DisplayName { get; set; }
 
     public string FormattedDisplayName { get; set; }
-    [Required] public string FileName { get; set; }
+
+    [Required]
+    public string FileName { get; set; }
 
     public bool IsSsml => !string.IsNullOrWhiteSpace(Ssml);
 }

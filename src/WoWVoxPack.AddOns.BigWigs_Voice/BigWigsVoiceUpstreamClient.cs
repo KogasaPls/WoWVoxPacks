@@ -14,11 +14,11 @@ public sealed class BigWigsVoiceUpstreamClient(
     public async Task<IEnumerable<BigWigsVoiceSoundFile>> GetSoundFilesAsync(
         CancellationToken cancellationToken = default)
     {
-        var soundFiles = new ConcurrentBag<BigWigsVoiceSoundFile>();
+        ConcurrentBag<BigWigsVoiceSoundFile> soundFiles = new();
 
-        await foreach (var spellListFile in GetSpellListFilesAsync(cancellationToken: cancellationToken))
+        await foreach (SpellListFile spellListFile in GetSpellListFilesAsync(cancellationToken))
         {
-            foreach (var soundFile in spellListFile.SoundFiles)
+            foreach (BigWigsVoiceSoundFile soundFile in spellListFile.SoundFiles)
             {
                 soundFiles.Add(soundFile);
             }
@@ -37,8 +37,8 @@ public sealed class BigWigsVoiceUpstreamClient(
     {
         const string baseUrl = "https://github.com/BigWigsMods/BigWigs_Voice/raw/master/Tools/";
 
-        var fullUrl = Path.Combine(baseUrl, fileName);
-        var content = await HttpClient.GetStringAsync(fullUrl, cancellationToken);
+        string fullUrl = Path.Combine(baseUrl, fileName);
+        string content = await HttpClient.GetStringAsync(fullUrl, cancellationToken);
 
         return new SpellListFile(fileName, content);
     }
@@ -52,13 +52,14 @@ public sealed class BigWigsVoiceUpstreamClient(
         HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd("request");
 
         List<GitHubFile>? response =
-            await HttpClient.GetFromJsonAsync<List<GitHubFile>>(toolsUrl, cancellationToken: cancellationToken);
+            await HttpClient.GetFromJsonAsync<List<GitHubFile>>(toolsUrl, cancellationToken);
         if (response == null)
         {
             throw new Exception("Failed to get spell list files from GitHub.");
         }
 
-        foreach (var file in response.Where(file => file.Name.StartsWith("spells") && file.Name.EndsWith(".txt")))
+        foreach (GitHubFile file in
+                 response.Where(file => file.Name.StartsWith("spells") && file.Name.EndsWith(".txt")))
         {
             yield return await GetSpellListFileAsync(file.Name, cancellationToken);
         }
@@ -66,22 +67,31 @@ public sealed class BigWigsVoiceUpstreamClient(
 
     private class GitHubFile
     {
-        [JsonPropertyName("name")] public string Name { get; set; }
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
 
-        [JsonPropertyName("path")] public string Path { get; set; }
+        [JsonPropertyName("path")]
+        public string Path { get; set; }
 
-        [JsonPropertyName("sha")] public string Sha { get; set; }
+        [JsonPropertyName("sha")]
+        public string Sha { get; set; }
 
-        [JsonPropertyName("size")] public int Size { get; set; }
+        [JsonPropertyName("size")]
+        public int Size { get; set; }
 
-        [JsonPropertyName("url")] public string Url { get; set; }
+        [JsonPropertyName("url")]
+        public string Url { get; set; }
 
-        [JsonPropertyName("html_url")] public string HtmlUrl { get; set; }
+        [JsonPropertyName("html_url")]
+        public string HtmlUrl { get; set; }
 
-        [JsonPropertyName("git_url")] public string GitUrl { get; set; }
+        [JsonPropertyName("git_url")]
+        public string GitUrl { get; set; }
 
-        [JsonPropertyName("download_url")] public string DownloadUrl { get; set; }
+        [JsonPropertyName("download_url")]
+        public string DownloadUrl { get; set; }
 
-        [JsonPropertyName("type")] public string Type { get; set; }
+        [JsonPropertyName("type")]
+        public string Type { get; set; }
     }
 }

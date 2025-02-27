@@ -1,5 +1,7 @@
 using System.Text.Json;
 
+using WoWVoxPack.TTS;
+
 namespace WoWVoxPack.AddOns.SharedMedia_Causese;
 
 public class CauseseAddOn : AddOn
@@ -19,7 +21,7 @@ public class CauseseAddOn : AddOn
 
         List<SoundFile>? soundFiles =
             JsonSerializer.Deserialize<List<SoundFile>>(File.ReadAllText(file),
-                SoundFileJsonContext.Default.ListSoundFile);
+                TTS.SoundFileJsonContext.Default.ListSoundFile);
 
         if (soundFiles is null)
         {

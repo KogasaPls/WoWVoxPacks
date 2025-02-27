@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WoWVoxPack;
+namespace WoWVoxPack.TTS;
 
 [JsonSourceGenerationOptions(WriteIndented = true)]
 [JsonSerializable(typeof(SoundFile))]

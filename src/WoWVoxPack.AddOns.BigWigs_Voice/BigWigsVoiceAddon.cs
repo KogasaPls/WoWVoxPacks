@@ -1,3 +1,5 @@
+using WoWVoxPack.TTS;
+
 namespace WoWVoxPack.AddOns.BigWigs_Voice;
 
 public sealed class BigWigsVoiceAddon : AddOn

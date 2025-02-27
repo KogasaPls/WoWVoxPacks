@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
+using WoWVoxPack.TTS;
+
 namespace WoWVoxPack.AddOns;
 
 public class AddOnSettings
@@ -15,6 +17,8 @@ public class AddOnSettings
     [Required] public List<string>? Interfaces { get; set; } = new();
 
     [Required] public List<string>? LuaFiles { get; set; } = new();
+
+    [Required] public TtsSettings? TtsSettings { get; set; }
 
     public Dictionary<string, string>? AdditionalNotes
     {

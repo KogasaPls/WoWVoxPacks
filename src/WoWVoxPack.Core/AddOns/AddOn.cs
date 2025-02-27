@@ -12,10 +12,12 @@ public class AddOn
     private readonly Dictionary<string, Lazy<string>> _filesWithContentFactory = new(StringComparer.OrdinalIgnoreCase);
     private readonly string[] _interfaces;
 
+    public string OutputDirectoryName => Title.Replace(' ', '_');
+
     public AddOn(
         AddOnSettings settings)
     {
-        Title = Guard.Against.Null(settings.Title);
+        Title = $"{Guard.Against.Null(settings.Title)}_{Guard.Against.Null(settings.TtsSettings?.Voice)}";
         Version = Guard.Against.Null(settings.Version);
         Author = Guard.Against.Null(settings.Author);
         PrimaryNote = settings.Notes is null ? null : new Note(null, settings.Notes);
@@ -26,7 +28,7 @@ public class AddOn
             StringComparer.OrdinalIgnoreCase);
     }
 
-    private string TocFilePath => $"{Title.Replace(' ', '_')}.toc";
+    private string TocFileName => $"{Title.Replace(' ', '_')}.toc";
 
     public string Title { get; }
 
@@ -67,7 +69,7 @@ public class AddOn
 
         Directory.CreateDirectory(outputDirectory);
 
-        string tocFilePath = Path.Combine(outputDirectory, TocFilePath);
+        string tocFilePath = Path.Combine(outputDirectory, TocFileName);
         await File.WriteAllTextAsync(tocFilePath, (string?)addOnTocFile.TransformText(), cancellationToken);
     }
 

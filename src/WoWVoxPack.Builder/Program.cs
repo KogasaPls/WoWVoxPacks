@@ -18,11 +18,10 @@ IHostBuilder hostBuilder = Host.CreateDefaultBuilder(args)
         services.AddHttpClient<IBigWigsVoiceUpstreamClient, BigWigsVoiceUpstreamClient>();
         services.TryAddEnumerable(ServiceDescriptor.Singleton<IAddOnService, BigWigsVoiceAddOnService>());
         services.TryAddEnumerable(ServiceDescriptor.Singleton<IAddOnService, CauseseAddOnService>());
-        services.AddOptionsWithValidateOnStart<TtsSettings>().BindConfiguration("Tts");
         services.AddOptionsWithValidateOnStart<AddOnSettings>("BigWigs_Voice").BindConfiguration("AddOn:BigWigs_Voice")
             .BindConfiguration("AddOn");
         services.AddOptionsWithValidateOnStart<AddOnSettings>("SharedMedia_Causese")
-            .BindConfiguration("AddOn:ShardMedia_Causese")
+            .BindConfiguration("AddOn:SharedMedia_Causese")
             .BindConfiguration("AddOn");
         services.AddHostedService<Worker>();
     }).ConfigureLogging((_, logging) =>

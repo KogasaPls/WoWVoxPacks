@@ -1,6 +1,6 @@
 ## Interface: 110005, 110007, 110100
 
-## Title: BigWigs Voice GCP Neural2_C
+## Title: BigWigs_Voice_GCP_Neural2_C
 ## Version: 11.1.0
 ## Notes: A plugin for BigWigs that will play Text-To-Speech sounds for boss abilities.
 ## Notes-deDE: A plugin for BigWigs that will play Text-To-Speech sounds for boss abilities.

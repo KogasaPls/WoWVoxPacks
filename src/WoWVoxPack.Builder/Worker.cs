@@ -14,7 +14,7 @@ public class Worker : IHostedService
         string solutionFile =
             Assembly.GetExecutingAssembly().GetCustomAttribute<SolutionFileAttribute>()?.SolutionFile ??
             throw new Exception("Solution file not found.");
-        OutputDirectory = Path.Combine(
+        OutputDirectoryBase = Path.Combine(
             Path.GetDirectoryName(solutionFile) ?? throw new Exception("Solution file not found."),
             "output");
         ApplicationLifetime = applicationLifetime;
@@ -24,13 +24,13 @@ public class Worker : IHostedService
 
 
     public List<IAddOnService> AddOnServices { get; }
-    public string OutputDirectory { get; }
+    public string OutputDirectoryBase { get; }
 
     public async Task StartAsync(CancellationToken cancellationToken)
     {
         foreach (IAddOnService addOnService in AddOnServices)
         {
-            await addOnService.BuildAddOnAsync(OutputDirectory, cancellationToken);
+            await addOnService.BuildAddOnAsync(OutputDirectoryBase, cancellationToken);
         }
 
         ApplicationLifetime.StopApplication();

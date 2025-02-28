@@ -772,5 +772,132 @@
     "FileName": "Zone.ogg",
     "FormattedDisplayName": "|cFFFF0000Zone|r",
     "Text": "Zone"
+  },
+  {
+    "DisplayName": "Throw",
+    "FileName": "Throw.ogg",
+    "FormattedDisplayName": "|cFFFF0000Throw|r",
+    "Text": "Throw"
+  },
+  {
+    "DisplayName": "Side",
+    "FileName": "Side.ogg",
+    "FormattedDisplayName": "|cFFFF0000Side|r",
+    "Text": "Side"
+  },
+  {
+    "DisplayName": "Sentry",
+    "FileName": "Sentry.ogg",
+    "FormattedDisplayName": "|cFFFF0000Sentry|r",
+    "Text": "Sentry"
+  },
+  {
+    "DisplayName": "Sac",
+    "FileName": "Sac.ogg",
+    "FormattedDisplayName": "|cFFFF0000Sac|r",
+    "Text": "Sac"
+  },
+  {
+    "DisplayName": "PS",
+    "FileName": "PS.ogg",
+    "FormattedDisplayName": "|cFFFF0000PS|r",
+    "Text": "PS"
+  },
+  {
+    "DisplayName": "Poison",
+    "FileName": "Poison.ogg",
+    "FormattedDisplayName": "|cFFFF0000Poison|r",
+    "Text": "Poison"
+  },
+  {
+    "DisplayName": "PI",
+    "FileName": "PI.ogg",
+    "FormattedDisplayName": "|cFFFF0000PI|r",
+    "SSML": "<speak><say-as interpret-as=\"characters\">PI</say-as></speak>"
+  },
+  {
+    "DisplayName": "Physical",
+    "FileName": "Physical.ogg",
+    "FormattedDisplayName": "|cFFFF0000Physical|r",
+    "Text": "Physical"
+  },
+
+  {
+    "DisplayName": "MC",
+    "FileName": "MC.ogg",
+    "FormattedDisplayName": "|cFFFF0000MC|r",
+    "Text": "MC"
+  },
+  {
+    "DisplayName": "Main",
+    "FileName": "Main.ogg",
+    "FormattedDisplayName": "|cFFFF0000Main|r",
+    "Text": "Main"
+  },
+  {
+    "DisplayName": "Magic",
+    "FileName": "Magic.ogg",
+    "FormattedDisplayName": "|cFFFF0000Magic|r",
+    "Text": "Magic"
+  },
+  {
+    "DisplayName": "Last",
+    "FileName": "Last.ogg",
+    "FormattedDisplayName": "|cFFFF0000Last|r",
+    "Text": "Last"
+  },
+  {
+    "DisplayName": "Innervate",
+    "FileName": "Innervate.ogg",
+    "FormattedDisplayName": "|cFFFF0000Innervate|r",
+    "Text": "Innervate"
+  },
+  {
+    "DisplayName": "Disease",
+    "FileName": "Disease.ogg",
+    "FormattedDisplayName": "|cFFFF0000Disease|r",
+    "Text": "Disease"
+  },
+  {
+    "DisplayName": "Decimate",
+    "FileName": "Decimate.ogg",
+    "FormattedDisplayName": "|cFFFF0000Decimate|r",
+    "Text": "Decimate"
+  },
+  {
+    "DisplayName": "Curse",
+    "FileName": "Curse.ogg",
+    "FormattedDisplayName": "|cFFFF0000Curse|r",
+    "Text": "Curse"
+  },
+  {
+    "DisplayName": "Cross",
+    "FileName": "Cross.ogg",
+    "FormattedDisplayName": "|cFFFF0000Cross|r",
+    "Text": "Cross"
+  },
+  {
+    "DisplayName": "Coin",
+    "FileName": "Coin.ogg",
+    "FormattedDisplayName": "|cFFFF0000Coin|r",
+    "Text": "Coin"
+  },
+  {
+    "DisplayName": "BoP",
+    "FileName": "BoP.ogg",
+    "FormattedDisplayName": "|cFFFF0000BoP|r",
+    "Text": "BoP"
+  },
+  {
+    "DisplayName": "Bleed",
+    "FileName": "Bleed.ogg",
+    "FormattedDisplayName": "|cFFFF0000Bleed|r",
+    "Text": "Bleed"
+  },
+  {
+    "DisplayName": "Bark",
+    "FileName": "Bark.ogg",
+    "FormattedDisplayName": "|cFFFF0000Bark|r",
+    "Text": "Bark"
   }
 ]

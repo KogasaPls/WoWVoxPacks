@@ -11,25 +11,23 @@ jobs:
       bigwigs_version: ${{ steps.compare-versions.outputs.bigwigs_version }}
     steps:
       - name: Get latest BigWigsVoice release
-        id: get_latest_release
+        id: get-bigwigsvoice-release
         uses: pozetroninc/github-action-get-latest-release@master
         with:
           owner: BigWigsMods
           repo: BigWigs_Voice
           excludes: prerelease, draft
-
       - name: Write version to file
-        run: echo "${{ steps.get_latest_release.outputs.release }}" > version.txt
-
+        run: echo "${{ steps.get-bigwigsvoice-release.outputs.release }}" > version.txt
       - name: Get previous version
         run: |
           curl -L \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-              https://api.github.com/repos/KogasaPls/WoWVoxPacks/releases/latest
-          | jq -r '.assets[] | select(.name == "bigwigs-voice-version.txt") | .browser_download_url' 
-          | xargs curl -L -o previous-version.txt
+              https://api.github.com/repos/KogasaPls/WoWVoxPacks/releases/latest \
+            | jq -r '.assets[] | select(.name == "bigwigs-voice-version.txt") | .browser_download_url' 
+            | xargs curl -L -o previous-version.txt
 
       - name: Compare versions
         id: compare-versions

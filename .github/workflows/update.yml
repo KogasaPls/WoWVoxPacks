@@ -30,10 +30,10 @@ jobs:
         run: |
           if [ ! -f last-version.txt ]; then
             echo "No previous version detected"
-            echo "echo bigwigs_version=$(cat version.txt)" >> $GITHUB_OUTPUT
+            echo "bigwigs_version=$(cat version.txt)" >> $GITHUB_OUTPUT
           elif [ "$(cat version.txt)" != "$(cat last-version.txt)" ]; then
             echo "New version detected (old: $(cat last-version.txt), new: $(cat version.txt))"
-            echo "echo bigwigs_version=$(cat version.txt)" >> $GITHUB_OUTPUT
+            echo "bigwigs_version=$(cat version.txt)" >> $GITHUB_OUTPUT
           else
             echo "No new version detected"
           fi

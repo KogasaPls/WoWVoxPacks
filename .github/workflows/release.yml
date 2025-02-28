@@ -6,6 +6,7 @@ on:
 
 jobs:
   Build-Release:
+    permissions: write-all
     env:
       CI: true
       DOTNET_ENVIRONMENT: Release

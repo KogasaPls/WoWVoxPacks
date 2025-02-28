@@ -28,3 +28,8 @@ The following voices are available.
   - <video src='https://github.com/user-attachments/assets/b5b99b0b-cfdf-4106-8461-d9df8588a4e4' width=10></video>
 - Wavenet_E (Female)
   - <video src='https://github.com/user-attachments/assets/78969d82-4878-403c-8201-c220f26f8ecc' width=10></video>
+- Standard_D (Male)
+  - <video src='https://github.com/user-attachments/assets/bc28901b-165b-4d73-8fb5-956e53a95acd' width=10></video>
+
+
+

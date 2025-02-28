@@ -55,6 +55,9 @@ jobs:
       OUTPUT_DIR: dist
     steps:
       - uses: actions/checkout@v4
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
       - name: Read new version
         id: read-version
         run: |
@@ -80,5 +83,7 @@ jobs:
           branch: ci/update-bigwigs-voice-${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version }}
           delete-branch: true
           base: main
-          add-paths: output/
+          add-paths: |
+            output/
+            bigwigs-voice-version.txt
           sign-commits: true

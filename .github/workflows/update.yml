@@ -24,6 +24,7 @@ jobs:
           path: last-version.txt
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Compare versions
+        id: compare-versions
         run: |
           if [ ! -f last-version.txt ]; then
             echo "No previous version detected"

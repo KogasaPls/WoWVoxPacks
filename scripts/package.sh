@@ -8,9 +8,13 @@ fi
 
 mkdir -p dist
 
-for dir in $(find output/ -mindepth 1 -maxdepth 1 -type d); do
-  echo "Packaging $dir"
-  basename=$(basename $dir)
+cd output || exit 1
+
+while IFS= read -r -d '' file; do
+  echo "Packaging $file"
+  cd "$file" || exit 1
+  basename=$(basename "$file")
   archive_name="WoWVoxPacks_${basename}_${RELEASE_TAG}.zip"
-  zip -q -9 -r "dist/$archive_name" "$dir" -x "**.wav"
-done
+  zip -r -q -9 "../../dist/$archive_name" . -x "*.wav"
+  cd .. || exit 1
+done < <(find . -mindepth 1 -maxdepth 1 -type d -print0)

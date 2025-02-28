@@ -1,33 +1,47 @@
 name: Release
 run-name: Release ${{ github.event.inputs.version }}
 on:
-  push:
-    tags:
-        - 'v*'
+  release:
+    types: [published]
+
 jobs:
   Build-Release:
     env:
       CI: true
       DOTNET_ENVIRONMENT: Release
       DOTNET_CLI_TELEMETRY_OPTOUT: true
-      RELEASE_TAG: ${{ github.event.inputs.version }}
       OUTPUT_DIR: dist
     runs-on: ubuntu-latest
     strategy:
       matrix:
         dotnet-version: [ '9.0.x' ]
     steps:
+      - name: Get release
+        id: get_release
+        uses: bruceadams/get-release@v1.3.2
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
       - uses: actions/checkout@v4
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
-      - name: Upload artifacts Neural2_C
-        uses: actions/upload-artifact@v4
+      - name: Package artifacts
+        run: RELEASE_TAG=${{ steps.get_release.outputs.tag_name}} ./scripts/package.sh
+      - name: Upload release Neural2_C
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         with:
-          name: WoWVoxPacks_${{ env.RELEASE_TAG }}_Neural2_C
-          path: output/Neural2_C/
-      - name: Upload artifacts Wavenet_E
-        uses: actions/upload-artifact@v4
+          upload_url: ${{ steps.get_release.outputs.upload_url }}
+          asset_path: ./dist/WoWVoxPacks_${{ steps.get_release.outputs.tag_name }}_Neural2_C.zip
+          asset_name: WoWVoxPacks_${{ steps.get_release.outputs.tag_name }}_Neural2_C.zip
+          asset_content_type: application/zip
+      - name: Upload release Wavenet_E
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         with:
-          name: WoWVoxPacks_${{ env.RELEASE_TAG }}_Wavenet_E
-          path: output/Wavenet_E/
+          upload_url: ${{ steps.get_release.outputs.upload_url }}
+          asset_path: ./dist/WoWVoxPacks_${{ steps.get_release.outputs.tag_name }}_Wavenet_E.zip
+          asset_name: WoWVoxPacks_${{ steps.get_release.outputs.tag_name }}_Wavenet_E.zip
+          asset_content_type: application/zip

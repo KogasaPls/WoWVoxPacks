@@ -48,7 +48,8 @@ public partial class ParsedSoundpathsLuaFile(string content)
             string baseName;
             SoundFile soundFile;
 
-            if (entry.Name.Equals("BITE.ogg", StringComparison.OrdinalIgnoreCase))
+            if (entry.Name.Equals("BITE.ogg", StringComparison.OrdinalIgnoreCase) ||
+                entry.Name.Equals("Duck.ogg", StringComparison.OrdinalIgnoreCase))
             {
                 string tmpPath = Path.GetTempFileName();
                 await using Stream entryStream = entry.Open();

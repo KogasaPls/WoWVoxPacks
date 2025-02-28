@@ -1,4 +1,4 @@
-# WoWVoxPack
+# WoWVoxPacks
 
 A collection of modern TTS voices for World of Warcraft addons.
 
@@ -11,4 +11,10 @@ A collection of modern TTS voices for World of Warcraft addons.
 
 ### Google Cloud Text-to-Speech
 
+Here's a sample of the original BigWigs_Voice audio for comparison.
+
+- [BigWigs_Voice sample](./samples/bigwigs_voice.mp4)
+
 - Neural2_C (Female)
+    - [Sample](./samples/Neural2_C/samples.mp4)
+

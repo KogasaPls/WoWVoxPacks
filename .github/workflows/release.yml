@@ -33,7 +33,7 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           upload_url: ${{ steps.get_release.outputs.upload_url }}
-          asset_path: ./dist/WoWVoxPacks_${{ steps.get_release.outputs.tag_name }}_Neural2_C.zip
+          asset_path: ./dist/WoWVoxPacks_Neural2_C_${{ steps.get_release.outputs.tag_name }}.zip
           asset_name: WoWVoxPacks_Neural2_C_${{ steps.get_release.outputs.tag_name }}.zip
           asset_content_type: application/zip
       - name: Upload release Wavenet_E
@@ -42,6 +42,6 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           upload_url: ${{ steps.get_release.outputs.upload_url }}
-          asset_path: ./dist/WoWVoxPacks_${{ steps.get_release.outputs.tag_name }}_Wavenet_E.zip
+          asset_path: ./dist/WoWVoxPacks_Wavenet_E_${{ steps.get_release.outputs.tag_name }}.zip
           asset_name: WoWVoxPacks_Wavenet_E_${{ steps.get_release.outputs.tag_name }}.zip
           asset_content_type: application/zip

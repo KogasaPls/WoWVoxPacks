@@ -21,6 +21,6 @@ The following voices are available.
 ### Google Cloud Text-to-Speech
 
 - Neural2_C (Female)
-    - <video src='https://github.com/user-attachments/assets/b5b99b0b-cfdf-4106-8461-d9df8588a4e4' width=10></video>
+  - <video src='https://github.com/user-attachments/assets/b5b99b0b-cfdf-4106-8461-d9df8588a4e4' width=10></video>
 - Wavenet_E (Female)
-    - <video src='https://github.com/user-attachments/assets/1a0f4fd6-c6eb-4d32-abee-fd1852df77ac' width=10></video>
+  - <video src='https://github.com/user-attachments/assets/78969d82-4878-403c-8201-c220f26f8ecc' width=10></video>

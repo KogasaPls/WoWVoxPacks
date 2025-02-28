@@ -13,7 +13,8 @@ A collection of modern TTS voices for World of Warcraft addons.
 
 Here's a sample of the original BigWigs_Voice audio for comparison.
 
-- <video src='https://github.com/user-attachments/assets/9aeffdd5-a0a0-4021-9869-e2827241be27' width=10>BigWigs_Voice sample</video>
+- <video src='https://github.com/user-attachments/assets/9aeffdd5-a0a0-4021-9869-e2827241be27' width=10>BigWigs_Voice
+  sample</video>
 
 The following voices are available.
 

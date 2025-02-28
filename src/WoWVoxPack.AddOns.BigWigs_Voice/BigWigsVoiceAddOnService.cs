@@ -1,6 +1,8 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
+using WoWVoxPack.TTS;
+
 namespace WoWVoxPack.AddOns.BigWigs_Voice;
 
 public sealed class BigWigsVoiceAddOnService(
@@ -20,8 +22,27 @@ public sealed class BigWigsVoiceAddOnService(
     {
         IEnumerable<BigWigsVoiceSoundFile> soundFiles = await UpstreamClient.GetSoundFilesAsync(cancellationToken);
 
-        BigWigsVoiceAddon addOn = new(outputDirectoryBase, AddOnSettings, soundFiles);
+        var countdownSoundFiles = GetCountdownSoundFiles();
+
+        BigWigsVoiceAddon addOn = new(outputDirectoryBase, AddOnSettings, soundFiles.Concat(countdownSoundFiles));
 
         return addOn;
+    }
+
+    private static List<SoundFile> GetCountdownSoundFiles()
+    {
+        return
+        [
+            new SoundFile("countdown_1", "1"),
+            new SoundFile("countdown_2", "2"),
+            new SoundFile("countdown_3", "3"),
+            new SoundFile("countdown_4", "4"),
+            new SoundFile("countdown_5", "5"),
+            new SoundFile("countdown_6", "6"),
+            new SoundFile("countdown_7", "7"),
+            new SoundFile("countdown_8", "8"),
+            new SoundFile("countdown_9", "9"),
+            new SoundFile("countdown_10", "10")
+        ];
     }
 }

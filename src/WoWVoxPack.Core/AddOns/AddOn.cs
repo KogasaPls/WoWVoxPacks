@@ -37,9 +37,9 @@ public class AddOn
     public string AddOnDirectory => Path.Combine(_outputDirectoryBase, AddOnDirectoryName);
 
     public string SoundDirectory => Path.Combine(AddOnDirectory, SoundDirectoryName);
-    protected virtual string AddOnDirectoryName => Title.Replace(' ', '_');
+    public virtual string AddOnDirectoryName => Title.Replace(' ', '_');
 
-    protected virtual string SoundDirectoryName => "Sounds";
+    public virtual string SoundDirectoryName => "Sounds";
 
     private string TocFileName => $"{AddOnDirectoryName}.toc";
 

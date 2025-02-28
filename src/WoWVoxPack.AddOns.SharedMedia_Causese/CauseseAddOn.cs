@@ -38,7 +38,7 @@ public class CauseseAddOn : AddOn
     protected override string AddOnDirectoryName => "SharedMedia_Causese";
     protected override string SoundDirectoryName => "sound";
 
-    public string SoundPath => $@"Interface\\AddOns\\{AddOnDirectoryName}\\{SoundDirectoryName}";
+    public string SoundPath => $@"Interface\\Addons\\{AddOnDirectoryName}\\{SoundDirectoryName}";
 
     public override async Task WriteAllFilesAsync(CancellationToken cancellationToken = default)
     {

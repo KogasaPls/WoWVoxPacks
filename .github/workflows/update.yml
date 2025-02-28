@@ -72,7 +72,7 @@ jobs:
           VERSION=${TAG#"v"} dotnet build
       - name: Run addon builder
         run: |
-          dotnet run --project src/AddonBuilder/AddonBuilder.csproj
+          VERSION=${TAG#"v"} dotnet run --project src/WoWVoxPack.Builder/WoWVoxPack.Builder.csproj
         env:
           TAG: ${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version }}
       - name: Create a pull request

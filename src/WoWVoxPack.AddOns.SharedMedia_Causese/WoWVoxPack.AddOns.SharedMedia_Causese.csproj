@@ -13,7 +13,6 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>SoundpathsLuaFile.cs</LastGenOutput>
     </None>
-
   </ItemGroup>
 
   <ItemGroup>

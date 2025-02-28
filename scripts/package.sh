@@ -12,7 +12,5 @@ for dir in $(find output/ -mindepth 1 -maxdepth 1 -type d); do
   echo "Packaging $dir"
   basename=$(basename $dir)
   archive_name="WoWVoxPacks_${basename}_${RELEASE_TAG}.zip"
-  zip -9 -r "dist/$archive_name" "$dir" -x "**.wav"
+  zip -q -9 -r "dist/$archive_name" "$dir" -x "**.wav"
 done
-
-

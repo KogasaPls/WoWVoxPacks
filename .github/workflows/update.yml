@@ -54,12 +54,12 @@ jobs:
       DOTNET_CLI_TELEMETRY_OPTOUT: true
       OUTPUT_DIR: dist
     steps:
+      - uses: actions/checkout@v4
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v2'
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
-      - uses: actions/checkout@v4
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}

@@ -20,4 +20,7 @@
   </PropertyGroup>
 
 
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <TransformOnBuild>false</TransformOnBuild>
+  </PropertyGroup>
 </Project>

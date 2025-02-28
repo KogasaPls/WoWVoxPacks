@@ -1,0 +1,41 @@
+name: Check for updates
+on:
+  schedule:
+    - cron: '0 */6 * * *' # every 6 hours
+  workflow_dispatch:
+
+jobs:
+  check-bigwigs-voice-version:
+    - name: Get latest BigWigs_Voice release
+      uses: pozetroninc/github-action-get-latest-release@master
+      with:
+        owner: BigWigsMods
+        repo: BigWigs_Voice
+        excludes: prerelease, draft
+    - name: Write version to file
+      run: echo ${{ steps.get_latest_release.outputs.release }} > version.txt
+    - name: Download previous artifact
+      continue-on-error: true
+      uses: actions/download-artifact@v4
+      with:
+        name: bigwigs-voice-version
+        path: last-version.txt
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Compare versions
+      run: |
+        if [ ! -f last-version.txt ]; then
+          echo "No previous version detected"
+          echo "::set-output name=version::$(cat version.txt)"
+        elif [ "$(cat version.txt)" != "$(cat last-version.txt)" ]; then
+          echo "New version detected (old: $(cat last-version.txt), new: $(cat version.txt))"
+          echo "::set-output name=version::$(cat version.txt)"
+        else
+          echo "No new version detected"
+        fi
+
+    - name: Upload new version
+      if: steps.compare-versions.outputs.version
+      uses: actions/upload-artifact@v4
+      with:
+        name: bigwigs-voice-version
+        path: 'version.txt'

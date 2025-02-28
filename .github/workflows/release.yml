@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 jobs:
   create-release:
-    if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     permissions: write-all
     steps:

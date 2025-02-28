@@ -20,6 +20,9 @@ jobs:
           echo "RELEASE_TAG=$(cat bigwigs-voice-version.txt)" >> $GITHUB_OUTPUT
       - name: Package artifacts
         run: ./scripts/package.sh
+        env:
+          OUTPUT_DIR: dist
+          RELEASE_TAG: ${{ steps.set-release-tag.outputs.RELEASE_TAG }}
       - name: Create GitHub Release
         id: create-release
         uses: softprops/action-gh-release@v2

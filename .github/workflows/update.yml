@@ -34,16 +34,63 @@ jobs:
           if [ ! -f previous-version.txt ]; then
             echo "No previous version detected"
             echo "bigwigs_version=$(cat version.txt)" >> $GITHUB_OUTPUT
-          elif [ "$(cat version.txt)" != "$(cat previous-version.txt)" ]; then
+            echo "needs_update=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          
+          echo "bigwigs_version=$(cat version.txt)" >> $GITHUB_OUTPUT
+          
+          if [ "$(cat version.txt)" != "$(cat previous-version.txt)" ]; then
             echo "New version detected (old: $(cat previous-version.txt), new: $(cat version.txt))"
             echo "bigwigs_version=$(cat version.txt)" >> $GITHUB_OUTPUT
+            echo "needs_update=true" >> $GITHUB_OUTPUT
           else
             echo "No new version detected"
           fi
+  check-causese-version:
+    runs-on: ubuntu-latest
+    outputs:
+      causese_version: ${{ steps.compare-versions.outputs.causese_version }}
+    steps:
+      - name: Get latest SharedMedia_Causese release
+        id: get-causese-release
+        uses: pozetroninc/github-action-get-latest-release@master
+        with:
+          owner: curseforge-mirror
+          repo: SharedMedia_Causese
+          excludes: prerelease, draft
+      - name: Write version to file
+        run: echo "${{ steps.get-causese-release.outputs.release }}" > version.txt
+      - name: Get previous version
+        run: |
+          curl -L \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+              https://api.github.com/repos/KogasaPls/WoWVoxPacks/releases/latest \
+            | jq -r '.assets[] | select(.name == "sharedmedia-causese-version.txt") | .browser_download_url'  \
+            | xargs curl -L -o previous-version.txt
+      - name: Compare versions
+        id: compare-versions
+        run: |
+          if [ ! -f previous-version.txt ]; then
+            echo "No previous version detected"
+            echo "causese_version=$(cat version.txt)" >> $GITHUB_OUTPUT
+            echo "needs_update=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
 
+          echo "causese_version=$(cat version.txt)" >> $GITHUB_OUTPUT
+          
+          if [ "$(cat version.txt)" != "$(cat previous-version.txt)" ]; then
+            echo "New version detected (old: $(cat previous-version.txt), new: $(cat version.txt))"
+            echo "needs_update=true" >> $GITHUB_OUTPUT
+          else
+            echo "No new version detected"
+          fi
   create-pull-request:
-    needs: check-bigwigs-voice-version
-    if: ${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version != '' }}
+    needs: [check-bigwigs-voice-version, check-causese-version]
+    if: ${{ needs.check-bigwigs-voice-version.outputs.needs_update != '' || needs.check-causese-version.outputs.needs_update != '' }}
     runs-on: ubuntu-latest
     permissions: write-all
     outputs:
@@ -67,8 +114,10 @@ jobs:
         id: read-version
         run: |
           echo "$BIGWIGS_VERSION" > bigwigs-voice-version.txt
+          echo "$CAUSESE_VERSION" > sharedmedia-causese-version.txt
         env:
           BIGWIGS_VERSION: ${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version }}
+          CAUSESE_VERSION: ${{ needs.check-causese-version.outputs.causese_version }}
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.0.x'

@@ -35,8 +35,8 @@ public class CauseseAddOn : AddOn
         AddSoundFiles(newSoundFiles);
     }
 
-    protected override string AddOnDirectoryName => "SharedMedia_Causese";
-    protected override string SoundDirectoryName => "sound";
+    public override string AddOnDirectoryName => "SharedMedia_Causese";
+    public override string SoundDirectoryName => "sound";
 
     public string SoundPath => $@"Interface\\Addons\\{AddOnDirectoryName}\\{SoundDirectoryName}";
 

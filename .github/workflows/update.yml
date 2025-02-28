@@ -47,15 +47,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
-      - name: Download latest version file
-        uses: actions/download-artifact@v4
-        with:
-          name: bigwigs-voice-version
-          path: .
-
       - name: Read new version
         id: read-version
-        run: echo "version=$(cat version.txt)" >> $GITHUB_ENV
+        run: echo "version=${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version }}" >> $GITHUB_ENV
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2

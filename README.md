@@ -2,7 +2,7 @@
 
 A collection of modern TTS voices for World of Warcraft addons.
 
-<video src='https://github.com/user-attachments/assets/8bceffae-2e57-49cb-bb74-aab43ac65ae7' width=180/>
+<video src='https://github.com/user-attachments/assets/8bceffae-2e57-49cb-bb74-aab43ac65ae7' width=180></video>
 
 ## AddOns
 
@@ -20,4 +20,4 @@ The following voices are available.
 ### Google Cloud Text-to-Speech
 
 - Neural2_C (Female)
-    - <video src='https://github.com/user-attachments/assets/b5b99b0b-cfdf-4106-8461-d9df8588a4e4' width=10/>
+    - <video src='https://github.com/user-attachments/assets/b5b99b0b-cfdf-4106-8461-d9df8588a4e4' width=10></video>

@@ -41,20 +41,23 @@ jobs:
             echo "No new version detected"
           fi
 
-  update:
+  create-release:
     needs: check-bigwigs-voice-version
     if: ${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version != '' }}
     runs-on: ubuntu-latest
     permissions: write-all
+    outputs:
+      upload_url: ${{ steps.create-release.outputs.upload_url }}
     steps:
       - name: Read new version
         id: read-version
         run: |
           echo "version=$VERSION" >> $GITHUB_ENV
-          echo "$VERSION" > version.txt
+          echo "$VERSION" > bigwigs-voice-version.txt
         env:
           VERSION: ${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version }}
-
+      - name: Package artifacts
+        run: RELEASE_TAG=${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version }} ./scripts/package.sh
       - name: Create GitHub Release
         id: create-release
         uses: softprops/action-gh-release@v2
@@ -66,14 +69,8 @@ jobs:
             Automatically created by the update workflow.
           draft: false
           prerelease: false
+          files: |
+            ./dist/*.zip
+            ./bigwigs-voice-version.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Add BigWigs version artifact
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        with:
-          upload_url: ${{ steps.create-release.outputs.upload_url }}
-          asset_path: ./version.txt
-          asset_name: bigwigs-voice-version
-          asset_content_type: text/plain

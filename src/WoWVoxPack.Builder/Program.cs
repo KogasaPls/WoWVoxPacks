@@ -21,7 +21,7 @@ IHostBuilder hostBuilder = Host.CreateDefaultBuilder(args)
         services.AddHttpClient<ICauseseUpstreamClient, CauseseUpstreamClient>();
         services.TryAddEnumerable(ServiceDescriptor.Singleton<IAddOnService, BigWigsVoiceAddOnService>());
         services.TryAddEnumerable(ServiceDescriptor.Singleton<IAddOnService, CauseseAddOnService>());
-        services.AddOptionsWithValidateOnStart<TtsSettings>().BindConfiguration("TtsSettings");
+        services.AddOptionsWithValidateOnStart<BuildMatrix>().BindConfiguration("Matrix");
         services.AddOptionsWithValidateOnStart<AddOnSettings>("BigWigs_Voice").BindConfiguration("AddOn:BigWigs_Voice")
             .BindConfiguration("AddOn");
         services.AddOptionsWithValidateOnStart<AddOnSettings>("SharedMedia_Causese")

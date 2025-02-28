@@ -22,3 +22,5 @@ The following voices are available.
 
 - Neural2_C (Female)
     - <video src='https://github.com/user-attachments/assets/b5b99b0b-cfdf-4106-8461-d9df8588a4e4' width=10></video>
+- Wavenet_E (Female)
+    - <video src='https://github.com/user-attachments/assets/1a0f4fd6-c6eb-4d32-abee-fd1852df77ac' width=10></video>

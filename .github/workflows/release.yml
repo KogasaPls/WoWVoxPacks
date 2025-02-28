@@ -1,0 +1,35 @@
+name: Release
+run-name: Release ${{ github.event.inputs.version }}
+on:
+  push:
+    tags:
+        - 'v*'
+jobs:
+  Build-Release:
+    env:
+      CI: true
+      DOTNET_ENVIRONMENT: Release
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+      RELEASE_TAG: ${{ github.event.inputs.version }}
+      OUTPUT_DIR: dist
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: [ '9.0.x' ]
+    variables:
+    steps:
+      - uses: actions/checkout@v4
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+      - name: Upload artifacts Neural2_C
+        uses: actions/upload-artifact@v4
+        with:
+          name: WoWVoxPacks_${{ env.RELEASE_TAG }}_Neural2_C
+          path: output/Neural2_C/
+      - name: Upload artifacts Wavenet_E
+        uses: actions/upload-artifact@v4
+        with:
+          name: WoWVoxPacks_${{ env.RELEASE_TAG }}_Wavenet_E
+          path: output/Wavenet_E/

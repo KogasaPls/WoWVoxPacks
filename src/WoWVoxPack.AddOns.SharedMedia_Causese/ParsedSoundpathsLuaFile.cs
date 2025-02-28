@@ -10,14 +10,6 @@ public partial class ParsedSoundpathsLuaFile(string content)
 {
     [GeneratedRegex("""LSM:Register\("sound", "(?<FormattedDisplayName>[^"]+)", \[\[(?<FileName>[^]]+)]]""")]
     public partial Regex SoundFileRegex { get; }
-    private class PartialSoundFile
-    {
-        public string FileName { get; set; } = string.Empty;
-
-        public string DisplayName { get; set; } = string.Empty;
-
-        public string FormattedDisplayName { get; set; } = string.Empty;
-    }
 
 
     public async Task<IEnumerable<SoundFile>> GetSoundFilesAsync(ZipArchive archive,
@@ -38,7 +30,6 @@ public partial class ParsedSoundpathsLuaFile(string content)
                 FormattedDisplayName = formattedDisplayName
             };
         }
-
 
         ConcurrentBag<SoundFile> soundFiles = new();
 
@@ -62,7 +53,7 @@ public partial class ParsedSoundpathsLuaFile(string content)
             }
             else
             {
-                var partialSoundFile = parsedSoundFilesByFileName.GetValueOrDefault(entry.Name);
+                PartialSoundFile? partialSoundFile = parsedSoundFilesByFileName.GetValueOrDefault(entry.Name);
                 if (partialSoundFile is not null)
                 {
                     soundFile = new SoundFile(entry.Name, displayName: partialSoundFile.DisplayName,
@@ -80,5 +71,14 @@ public partial class ParsedSoundpathsLuaFile(string content)
         }
 
         return soundFiles;
+    }
+
+    private class PartialSoundFile
+    {
+        public string FileName { get; set; } = string.Empty;
+
+        public string DisplayName { get; set; } = string.Empty;
+
+        public string FormattedDisplayName { get; set; } = string.Empty;
     }
 }

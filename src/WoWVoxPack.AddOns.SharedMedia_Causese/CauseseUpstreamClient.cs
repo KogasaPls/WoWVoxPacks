@@ -1,4 +1,3 @@
-using System.Collections.Concurrent;
 using System.IO.Compression;
 using System.Text.Json.Serialization;
 
@@ -31,7 +30,7 @@ public sealed class CauseseUpstreamClient(
         using ZipArchive archive = new(assetStream, ZipArchiveMode.Read);
 
 
-        var soundpathsLuaFile = archive.GetEntry("SharedMedia_Causese/Soundpaths.lua");
+        ZipArchiveEntry? soundpathsLuaFile = archive.GetEntry("SharedMedia_Causese/Soundpaths.lua");
         if (soundpathsLuaFile is null)
         {
             throw new Exception("Failed to get Soundpaths.lua from SharedMedia_Causese.zip");
@@ -40,9 +39,10 @@ public sealed class CauseseUpstreamClient(
         await using Stream soundpathsLuaStream = soundpathsLuaFile.Open();
         using StreamReader reader = new(soundpathsLuaStream);
         string soundpathsLua = await reader.ReadToEndAsync(cancellationToken);
-        var parsedSoundpathsLuaFile = new ParsedSoundpathsLuaFile(soundpathsLua);
+        ParsedSoundpathsLuaFile parsedSoundpathsLuaFile = new(soundpathsLua);
 
-        var soundFiles = await parsedSoundpathsLuaFile.GetSoundFilesAsync(archive, cancellationToken);
+        IEnumerable<SoundFile> soundFiles =
+            await parsedSoundpathsLuaFile.GetSoundFilesAsync(archive, cancellationToken);
 
         return soundFiles;
     }

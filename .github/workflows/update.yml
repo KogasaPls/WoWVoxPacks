@@ -6,7 +6,7 @@ on:
 
 jobs:
   check-bigwigs-voice-version:
-    - name: Get latest BigWigs_Voice release
+    - name: Get latest BigWigsVoice release
       uses: pozetroninc/github-action-get-latest-release@master
       with:
         owner: BigWigsMods

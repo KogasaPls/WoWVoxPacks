@@ -7,6 +7,8 @@ on:
 jobs:
   check-bigwigs-voice-version:
     runs-on: ubuntu-latest
+    outputs:
+      bigwigs_version: ${{ steps.compare-versions.outputs.bigwigs_version }}
     steps:
       - name: Get latest BigWigsVoice release
         uses: pozetroninc/github-action-get-latest-release@master
@@ -37,7 +39,7 @@ jobs:
           fi
 
       - name: Upload new version
-        if: ${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version != '' }}
+        if: ${{ steps.compare-versions.outputs.bigwigs_version }}
         uses: actions/upload-artifact@v4
         with:
           name: bigwigs-voice-version

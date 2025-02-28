@@ -61,10 +61,9 @@ jobs:
       - name: Read new version
         id: read-version
         run: |
-          echo "version=$VERSION" >> $GITHUB_ENV
-          echo "$VERSION" > bigwigs-voice-version.txt
+          echo "$BIGWIGS_VERSION" > bigwigs-voice-version.txt
         env:
-          VERSION: ${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version }}
+          BIGWIGS_VERSION: ${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version }}
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.0.x'

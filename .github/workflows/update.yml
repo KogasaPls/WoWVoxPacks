@@ -41,7 +41,7 @@ jobs:
             echo "No new version detected"
           fi
 
-  create-release:
+  create-pull-request:
     needs: check-bigwigs-voice-version
     if: ${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version != '' }}
     runs-on: ubuntu-latest
@@ -64,7 +64,7 @@ jobs:
           VERSION: ${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version }}
       - uses: actions/setup-dotnet@v4
         with:
-          global-json-file: ./global.json
+          dotnet-version: '9.0.x'
       - name: Build new version
         run: |
           dotnet run --project ./src/WoWVoxPacks.Builder/WoWVoxPacks.Builder.csproj

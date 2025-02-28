@@ -50,11 +50,11 @@ public class Worker : IHostedService
             string soundOutputDirectory = addOn.SoundDirectory;
             Directory.CreateDirectory(soundOutputDirectory);
 
-            foreach (SoundFile soundFile in addOn.SoundFiles)
-            {
-                await SoundFileService.CreateSoundFileIfNotExistsAsync(soundFile, soundOutputDirectory,
-                    TtsSettings, cancellationToken);
-            }
+            var tasks = addOn.SoundFiles.Select(soundFile =>
+                SoundFileService.CreateSoundFileIfNotExistsAsync(soundFile, soundOutputDirectory, TtsSettings,
+                    cancellationToken));
+
+            await Task.WhenAll(tasks.ToArray());
 
             Logger.LogInformation("Finished building addon: {AddOnName}", addOn.Title);
         }

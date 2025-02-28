@@ -9,5 +9,5 @@ public partial class CountdownLuaFile
 
     public AddOn AddOn { get; }
 
-    public string SoundsPath => $@"Interface\\AddOns\\{AddOn.AddOnDirectoryName}\{AddOn.SoundDirectoryName}";
+    public string SoundsPath => $@"Interface\\AddOns\\{AddOn.AddOnDirectoryName}\\{AddOn.SoundDirectoryName}";
 }

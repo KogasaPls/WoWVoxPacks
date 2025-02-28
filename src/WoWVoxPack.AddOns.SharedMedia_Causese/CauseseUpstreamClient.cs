@@ -30,34 +30,19 @@ public sealed class CauseseUpstreamClient(
         await using Stream assetStream = await HttpClient.GetStreamAsync(asset.BrowserDownloadUrl, cancellationToken);
         using ZipArchive archive = new(assetStream, ZipArchiveMode.Read);
 
-        ConcurrentBag<SoundFile> soundFiles = new();
 
-        foreach (ZipArchiveEntry entry in archive.Entries.Where(entry =>
-                     entry.FullName.StartsWith("SharedMedia_Causese/sound/") && entry.Name.EndsWith(".ogg")))
+        var soundpathsLuaFile = archive.GetEntry("SharedMedia_Causese/Soundpaths.lua");
+        if (soundpathsLuaFile is null)
         {
-            string baseName;
-            SoundFile soundFile;
-
-            if (entry.Name.Equals("BITE.ogg", StringComparison.OrdinalIgnoreCase))
-            {
-                string tmpPath = Path.GetTempFileName();
-                await using Stream entryStream = entry.Open();
-                await using FileStream fileStream = File.OpenWrite(tmpPath);
-                await entryStream.CopyToAsync(fileStream, cancellationToken);
-
-                baseName = Path.GetFileNameWithoutExtension(entry.Name);
-                soundFile = new SoundFile(entry.Name,
-                    formattedDisplayName: $"|cFFFF0000{baseName}|r") { CopyFromPath = tmpPath };
-            }
-            else
-            {
-                baseName = Path.GetFileNameWithoutExtension(entry.Name);
-                soundFile = new SoundFile(entry.Name, baseName, displayName: baseName,
-                    formattedDisplayName: $"|cFFFF0000{baseName}|r");
-            }
-
-            soundFiles.Add(soundFile);
+            throw new Exception("Failed to get Soundpaths.lua from SharedMedia_Causese.zip");
         }
+
+        await using Stream soundpathsLuaStream = soundpathsLuaFile.Open();
+        using StreamReader reader = new(soundpathsLuaStream);
+        string soundpathsLua = await reader.ReadToEndAsync(cancellationToken);
+        var parsedSoundpathsLuaFile = new ParsedSoundpathsLuaFile(soundpathsLua);
+
+        var soundFiles = await parsedSoundpathsLuaFile.GetSoundFilesAsync(archive, cancellationToken);
 
         return soundFiles;
     }

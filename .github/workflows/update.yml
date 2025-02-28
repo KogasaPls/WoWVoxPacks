@@ -27,16 +27,16 @@ jobs:
         run: |
           if [ ! -f last-version.txt ]; then
             echo "No previous version detected"
-            echo "::set-output name=version::$(cat version.txt)"
+            echo "echo version=$(cat version.txt)" >> $GITHUB_OUTPUT
           elif [ "$(cat version.txt)" != "$(cat last-version.txt)" ]; then
             echo "New version detected (old: $(cat last-version.txt), new: $(cat version.txt))"
-            echo "::set-output name=version::$(cat version.txt)"
+            echo "echo version=$(cat version.txt)" >> $GITHUB_OUTPUT
           else
             echo "No new version detected"
           fi
 
       - name: Upload new version
-        if: steps.compare-versions.outputs.version
+        if: steps.compare-versions.outputs.version != ''
         uses: actions/upload-artifact@v4
         with:
           name: bigwigs-voice-version

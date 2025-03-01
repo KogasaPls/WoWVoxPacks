@@ -38,7 +38,7 @@ public class AddOn
     }
 
 
-    protected TtsSettings TtsSettings { get; }
+    public TtsSettings TtsSettings { get; }
     public string AddOnDirectory => Path.Combine(_outputDirectoryBase, AddOnDirectoryName);
 
     public string SoundDirectory => Path.Combine(AddOnDirectory, SoundDirectoryName);

@@ -25,7 +25,14 @@ namespace WoWVoxPack.AddOns.BigWigs_Countdown
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("local L = BigWigsAPI:GetLocale(\"BigWigs\")\nlocal LSM = LibStub(\"LibSharedMedia-3.0\")\n\nlocal key = \"VoxPacks\"\nlocal path = \"");
+            this.Write("local L = BigWigsAPI:GetLocale(\"BigWigs\")\nlocal LSM = LibStub(\"LibSharedMedia-3.0\")\n\nlocal key = \"");
+            
+            #line 5 "/home/kogasa/git/WoWVoxPack/src/WoWVoxPack.AddOns.BigWigs_Countdown/CountdownLuaFile.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(VoicePackName));
+            
+            #line default
+            #line hidden
+            this.Write("\nlocal path = \"");
             
             #line 6 "/home/kogasa/git/WoWVoxPack/src/WoWVoxPack.AddOns.BigWigs_Countdown/CountdownLuaFile.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(SoundsPath));

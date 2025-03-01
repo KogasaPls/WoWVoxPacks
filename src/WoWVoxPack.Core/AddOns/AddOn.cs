@@ -20,11 +20,13 @@ public class AddOn
 
 
     protected AddOn(string outputDirectoryBase,
-        AddOnSettings settings)
+        AddOnSettings settings,
+        TtsSettings ttsSettings)
     {
         _outputDirectoryBase = outputDirectoryBase;
-        Settings = settings;
+        TtsSettings = ttsSettings;
         Title = Guard.Against.Null(settings.Title);
+        DisplayTitle = settings.DisplayTitle ?? Title;
         Version = Guard.Against.Null(settings.Version);
         Author = Guard.Against.Null(settings.Author);
         PrimaryNote = settings.Notes is null ? null : new Note(null, settings.Notes);
@@ -35,12 +37,13 @@ public class AddOn
             StringComparer.OrdinalIgnoreCase);
     }
 
-    private AddOnSettings Settings { get; }
 
+    protected TtsSettings TtsSettings { get; }
     public string AddOnDirectory => Path.Combine(_outputDirectoryBase, AddOnDirectoryName);
 
     public string SoundDirectory => Path.Combine(AddOnDirectory, SoundDirectoryName);
     public virtual string AddOnDirectoryName => Title.Replace(' ', '_');
+    public string DisplayTitle { get; protected set; }
 
     public virtual string SoundDirectoryName => "Sounds";
 

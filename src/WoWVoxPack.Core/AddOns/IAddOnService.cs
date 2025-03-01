@@ -1,16 +1,21 @@
+using WoWVoxPack.TTS;
+
 namespace WoWVoxPack.AddOns;
 
 public interface IAddOnService<T> : IAddOnService where T : AddOn
 {
-    async Task<AddOn> IAddOnService.BuildAddOnAsync(string outputDirectoryBase, CancellationToken cancellationToken)
+    async Task<AddOn> IAddOnService.BuildAddOnAsync(string outputDirectoryBase, TtsSettings ttsSettings,
+        CancellationToken cancellationToken)
     {
-        return await BuildAddOnAsync(outputDirectoryBase, cancellationToken).ConfigureAwait(false);
+        return await BuildAddOnAsync(outputDirectoryBase, ttsSettings, cancellationToken).ConfigureAwait(false);
     }
 
-    new Task<T> BuildAddOnAsync(string outputDirectoryBase, CancellationToken cancellationToken = default);
+    new Task<T> BuildAddOnAsync(string outputDirectoryBase, TtsSettings ttsSettings,
+        CancellationToken cancellationToken = default);
 }
 
 public interface IAddOnService
 {
-    Task<AddOn> BuildAddOnAsync(string outputDirectoryBase, CancellationToken cancellationToken = default);
+    Task<AddOn> BuildAddOnAsync(string outputDirectoryBase, TtsSettings ttsSettings,
+        CancellationToken cancellationToken = default);
 }

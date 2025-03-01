@@ -1,6 +1,6 @@
 ## Interface: 110005, 110007, 110100
 
-## Title: BigWigs_Countdown_VoxPack
+## Title: BigWigs |cffff7f3f+|r|cffffffffCountdown: VoxPacks Neural2_C|r
 ## Version: 11.1.0
 ## Notes: A BigWigs plugin that adds a new countdown voice pack.
 ## Author: KogasaPls

@@ -35,7 +35,7 @@ namespace WoWVoxPack.AddOns
             this.Write("\n\n## Title: ");
             
             #line 4 "/home/kogasa/git/WoWVoxPack/src/WoWVoxPack.Core/AddOns/AddOnTocFile.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(AddOn.Title));
+            this.Write(this.ToStringHelper.ToStringWithCulture(AddOn.DisplayTitle));
             
             #line default
             #line hidden

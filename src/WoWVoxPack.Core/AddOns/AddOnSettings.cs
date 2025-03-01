@@ -1,11 +1,15 @@
 using System.ComponentModel.DataAnnotations;
 
+using WoWVoxPack.TTS;
+
 namespace WoWVoxPack.AddOns;
 
 public class AddOnSettings
 {
     [Required]
     public string? Title { get; set; }
+
+    public string? DisplayTitle { get; set; }
 
     [Required]
     public string? Version { get; set; }

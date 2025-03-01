@@ -4,9 +4,11 @@ on:
     types: [closed]
     branches: [ci/*]
   workflow_dispatch:
+  push:
+    tags: ['v*']
 jobs:
   create-release:
-    if: github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'
+    if: github.event.pull_request.merged == true || github.event_name  != 'pull_request'
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
@@ -16,8 +18,12 @@ jobs:
           ls ${{ github.workspace }}
       - name: Set release tag
         id: set-release-tag
-        run: |
-          echo "RELEASE_TAG=$(cat bigwigs-voice-version.txt)" >> $GITHUB_OUTPUT
+        if: github.event_name != 'push'
+        run: echo "RELEASE_TAG=$(cat bigwigs-voice-version.txt)" >> $GITHUB_OUTPUT
+      - name: Set release tag from push event
+        id: set-release-tag-push
+        if: github.event_name == 'push'
+        run: echo "RELEASE_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
       - name: Package artifacts
         run: ./scripts/package.sh
         env:

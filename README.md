@@ -2,9 +2,6 @@
 
 A collection of modern TTS voices for World of Warcraft addons.
 
-<video src='https://github.com/user-attachments/assets/8bceffae-2e57-49cb-bb74-aab43ac65ae7' width=180></video>
-
-## AddOns
 
 This collection does not have any standalone functionality. Instead, it replaces the audio files used by the following addons.
 
@@ -12,6 +9,9 @@ This collection does not have any standalone functionality. Instead, it replaces
 - SharedMedia_Causese
 
 **These addons must be uninstalled for the VoxPacks voices to work.** Simply disabling them ingame will not work.
+You can rename the .toc file of the addon, or move the addon folder out of the `Interface\AddOns` directory.
+
+<video src='https://github.com/user-attachments/assets/8bceffae-2e57-49cb-bb74-aab43ac65ae7' width=180></video>
 
 ## Voices
 

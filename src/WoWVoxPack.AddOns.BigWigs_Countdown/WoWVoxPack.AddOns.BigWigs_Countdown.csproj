@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\WoWVoxPack.Core\WoWVoxPack.Core.csproj"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="CountdownLuaFile.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CountdownLuaFile.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="CountdownLuaFile.cs">
+      <DependentUpon>CountdownLuaFile.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+</Project>

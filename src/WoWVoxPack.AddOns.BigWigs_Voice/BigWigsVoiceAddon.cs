@@ -8,7 +8,6 @@ public sealed class BigWigsVoiceAddon : AddOn
         outputDirectory, settings)
     {
         AddCoreDotLuaFile();
-        AddCountdownLuaFile();
 
         string file = Path.Combine(AppContext.BaseDirectory, "BigWigsVoice_Sounds.json");
         AddSoundFileJson(file);
@@ -22,15 +21,6 @@ public sealed class BigWigsVoiceAddon : AddOn
         {
             CoreLuaFile coreLuaFile = new(addon);
             return coreLuaFile.TransformText();
-        });
-    }
-
-    private void AddCountdownLuaFile()
-    {
-        AddFile("Countdown.lua", addon =>
-        {
-            CountdownLuaFile countdownLuaFile = new(addon);
-            return countdownLuaFile.TransformText();
         });
     }
 }

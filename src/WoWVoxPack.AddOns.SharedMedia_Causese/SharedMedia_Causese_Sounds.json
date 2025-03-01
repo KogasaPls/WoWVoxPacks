@@ -849,7 +849,7 @@
     "DisplayName": "Innervate",
     "FileName": "Innervate.ogg",
     "FormattedDisplayName": "|cFFFF0000Innervate|r",
-    "Text": "Innervate"
+    "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"ˈɪnərˌveɪt\">Innervate</phoneme></speak>"
   },
   {
     "DisplayName": "Disease",

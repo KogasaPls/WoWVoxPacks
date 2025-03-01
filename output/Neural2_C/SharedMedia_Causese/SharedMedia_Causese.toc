@@ -1,6 +1,6 @@
 ## Interface: 110005, 110007, 110100
 
-## Title: SharedMedia_Causese_VoxPack
+## Title: SharedMedia_Causese (VoxPacks Neural2_C)
 ## Version: 11.1.0
 ## Author: KogasaPls
 

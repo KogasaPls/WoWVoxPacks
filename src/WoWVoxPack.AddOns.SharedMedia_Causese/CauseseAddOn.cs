@@ -8,9 +8,12 @@ namespace WoWVoxPack.AddOns.SharedMedia_Causese;
 
 public class CauseseAddOn : AddOn
 {
-    public CauseseAddOn(string outputDirectory, AddOnSettings settings, IEnumerable<SoundFile> soundFiles) : base(
-        outputDirectory, settings)
+    public CauseseAddOn(string outputDirectory, AddOnSettings settings, TtsSettings ttsSettings,
+        IEnumerable<SoundFile> soundFiles) : base(
+        outputDirectory, settings, ttsSettings)
     {
+        DisplayTitle = $"SharedMedia_Causese (VoxPacks {ttsSettings.Voice})";
+
         soundFiles = soundFiles.ToArray();
 
         AddFile(@"libs\LibStub\LibStub.lua");

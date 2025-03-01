@@ -1,6 +1,6 @@
 ## Interface: 110005, 110007, 110100
 
-## Title: BigWigs_Voice_VoxPack
+## Title: BigWigs |cffff7f3f+|r|cffffffffVoice: VoxPacks Wavenet_E|r
 ## Version: 11.1.0
 ## Notes: A plugin for BigWigs that will play Text-To-Speech sounds for boss abilities.
 ## Notes-deDE: A plugin for BigWigs that will play Text-To-Speech sounds for boss abilities.

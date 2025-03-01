@@ -15,9 +15,10 @@ public sealed class BigWigsCountdownAddOnService(
     private AddOnSettings AddOnSettings { get; } = addOnOptions.Get("BigWigs_Countdown");
 
     public Task<BigWigsCountdownAddon> BuildAddOnAsync(string outputDirectoryBase,
+        TtsSettings ttsSettings,
         CancellationToken cancellationToken)
     {
-        BigWigsCountdownAddon addOn = new(outputDirectoryBase, AddOnSettings);
+        BigWigsCountdownAddon addOn = new(outputDirectoryBase, AddOnSettings, ttsSettings);
 
         return Task.FromResult(addOn);
     }

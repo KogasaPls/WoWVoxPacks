@@ -20,11 +20,12 @@ public class CauseseAddOnService(
     private ICauseseUpstreamClient UpstreamClient { get; } = upstreamClient;
 
     public async Task<CauseseAddOn> BuildAddOnAsync(string outputDirectoryBase,
+        TtsSettings ttsSettings,
         CancellationToken cancellationToken = default)
     {
         var soundFiles = await GetSoundFilesAsync(cancellationToken);
 
-        return new CauseseAddOn(outputDirectoryBase, AddOnSettings, soundFiles);
+        return new CauseseAddOn(outputDirectoryBase, AddOnSettings, ttsSettings, soundFiles);
     }
 
     private async ValueTask<IEnumerable<SoundFile>> GetSoundFilesAsync(

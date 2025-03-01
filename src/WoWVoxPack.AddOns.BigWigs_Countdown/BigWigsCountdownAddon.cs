@@ -1,3 +1,5 @@
+using Ardalis.GuardClauses;
+
 using WoWVoxPack.TTS;
 
 namespace WoWVoxPack.AddOns.BigWigs_Countdown;
@@ -6,9 +8,11 @@ public class BigWigsCountdownAddon : AddOn
 {
     private static readonly Lazy<List<SoundFile>> CountdownSoundFiles = new(GetCountdownSoundFiles);
 
-    public BigWigsCountdownAddon(string outputDirectory, AddOnSettings settings) : base(
-        outputDirectory, settings)
+    public BigWigsCountdownAddon(string outputDirectory, AddOnSettings settings, TtsSettings ttsSettings) : base(
+        outputDirectory, settings, ttsSettings)
     {
+        DisplayTitle = $"BigWigs |cffff7f3f+|r|cffffffffCountdown: VoxPacks {ttsSettings.Voice}|r";
+
         AddCountdownLuaFile();
         AddSoundFiles(CountdownSoundFiles.Value);
     }

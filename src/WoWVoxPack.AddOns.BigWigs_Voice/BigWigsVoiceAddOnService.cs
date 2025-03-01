@@ -21,11 +21,13 @@ public sealed class BigWigsVoiceAddOnService(
     private AddOnSettings AddOnSettings { get; } = addOnOptions.Get("BigWigs_Voice");
 
     public async Task<BigWigsVoiceAddon> BuildAddOnAsync(string outputDirectoryBase,
+        TtsSettings ttsSettings,
         CancellationToken cancellationToken)
     {
         var soundFiles = await GetSoundFilesAsync(cancellationToken);
 
-        BigWigsVoiceAddon addOn = new(outputDirectoryBase, AddOnSettings, soundFiles.Concat(CountdownSoundFiles.Value));
+        BigWigsVoiceAddon addOn = new(outputDirectoryBase, AddOnSettings, ttsSettings,
+            soundFiles.Concat(CountdownSoundFiles.Value));
 
         return addOn;
     }

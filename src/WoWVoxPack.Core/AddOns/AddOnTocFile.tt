@@ -1,7 +1,7 @@
 <#@ template language="C#" #>
 ## Interface: <#= string.Join(", ", AddOn.Interfaces) #>
 
-## Title: <#= AddOn.Title #>
+## Title: <#= AddOn.DisplayTitle #>
 ## Version: <#= AddOn.Version #>
 <#
     if (AddOn.PrimaryNote != null)

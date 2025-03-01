@@ -19,22 +19,21 @@ jobs:
       - name: Set release tag
         id: set-release-tag
         if: github.event_name != 'push'
-        run: echo "RELEASE_TAG=$(cat bigwigs-voice-version.txt)" >> $GITHUB_OUTPUT
+        run: echo "RELEASE_TAG=$(cat bigwigs-voice-version.txt)" >> $GITHUB_ENV
       - name: Set release tag from push event
         id: set-release-tag-push
         if: github.event_name == 'push'
-        run: echo "RELEASE_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+        run: echo "RELEASE_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
       - name: Package artifacts
         run: ./scripts/package.sh
         env:
           OUTPUT_DIR: dist
-          RELEASE_TAG: ${{ steps.set-release-tag.outputs.RELEASE_TAG }}
       - name: Create GitHub Release
         id: create-release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ steps.set-release-tag.outputs.RELEASE_TAG }}
-          name: Release ${{ steps.set-release-tag.outputs.RELEASE_TAG }}
+          tag_name: ${{ env.RELEASE_TAG }}
+          name: Release ${{ env.RELEASE_TAG }}
           body: |
             Automatically created by the update workflow.
           draft: false

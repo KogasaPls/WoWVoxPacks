@@ -154,6 +154,6 @@ LSM:Register("sound", "|cFFFF0000Coin|r", [[Interface\Addons\SharedMedia_Causese
 LSM:Register("sound", "|cFFFF0000BoP|r", [[Interface\Addons\SharedMedia_Causese\sound\BoP.ogg]])
 LSM:Register("sound", "|cFFFF0000Bleed|r", [[Interface\Addons\SharedMedia_Causese\sound\Bleed.ogg]])
 LSM:Register("sound", "|cFFFF0000Bark|r", [[Interface\Addons\SharedMedia_Causese\sound\Bark.ogg]])
-LSM:Register("sound", "|cFFFF0000Duck|r", [[Interface\Addons\SharedMedia_Causese\sound\Duck.ogg]])
 LSM:Register("sound", "|cFFFF0000Cage|r", [[Interface\Addons\SharedMedia_Causese\sound\Cage.ogg]])
 LSM:Register("sound", "|cFFFF0000BITE|r", [[Interface\Addons\SharedMedia_Causese\sound\BITE.ogg]])
+LSM:Register("sound", "|cFFFF0000Duck|r", [[Interface\Addons\SharedMedia_Causese\sound\Duck.ogg]])

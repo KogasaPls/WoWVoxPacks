@@ -9,7 +9,7 @@ public sealed class BigWigsVoiceAddOnService(
     ILogger<BigWigsVoiceAddOnService> logger,
     IOptionsSnapshot<AddOnSettings> addOnOptions,
     IBigWigsVoiceUpstreamClient upstreamClient)
-    : IAddOnService<BigWigsVoiceAddon>
+    : IAddOnService<BigWigsVoiceAddOn>
 {
     private static readonly Lazy<List<SoundFile>> CountdownSoundFiles = new(GetCountdownSoundFiles);
 
@@ -20,13 +20,13 @@ public sealed class BigWigsVoiceAddOnService(
     private IBigWigsVoiceUpstreamClient UpstreamClient { get; } = upstreamClient;
     private AddOnSettings AddOnSettings { get; } = addOnOptions.Get("BigWigs_Voice");
 
-    public async Task<BigWigsVoiceAddon> BuildAddOnAsync(string outputDirectoryBase,
+    public async Task<BigWigsVoiceAddOn> BuildAddOnAsync(string outputDirectoryBase,
         TtsSettings ttsSettings,
         CancellationToken cancellationToken)
     {
         var soundFiles = await GetSoundFilesAsync(cancellationToken);
 
-        BigWigsVoiceAddon addOn = new(outputDirectoryBase, AddOnSettings, ttsSettings,
+        BigWigsVoiceAddOn addOn = new(outputDirectoryBase, AddOnSettings, ttsSettings,
             soundFiles.Concat(CountdownSoundFiles.Value));
 
         return addOn;

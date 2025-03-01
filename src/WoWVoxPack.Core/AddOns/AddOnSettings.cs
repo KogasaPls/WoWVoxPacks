@@ -1,7 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 
-using WoWVoxPack.TTS;
-
 namespace WoWVoxPack.AddOns;
 
 public class AddOnSettings

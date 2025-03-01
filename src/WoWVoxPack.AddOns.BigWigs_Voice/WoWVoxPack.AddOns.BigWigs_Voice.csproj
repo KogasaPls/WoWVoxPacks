@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="BigWigsVoice_Sounds.json" />
+    <None Remove="BigWigsVoice_Sounds.json"/>
     <AdditionalFiles Include="BigWigsVoice_Sounds.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </AdditionalFiles>

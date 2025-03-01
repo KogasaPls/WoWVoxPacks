@@ -24,7 +24,7 @@ public sealed class BigWigsVoiceAddOnService(
         TtsSettings ttsSettings,
         CancellationToken cancellationToken)
     {
-        var soundFiles = await GetSoundFilesAsync(cancellationToken);
+        IEnumerable<BigWigsVoiceSoundFile> soundFiles = await GetSoundFilesAsync(cancellationToken);
 
         BigWigsVoiceAddOn addOn = new(outputDirectoryBase, AddOnSettings, ttsSettings,
             soundFiles.Concat(CountdownSoundFiles.Value));
@@ -33,8 +33,10 @@ public sealed class BigWigsVoiceAddOnService(
     }
 
     private async ValueTask<IEnumerable<BigWigsVoiceSoundFile>>
-        GetSoundFilesAsync(CancellationToken cancellationToken) =>
-        _soundFiles ??= (await UpstreamClient.GetSoundFilesAsync(cancellationToken)).ToArray();
+        GetSoundFilesAsync(CancellationToken cancellationToken)
+    {
+        return _soundFiles ??= (await UpstreamClient.GetSoundFilesAsync(cancellationToken)).ToArray();
+    }
 
     private static List<SoundFile> GetCountdownSoundFiles()
     {

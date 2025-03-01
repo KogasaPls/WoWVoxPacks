@@ -11,9 +11,8 @@ public class CauseseAddOnService(
     ICauseseUpstreamClient upstreamClient)
     : IAddOnService<CauseseAddOn>
 {
-    private ILogger<CauseseAddOnService> Logger { get; } = logger;
-
     private SoundFile[]? _soundFiles;
+    private ILogger<CauseseAddOnService> Logger { get; } = logger;
 
     private AddOnSettings AddOnSettings { get; } = addOnOptions.Get("SharedMedia_Causese");
 
@@ -23,12 +22,14 @@ public class CauseseAddOnService(
         TtsSettings ttsSettings,
         CancellationToken cancellationToken = default)
     {
-        var soundFiles = await GetSoundFilesAsync(cancellationToken);
+        IEnumerable<SoundFile> soundFiles = await GetSoundFilesAsync(cancellationToken);
 
         return new CauseseAddOn(outputDirectoryBase, AddOnSettings, ttsSettings, soundFiles);
     }
 
     private async ValueTask<IEnumerable<SoundFile>> GetSoundFilesAsync(
-        CancellationToken cancellationToken = default) =>
-        _soundFiles ??= (await UpstreamClient.GetSoundFilesAsync(cancellationToken)).ToArray();
+        CancellationToken cancellationToken = default)
+    {
+        return _soundFiles ??= (await UpstreamClient.GetSoundFilesAsync(cancellationToken)).ToArray();
+    }
 }

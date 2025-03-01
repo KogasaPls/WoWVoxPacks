@@ -1,11 +1,11 @@
 name: Create release
 on:
   pull_request:
-    types: [closed]
-    branches: [ci/*]
+    types: [ closed ]
+    branches: [ ci/* ]
   workflow_dispatch:
   push:
-    tags: ['v*']
+    tags: [ 'v*' ]
 jobs:
   create-release:
     if: github.event.pull_request.merged == true || github.event_name  != 'pull_request'

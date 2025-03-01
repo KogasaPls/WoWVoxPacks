@@ -1,7 +1,3 @@
-using System.Text.Json;
-
-using Ardalis.GuardClauses;
-
 using WoWVoxPack.TTS;
 
 namespace WoWVoxPack.AddOns.SharedMedia_Causese;

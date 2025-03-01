@@ -23,16 +23,8 @@ public class CauseseAddOn : AddOn
         });
 
         string file = Path.Combine(AppContext.BaseDirectory, "SharedMedia_Causese_Sounds.json");
-
-        List<SoundFile> manualSoundFiles =
-            Guard.Against.Null(JsonSerializer.Deserialize<List<SoundFile>>(File.ReadAllText(file),
-                SoundFileJsonContext.Default.ListSoundFile));
-
-        AddSoundFiles(manualSoundFiles);
-
-        List<SoundFile> newSoundFiles = soundFiles
-            .ExceptBy(manualSoundFiles.Select(s => s.FileName), s => s.FileName).ToList();
-        AddSoundFiles(newSoundFiles);
+        AddSoundFileJson(file);
+        AddSoundFiles(soundFiles);
     }
 
     public override string AddOnDirectoryName => "SharedMedia_Causese";

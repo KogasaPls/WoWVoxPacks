@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 using Ardalis.GuardClauses;
 
 using WoWVoxPack.TTS;
@@ -15,6 +17,7 @@ public class AddOn
     private readonly string _outputDirectoryBase;
 
     private readonly Dictionary<string, SoundFile> _soundFiles = new(StringComparer.OrdinalIgnoreCase);
+
 
     protected AddOn(string outputDirectoryBase,
         AddOnSettings settings)
@@ -56,6 +59,15 @@ public class AddOn
     public IReadOnlyCollection<string> Interfaces => _interfaces;
     public IReadOnlyCollection<string> Files => _addOnFiles.Keys;
 
+    protected void AddSoundFileJson(string filePath)
+    {
+        List<SoundFile> soundFiles =
+            Guard.Against.Null(JsonSerializer.Deserialize<List<SoundFile>>(File.ReadAllText(filePath),
+                SoundFileJsonContext.Default.ListSoundFile));
+
+        AddSoundFiles(soundFiles, true);
+    }
+
     protected void AddFile(string fileName, Func<AddOn, string> contentFactory)
     {
         _addOnFiles.Add(fileName, new Lazy<string>(() => contentFactory(this)));
@@ -66,16 +78,19 @@ public class AddOn
         _addOnFiles.Add(fileName, null);
     }
 
-    protected void AddSoundFile(SoundFile soundFile)
+    protected void AddSoundFile(SoundFile soundFile, bool overwrite = false)
     {
-        _soundFiles.Add(soundFile.FileName, soundFile);
+        if (overwrite || !_soundFiles.ContainsKey(soundFile.FileName))
+        {
+            _soundFiles[soundFile.FileName] = soundFile;
+        }
     }
 
-    protected void AddSoundFiles(IEnumerable<SoundFile> soundFiles)
+    protected void AddSoundFiles(IEnumerable<SoundFile> soundFiles, bool overwrite = false)
     {
         foreach (SoundFile soundFile in soundFiles)
         {
-            AddSoundFile(soundFile);
+            AddSoundFile(soundFile, overwrite);
         }
     }
 

@@ -9,6 +9,10 @@ public sealed class BigWigsVoiceAddon : AddOn
     {
         AddCoreDotLuaFile();
         AddCountdownLuaFile();
+
+        string file = Path.Combine(AppContext.BaseDirectory, "BigWigsVoice_Sounds.json");
+        AddSoundFileJson(file);
+
         AddSoundFiles(soundFiles);
     }
 

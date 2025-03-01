@@ -41,5 +41,6 @@ jobs:
           files: |
             ./dist/*.zip
             ./bigwigs-voice-version.txt
+            ./sharedmedia-causese-version.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

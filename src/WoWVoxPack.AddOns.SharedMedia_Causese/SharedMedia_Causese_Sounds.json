@@ -153,7 +153,7 @@
     "DisplayName": "Affix",
     "FileName": "Affix.ogg",
     "FormattedDisplayName": "|cFFFF0000Affix|r",
-    "Text": "Affix"
+    "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"ˈæfɪks\">Affix</phoneme></speak>"
   },
   {
     "DisplayName": "AoE",
@@ -801,7 +801,7 @@
     "DisplayName": "PS",
     "FileName": "PS.ogg",
     "FormattedDisplayName": "|cFFFF0000PS|r",
-    "Text": "PS"
+    "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"pi.ˈɛs\">PS</phoneme></speak>"
   },
   {
     "DisplayName": "Poison",
@@ -813,7 +813,7 @@
     "DisplayName": "PI",
     "FileName": "PI.ogg",
     "FormattedDisplayName": "|cFFFF0000PI|r",
-    "SSML": "<speak><say-as interpret-as=\"characters\">PI</say-as></speak>"
+    "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"pi.ˈaɪ\">PI</phoneme></speak>"
   },
   {
     "DisplayName": "Physical",

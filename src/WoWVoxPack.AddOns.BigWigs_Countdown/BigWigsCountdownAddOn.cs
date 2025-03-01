@@ -1,5 +1,3 @@
-using Ardalis.GuardClauses;
-
 using WoWVoxPack.TTS;
 
 namespace WoWVoxPack.AddOns.BigWigs_Countdown;

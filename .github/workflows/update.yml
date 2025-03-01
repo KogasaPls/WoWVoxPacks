@@ -89,7 +89,7 @@ jobs:
             echo "No new version detected"
           fi
   create-pull-request:
-    needs: [check-bigwigs-voice-version, check-causese-version]
+    needs: [ check-bigwigs-voice-version, check-causese-version ]
     if: ${{ needs.check-bigwigs-voice-version.outputs.needs_update != '' || needs.check-causese-version.outputs.needs_update != '' }}
     runs-on: ubuntu-latest
     permissions: write-all

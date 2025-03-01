@@ -47,7 +47,8 @@ public class Worker : IHostedService
     {
         foreach ((IAddOnService addOnService, TtsSettings ttsSettings) in Matrix)
         {
-            var outputDirectory = Path.Combine(OutputDirectoryBase, Guard.Against.Null(ttsSettings.Voice).ToString());
+            string? outputDirectory =
+                Path.Combine(OutputDirectoryBase, Guard.Against.Null(ttsSettings.Voice).ToString());
             AddOn addOn = await addOnService.BuildAddOnAsync(outputDirectory, ttsSettings, cancellationToken);
 
             Logger.LogInformation("Building {AddOnName} addon in directory {OutputDirectory}", addOn.Title,
@@ -58,7 +59,7 @@ public class Worker : IHostedService
             string soundOutputDirectory = addOn.SoundDirectory;
             Directory.CreateDirectory(soundOutputDirectory);
 
-            var tasks = addOn.SoundFiles.Select(soundFile =>
+            IEnumerable<Task>? tasks = addOn.SoundFiles.Select(soundFile =>
                 SoundFileService.CreateSoundFileIfNotExistsAsync(soundFile, soundOutputDirectory, ttsSettings,
                     cancellationToken));
 

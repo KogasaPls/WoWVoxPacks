@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WoWVoxPack.AddOns.BigWigs_Countdown\WoWVoxPack.AddOns.BigWigs_Countdown.csproj" />
+    <ProjectReference Include="..\WoWVoxPack.AddOns.BigWigs_Countdown\WoWVoxPack.AddOns.BigWigs_Countdown.csproj"/>
     <ProjectReference Include="..\WoWVoxPack.Core\WoWVoxPack.Core.csproj"/>
     <ProjectReference Include="..\WoWVoxPack.AddOns.BigWigs_Voice\WoWVoxPack.AddOns.BigWigs_Voice.csproj"/>
     <ProjectReference Include="..\WoWVoxPack.AddOns.SharedMedia_Causese\WoWVoxPack.AddOns.SharedMedia_Causese.csproj"/>

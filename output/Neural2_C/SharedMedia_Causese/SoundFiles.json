@@ -129,7 +129,7 @@
     "FileName": "AoE.ogg",
     "DisplayName": "AoE",
     "FormattedDisplayName": "|cFFFF0000AoE|r",
-    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022e\u026A.\u0259\u028A.\u02C8i\u02D0\u0022\u003EAoE\u003C/phoneme\u003E\u003C/speak\u003E"
+    "Text": "AOE"
   },
   {
     "FileName": "Assist.ogg",
@@ -236,13 +236,13 @@
     "FileName": "CC.ogg",
     "DisplayName": "CC",
     "FormattedDisplayName": "|cFFFF0000CC|r",
-    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022\u02CCsi.\u02C8si\u02D0\u0022\u003Ecc\u003C/phoneme\u003E\u003C/speak\u003E"
+    "Text": "C C"
   },
   {
     "FileName": "CD.ogg",
     "DisplayName": "CD",
     "FormattedDisplayName": "|cFFFF0000CD|r",
-    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022\u02CCsi.\u02C8di\u02D0\u0022\u003Ecd\u003C/phoneme\u003E\u003C/speak\u003E"
+    "Text": "C D"
   },
   {
     "FileName": "Center.ogg",
@@ -451,7 +451,7 @@
     "FileName": "Healcd.ogg",
     "DisplayName": "Healcd",
     "FormattedDisplayName": "|cFFFF0000Healcd|r",
-    "SSML": "\u003Cspeak\u003EHeal \u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022\u02CCsi.\u02C8di\u02D0\u0022\u003Ecd\u003C/phoneme\u003E\u003C/speak\u003E"
+    "Text": "Heal C D"
   },
   {
     "FileName": "Hide.ogg",
@@ -757,7 +757,7 @@
     "FileName": "Selfcd.ogg",
     "DisplayName": "Selfcd",
     "FormattedDisplayName": "|cFFFF0000Selfcd|r",
-    "SSML": "\u003Cspeak\u003ESelf \u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022\u02CCsi.\u02C8di\u02D0\u0022\u003Ecd\u003C/phoneme\u003E\u003C/speak\u003E"
+    "Text": "Self C D"
   },
   {
     "FileName": "Sentry.ogg",

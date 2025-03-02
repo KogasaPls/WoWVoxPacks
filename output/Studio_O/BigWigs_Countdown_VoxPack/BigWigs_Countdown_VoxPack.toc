@@ -1,0 +1,15 @@
+## Interface: 110005, 110007, 110100
+
+## Title: BigWigs |cffff7f3f+|r|cffffffffCountdown: VoxPacks Studio_O|r
+## Version: 11.1.0
+## Notes: A BigWigs plugin that adds a new countdown voice pack.
+## Author: KogasaPls
+
+## Dependencies: BigWigs
+## IconTexture: Interface\AddOns\BigWigs\Media\Icons\core-enabled
+## LoadOnDemand: 1
+## X-BigWigs-LoadOn-CoreEnabled: 1
+## X-Category: Raid
+## X-License: Apache-2.0
+
+Countdown.lua

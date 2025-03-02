@@ -1,0 +1,918 @@
+[
+  {
+    "FileName": "01.ogg",
+    "DisplayName": "01",
+    "FormattedDisplayName": "|TInterface\\\\TargetingFrame\\\\UI-RaidTargetingIcon_1:16|t",
+    "Text": "Star"
+  },
+  {
+    "FileName": "02.ogg",
+    "DisplayName": "02",
+    "FormattedDisplayName": "|TInterface\\\\TargetingFrame\\\\UI-RaidTargetingIcon_2:16|t",
+    "Text": "Circle"
+  },
+  {
+    "FileName": "03.ogg",
+    "DisplayName": "03",
+    "FormattedDisplayName": "|TInterface\\\\TargetingFrame\\\\UI-RaidTargetingIcon_3:16|t",
+    "Text": "Diamond"
+  },
+  {
+    "FileName": "04.ogg",
+    "DisplayName": "04",
+    "FormattedDisplayName": "|TInterface\\\\TargetingFrame\\\\UI-RaidTargetingIcon_4:16|t",
+    "Text": "Triangle"
+  },
+  {
+    "FileName": "05.ogg",
+    "DisplayName": "05",
+    "FormattedDisplayName": "|TInterface\\\\TargetingFrame\\\\UI-RaidTargetingIcon_5:16|t",
+    "Text": "Moon"
+  },
+  {
+    "FileName": "06.ogg",
+    "DisplayName": "06",
+    "FormattedDisplayName": "|TInterface\\\\TargetingFrame\\\\UI-RaidTargetingIcon_6:16|t",
+    "Text": "Square"
+  },
+  {
+    "FileName": "07.ogg",
+    "DisplayName": "07",
+    "FormattedDisplayName": "|TInterface\\\\TargetingFrame\\\\UI-RaidTargetingIcon_7:16|t",
+    "Text": "Cross"
+  },
+  {
+    "FileName": "08.ogg",
+    "DisplayName": "08",
+    "FormattedDisplayName": "|TInterface\\\\TargetingFrame\\\\UI-RaidTargetingIcon_8:16|t",
+    "Text": "Skull"
+  },
+  {
+    "FileName": "1.ogg",
+    "DisplayName": "1",
+    "FormattedDisplayName": "|cFFFF00001|r",
+    "Text": "1"
+  },
+  {
+    "FileName": "10.ogg",
+    "DisplayName": "10",
+    "FormattedDisplayName": "|cFFFE000010|r",
+    "Text": "10"
+  },
+  {
+    "FileName": "2.ogg",
+    "DisplayName": "2",
+    "FormattedDisplayName": "|cFFFF00002|r",
+    "Text": "2"
+  },
+  {
+    "FileName": "3.ogg",
+    "DisplayName": "3",
+    "FormattedDisplayName": "|cFFFF00003|r",
+    "Text": "3"
+  },
+  {
+    "FileName": "4.ogg",
+    "DisplayName": "4",
+    "FormattedDisplayName": "|cFFFF00004|r",
+    "Text": "4"
+  },
+  {
+    "FileName": "5.ogg",
+    "DisplayName": "5",
+    "FormattedDisplayName": "|cFFFF00005|r",
+    "Text": "5"
+  },
+  {
+    "FileName": "6.ogg",
+    "DisplayName": "6",
+    "FormattedDisplayName": "|cFFFF00006|r",
+    "Text": "6"
+  },
+  {
+    "FileName": "7.ogg",
+    "DisplayName": "7",
+    "FormattedDisplayName": "|cFFFF00007|r",
+    "Text": "7"
+  },
+  {
+    "FileName": "8.ogg",
+    "DisplayName": "8",
+    "FormattedDisplayName": "|cFFFF00008|r",
+    "Text": "8"
+  },
+  {
+    "FileName": "9.ogg",
+    "DisplayName": "9",
+    "FormattedDisplayName": "|cFFFF00009|r",
+    "Text": "9"
+  },
+  {
+    "FileName": "Add.ogg",
+    "DisplayName": "Add",
+    "FormattedDisplayName": "|cFFFF0000Add|r",
+    "Text": "Add"
+  },
+  {
+    "FileName": "Adds.ogg",
+    "DisplayName": "Adds",
+    "FormattedDisplayName": "|cFFFF0000Adds|r",
+    "Text": "Adds"
+  },
+  {
+    "FileName": "Affix.ogg",
+    "DisplayName": "Affix",
+    "FormattedDisplayName": "|cFFFF0000Affix|r",
+    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022\u02C8\u00E6f\u026Aks\u0022\u003EAffix\u003C/phoneme\u003E\u003C/speak\u003E"
+  },
+  {
+    "FileName": "AoE.ogg",
+    "DisplayName": "AoE",
+    "FormattedDisplayName": "|cFFFF0000AoE|r",
+    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022e\u026A.\u0259\u028A.\u02C8i\u02D0\u0022\u003EAoE\u003C/phoneme\u003E\u003C/speak\u003E"
+  },
+  {
+    "FileName": "Assist.ogg",
+    "DisplayName": "Assist",
+    "FormattedDisplayName": "|cFFFF0000Assist|r",
+    "Text": "Assist"
+  },
+  {
+    "FileName": "Avoid.ogg",
+    "DisplayName": "Avoid",
+    "FormattedDisplayName": "|cFFFF0000Avoid|r",
+    "Text": "Avoid"
+  },
+  {
+    "FileName": "Back.ogg",
+    "DisplayName": "Back",
+    "FormattedDisplayName": "|cFFFF0000Back|r",
+    "Text": "Back"
+  },
+  {
+    "FileName": "Backup.ogg",
+    "DisplayName": "Backup",
+    "FormattedDisplayName": "|cFFFF0000Backup|r",
+    "Text": "Back up"
+  },
+  {
+    "FileName": "Bait.ogg",
+    "DisplayName": "Bait",
+    "FormattedDisplayName": "|cFFFF0000Bait|r",
+    "Text": "Bait"
+  },
+  {
+    "FileName": "Bark.ogg",
+    "DisplayName": "Bark",
+    "FormattedDisplayName": "|cFFFF0000Bark|r",
+    "Text": "Bark"
+  },
+  {
+    "FileName": "Beam.ogg",
+    "DisplayName": "Beam",
+    "FormattedDisplayName": "|cFFFF0000Beam|r",
+    "Text": "Beam"
+  },
+  {
+    "FileName": "BITE.ogg",
+    "DisplayName": "BITE",
+    "FormattedDisplayName": "|cFFFF0000BITE|r"
+  },
+  {
+    "FileName": "Bleed.ogg",
+    "DisplayName": "Bleed",
+    "FormattedDisplayName": "|cFFFF0000Bleed|r",
+    "Text": "Bleed"
+  },
+  {
+    "FileName": "Bloodlust.ogg",
+    "DisplayName": "Bloodlust",
+    "FormattedDisplayName": "|cFFFF0000Bloodlust|r",
+    "Text": "Bloodlust"
+  },
+  {
+    "FileName": "Blue.ogg",
+    "DisplayName": "Blue",
+    "FormattedDisplayName": "|cFFFF0000Blue|r",
+    "Text": "Blue"
+  },
+  {
+    "FileName": "Bombs.ogg",
+    "DisplayName": "Bombs",
+    "FormattedDisplayName": "|cFFFF0000Bombs|r",
+    "Text": "Bombs"
+  },
+  {
+    "FileName": "BoP.ogg",
+    "DisplayName": "BoP",
+    "FormattedDisplayName": "|cFFFF0000BoP|r",
+    "Text": "BoP"
+  },
+  {
+    "FileName": "Boss.ogg",
+    "DisplayName": "Boss",
+    "FormattedDisplayName": "|cFFFF0000Boss|r",
+    "Text": "Boss"
+  },
+  {
+    "FileName": "Break.ogg",
+    "DisplayName": "Break",
+    "FormattedDisplayName": "|cFFFF0000Break|r",
+    "Text": "Break"
+  },
+  {
+    "FileName": "Buff.ogg",
+    "DisplayName": "Buff",
+    "FormattedDisplayName": "|cFFFF0000Buff|r",
+    "Text": "Buff"
+  },
+  {
+    "FileName": "Cage.ogg",
+    "DisplayName": "Cage",
+    "FormattedDisplayName": "|cFFFF0000Cage|r",
+    "Text": "Cage"
+  },
+  {
+    "FileName": "CC.ogg",
+    "DisplayName": "CC",
+    "FormattedDisplayName": "|cFFFF0000CC|r",
+    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022\u02CCsi.\u02C8si\u02D0\u0022\u003Ecc\u003C/phoneme\u003E\u003C/speak\u003E"
+  },
+  {
+    "FileName": "CD.ogg",
+    "DisplayName": "CD",
+    "FormattedDisplayName": "|cFFFF0000CD|r",
+    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022\u02CCsi.\u02C8di\u02D0\u0022\u003Ecd\u003C/phoneme\u003E\u003C/speak\u003E"
+  },
+  {
+    "FileName": "Center.ogg",
+    "DisplayName": "Center",
+    "FormattedDisplayName": "|cFFFF0000Center|r",
+    "Text": "Center"
+  },
+  {
+    "FileName": "Chain.ogg",
+    "DisplayName": "Chain",
+    "FormattedDisplayName": "|cFFFF0000Chain|r",
+    "Text": "Chain"
+  },
+  {
+    "FileName": "Charge.ogg",
+    "DisplayName": "Charge",
+    "FormattedDisplayName": "|cFFFF0000Charge|r",
+    "Text": "Charge"
+  },
+  {
+    "FileName": "Clear.ogg",
+    "DisplayName": "Clear",
+    "FormattedDisplayName": "|cFFFF0000Clear|r",
+    "Text": "Clear"
+  },
+  {
+    "FileName": "Coin.ogg",
+    "DisplayName": "Coin",
+    "FormattedDisplayName": "|cFFFF0000Coin|r",
+    "Text": "Coin"
+  },
+  {
+    "FileName": "Collect.ogg",
+    "DisplayName": "Collect",
+    "FormattedDisplayName": "|cFFFF0000Collect|r",
+    "Text": "Collect"
+  },
+  {
+    "FileName": "Cross.ogg",
+    "DisplayName": "Cross",
+    "FormattedDisplayName": "|cFFFF0000Cross|r",
+    "Text": "Cross"
+  },
+  {
+    "FileName": "Curse.ogg",
+    "DisplayName": "Curse",
+    "FormattedDisplayName": "|cFFFF0000Curse|r",
+    "Text": "Curse"
+  },
+  {
+    "FileName": "Dance.ogg",
+    "DisplayName": "Dance",
+    "FormattedDisplayName": "|cFFFF0000Dance|r",
+    "Text": "Dance"
+  },
+  {
+    "FileName": "Debuff.ogg",
+    "DisplayName": "Debuff",
+    "FormattedDisplayName": "|cFFFF0000Debuff|r",
+    "Text": "Debuff"
+  },
+  {
+    "FileName": "Decimate.ogg",
+    "DisplayName": "Decimate",
+    "FormattedDisplayName": "|cFFFF0000Decimate|r",
+    "Text": "Decimate"
+  },
+  {
+    "FileName": "Defensive.ogg",
+    "DisplayName": "Defensive",
+    "FormattedDisplayName": "|cFFFF0000Defensive|r",
+    "Text": "Defensive"
+  },
+  {
+    "FileName": "Disease.ogg",
+    "DisplayName": "Disease",
+    "FormattedDisplayName": "|cFFFF0000Disease|r",
+    "Text": "Disease"
+  },
+  {
+    "FileName": "Dispell.ogg",
+    "DisplayName": "Dispell",
+    "FormattedDisplayName": "|cFFFF0000Dispell|r",
+    "Text": "Dispel"
+  },
+  {
+    "FileName": "Dodge.ogg",
+    "DisplayName": "Dodge",
+    "FormattedDisplayName": "|cFFFF0000Dodge|r",
+    "Text": "Dodge"
+  },
+  {
+    "FileName": "Dont Move.ogg",
+    "DisplayName": "Dont Move",
+    "FormattedDisplayName": "|cFFFF0000Dont Move|r",
+    "Text": "Don\u0027t Move"
+  },
+  {
+    "FileName": "Dont.ogg",
+    "DisplayName": "Dont",
+    "FormattedDisplayName": "|cFFFF0000Dont|r",
+    "Text": "Don\u0027t"
+  },
+  {
+    "FileName": "Dot.ogg",
+    "DisplayName": "Dot",
+    "FormattedDisplayName": "|cFFFF0000Dot|r",
+    "Text": "Dot"
+  },
+  {
+    "FileName": "Drop.ogg",
+    "DisplayName": "Drop",
+    "FormattedDisplayName": "|cFFFF0000Drop|r",
+    "Text": "Drop"
+  },
+  {
+    "FileName": "Duck.ogg",
+    "DisplayName": "Duck",
+    "FormattedDisplayName": "|cFFFF0000Duck|r"
+  },
+  {
+    "FileName": "Enter.ogg",
+    "DisplayName": "Enter",
+    "FormattedDisplayName": "|cFFFF0000Enter|r",
+    "Text": "Enter"
+  },
+  {
+    "FileName": "Escort.ogg",
+    "DisplayName": "Escort",
+    "FormattedDisplayName": "|cFFFF0000Escort|r",
+    "Text": "Escort"
+  },
+  {
+    "FileName": "Exit.ogg",
+    "DisplayName": "Exit",
+    "FormattedDisplayName": "|cFFFF0000Exit|r",
+    "Text": "Exit"
+  },
+  {
+    "FileName": "Feet.ogg",
+    "DisplayName": "Feet",
+    "FormattedDisplayName": "|cFFFF0000Feet|r",
+    "Text": "Feet"
+  },
+  {
+    "FileName": "Fifth.ogg",
+    "DisplayName": "Fifth",
+    "FormattedDisplayName": "|cFFFF00005. Fifth|r",
+    "Text": "Fifth"
+  },
+  {
+    "FileName": "First.ogg",
+    "DisplayName": "First",
+    "FormattedDisplayName": "|cFFFF00001. First|r",
+    "Text": "First"
+  },
+  {
+    "FileName": "Fixate.ogg",
+    "DisplayName": "Fixate",
+    "FormattedDisplayName": "|cFFFF0000Fixate|r",
+    "Text": "Fixate"
+  },
+  {
+    "FileName": "Focus.ogg",
+    "DisplayName": "Focus",
+    "FormattedDisplayName": "|cFFFF0000Focus|r",
+    "Text": "Focus"
+  },
+  {
+    "FileName": "Fourth.ogg",
+    "DisplayName": "Fourth",
+    "FormattedDisplayName": "|cFFFF00004. Fourth|r",
+    "Text": "Fourth"
+  },
+  {
+    "FileName": "Front.ogg",
+    "DisplayName": "Front",
+    "FormattedDisplayName": "|cFFFF0000Front|r",
+    "Text": "Front"
+  },
+  {
+    "FileName": "Gate.ogg",
+    "DisplayName": "Gate",
+    "FormattedDisplayName": "|cFFFF0000Gate|r",
+    "Text": "Gate"
+  },
+  {
+    "FileName": "Gather.ogg",
+    "DisplayName": "Gather",
+    "FormattedDisplayName": "|cFFFF0000Gather|r",
+    "Text": "Gather"
+  },
+  {
+    "FileName": "Go.ogg",
+    "DisplayName": "Go",
+    "FormattedDisplayName": "|cFFFF0000Go|r",
+    "Text": "Go"
+  },
+  {
+    "FileName": "Green.ogg",
+    "DisplayName": "Green",
+    "FormattedDisplayName": "|cFFFF0000Green|r",
+    "Text": "Green"
+  },
+  {
+    "FileName": "Healcd.ogg",
+    "DisplayName": "Healcd",
+    "FormattedDisplayName": "|cFFFF0000Healcd|r",
+    "SSML": "\u003Cspeak\u003EHeal \u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022\u02CCsi.\u02C8di\u02D0\u0022\u003Ecd\u003C/phoneme\u003E\u003C/speak\u003E"
+  },
+  {
+    "FileName": "Hide.ogg",
+    "DisplayName": "Hide",
+    "FormattedDisplayName": "|cFFFF0000Hide|r",
+    "Text": "Hide"
+  },
+  {
+    "FileName": "High Energy.ogg",
+    "DisplayName": "High Energy",
+    "FormattedDisplayName": "|cFFFF0000High Energy|r",
+    "Text": "High Energy"
+  },
+  {
+    "FileName": "High Stacks.ogg",
+    "DisplayName": "High Stacks",
+    "FormattedDisplayName": "|cFFFF0000High Stacks|r",
+    "Text": "High Stacks"
+  },
+  {
+    "FileName": "Immunity.ogg",
+    "DisplayName": "Immunity",
+    "FormattedDisplayName": "|cFFFF0000Immunity|r",
+    "Text": "Immunity"
+  },
+  {
+    "FileName": "In.ogg",
+    "DisplayName": "In",
+    "FormattedDisplayName": "|cFFFF0000In|r",
+    "Text": "In"
+  },
+  {
+    "FileName": "Innervate.ogg",
+    "DisplayName": "Innervate",
+    "FormattedDisplayName": "|cFFFF0000Innervate|r",
+    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022\u02C8\u026An\u0259r\u02CCve\u026At\u0022\u003EInnervate\u003C/phoneme\u003E\u003C/speak\u003E"
+  },
+  {
+    "FileName": "Intermission.ogg",
+    "DisplayName": "Intermission",
+    "FormattedDisplayName": "|cFFFF0000Intermission|r",
+    "Text": "Intermission"
+  },
+  {
+    "FileName": "Interrupt.ogg",
+    "DisplayName": "Interrupt",
+    "FormattedDisplayName": "|cFFFF0000Interrupt|r",
+    "Text": "Interrupt"
+  },
+  {
+    "FileName": "Invisibility.ogg",
+    "DisplayName": "Invisibility",
+    "FormattedDisplayName": "|cFFFF0000Invisibility|r",
+    "Text": "Invisibility"
+  },
+  {
+    "FileName": "Jump.ogg",
+    "DisplayName": "Jump",
+    "FormattedDisplayName": "|cFFFF0000Jump|r",
+    "Text": "Jump"
+  },
+  {
+    "FileName": "Kick.ogg",
+    "DisplayName": "Kick",
+    "FormattedDisplayName": "|cFFFF0000Kick|r",
+    "Text": "Kick"
+  },
+  {
+    "FileName": "Kite.ogg",
+    "DisplayName": "Kite",
+    "FormattedDisplayName": "|cFFFF0000Kite|r",
+    "Text": "Kite"
+  },
+  {
+    "FileName": "Knock.ogg",
+    "DisplayName": "Knock",
+    "FormattedDisplayName": "|cFFFF0000Knock|r",
+    "Text": "Knock"
+  },
+  {
+    "FileName": "Last.ogg",
+    "DisplayName": "Last",
+    "FormattedDisplayName": "|cFFFF0000Last|r",
+    "Text": "Last"
+  },
+  {
+    "FileName": "Left.ogg",
+    "DisplayName": "Left",
+    "FormattedDisplayName": "|cFFFF0000Left|r",
+    "Text": "Left"
+  },
+  {
+    "FileName": "Link.ogg",
+    "DisplayName": "Link",
+    "FormattedDisplayName": "|cFFFF0000Link|r",
+    "Text": "Link"
+  },
+  {
+    "FileName": "Linked.ogg",
+    "DisplayName": "Linked",
+    "FormattedDisplayName": "|cFFFF0000Linked|r",
+    "Text": "Linked"
+  },
+  {
+    "FileName": "LoS.ogg",
+    "DisplayName": "LoS",
+    "FormattedDisplayName": "|cFFFF0000LoS|r",
+    "Text": "LoS"
+  },
+  {
+    "FileName": "Macro.ogg",
+    "DisplayName": "Macro",
+    "FormattedDisplayName": "|cFFFF0000Macro|r",
+    "Text": "Macro"
+  },
+  {
+    "FileName": "Magic.ogg",
+    "DisplayName": "Magic",
+    "FormattedDisplayName": "|cFFFF0000Magic|r",
+    "Text": "Magic"
+  },
+  {
+    "FileName": "Main.ogg",
+    "DisplayName": "Main",
+    "FormattedDisplayName": "|cFFFF0000Main|r",
+    "Text": "Main"
+  },
+  {
+    "FileName": "MC.ogg",
+    "DisplayName": "MC",
+    "FormattedDisplayName": "|cFFFF0000MC|r",
+    "Text": "MC"
+  },
+  {
+    "FileName": "Melee.ogg",
+    "DisplayName": "Melee",
+    "FormattedDisplayName": "|cFFFF0000Melee|r",
+    "Text": "Melee"
+  },
+  {
+    "FileName": "Mines.ogg",
+    "DisplayName": "Mines",
+    "FormattedDisplayName": "|cFFFF0000Mines|r",
+    "Text": "Mines"
+  },
+  {
+    "FileName": "Move.ogg",
+    "DisplayName": "Move",
+    "FormattedDisplayName": "|cFFFF0000Move|r",
+    "Text": "Move"
+  },
+  {
+    "FileName": "Next.ogg",
+    "DisplayName": "Next",
+    "FormattedDisplayName": "|cFFFF0000Next|r",
+    "Text": "Next"
+  },
+  {
+    "FileName": "Nuke.ogg",
+    "DisplayName": "Nuke",
+    "FormattedDisplayName": "|cFFFF0000Nuke|r",
+    "Text": "Nuke"
+  },
+  {
+    "FileName": "Orange.ogg",
+    "DisplayName": "Orange",
+    "FormattedDisplayName": "|cFFFF0000Orange|r",
+    "Text": "Orange"
+  },
+  {
+    "FileName": "Orb.ogg",
+    "DisplayName": "Orb",
+    "FormattedDisplayName": "|cFFFF0000Orb|r",
+    "Text": "Orb"
+  },
+  {
+    "FileName": "Out.ogg",
+    "DisplayName": "Out",
+    "FormattedDisplayName": "|cFFFF0000Out|r",
+    "Text": "Out"
+  },
+  {
+    "FileName": "Overlap.ogg",
+    "DisplayName": "Overlap",
+    "FormattedDisplayName": "|cFFFF0000Overlap|r",
+    "Text": "Overlap"
+  },
+  {
+    "FileName": "Physical.ogg",
+    "DisplayName": "Physical",
+    "FormattedDisplayName": "|cFFFF0000Physical|r",
+    "Text": "Physical"
+  },
+  {
+    "FileName": "PI.ogg",
+    "DisplayName": "PI",
+    "FormattedDisplayName": "|cFFFF0000PI|r",
+    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022pi.\u02C8a\u026A\u0022\u003EPI\u003C/phoneme\u003E\u003C/speak\u003E"
+  },
+  {
+    "FileName": "Poison.ogg",
+    "DisplayName": "Poison",
+    "FormattedDisplayName": "|cFFFF0000Poison|r",
+    "Text": "Poison"
+  },
+  {
+    "FileName": "Pots.ogg",
+    "DisplayName": "Pots",
+    "FormattedDisplayName": "|cFFFF0000Pots|r",
+    "Text": "Pots"
+  },
+  {
+    "FileName": "PS.ogg",
+    "DisplayName": "PS",
+    "FormattedDisplayName": "|cFFFF0000PS|r",
+    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022pi.\u02C8\u025Bs\u0022\u003EPS\u003C/phoneme\u003E\u003C/speak\u003E"
+  },
+  {
+    "FileName": "Pull.ogg",
+    "DisplayName": "Pull",
+    "FormattedDisplayName": "|cFFFF0000Pull|r",
+    "Text": "Pull"
+  },
+  {
+    "FileName": "Purple.ogg",
+    "DisplayName": "Purple",
+    "FormattedDisplayName": "|cFFFF0000Purple|r",
+    "Text": "Purple"
+  },
+  {
+    "FileName": "Push.ogg",
+    "DisplayName": "Push",
+    "FormattedDisplayName": "|cFFFF0000Push|r",
+    "Text": "Push"
+  },
+  {
+    "FileName": "Range.ogg",
+    "DisplayName": "Range",
+    "FormattedDisplayName": "|cFFFF0000Range|r",
+    "Text": "Range"
+  },
+  {
+    "FileName": "Ready.ogg",
+    "DisplayName": "Ready",
+    "FormattedDisplayName": "|cFFFF0000Ready|r",
+    "Text": "Ready"
+  },
+  {
+    "FileName": "Red.ogg",
+    "DisplayName": "Red",
+    "FormattedDisplayName": "|cFFFF0000Red|r",
+    "Text": "Red"
+  },
+  {
+    "FileName": "Reflect.ogg",
+    "DisplayName": "Reflect",
+    "FormattedDisplayName": "|cFFFF0000Reflect|r",
+    "Text": "Reflect"
+  },
+  {
+    "FileName": "Refresh.ogg",
+    "DisplayName": "Refresh",
+    "FormattedDisplayName": "|cFFFF0000Refresh|r",
+    "Text": "Refresh"
+  },
+  {
+    "FileName": "Right.ogg",
+    "DisplayName": "Right",
+    "FormattedDisplayName": "|cFFFF0000Right|r",
+    "Text": "Right"
+  },
+  {
+    "FileName": "Ring.ogg",
+    "DisplayName": "Ring",
+    "FormattedDisplayName": "|cFFFF0000Ring|r",
+    "Text": "Ring"
+  },
+  {
+    "FileName": "Root.ogg",
+    "DisplayName": "Root",
+    "FormattedDisplayName": "|cFFFF0000Root|r",
+    "Text": "Root"
+  },
+  {
+    "FileName": "Sac.ogg",
+    "DisplayName": "Sac",
+    "FormattedDisplayName": "|cFFFF0000Sac|r",
+    "Text": "Sac"
+  },
+  {
+    "FileName": "Second.ogg",
+    "DisplayName": "Second",
+    "FormattedDisplayName": "|cFFFF00002. Second|r",
+    "Text": "Second"
+  },
+  {
+    "FileName": "Seed.ogg",
+    "DisplayName": "Seed",
+    "FormattedDisplayName": "|cFFFF0000Seed|r",
+    "Text": "Seed"
+  },
+  {
+    "FileName": "Selfcd.ogg",
+    "DisplayName": "Selfcd",
+    "FormattedDisplayName": "|cFFFF0000Selfcd|r",
+    "SSML": "\u003Cspeak\u003ESelf \u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022\u02CCsi.\u02C8di\u02D0\u0022\u003Ecd\u003C/phoneme\u003E\u003C/speak\u003E"
+  },
+  {
+    "FileName": "Sentry.ogg",
+    "DisplayName": "Sentry",
+    "FormattedDisplayName": "|cFFFF0000Sentry|r",
+    "Text": "Sentry"
+  },
+  {
+    "FileName": "Shield.ogg",
+    "DisplayName": "Shield",
+    "FormattedDisplayName": "|cFFFF0000Shield|r",
+    "Text": "Shield"
+  },
+  {
+    "FileName": "Side.ogg",
+    "DisplayName": "Side",
+    "FormattedDisplayName": "|cFFFF0000Side|r",
+    "Text": "Side"
+  },
+  {
+    "FileName": "Soak.ogg",
+    "DisplayName": "Soak",
+    "FormattedDisplayName": "|cFFFF0000Soak|r",
+    "Text": "Soak"
+  },
+  {
+    "FileName": "Soon.ogg",
+    "DisplayName": "Soon",
+    "FormattedDisplayName": "|cFFFF0000Soon|r",
+    "Text": "Soon"
+  },
+  {
+    "FileName": "Spawn.ogg",
+    "DisplayName": "Spawn",
+    "FormattedDisplayName": "|cFFFF0000Spawn|r",
+    "Text": "Spawn"
+  },
+  {
+    "FileName": "Spellsteal.ogg",
+    "DisplayName": "Spellsteal",
+    "FormattedDisplayName": "|cFFFF0000Spellsteal|r",
+    "Text": "Spellsteal"
+  },
+  {
+    "FileName": "Split.ogg",
+    "DisplayName": "Split",
+    "FormattedDisplayName": "|cFFFF0000Split|r",
+    "Text": "Split"
+  },
+  {
+    "FileName": "Spread.ogg",
+    "DisplayName": "Spread",
+    "FormattedDisplayName": "|cFFFF0000Spread|r",
+    "Text": "Spread"
+  },
+  {
+    "FileName": "Stack.ogg",
+    "DisplayName": "Stack",
+    "FormattedDisplayName": "|cFFFF0000Stack|r",
+    "Text": "Stack"
+  },
+  {
+    "FileName": "Stop.ogg",
+    "DisplayName": "Stop",
+    "FormattedDisplayName": "|cFFFF0000Stop|r",
+    "Text": "Stop"
+  },
+  {
+    "FileName": "Stopcast.ogg",
+    "DisplayName": "Stopcast",
+    "FormattedDisplayName": "|cFFFF0000Stopcast|r",
+    "Text": "Stop cast"
+  },
+  {
+    "FileName": "Switch.ogg",
+    "DisplayName": "Switch",
+    "FormattedDisplayName": "|cFFFF0000Switch|r",
+    "Text": "Switch"
+  },
+  {
+    "FileName": "Targeted.ogg",
+    "DisplayName": "Targeted",
+    "FormattedDisplayName": "|cFFFF0000Targeted|r",
+    "Text": "Targeted"
+  },
+  {
+    "FileName": "Taunt.ogg",
+    "DisplayName": "Taunt",
+    "FormattedDisplayName": "|cFFFF0000Taunt|r",
+    "Text": "Taunt"
+  },
+  {
+    "FileName": "Third.ogg",
+    "DisplayName": "Third",
+    "FormattedDisplayName": "|cFFFF00003. Third|r",
+    "Text": "Third"
+  },
+  {
+    "FileName": "Throw.ogg",
+    "DisplayName": "Throw",
+    "FormattedDisplayName": "|cFFFF0000Throw|r",
+    "Text": "Throw"
+  },
+  {
+    "FileName": "Totem.ogg",
+    "DisplayName": "Totem",
+    "FormattedDisplayName": "|cFFFF0000Totem|r",
+    "Text": "Totem"
+  },
+  {
+    "FileName": "Transition.ogg",
+    "DisplayName": "Transition",
+    "FormattedDisplayName": "|cFFFF0000Transition|r",
+    "Text": "Transition"
+  },
+  {
+    "FileName": "Trap.ogg",
+    "DisplayName": "Trap",
+    "FormattedDisplayName": "|cFFFF0000Trap|r",
+    "Text": "Trap"
+  },
+  {
+    "FileName": "Turn.ogg",
+    "DisplayName": "Turn",
+    "FormattedDisplayName": "|cFFFF0000Turn|r",
+    "Text": "Turn"
+  },
+  {
+    "FileName": "Use.ogg",
+    "DisplayName": "Use",
+    "FormattedDisplayName": "|cFFFF0000Use|r",
+    "Text": "Use"
+  },
+  {
+    "FileName": "Wave.ogg",
+    "DisplayName": "Wave",
+    "FormattedDisplayName": "|cFFFF0000Wave|r",
+    "Text": "Wave"
+  },
+  {
+    "FileName": "Winds.ogg",
+    "DisplayName": "Winds",
+    "FormattedDisplayName": "|cFFFF0000Winds|r",
+    "Text": "Winds"
+  },
+  {
+    "FileName": "Yellow.ogg",
+    "DisplayName": "Yellow",
+    "FormattedDisplayName": "|cFFFF0000Yellow|r",
+    "Text": "Yellow"
+  },
+  {
+    "FileName": "Zone.ogg",
+    "DisplayName": "Zone",
+    "FormattedDisplayName": "|cFFFF0000Zone|r",
+    "Text": "Zone"
+  }
+]

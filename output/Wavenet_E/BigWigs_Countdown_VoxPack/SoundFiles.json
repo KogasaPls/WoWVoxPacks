@@ -6,6 +6,12 @@
     "Text": "1"
   },
   {
+    "FileName": "countdown_10.ogg",
+    "DisplayName": "countdown_10",
+    "FormattedDisplayName": "countdown_10",
+    "Text": "10"
+  },
+  {
     "FileName": "countdown_2.ogg",
     "DisplayName": "countdown_2",
     "FormattedDisplayName": "countdown_2",
@@ -52,11 +58,5 @@
     "DisplayName": "countdown_9",
     "FormattedDisplayName": "countdown_9",
     "Text": "9"
-  },
-  {
-    "FileName": "countdown_10.ogg",
-    "DisplayName": "countdown_10",
-    "FormattedDisplayName": "countdown_10",
-    "Text": "10"
   }
 ]

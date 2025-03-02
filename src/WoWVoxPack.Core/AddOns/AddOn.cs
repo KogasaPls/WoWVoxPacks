@@ -76,7 +76,8 @@ public class AddOn
     public async Task WriteSoundFilesJsonAsync(CancellationToken cancellationToken = default)
     {
         string? soundFilesJson =
-            JsonSerializer.Serialize(SoundFiles.ToList(), SoundFileJsonContext.Default.ListSoundFile);
+            JsonSerializer.Serialize(SoundFiles.OrderBy(s => s.FileName).ToList(),
+                SoundFileJsonContext.Default.ListSoundFile);
         await File.WriteAllTextAsync(SoundFilesJsonPath, soundFilesJson, cancellationToken);
     }
 

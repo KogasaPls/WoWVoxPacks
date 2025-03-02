@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using System.Text.Json;
 
 using Ardalis.GuardClauses;
@@ -37,7 +38,6 @@ public class AddOn
             StringComparer.OrdinalIgnoreCase);
     }
 
-
     public TtsSettings TtsSettings { get; }
     public string AddOnDirectory => Path.Combine(_outputDirectoryBase, AddOnDirectoryName);
 
@@ -56,11 +56,57 @@ public class AddOn
 
     public IEnumerable<SoundFile> SoundFiles => _soundFiles.Values;
 
+    private IEnumerable<SoundFile> NewOrModifiedSoundFiles =>
+        SoundFiles.Where(f => !IsSameContentAsSoundFileInJson(f));
+
+    public IEnumerable<SoundFile> SoundFilesToCreate =>
+        SoundFiles.Where(f => !File.Exists(Path.Combine(SoundDirectory, f.FileName)))
+            .UnionBy(NewOrModifiedSoundFiles, f => f.FileName);
+
     public IReadOnlyDictionary<string, string> AdditionalProperties => _additionalProperties.AsReadOnly();
     public Note? PrimaryNote { get; }
     public IReadOnlyCollection<Note> AdditionalNotes => _additionalNotes;
     public IReadOnlyCollection<string> Interfaces => _interfaces;
     public IReadOnlyCollection<string> Files => _addOnFiles.Keys;
+
+    private ReadOnlyDictionary<string, SoundFile>? SoundFilesFromJson { get; set; }
+
+    private string SoundFilesJsonPath => Path.Combine(AddOnDirectory, "SoundFiles.json");
+
+    public async Task WriteSoundFilesJsonAsync(CancellationToken cancellationToken = default)
+    {
+        string? soundFilesJson =
+            JsonSerializer.Serialize(SoundFiles.ToList(), SoundFileJsonContext.Default.ListSoundFile);
+        await File.WriteAllTextAsync(SoundFilesJsonPath, soundFilesJson, cancellationToken);
+    }
+
+    public async Task LoadSoundFilesJsonAsync(CancellationToken cancellationToken = default)
+    {
+        if (!File.Exists(SoundFilesJsonPath))
+        {
+            SoundFilesFromJson = new Dictionary<string, SoundFile>().AsReadOnly();
+            return;
+        }
+
+        string json = await File.ReadAllTextAsync(SoundFilesJsonPath, cancellationToken);
+        List<SoundFile> soundFiles =
+            JsonSerializer.Deserialize<List<SoundFile>>(json, SoundFileJsonContext.Default.ListSoundFile) ??
+            throw new Exception("Failed to deserialize sound files.");
+
+        SoundFilesFromJson = soundFiles.ToDictionary(f => f.FileName, StringComparer.OrdinalIgnoreCase).AsReadOnly();
+    }
+
+    private bool IsSameContentAsSoundFileInJson(SoundFile soundFile)
+    {
+        ArgumentNullException.ThrowIfNull(SoundFilesFromJson);
+
+        if (!SoundFilesFromJson.TryGetValue(soundFile.FileName, out SoundFile? soundFileFromJson))
+        {
+            return false;
+        }
+
+        return SoundFileContentEqualityComparer.Default.Equals(soundFile, soundFileFromJson);
+    }
 
     protected void AddSoundFileJson(string filePath)
     {

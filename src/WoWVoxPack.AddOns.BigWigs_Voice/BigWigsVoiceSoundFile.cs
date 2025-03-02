@@ -13,20 +13,21 @@ public class BigWigsVoiceSoundFile(string spellId, string spellName)
 
     private static string GetSsml(string text)
     {
-        XNamespace ns = XNamespace.Get("http://www.w3.org/2001/10/synthesis");
+        string[] words = text.Split([' '], StringSplitOptions.RemoveEmptyEntries);
+        IEnumerable<XNode> xElementContent = words.Select((word, index) => new
+            {
+                Word = word + (index == words.Length - 1 ? "" : " "),
+                WordIpa = word.Split('=').ElementAtOrDefault(1)
+            })
+            .Select(
+                x => x.WordIpa is null
+                    ? new XText(x.Word) as XNode
+                    : new XElement("phoneme", new XAttribute("alphabet", "IPA"),
+                        new XAttribute("ph", x.WordIpa), x.Word));
 
         return new XDocument(
             new XElement(
-                ns + "speak",
-                new XAttribute("version", "1.0"),
-                new XAttribute(XNamespace.Xml + "lang", "en"),
-                text.Split([' '], StringSplitOptions.RemoveEmptyEntries)
-                    .Select(x => x.Split('='))
-                    .Select(x => new { Word = x.ElementAt(0) + " ", WordIpa = x.ElementAtOrDefault(1) })
-                    .Select(
-                        x => x.WordIpa == null
-                            ? new XText(x.Word) as XNode
-                            : new XElement(ns + "phoneme", new XAttribute("alphabet", "IPA"),
-                                new XAttribute("ph", x.WordIpa), x.Word)))).ToString();
+                "speak", xElementContent
+            )).ToString().TrimEnd();
     }
 }

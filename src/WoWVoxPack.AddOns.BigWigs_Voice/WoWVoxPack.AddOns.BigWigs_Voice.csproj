@@ -32,4 +32,8 @@
     </AdditionalFiles>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="SoundFiles\"/>
+  </ItemGroup>
+
 </Project>

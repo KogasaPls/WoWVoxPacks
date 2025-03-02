@@ -32,4 +32,6 @@ The following voices are available.
   - <video src='https://github.com/user-attachments/assets/bc28901b-165b-4d73-8fb5-956e53a95acd' width=10></video>
 - Studio_Q (Male)
   - <video src='https://github.com/user-attachments/assets/c6f39c01-4934-41dd-9f4e-7b3ca7acffdc' width=10></video>
-  
+- Studio_O (Female)
+  - <video src='https://github.com/user-attachments/assets/35d6b894-0532-4ac2-803a-de720419cbc9' width=10></video>
+

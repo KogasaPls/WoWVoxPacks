@@ -18,11 +18,13 @@ public class SoundFileService(ITtsProvider ttsProvider) : ISoundFileService
 
         string filePathWithOggExtension =
             Path.Combine(outputDirectory, Path.ChangeExtension(soundFile.FileName, ".ogg"));
-        TtsResponse ttsResponse = await TtsProvider.GetAudioContentAsync(soundFile, settings, cancellationToken);
+        TtsResponse ttsResponse = await TtsProvider.GetAudioContentAsync(soundFile, settings, cancellationToken)
+            .ConfigureAwait(false);
 
         string correctExtension = ttsResponse.Format.GetFileExtension();
         string filePathWithCorrectExtension = Path.ChangeExtension(filePathWithOggExtension, correctExtension);
-        await File.WriteAllBytesAsync(filePathWithCorrectExtension, ttsResponse.AudioContent, cancellationToken);
+        await File.WriteAllBytesAsync(filePathWithCorrectExtension, ttsResponse.AudioContent, cancellationToken)
+            .ConfigureAwait(false);
 
         string originalExtension = Path.GetExtension(soundFile.FileName);
         if (!originalExtension.Equals(correctExtension, StringComparison.OrdinalIgnoreCase) &&
@@ -36,7 +38,7 @@ public class SoundFileService(ITtsProvider ttsProvider) : ISoundFileService
                         options.WithAudioBitrate(AudioQuality.BelowNormal);
                     })
                 .CancellableThrough(cancellationToken)
-                .ProcessAsynchronously();
+                .ProcessAsynchronously().ConfigureAwait(false);
         }
     }
 }

@@ -15,9 +15,9 @@ public sealed class GoogleTtsClient(ILogger<GoogleTtsClient> logger, TextToSpeec
     {
         AutoReplenishment = true,
         QueueLimit = 50_000,
-        TokenLimit = 1000,
-        ReplenishmentPeriod = TimeSpan.FromMinutes(1),
-        TokensPerPeriod = 500,
+        TokenLimit = 500,
+        ReplenishmentPeriod = TimeSpan.FromSeconds(1),
+        TokensPerPeriod = 10,
         QueueProcessingOrder = QueueProcessingOrder.OldestFirst
     });
 

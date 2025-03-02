@@ -900,15 +900,15 @@
     "Text": "Bark"
   },
   {
+    "FileName": "BITE.ogg",
+    "DisplayName": "BITE",
+    "FormattedDisplayName": "|cFFFF0000BITE|r"
+  },
+  {
     "FileName": "Cage.ogg",
     "DisplayName": "Cage",
     "FormattedDisplayName": "|cFFFF0000Cage|r",
     "Text": "Cage"
-  },
-  {
-    "FileName": "BITE.ogg",
-    "DisplayName": "BITE",
-    "FormattedDisplayName": "|cFFFF0000BITE|r"
   },
   {
     "FileName": "Duck.ogg",

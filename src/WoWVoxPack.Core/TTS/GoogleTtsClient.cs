@@ -8,7 +8,8 @@ using Microsoft.Extensions.Logging;
 
 namespace WoWVoxPack.TTS;
 
-public class GoogleTtsClient(ILogger<GoogleTtsClient> logger, TextToSpeechClient client)
+public sealed class GoogleTtsClient(ILogger<GoogleTtsClient> logger, TextToSpeechClient client)
+    : IDisposable, IAsyncDisposable
 {
     private readonly TokenBucketRateLimiter _rateLimiter = new(new TokenBucketRateLimiterOptions
     {
@@ -143,5 +144,15 @@ public class GoogleTtsClient(ILogger<GoogleTtsClient> logger, TextToSpeechClient
         {
             GrpcAdapter = RestGrpcAdapter.Default, Settings = TextToSpeechSettings.GetDefault(), Logger = logger
         }.Build();
+    }
+
+    public void Dispose()
+    {
+        _rateLimiter.Dispose();
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        await _rateLimiter.DisposeAsync();
     }
 }

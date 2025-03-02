@@ -13,8 +13,8 @@
     <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.2"/>
     <PackageVersion Include="Microsoft.Extensions.Options" Version="9.0.2"/>
     <PackageVersion Include="Octokit" Version="14.0.0"/>
-    <PackageVersion Include="RateLimiter" Version="2.2.0"/>
     <PackageVersion Include="StyleCop.Analyzers" Version="1.2.0-beta.556"/>
+    <PackageVersion Include="System.Threading.RateLimiting" Version="9.0.2"/>
   </ItemGroup>
   <ItemGroup>
     <PackageVersion Include="Google.Cloud.TextToSpeech.V1" Version="3.10.0"/>

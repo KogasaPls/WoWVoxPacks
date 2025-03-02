@@ -47,9 +47,10 @@ public class Worker : IHostedService
     {
         foreach ((IAddOnService addOnService, TtsSettings ttsSettings) in Matrix)
         {
-            string? outputDirectory =
+            string outputDirectory =
                 Path.Combine(OutputDirectoryBase, Guard.Against.Null(ttsSettings.Voice).ToString());
             AddOn addOn = await addOnService.BuildAddOnAsync(outputDirectory, ttsSettings, cancellationToken);
+            await addOn.LoadSoundFilesJsonAsync(cancellationToken);
 
             Logger.LogInformation("Building {AddOnName} addon in directory {OutputDirectory}", addOn.Title,
                 addOn.AddOnDirectory);
@@ -59,11 +60,13 @@ public class Worker : IHostedService
             string soundOutputDirectory = addOn.SoundDirectory;
             Directory.CreateDirectory(soundOutputDirectory);
 
-            IEnumerable<Task>? tasks = addOn.SoundFiles.Select(soundFile =>
-                SoundFileService.CreateSoundFileIfNotExistsAsync(soundFile, soundOutputDirectory, ttsSettings,
-                    cancellationToken));
+            Task[]? createSoundFileTasks = addOn.SoundFilesToCreate.Select(
+                soundFile =>
+                    SoundFileService.CreateSoundFileAsync(soundFile, soundOutputDirectory, ttsSettings,
+                        cancellationToken)).ToArray();
 
-            await Task.WhenAll(tasks.ToArray());
+            await Task.WhenAll(createSoundFileTasks);
+            await addOn.WriteSoundFilesJsonAsync(cancellationToken);
 
             Logger.LogInformation("Finished building addon: {AddOnName}", addOn.Title);
         }
@@ -71,6 +74,7 @@ public class Worker : IHostedService
         Logger.LogInformation("Finished building add-ons, stopping");
         ApplicationLifetime.StopApplication();
     }
+
 
     public Task StopAsync(CancellationToken cancellationToken)
     {

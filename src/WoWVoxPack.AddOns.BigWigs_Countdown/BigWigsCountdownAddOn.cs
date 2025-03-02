@@ -28,16 +28,16 @@ public class BigWigsCountdownAddOn : AddOn
     {
         return
         [
-            new SoundFile("countdown_1", "1"),
-            new SoundFile("countdown_2", "2"),
-            new SoundFile("countdown_3", "3"),
-            new SoundFile("countdown_4", "4"),
-            new SoundFile("countdown_5", "5"),
-            new SoundFile("countdown_6", "6"),
-            new SoundFile("countdown_7", "7"),
-            new SoundFile("countdown_8", "8"),
-            new SoundFile("countdown_9", "9"),
-            new SoundFile("countdown_10", "10")
+            new SoundFile("countdown_1.ogg", "1"),
+            new SoundFile("countdown_2.ogg", "2"),
+            new SoundFile("countdown_3.ogg", "3"),
+            new SoundFile("countdown_4.ogg", "4"),
+            new SoundFile("countdown_5.ogg", "5"),
+            new SoundFile("countdown_6.ogg", "6"),
+            new SoundFile("countdown_7.ogg", "7"),
+            new SoundFile("countdown_8.ogg", "8"),
+            new SoundFile("countdown_9.ogg", "9"),
+            new SoundFile("countdown_10.ogg", "10")
         ];
     }
 }

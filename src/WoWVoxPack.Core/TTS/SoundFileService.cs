@@ -7,7 +7,7 @@ public class SoundFileService(ITtsProvider ttsProvider) : ISoundFileService
 {
     private ITtsProvider TtsProvider { get; } = ttsProvider;
 
-    public async Task CreateSoundFileIfNotExistsAsync(SoundFile soundFile, string outputDirectory, TtsSettings settings,
+    public async Task CreateSoundFileAsync(SoundFile soundFile, string outputDirectory, TtsSettings settings,
         CancellationToken cancellationToken = default)
     {
         if (!string.IsNullOrEmpty(soundFile.CopyFromPath))
@@ -18,11 +18,6 @@ public class SoundFileService(ITtsProvider ttsProvider) : ISoundFileService
 
         string filePathWithOggExtension =
             Path.Combine(outputDirectory, Path.ChangeExtension(soundFile.FileName, ".ogg"));
-        if (File.Exists(filePathWithOggExtension))
-        {
-            return;
-        }
-
         TtsResponse ttsResponse = await TtsProvider.GetAudioContentAsync(soundFile, settings, cancellationToken);
 
         string correctExtension = ttsResponse.Format.GetFileExtension();
@@ -39,7 +34,6 @@ public class SoundFileService(ITtsProvider ttsProvider) : ISoundFileService
                     {
                         options.WithAudioCodec("libvorbis");
                         options.WithAudioBitrate(AudioQuality.BelowNormal);
-                        options.UsingMultithreading(false);
                     })
                 .CancellableThrough(cancellationToken)
                 .ProcessAsynchronously();

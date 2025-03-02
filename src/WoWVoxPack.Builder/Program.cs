@@ -15,7 +15,8 @@ IHostBuilder hostBuilder = Host.CreateDefaultBuilder(args)
     .UseConsoleLifetime()
     .ConfigureServices((_, services) =>
     {
-        services.AddScoped<GoogleTtsClient>();
+        services.AddTextToSpeechClient();
+        services.AddSingleton<GoogleTtsClient>();
         services.AddSingleton<ITtsProvider, GoogleTtsProvider>();
         services.AddSingleton<ISoundFileService, SoundFileService>();
         services.AddHttpClient<IBigWigsVoiceUpstreamClient, BigWigsVoiceUpstreamClient>();
@@ -46,6 +47,7 @@ IHostBuilder hostBuilder = Host.CreateDefaultBuilder(args)
 
         config.AddCommandLine(args);
     });
+
 
 using IHost host = hostBuilder.Build();
 await host.RunAsync();

@@ -1,26 +1,23 @@
+using System.Threading.RateLimiting;
+
 using Google.Api.Gax.Grpc.Rest;
 using Google.Cloud.TextToSpeech.V1;
 using Google.Protobuf;
 
 using Microsoft.Extensions.Logging;
 
-using RateLimiter;
-
 namespace WoWVoxPack.TTS;
 
-public class GoogleTtsClient
+public class GoogleTtsClient(ILogger<GoogleTtsClient> logger, TextToSpeechClient client)
 {
-    private readonly TextToSpeechClient _client;
-    private readonly ILogger<GoogleTtsClient> _logger;
-
-    private readonly TimeLimiter _rateLimiter =
-        TimeLimiter.GetFromMaxCountByInterval(500, TimeSpan.FromMinutes(1));
-
-    public GoogleTtsClient(ILogger<GoogleTtsClient> logger)
+    private readonly TokenBucketRateLimiter _rateLimiter = new(new TokenBucketRateLimiterOptions
     {
-        _logger = logger;
-        _client = CreateClient();
-    }
+        AutoReplenishment = true,
+        QueueLimit = 50_000,
+        TokenLimit = 1000,
+        ReplenishmentPeriod = TimeSpan.FromMinutes(1),
+        TokensPerPeriod = 500
+    });
 
     public Task<ByteString> SynthesizeText(
         string text,
@@ -42,7 +39,7 @@ public class GoogleTtsClient
             ttsSettings.Pitch, ttsSettings.SampleRateHertz, audioEncoding, cancellationToken);
     }
 
-    public Task<ByteString> SynthesizeText(
+    public async Task<ByteString> SynthesizeText(
         string text,
         VoiceName voice = VoiceName.Default,
         string languageCode = "en-US",
@@ -52,12 +49,12 @@ public class GoogleTtsClient
         AudioEncoding audioEncoding = AudioEncoding.Linear16,
         CancellationToken cancellationToken = default)
     {
-        return _rateLimiter.Enqueue(() =>
-            SynthesizeTextCore(text, voice, languageCode, speakingRate, pitch, sampleRateHertz, audioEncoding,
-                cancellationToken), cancellationToken);
+        using RateLimitLease limit = await _rateLimiter.AcquireAsync(1, cancellationToken);
+        return await SynthesizeTextCore(text, voice, languageCode, speakingRate, pitch, sampleRateHertz, audioEncoding,
+            cancellationToken);
     }
 
-    public Task<ByteString> SynthesizeSsml(
+    public async Task<ByteString> SynthesizeSsml(
         string ssml,
         VoiceName voice = VoiceName.Default,
         string languageCode = "en-US",
@@ -67,9 +64,9 @@ public class GoogleTtsClient
         AudioEncoding audioEncoding = AudioEncoding.Linear16,
         CancellationToken cancellationToken = default)
     {
-        return _rateLimiter.Enqueue(() =>
-            SynthesizeSsmlCore(ssml, voice, languageCode, speakingRate, pitch, sampleRateHertz, audioEncoding,
-                cancellationToken), cancellationToken);
+        using RateLimitLease limit = await _rateLimiter.AcquireAsync(1, cancellationToken);
+        return await SynthesizeSsmlCore(ssml, voice, languageCode, speakingRate, pitch, sampleRateHertz, audioEncoding,
+            cancellationToken);
     }
 
     private async Task<ByteString> SynthesizeTextCore(
@@ -82,8 +79,8 @@ public class GoogleTtsClient
         AudioEncoding audioEncoding,
         CancellationToken cancellationToken = default)
     {
-        _logger.LogInformation("Synthesizing text: {Text}", text);
-        SynthesizeSpeechResponse? result = await _client.SynthesizeSpeechAsync(
+        logger.LogInformation("Synthesizing text: {Text}", text);
+        SynthesizeSpeechResponse? result = await client.SynthesizeSpeechAsync(
             new SynthesizeSpeechRequest
             {
                 Input = new SynthesisInput { Text = text },
@@ -116,8 +113,8 @@ public class GoogleTtsClient
         AudioEncoding audioEncoding,
         CancellationToken cancellationToken = default)
     {
-        _logger.LogInformation("Synthesizing SSML: {Ssml}", ssml);
-        SynthesizeSpeechResponse? result = await _client.SynthesizeSpeechAsync(
+        logger.LogInformation("Synthesizing SSML: {Ssml}", ssml);
+        SynthesizeSpeechResponse? result = await client.SynthesizeSpeechAsync(
             new SynthesizeSpeechRequest
             {
                 Input = new SynthesisInput { Ssml = ssml },
@@ -144,7 +141,7 @@ public class GoogleTtsClient
     {
         return new TextToSpeechClientBuilder
         {
-            GrpcAdapter = RestGrpcAdapter.Default, Settings = TextToSpeechSettings.GetDefault(), Logger = _logger
+            GrpcAdapter = RestGrpcAdapter.Default, Settings = TextToSpeechSettings.GetDefault(), Logger = logger
         }.Build();
     }
 }

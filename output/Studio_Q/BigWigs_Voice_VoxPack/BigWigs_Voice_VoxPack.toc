@@ -1,0 +1,25 @@
+## Interface: 110005, 110007, 110100
+
+## Title: BigWigs |cffff7f3f+|r|cffffffffVoice: VoxPacks Studio_Q|r
+## Version: 11.1.0
+## Notes: A plugin for BigWigs that will play Text-To-Speech sounds for boss abilities.
+## Notes-deDE: A plugin for BigWigs that will play Text-To-Speech sounds for boss abilities.
+## Notes-esES: A plugin for BigWigs that will play Text-To-Speech sounds for boss abilities.
+## Notes-esMX: A plugin for BigWigs that will play Text-To-Speech sounds for boss abilities.
+## Notes-frFR: A plugin for BigWigs that will play Text-To-Speech sounds for boss abilities.
+## Notes-itIT: A plugin for BigWigs that will play Text-To-Speech sounds for boss abilities.
+## Notes-koKR: 우두머리 능력에 대하여 텍스트 음성 변환 소리를 재생하는 BigWigs 플러그인입니다.
+## Notes-ptBR: A plugin for BigWigs that will play Text-To-Speech sounds for boss abilities.
+## Notes-ruRU: A plugin for BigWigs that will play Text-To-Speech sounds for boss abilities.
+## Notes-zhCN: BigWigs附加模块，为团队首领技能播放语音合成（TTS）提示。
+## Notes-zhTW: BigWigs附加模組，為團隊首領技能播放語音合成（TTS）提示。
+## Author: KogasaPls
+
+## Dependencies: BigWigs
+## IconTexture: Interface\AddOns\BigWigs\Media\Icons\core-enabled
+## LoadOnDemand: 1
+## X-BigWigs-LoadOn-CoreEnabled: 1
+## X-Category: Raid
+## X-License: Apache-2.0
+
+Core.lua

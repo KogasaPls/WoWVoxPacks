@@ -32,7 +32,7 @@ namespace WoWVoxPack.AddOns.BigWigs_Countdown
             
             #line default
             #line hidden
-            this.Write("\nlocal path = \"");
+            this.Write("\"\nlocal path = \"");
             
             #line 6 "/home/kogasa/git/WoWVoxPack/src/WoWVoxPack.AddOns.BigWigs_Countdown/CountdownLuaFile.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(SoundsPath));

@@ -96,7 +96,7 @@ public class GoogleTtsClient
                     SampleRateHertz = sampleRateHertz,
                     Pitch = pitch
                 }
-            }, cancellationToken);
+            }, cancellationToken).ConfigureAwait(false);
 
         if (result.AudioContent is null)
         {
@@ -121,10 +121,7 @@ public class GoogleTtsClient
             new SynthesizeSpeechRequest
             {
                 Input = new SynthesisInput { Ssml = ssml },
-                Voice = new VoiceSelectionParams
-                {
-                    LanguageCode = languageCode, Name = voice.GetVoiceName()
-                },
+                Voice = new VoiceSelectionParams { LanguageCode = languageCode, Name = voice.GetVoiceName() },
                 AudioConfig = new AudioConfig
                 {
                     AudioEncoding = audioEncoding,
@@ -133,7 +130,7 @@ public class GoogleTtsClient
                     SampleRateHertz = sampleRateHertz,
                     Pitch = pitch
                 }
-            }, cancellationToken);
+            }, cancellationToken).ConfigureAwait(false);
 
         if (result.AudioContent is null)
         {

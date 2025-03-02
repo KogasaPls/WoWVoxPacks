@@ -13,12 +13,12 @@ public class GoogleTtsProvider(GoogleTtsClient client) : ITtsProvider
         if (soundFile.Ssml is { } ssml)
         {
             audioContent = await Client.SynthesizeSsml(ssml, settings,
-                cancellationToken: cancellationToken);
+                cancellationToken: cancellationToken).ConfigureAwait(false);
         }
         else if (soundFile.Text is { } text)
         {
             audioContent = await Client.SynthesizeText(text, settings,
-                cancellationToken: cancellationToken);
+                cancellationToken: cancellationToken).ConfigureAwait(false);
         }
         else
         {

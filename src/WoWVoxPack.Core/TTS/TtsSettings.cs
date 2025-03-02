@@ -1,7 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 
+using JetBrains.Annotations;
+
 namespace WoWVoxPack.TTS;
 
+[UsedImplicitly]
 public class TtsSettings
 {
     [Required]

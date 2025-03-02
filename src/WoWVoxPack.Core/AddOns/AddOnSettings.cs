@@ -19,7 +19,7 @@ public class AddOnSettings
     public string? Notes { get; set; }
 
     [Required]
-    public List<string>? Interfaces { get; set; } = new();
+    public List<string>? Interfaces { get; set; } = [];
 
     public Dictionary<string, string>? AdditionalNotes
     {

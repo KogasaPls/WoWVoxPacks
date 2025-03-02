@@ -35,9 +35,6 @@ jobs:
           tag_name: ${{ env.RELEASE_TAG }}
           name: Release ${{ env.RELEASE_TAG }}
           body: |
-            BigWigs_Voice version: $(cat bigwigs-voice-version.txt)
-            SharedMedia_Causese version: $(cat sharedmedia-causese-version.txt)
-            
             Automatically created by the release workflow.
           draft: false
           prerelease: false

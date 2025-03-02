@@ -103,7 +103,7 @@ public class AddOn
 
         if (!SoundFilesFromJson.TryGetValue(soundFile.FileName, out SoundFile? soundFileFromJson))
         {
-            return false;
+            return true;
         }
 
         return SoundFileContentEqualityComparer.Default.Equals(soundFile, soundFileFromJson);

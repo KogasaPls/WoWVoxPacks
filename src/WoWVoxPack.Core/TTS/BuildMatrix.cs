@@ -5,5 +5,5 @@ namespace WoWVoxPack.TTS;
 public class BuildMatrix
 {
     [Required]
-    public List<TtsSettings> TtsSettings { get; set; }
+    public List<TtsSettings> TtsSettings { get; set; } = null!;
 }

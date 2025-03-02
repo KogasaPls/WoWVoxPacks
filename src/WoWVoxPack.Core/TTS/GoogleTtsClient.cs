@@ -87,10 +87,7 @@ public class GoogleTtsClient
             new SynthesizeSpeechRequest
             {
                 Input = new SynthesisInput { Text = text },
-                Voice = new VoiceSelectionParams
-                {
-                    LanguageCode = languageCode, Name = Voices.GetVoiceName(voice, languageCode)
-                },
+                Voice = new VoiceSelectionParams { LanguageCode = languageCode, Name = voice.GetVoiceName() },
                 AudioConfig = new AudioConfig
                 {
                     AudioEncoding = audioEncoding,
@@ -126,7 +123,7 @@ public class GoogleTtsClient
                 Input = new SynthesisInput { Ssml = ssml },
                 Voice = new VoiceSelectionParams
                 {
-                    LanguageCode = languageCode, Name = Voices.GetVoiceName(voice, languageCode)
+                    LanguageCode = languageCode, Name = voice.GetVoiceName()
                 },
                 AudioConfig = new AudioConfig
                 {

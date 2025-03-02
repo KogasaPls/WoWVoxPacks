@@ -1,4 +1,5 @@
 using System.Collections.Concurrent;
+using System.Collections.Frozen;
 using System.IO.Compression;
 using System.Text.RegularExpressions;
 
@@ -8,29 +9,37 @@ namespace WoWVoxPack.AddOns.SharedMedia_Causese;
 
 public partial class ParsedSoundpathsLuaFile(string content)
 {
+    private static readonly string[] NonTtsSoundFiles = ["BITE.ogg", "Duck.ogg"];
+
     [GeneratedRegex("""LSM:Register\("sound", "(?<FormattedDisplayName>[^"]+)", \[\[(?<FileName>[^]]+)]]""")]
-    public partial Regex SoundFileRegex { get; }
+    private static partial Regex SoundFileRegex { get; }
+
+    private IEnumerable<SoundFileRegexMatch> GetSoundFileRegexMatches()
+    {
+        foreach (Match match in SoundFileRegex.Matches(content))
+        {
+            yield return new SoundFileRegexMatch(match.Groups["FileName"].Value,
+                match.Groups["FormattedDisplayName"].Value);
+        }
+    }
+
+    private IEnumerable<PartialSoundFile> ParseSoundFiles()
+    {
+        foreach ((string? fileName, string? formattedDisplayName) in GetSoundFileRegexMatches())
+        {
+            yield return new PartialSoundFile
+            {
+                FileName = Path.GetFileName(fileName.Replace("\\", "/")),
+                DisplayName = Path.GetFileNameWithoutExtension(fileName),
+                FormattedDisplayName = formattedDisplayName
+            };
+        }
+    }
 
 
     public async Task<IEnumerable<SoundFile>> GetSoundFilesAsync(ZipArchive archive,
         CancellationToken cancellationToken = default)
     {
-        Dictionary<string, PartialSoundFile> parsedSoundFilesByFileName = new();
-
-        // LSM:Register("sound", "|cFFFF0000Bark|r", [[Interface\AddOns\SharedMedia_Causese\sound\Bark.ogg]])
-        foreach (Match match in SoundFileRegex.Matches(content))
-        {
-            string fileName = Path.GetFileName(match.Groups["FileName"].Value.Replace("\\", "/"));
-            string formattedDisplayName = match.Groups["FormattedDisplayName"].Value;
-
-            parsedSoundFilesByFileName[fileName] = new PartialSoundFile
-            {
-                FileName = fileName,
-                DisplayName = Path.GetFileNameWithoutExtension(fileName),
-                FormattedDisplayName = formattedDisplayName
-            };
-        }
-
         ConcurrentBag<SoundFile> soundFiles = new();
 
         foreach (ZipArchiveEntry entry in archive.Entries.Where(entry =>
@@ -39,8 +48,10 @@ public partial class ParsedSoundpathsLuaFile(string content)
             string baseName;
             SoundFile soundFile;
 
-            if (entry.Name.Equals("BITE.ogg", StringComparison.OrdinalIgnoreCase) ||
-                entry.Name.Equals("Duck.ogg", StringComparison.OrdinalIgnoreCase))
+            FrozenDictionary<string, PartialSoundFile> parsedSoundFilesByFileName =
+                ParseSoundFiles().ToFrozenDictionary(x => x.FileName);
+
+            if (NonTtsSoundFiles.Contains(entry.Name, StringComparer.OrdinalIgnoreCase))
             {
                 string tmpPath = Path.GetTempFileName();
                 await using Stream entryStream = entry.Open();
@@ -72,6 +83,8 @@ public partial class ParsedSoundpathsLuaFile(string content)
 
         return soundFiles;
     }
+
+    private record struct SoundFileRegexMatch(string FileName, string FormattedDisplayName);
 
     private class PartialSoundFile
     {

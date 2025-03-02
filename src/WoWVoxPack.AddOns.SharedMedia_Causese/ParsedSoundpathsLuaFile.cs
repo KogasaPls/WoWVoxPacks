@@ -1,4 +1,3 @@
-using System.Collections.Concurrent;
 using System.Collections.Frozen;
 using System.IO.Compression;
 using System.Text.RegularExpressions;
@@ -36,31 +35,35 @@ public partial class ParsedSoundpathsLuaFile(string content)
         }
     }
 
+    private static async Task<SoundFile> GetNonTtsSoundFileAsync(ZipArchiveEntry entry,
+        CancellationToken cancellationToken = default)
+    {
+        string tmpPath = Path.GetTempFileName();
+        await using Stream entryStream = entry.Open();
+        await using FileStream fileStream = File.OpenWrite(tmpPath);
+        await entryStream.CopyToAsync(fileStream, cancellationToken);
+
+        string baseName = Path.GetFileNameWithoutExtension(entry.Name);
+        return new SoundFile(entry.Name,
+            formattedDisplayName: $"|cFFFF0000{baseName}|r") { CopyFromPath = tmpPath };
+    }
 
     public async Task<IEnumerable<SoundFile>> GetSoundFilesAsync(ZipArchive archive,
         CancellationToken cancellationToken = default)
     {
-        ConcurrentBag<SoundFile> soundFiles = new();
+        List<SoundFile> soundFiles = [];
+
+        FrozenDictionary<string, PartialSoundFile> parsedSoundFilesByFileName =
+            ParseSoundFiles().ToFrozenDictionary(x => x.FileName);
 
         foreach (ZipArchiveEntry entry in archive.Entries.Where(entry =>
                      entry.FullName.StartsWith("SharedMedia_Causese/sound/") && entry.Name.EndsWith(".ogg")))
         {
-            string baseName;
             SoundFile soundFile;
-
-            FrozenDictionary<string, PartialSoundFile> parsedSoundFilesByFileName =
-                ParseSoundFiles().ToFrozenDictionary(x => x.FileName);
 
             if (NonTtsSoundFiles.Contains(entry.Name, StringComparer.OrdinalIgnoreCase))
             {
-                string tmpPath = Path.GetTempFileName();
-                await using Stream entryStream = entry.Open();
-                await using FileStream fileStream = File.OpenWrite(tmpPath);
-                await entryStream.CopyToAsync(fileStream, cancellationToken);
-
-                baseName = Path.GetFileNameWithoutExtension(entry.Name);
-                soundFile = new SoundFile(entry.Name,
-                    formattedDisplayName: $"|cFFFF0000{baseName}|r") { CopyFromPath = tmpPath };
+                soundFile = await GetNonTtsSoundFileAsync(entry, cancellationToken);
             }
             else
             {
@@ -72,7 +75,7 @@ public partial class ParsedSoundpathsLuaFile(string content)
                 }
                 else
                 {
-                    baseName = Path.GetFileNameWithoutExtension(entry.Name);
+                    string baseName = Path.GetFileNameWithoutExtension(entry.Name);
                     soundFile = new SoundFile(entry.Name, baseName, displayName: baseName,
                         formattedDisplayName: $"|cFFFF0000{baseName}|r");
                 }

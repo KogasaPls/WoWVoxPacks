@@ -67,17 +67,18 @@ public partial class ParsedSoundpathsLuaFile(string content)
             }
             else
             {
+                string baseName = Path.GetFileNameWithoutExtension(entry.Name);
+
                 PartialSoundFile? partialSoundFile = parsedSoundFilesByFileName.GetValueOrDefault(entry.Name);
                 if (partialSoundFile is not null)
                 {
-                    soundFile = new SoundFile(entry.Name, displayName: partialSoundFile.DisplayName,
-                        formattedDisplayName: partialSoundFile.FormattedDisplayName);
+                    soundFile = new SoundFile($"{baseName}.ogg", displayName: partialSoundFile.DisplayName,
+                        formattedDisplayName: partialSoundFile.FormattedDisplayName, text: entry.Name);
                 }
                 else
                 {
-                    string baseName = Path.GetFileNameWithoutExtension(entry.Name);
-                    soundFile = new SoundFile(entry.Name, baseName, displayName: baseName,
-                        formattedDisplayName: $"|cFFFF0000{baseName}|r");
+                    soundFile = new SoundFile("${baseName}.ogg", displayName: baseName,
+                        formattedDisplayName: $"|cFFFF0000{baseName}|r", text: entry.Name);
                 }
             }
 

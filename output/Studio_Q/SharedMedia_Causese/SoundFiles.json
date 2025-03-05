@@ -230,7 +230,7 @@
     "FileName": "Cage.ogg",
     "DisplayName": "Cage",
     "FormattedDisplayName": "|cFFFF0000Cage|r",
-    "Text": "Cage"
+    "Text": "Cage.ogg"
   },
   {
     "FileName": "CC.ogg",
@@ -446,6 +446,12 @@
     "DisplayName": "Green",
     "FormattedDisplayName": "|cFFFF0000Green|r",
     "Text": "Green"
+  },
+  {
+    "FileName": "Grip.ogg",
+    "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Grip",
+    "FormattedDisplayName": "|cFFFF0000Grip|r",
+    "Text": "Grip.ogg"
   },
   {
     "FileName": "Healcd.ogg",

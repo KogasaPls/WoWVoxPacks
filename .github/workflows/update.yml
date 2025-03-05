@@ -104,11 +104,6 @@ jobs:
       OUTPUT_DIR: dist
     steps:
       - uses: actions/checkout@v4
-      - id: 'auth'
-        name: 'Authenticate to Google Cloud'
-        uses: 'google-github-actions/auth@v2'
-        with:
-          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
@@ -120,6 +115,14 @@ jobs:
         env:
           BIGWIGS_VERSION: ${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version }}
           CAUSESE_VERSION: ${{ needs.check-causese-version.outputs.causese_version }}
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+      - uses: FedericoCarboni/setup-ffmpeg@v3
+        with:
+          ffmpeg-version: release
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.0.x'

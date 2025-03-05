@@ -77,7 +77,7 @@ public partial class ParsedSoundpathsLuaFile(string content)
                 }
                 else
                 {
-                    soundFile = new SoundFile("${baseName}.ogg", displayName: baseName,
+                    soundFile = new SoundFile($"{baseName}.ogg", displayName: baseName,
                         formattedDisplayName: $"|cFFFF0000{baseName}|r", text: entry.Name);
                 }
             }

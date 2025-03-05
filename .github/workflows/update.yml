@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       bigwigs_version: ${{ steps.compare-versions.outputs.bigwigs_version }}
+      needs_update: ${{ steps.compare-versions.outputs.needs_update }}
     steps:
       - name: Get latest BigWigsVoice release
         id: get-bigwigsvoice-release
@@ -51,6 +52,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       causese_version: ${{ steps.compare-versions.outputs.causese_version }}
+      needs_update: ${{ steps.compare-versions.outputs.needs_update }}
     steps:
       - name: Get latest SharedMedia_Causese release
         id: get-causese-release
@@ -81,7 +83,7 @@ jobs:
           fi
 
           echo "causese_version=$(cat version.txt)" >> $GITHUB_OUTPUT
-          
+
           if [ "$(cat version.txt)" != "$(cat previous-version.txt)" ]; then
             echo "New version detected (old: $(cat previous-version.txt), new: $(cat version.txt))"
             echo "needs_update=true" >> $GITHUB_OUTPUT

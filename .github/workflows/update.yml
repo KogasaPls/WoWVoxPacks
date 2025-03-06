@@ -150,6 +150,7 @@ jobs:
           add-paths: |
             output/
             bigwigs-voice-version.txt
+            sharedmedia-causese-version.txt
           sign-commits: true
       - name: Enable Pull Request Automerge
         run: gh pr merge --merge --auto --delete-branch "$PR_NUMBER"

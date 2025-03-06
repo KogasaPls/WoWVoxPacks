@@ -154,5 +154,5 @@ jobs:
       - name: Enable Pull Request Automerge
         run: gh pr merge --merge --auto --delete-branch "$PR_NUMBER"
         env:
-          GH_TOKEN: ${{ secrets.PAT }}
+          GH_TOKEN: ${{  secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ steps.create-pull-request.outputs.pull-request-number }}

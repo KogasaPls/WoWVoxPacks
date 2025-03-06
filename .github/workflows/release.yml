@@ -2,7 +2,7 @@ name: Create release
 on:
   pull_request:
     types: [ closed ]
-    branches: [ ci/* ]
+    branches: [ main ]
   workflow_dispatch:
   push:
     tags: [ 'v*' ]

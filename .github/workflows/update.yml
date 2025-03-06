@@ -137,6 +137,7 @@ jobs:
 
       - name: Create a pull request
         uses: peter-evans/create-pull-request@v7
+        id: create-pull-request
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "[ci] Automatic update"

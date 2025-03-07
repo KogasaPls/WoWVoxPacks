@@ -159,7 +159,7 @@
     "DisplayName": "AoE",
     "FileName": "AoE.ogg",
     "FormattedDisplayName": "|cFFFF0000AoE|r",
-    "Text": "AOE"
+    "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"ˌeɪ.joʊˈwi\">AoE</phoneme></speak>"
   },
   {
     "DisplayName": "Assist",

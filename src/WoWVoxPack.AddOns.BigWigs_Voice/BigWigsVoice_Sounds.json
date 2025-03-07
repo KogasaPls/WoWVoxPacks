@@ -3,5 +3,25 @@
     "DisplayName": "Goresplatter",
     "FileName": "338353.ogg",
     "SSML": "<speak><phoneme alphabet=\"IPA\" ph=\"ˈɡɔrˌsplætər\">Goresplatter</phoneme></speak>"
+  },
+  {
+    "DisplayName": "B.4.T.T.L.3. Mine",
+    "FileName": "1216431.ogg",
+    "Text": "Battle Mine"
+  },
+  {
+    "DisplayName": "Discom-BOMB-ulator",
+    "FileName": "285454.ogg",
+    "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"dɪs.kəmˈbɑm.bjə.leɪ.tɚ\">Discom-BOMB-bulator</phoneme></speak>"
+  },
+  {
+    "DisplayName": "Call Earthrager",
+    "FileName": "257593.ogg",
+    "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"kɔl ˈɝθˌreɪ.dʒɚ\">Call Earthrager</phoneme></speak>"
+  },
+  {
+    "DisplayName": "Fill 'Er Up",
+    "FileName": "440147.ogg",
+    "Text": "Filler up."
   }
 ]

@@ -771,7 +771,7 @@
     "FileName": "1216431.ogg",
     "DisplayName": "B.4.T.T.L.3. Mine",
     "FormattedDisplayName": "B.4.T.T.L.3. Mine",
-    "SSML": "\u003Cspeak\u003EB.4.T.T.L.3. Mine\u003C/speak\u003E"
+    "Text": "Battle Mine"
   },
   {
     "FileName": "1216443.ogg",
@@ -11661,7 +11661,7 @@
     "FileName": "257593.ogg",
     "DisplayName": "Call Earthrager",
     "FormattedDisplayName": "Call Earthrager",
-    "SSML": "\u003Cspeak\u003ECall Earthrager\u003C/speak\u003E"
+    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022k\u0254l \u02C8\u025D\u03B8\u02CCre\u026A.d\u0292\u025A\u0022\u003ECall Earthrager\u003C/phoneme\u003E\u003C/speak\u003E"
   },
   {
     "FileName": "257608.ogg",
@@ -14667,7 +14667,7 @@
     "FileName": "285454.ogg",
     "DisplayName": "Discom-BOMB-ulator",
     "FormattedDisplayName": "Discom-BOMB-ulator",
-    "SSML": "\u003Cspeak\u003EDiscom-BOMB-ulator\u003C/speak\u003E"
+    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022d\u026As.k\u0259m\u02C8b\u0251m.bj\u0259.le\u026A.t\u025A\u0022\u003EDiscom-BOMB-bulator\u003C/phoneme\u003E\u003C/speak\u003E"
   },
   {
     "FileName": "285459.ogg",
@@ -29703,7 +29703,7 @@
     "FileName": "440147.ogg",
     "DisplayName": "Fill \u0027Er Up",
     "FormattedDisplayName": "Fill \u0027Er Up",
-    "SSML": "\u003Cspeak\u003EFill \u0027Er Up\u003C/speak\u003E"
+    "Text": "Filler up."
   },
   {
     "FileName": "440177.ogg",

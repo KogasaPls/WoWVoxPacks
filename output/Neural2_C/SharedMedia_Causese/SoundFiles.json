@@ -129,7 +129,7 @@
     "FileName": "AoE.ogg",
     "DisplayName": "AoE",
     "FormattedDisplayName": "|cFFFF0000AoE|r",
-    "Text": "AOE"
+    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022\u02CCe\u026A.jo\u028A\u02C8wi\u0022\u003EAoE\u003C/phoneme\u003E\u003C/speak\u003E"
   },
   {
     "FileName": "Assist.ogg",
@@ -236,7 +236,7 @@
     "FileName": "CC.ogg",
     "DisplayName": "CC",
     "FormattedDisplayName": "|cFFFF0000CC|r",
-    "Text": "C C"
+    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022\u02CCsi\u02D0\u02C8si\u02D0\u0022\u003ECC\u003C/phoneme\u003E\u003C/speak\u003E"
   },
   {
     "FileName": "CD.ogg",

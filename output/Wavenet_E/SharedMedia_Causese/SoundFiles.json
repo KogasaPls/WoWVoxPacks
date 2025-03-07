@@ -236,7 +236,7 @@
     "FileName": "CC.ogg",
     "DisplayName": "CC",
     "FormattedDisplayName": "|cFFFF0000CC|r",
-    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022\u02CCsi\u02D0\u02C8si\u02D0\u0022\u003ECC\u003C/phoneme\u003E\u003C/speak\u003E"
+    "Text": "C C"
   },
   {
     "FileName": "CD.ogg",

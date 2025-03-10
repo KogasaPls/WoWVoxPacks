@@ -8,7 +8,7 @@ jobs:
       matrix:
         include:
           - voice: Wavenet_E
-            addon: BigWigs_Voice
+            addon: BigWigs_Voice_VoxPack
             project_id: 1215288
           - voice: Wavenet_E
             addon: SharedMedia_Causese

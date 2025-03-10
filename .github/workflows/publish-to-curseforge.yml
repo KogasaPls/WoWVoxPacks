@@ -24,12 +24,12 @@ jobs:
         id: set-release-tag-push
         if: github.event_name == 'push' || github.event_name == 'release'
         run: echo "RELEASE_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-      - uses: actions/checkout@v4
-        if: github.event_name != 'push' && github.event_name != 'release'
       - name: Set release tag
         id: set-release-tag
         if: github.event_name != 'push' && github.event_name != 'release'
-        run: echo "RELEASE_TAG=$(cat bigwigs-voice-version.txt)" >> $GITHUB_ENV
+        run: |
+          RELEASE_TAG=$(curl -s https://api.github.com/repos/KogasaPls/WoWVoxPacks/releases/latest | jq -r '.tag_name')
+          echo "RELEASE_TAG=${RELEASE_TAG}" >> $GITHUB_ENV
       - name: Download release assets
         uses: robinraju/release-downloader@v1
         with:

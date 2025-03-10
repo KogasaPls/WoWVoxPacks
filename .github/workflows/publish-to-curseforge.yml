@@ -6,6 +6,8 @@ on:
 jobs:
   publish-addon:
     strategy:
+      max-parallel: 3
+      fail-fast: true
       matrix:
         include:
           - voice: Wavenet_E

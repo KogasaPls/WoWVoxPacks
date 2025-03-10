@@ -28,14 +28,14 @@ namespace WoWVoxPack.AddOns.BigWigs_Voice
             this.Write("\nlocal name, addon = ...\n\n--------------------------------------------------------------------------------\n-- Locals\n--\n\nlocal tostring = tostring\nlocal format = format\naddon.SendMessage = BigWigsLoader.SendMessage\n\n--------------------------------------------------------------------------------\n-- Event Handlers\n--\nlocal path = \"");
             
             #line 16 "/home/kogasa/git/WoWVoxPack/src/WoWVoxPack.AddOns.BigWigs_Voice/CoreLuaFile.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(AddOnFolderPath));
+            this.Write(this.ToStringHelper.ToStringWithCulture(AddOnDirectoryPath));
             
             #line default
             #line hidden
             this.Write("\\\\Sounds\\\\%s.ogg\"\nlocal pathYou = \"");
             
             #line 17 "/home/kogasa/git/WoWVoxPack/src/WoWVoxPack.AddOns.BigWigs_Voice/CoreLuaFile.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(AddOnFolderPath));
+            this.Write(this.ToStringHelper.ToStringWithCulture(AddOnDirectoryPath));
             
             #line default
             #line hidden

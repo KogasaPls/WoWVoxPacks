@@ -1,0 +1,41 @@
+name: Create release
+on:
+  release:
+    types: [ published ]
+jobs:
+  publish-addon:
+    strategy:
+      matrix:
+        include:
+          - voice: Wavenet_E
+            addon: BigWigs_Voice
+            project_id: 1215288
+          - voice: Wavenet_E
+            addon: SharedMedia_Causese
+            project_id: 1215285
+          - voice: Neural2_C
+            addon: SharedMedia_Causese
+            project_id: 1214942
+    runs-on: ubuntu-latest
+    name: Publish ${{ matrix.addon }} (${{ matrix.voice }})
+    steps:
+      - name: Set release tag
+        id: set-release-tag-push
+        if: github.event_name == 'push' || github.event_name == 'release'
+        run: echo "RELEASE_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - name: Download release assets
+        uses: robinraju/release-downloader@v1
+        with:
+          tag: ${{ env.RELEASE_TAG }}
+          fileName: WoWVoxPacks_${{ matrix.voice }}_${{ matrix.addon }}_${{ env.RELEASE_TAG }}.zip
+          extract: false
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload to CurseForge
+        uses: itsmeow/curseforge-upload@v3
+        with:
+          file_path: WoWVoxPacks_${{ matrix.voice }}_${{ matrix.addon }}_${{ env.RELEASE_TAG }}.zip
+          game_endpoint: 'wow'
+          project_id: ${{ matrix.project_id }}
+          token: ${{ secrets.CURSEFORGE_API_TOKEN }}
+          display_name: ${{ matrix.addon }} (${{ matrix.voice }}) ${{ env.RELEASE_TAG }}
+          game_versions: '11.1.0'

@@ -9,6 +9,6 @@ public partial class CountdownLuaFile
 
     public AddOn AddOn { get; }
 
-    public string VoicePackName => $"VoxPacks {AddOn.TtsSettings.Voice}";
+    public string VoicePackName => $"WoWVoxPacks: {AddOn.TtsSettings.Voice}";
     public string SoundsPath => $@"Interface\\AddOns\\{AddOn.AddOnDirectoryName}\\{AddOn.SoundDirectoryName}";
 }

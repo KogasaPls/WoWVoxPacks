@@ -14,6 +14,12 @@ while IFS= read -r -d '' file; do
   voice_name=$(basename "$(dirname "$file")")
   addon_name=$(basename "$file")
 
+  # Trim _${voice_name} out of addon_name if it exists
+  addon_name=${addon_name%"_$voice_name"}
+
+  # Trim _WoWVoxPacks out of addon_name if it exists
+  addon_name=${addon_name%"_WoWVoxPacks"}
+
   echo "Processing directory: $file"
   echo "Creating archive for voice: $voice_name, addon: $addon_name"
 

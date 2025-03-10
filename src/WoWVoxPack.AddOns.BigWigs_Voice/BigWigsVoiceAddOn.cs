@@ -8,7 +8,7 @@ public sealed class BigWigsVoiceAddOn : AddOn
         IEnumerable<SoundFile> soundFiles) : base(
         outputDirectory, settings, ttsSettings)
     {
-        DisplayTitle = $"BigWigs |cffff7f3f+|r|cffffffffVoice: VoxPacks {ttsSettings.Voice}|r";
+        DisplayTitle = $"BigWigs |cffff7f3f+|r|cffffffffVoice: WoWVoxPacks ({ttsSettings.Voice})|r";
 
         AddCoreDotLuaFile();
 

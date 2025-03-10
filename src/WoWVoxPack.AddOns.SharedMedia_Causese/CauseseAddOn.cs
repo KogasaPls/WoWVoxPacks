@@ -8,7 +8,7 @@ public class CauseseAddOn : AddOn
         IEnumerable<SoundFile> soundFiles) : base(
         outputDirectory, settings, ttsSettings)
     {
-        DisplayTitle = $"SharedMedia_Causese (VoxPacks {ttsSettings.Voice})";
+        DisplayTitle = $"SharedMedia_Causese (WoWVoxPacks: {ttsSettings.Voice})";
 
         soundFiles = soundFiles.ToArray();
 

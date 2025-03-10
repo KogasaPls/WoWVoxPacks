@@ -50,6 +50,7 @@ jobs:
           fi
   check-causese-version:
     runs-on: ubuntu-latest
+    if: false
     outputs:
       causese_version: ${{ steps.compare-versions.outputs.causese_version }}
       needs_update: ${{ steps.compare-versions.outputs.needs_update }}
@@ -91,7 +92,7 @@ jobs:
             echo "No new version detected"
           fi
   create-pull-request:
-    needs: [ check-bigwigs-voice-version, check-causese-version ]
+    needs: [ check-bigwigs-voice-version ]
     if: ${{ needs.check-bigwigs-voice-version.outputs.needs_update != '' || needs.check-causese-version.outputs.needs_update != '' }}
     runs-on: ubuntu-latest
     permissions: write-all

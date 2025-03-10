@@ -2,6 +2,7 @@ name: Publish to CurseForge
 on:
   release:
     types: [ published ]
+    branches: [ main ]
   workflow_dispatch:
 jobs:
   publish-addon:

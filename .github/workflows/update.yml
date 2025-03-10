@@ -106,6 +106,8 @@ jobs:
       GH_TOKEN: ${{ secrets.WORKFLOW_RELEASE_PAT }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}

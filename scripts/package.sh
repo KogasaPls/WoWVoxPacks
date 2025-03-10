@@ -11,10 +11,23 @@ mkdir -p dist
 cd output || exit 1
 
 while IFS= read -r -d '' file; do
-  echo "Packaging $file"
+  voice_name=$(basename "$(dirname "$file")")
+  addon_name=$(basename "$file")
+
+  echo "Processing directory: $file"
+  echo "Creating archive for voice: $voice_name, addon: $addon_name"
+
   cd "$file" || exit 1
-  basename=$(basename "$file")
-  archive_name="WoWVoxPacks_${basename}_${RELEASE_TAG}.zip"
-  zip -r -q -9 "../../dist/$archive_name" . -x "*.wav"
-  cd .. || exit 1
-done < <(find . -mindepth 1 -maxdepth 1 -type d -print0)
+
+  archive_name="WoWVoxPacks_${voice_name}_${addon_name}_${RELEASE_TAG}.zip"
+  zip -r -q -9 "../../../dist/$archive_name" . -x "*.wav"
+
+  if [ $? -ne 0 ]; then
+    echo "Failed to create archive for $file"
+    exit 1
+  fi
+
+  echo "Created archive: dist/$archive_name"
+
+  cd ../.. || exit 1
+done < <(find . -mindepth 2 -maxdepth 2 -type d -print0)

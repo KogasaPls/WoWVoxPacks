@@ -49,7 +49,7 @@ public class AddOn
 
     private string TocFileName => $"{AddOnDirectoryName}.toc";
 
-    public string Title { get; }
+    public string Title { get; protected init; }
 
     public string Version { get; }
     public string Author { get; }

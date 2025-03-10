@@ -9,7 +9,8 @@ public class BigWigsCountdownAddOn : AddOn
     public BigWigsCountdownAddOn(string outputDirectory, AddOnSettings settings, TtsSettings ttsSettings) : base(
         outputDirectory, settings, ttsSettings)
     {
-        DisplayTitle = $"BigWigs |cffff7f3f+|r|cffffffffCountdown: VoxPacks {ttsSettings.Voice}|r";
+        Title = $"BigWigs Countdown WoWVoxPacks {ttsSettings.Voice}";
+        DisplayTitle = $"BigWigs |cffff7f3f+|r|cffffffffCountdown: WoWVoxPacks ({ttsSettings.Voice})|r";
 
         AddCountdownLuaFile();
         AddSoundFiles(CountdownSoundFiles.Value);

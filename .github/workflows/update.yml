@@ -102,7 +102,6 @@ jobs:
       CI: true
       DOTNET_ENVIRONMENT: Release
       DOTNET_CLI_TELEMETRY_OPTOUT: true
-      OUTPUT_DIR: dist
       GH_TOKEN: ${{ secrets.WORKFLOW_RELEASE_PAT }}
     steps:
       - uses: actions/checkout@v4
@@ -138,7 +137,6 @@ jobs:
           VERSION=${TAG#"v"} dotnet run --project src/WoWVoxPack.Builder/WoWVoxPack.Builder.csproj
         env:
           TAG: ${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version }}
-
       - name: Create a pull request
         uses: peter-evans/create-pull-request@v7
         id: create-pull-request
@@ -148,7 +146,8 @@ jobs:
           title: Automatic update
           body: |
             Automatically created by the update workflow.
-            Update BigWigs_Voice to ${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version }}
+
+            - BigWigs_Voice version: ${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version }}
           branch: ci/update-bigwigs-voice-${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version }}
           delete-branch: true
           base: main
@@ -160,5 +159,4 @@ jobs:
       - name: Enable Pull Request Automerge
         run: gh pr merge --merge --auto --delete-branch "$PR_NUMBER"
         env:
-          GH_TOKEN: ${{  secrets.WORKFLOW_RELEASE_PAT }}
           PR_NUMBER: ${{ steps.create-pull-request.outputs.pull-request-number }}

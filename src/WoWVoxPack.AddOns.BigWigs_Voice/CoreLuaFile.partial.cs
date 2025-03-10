@@ -9,5 +9,5 @@ public partial class CoreLuaFile
 
     public AddOn AddOn { get; }
 
-    public string AddOnFolderPath => $@"Interface\\AddOns\\{AddOn.Title.Replace(" ", "_")}";
+    public string AddOnDirectoryPath => $@"Interface\\AddOns\\{AddOn.AddOnDirectoryName}";
 }

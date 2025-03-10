@@ -13,8 +13,8 @@ addon.SendMessage = BigWigsLoader.SendMessage
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-local path = "<#= AddOnFolderPath #>\\Sounds\\%s.ogg"
-local pathYou = "<#= AddOnFolderPath #>\\Sounds\\%sy.ogg"
+local path = "<#= AddOnDirectoryPath #>\\Sounds\\%s.ogg"
+local pathYou = "<#= AddOnDirectoryPath #>\\Sounds\\%sy.ogg"
 local function handler(event, module, key, sound, isOnMe)
 	local success = PlaySoundFile(format(isOnMe and pathYou or path, tostring(key)), "Master")
 	if not success then

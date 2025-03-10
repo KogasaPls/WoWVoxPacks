@@ -1029,7 +1029,7 @@
     "FileName": "1220761.ogg",
     "DisplayName": "Mechengineer\u0027s Canisters",
     "FormattedDisplayName": "Mechengineer\u0027s Canisters",
-    "SSML": "\u003Cspeak\u003EMechengineer\u0027s Canisters\u003C/speak\u003E"
+    "Text": "Mech-engineer\u0027s Canisters"
   },
   {
     "FileName": "1220846.ogg",
@@ -32493,7 +32493,7 @@
     "FileName": "472233.ogg",
     "DisplayName": "Blastburn Roarcannon",
     "FormattedDisplayName": "Blastburn Roarcannon",
-    "SSML": "\u003Cspeak\u003EBlastburn Roarcannon\u003C/speak\u003E"
+    "Text": "Blastburn Roar-cannon"
   },
   {
     "FileName": "472306.ogg",

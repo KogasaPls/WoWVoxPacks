@@ -1,6 +1,6 @@
 ## Interface: 110005, 110007, 110100
 
-## Title: SharedMedia_Causese (VoxPacks Standard_D)
+## Title: SharedMedia_Causese (WoWVoxPacks: Standard_D)
 ## Version: 11.1.0
 ## Author: KogasaPls
 

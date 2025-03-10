@@ -140,7 +140,7 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         id: create-pull-request
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.WORKFLOW_RELEASE_PAT }}
           commit-message: "[ci] Automatic update"
           title: Automatic update
           body: |
@@ -157,5 +157,5 @@ jobs:
       - name: Enable Pull Request Automerge
         run: gh pr merge --merge --auto --delete-branch "$PR_NUMBER"
         env:
-          GH_TOKEN: ${{  secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{  secrets.WORKFLOW_RELEASE_PAT }}
           PR_NUMBER: ${{ steps.create-pull-request.outputs.pull-request-number }}

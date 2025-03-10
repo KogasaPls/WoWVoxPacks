@@ -20,6 +20,12 @@ jobs:
           - voice: Neural2_C
             addon: SharedMedia_Causese
             project_id: 1214942
+          - voice: Neural2_C
+            addon: BigWigs_Voice
+            project_id: 1217580
+          - voice: Neural2_C
+            addon: BigWigs_Countdown
+            project_id: 1217583
     runs-on: ubuntu-latest
     name: Publish ${{ matrix.addon }} (${{ matrix.voice }})
     steps:

@@ -34,6 +34,15 @@ on:
   release:
     types: [ published ]
   workflow_dispatch:
+    inputs:
+      voices:
+        description: 'Comma separated list of voices to publish e.g. "Wavenet_E,Neural2_C,Studio_Q"'
+        default: '"Wavenet_E","Neural2_C","Studio_Q"'
+        required: true
+      addons:
+        description: 'Comma separated list of addons to publish e.g. "BigWigs_Voice","SharedMedia_Causese","BigWigs_Countdown"'
+        default: '"BigWigs_Voice","SharedMedia_Causese","BigWigs_Countdown"'
+        required: true
 jobs:
   publish-addon:
     strategy:

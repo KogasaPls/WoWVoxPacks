@@ -20,8 +20,8 @@ jobs:
       matrix:
         voice: ${{ fromJSON(format('[{0}]', inputs.voices)) }}
         addon: ${{ fromJSON(format('[{0}]', inputs.addons)) }}
-        voice-to-addon-to-project-id-json: [>-
-          {
+        voice-to-addon-to-project-id-json:
+          - '{
             "Wavenet_E": {
               "BigWigs_Voice": 1215288,
               "SharedMedia_Causese": 1215285,
@@ -37,8 +37,7 @@ jobs:
               "BigWigs_Voice": 1218355,
               "BigWigs_Countdown": 1218357
             }
-          }
-        ]
+          }'
 
     runs-on: ubuntu-latest
     name: Publish ${{ matrix.addon }} (${{ matrix.voice }}) (Project ID ${{ fromJSON(matrix.voice-to-addon-to-project-id-json)[matrix.voice][matrix.addon] }})

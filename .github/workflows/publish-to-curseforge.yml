@@ -1,38 +1,39 @@
 name: Publish to CurseForge
+inputs:
+  voices:
+    description: 'Comma separated list of voices to publish e.g. "Wavenet_E,Neural2_C,Studio_Q"'
+    default: '"Wavenet_E","Neural2_C","Studio_Q"'
+    required: true
+  addons:
+    description: 'Comma separated list of addons to publish e.g. "BigWigs_Voice","SharedMedia_Causese","BigWigs_Countdown"'
+    default: '"BigWigs_Voice","SharedMedia_Causese","BigWigs_Countdown"'
+    required: true
+  voice-to-addon-to-project-id-json:
+    description: 'Doubly nested JSON mapping. First level key is voice, second level key is addon, value is project_id'
+    required: true
+    default: |
+      {
+        "Wavenet_E": {
+          "BigWigs_Voice": 1215288,
+          "SharedMedia_Causese": 1215285,
+          "BigWigs_Countdown": 1217577
+        },
+        "Neural2_C": {
+          "SharedMedia_Causese": 1214942,
+          "BigWigs_Voice": 1217580,
+          "BigWigs_Countdown": 1217583
+        },
+        "Studio_Q": {
+          "SharedMedia_Causese": 1218351,
+          "BigWigs_Voice": 1218355,
+          "BigWigs_Countdown": 1218357
+        }
+      }
+
 on:
   release:
     types: [ published ]
   workflow_dispatch:
-    inputs:
-      voices:
-        description: 'Comma separated list of voices to publish e.g. "Wavenet_E,Neural2_C,Studio_Q"'
-        default: '"Wavenet_E","Neural2_C","Studio_Q"'
-        required: true
-      addons:
-        description: 'Comma separated list of addons to publish e.g. "BigWigs_Voice","SharedMedia_Causese","BigWigs_Countdown"'
-        default: '"BigWigs_Voice","SharedMedia_Causese","BigWigs_Countdown"'
-        required: true
-      voice-to-addon-to-project-id-json:
-        description: 'Doubly nested JSON mapping. First level key is voice, second level key is addon, value is project_id'
-        required: true
-        default: |
-          {
-            "Wavenet_E": {
-              "BigWigs_Voice": 1215288,
-              "SharedMedia_Causese": 1215285,
-              "BigWigs_Countdown": 1217577
-            },
-            "Neural2_C": {
-              "SharedMedia_Causese": 1214942,
-              "BigWigs_Voice": 1217580,
-              "BigWigs_Countdown": 1217583
-            },
-            "Studio_Q": {
-              "SharedMedia_Causese": 1218351,
-              "BigWigs_Voice": 1218355,
-              "BigWigs_Countdown": 1218357
-            }
-          }
 jobs:
   publish-addon:
     strategy:

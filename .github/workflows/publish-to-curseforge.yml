@@ -41,7 +41,6 @@ jobs:
         addon: ${{ fromJSON(format('[{0}]', inputs.addons)) }}
     runs-on: ubuntu-latest
     name: Publish ${{ matrix.addon }} (${{ matrix.voice }}) (Release ${{ env.RELEASE_TAG }}, Project ID ${{ fromJSON(env.voice-to-addon-to-project-id-json)[matrix.voice][matrix.addon] }})
-    env:
     steps:
       - name: Set release tag
         id: set-release-tag-push

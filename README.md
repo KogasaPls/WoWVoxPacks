@@ -1,4 +1,7 @@
 # WoWVoxPacks
+[![Auto-update](https://github.com/KogasaPls/WoWVoxPacks/actions/workflows/update.yml/badge.svg)](https://github.com/KogasaPls/WoWVoxPacks/actions/workflows/update.yml)
+[![Create Release](https://github.com/KogasaPls/WoWVoxPacks/actions/workflows/create-release.yml/badge.svg)](https://github.com/KogasaPls/WoWVoxPacks/actions/workflows/create-release.yml)
+[![Publish to CurseForge](https://github.com/KogasaPls/WoWVoxPacks/actions/workflows/publish-to-curseforge.yml/badge.svg)](https://github.com/KogasaPls/WoWVoxPacks/actions/workflows/publish-to-curseforge.yml)
 
 A collection of modern TTS voices for World of Warcraft addons.
 

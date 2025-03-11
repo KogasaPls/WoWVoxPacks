@@ -40,7 +40,8 @@ jobs:
         voice: ${{ fromJSON(format('[{0}]', inputs.voices)) }}
         addon: ${{ fromJSON(format('[{0}]', inputs.addons)) }}
     runs-on: ubuntu-latest
-    name: Publish ${{ matrix.addon }} (${{ matrix.voice }})
+    name: Publish ${{ matrix.addon }} (${{ matrix.voice }}) (Release ${{ env.RELEASE_TAG }}, Project ID ${{ fromJSON(env.voice-to-addon-to-project-id-json)[matrix.voice][matrix.addon] }})
+    env:
     steps:
       - name: Set release tag
         id: set-release-tag-push
@@ -61,10 +62,12 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload to CurseForge
         uses: itsmeow/curseforge-upload@v3
+        env:
+          CF_PROJECT_ID: ${{ fromJSON(env.voice-to-addon-to-project-id-json)[matrix.voice][matrix.addon] }}
         with:
           file_path: WoWVoxPacks_${{ matrix.voice }}_${{ matrix.addon }}_${{ env.RELEASE_TAG }}.zip
           game_endpoint: 'wow'
-          project_id: ${{ fromJSON(env.voice-to-addon-to-project-id-json)[matrix.voice][matrix.addon] }}
+          project_id: ${{ env.CF_PROJECT_ID }}
           token: ${{ secrets.CURSEFORGE_API_TOKEN }}
           display_name: ${{ matrix.addon }} (${{ matrix.voice }}) ${{ env.RELEASE_TAG }}
           game_versions: '11.1.0'

@@ -41,7 +41,6 @@ jobs:
       matrix:
         voice: ${{ fromJSON(format('[{0}]', inputs.voices)) }}
         addon: ${{ fromJSON(format('[{0}]', inputs.addons)) }}
-        project_id: ${{ fromJSON('${{ inputs.voice-to-addon-to-project-id-json }}')[matrix.voice][matrix.addon] }}
     runs-on: ubuntu-latest
     name: Publish ${{ matrix.addon }} (${{ matrix.voice }})
     steps:
@@ -67,7 +66,7 @@ jobs:
         with:
           file_path: WoWVoxPacks_${{ matrix.voice }}_${{ matrix.addon }}_${{ env.RELEASE_TAG }}.zip
           game_endpoint: 'wow'
-          project_id: ${{ matrix.project_id }}
+          project_id: ${{ fromJSON('${{ inputs.voice-to-addon-to-project-id-json }}')[${{ matrix.voice $}}][${{ matrix.addon }}]
           token: ${{ secrets.CURSEFORGE_API_TOKEN }}
           display_name: ${{ matrix.addon }} (${{ matrix.voice }}) ${{ env.RELEASE_TAG }}
           game_versions: '11.1.0'

@@ -1,4 +1,23 @@
 name: Publish to CurseForge
+env:
+  voice-to-addon-to-project-id-json: |
+  {
+    "Wavenet_E": {
+      "BigWigs_Voice": 1215288,
+      "SharedMedia_Causese": 1215285,
+      "BigWigs_Countdown": 1217577
+    },
+    "Neural2_C": {
+      "SharedMedia_Causese": 1214942,
+      "BigWigs_Voice": 1217580,
+      "BigWigs_Countdown": 1217583
+    },
+    "Studio_Q": {
+      "SharedMedia_Causese": 1218351,
+      "BigWigs_Voice": 1218355,
+      "BigWigs_Countdown": 1218357
+    }
+  }
 on:
   release:
     types: [ published ]
@@ -39,8 +58,8 @@ jobs:
       max-parallel: 3
       fail-fast: true
       matrix:
-        voice: ${{ fromJSON(format('[{0}]', inputs.voices)) }}
-        addon: ${{ fromJSON(format('[{0}]', inputs.addons)) }}
+        voice: ${{ fromJSON(format('[{0}]', inputs.voices || '"Wavenet_E","Neural2_C","Studio_Q"')) }}
+        addon: ${{ fromJSON(format('[{0}]', inputs.addons || '"BigWigs_Voice","SharedMedia_Causese","BigWigs_Countdown"')) }}
     runs-on: ubuntu-latest
     name: Publish ${{ matrix.addon }} (${{ matrix.voice }})
     steps:
@@ -66,7 +85,7 @@ jobs:
         with:
           file_path: WoWVoxPacks_${{ matrix.voice }}_${{ matrix.addon }}_${{ env.RELEASE_TAG }}.zip
           game_endpoint: 'wow'
-          project_id: ${{ fromJSON(inputs.voice-to-addon-to-project-id-json)[matrix.voice][matrix.addon] }}
+          project_id: ${{ fromJSON(env.voice-to-addon-to-project-id-json)[matrix.voice][matrix.addon] }}
           token: ${{ secrets.CURSEFORGE_API_TOKEN }}
           display_name: ${{ matrix.addon }} (${{ matrix.voice }}) ${{ env.RELEASE_TAG }}
           game_versions: '11.1.0'

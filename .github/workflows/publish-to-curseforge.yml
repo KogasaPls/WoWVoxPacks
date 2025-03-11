@@ -3,31 +3,45 @@ on:
   release:
     types: [ published ]
   workflow_dispatch:
+    inputs:
+      voices:
+        description: 'Comma separated list of voices to publish e.g. "Wavenet_E,Neural2_C,Studio_Q"'
+        default: 'Wavenet_E,Neural2_C,Studio_Q'
+        required: true
+      addons:
+        description: 'Comma separated list of addons to publish e.g. "BigWigs_Voice,SharedMedia_Causese,BigWigs_Countdown"'
+        default: 'BigWigs_Voice,SharedMedia_Causese,BigWigs_Countdown'
+        required: true
+      voice-to-addon-to-project-id-json:
+        description: 'Doubly nested JSON mapping. First level key is voice, second level key is addon, value is project_id'
+        required: true
+        default: |
+          {
+            "Wavenet_E": {
+              "BigWigs_Voice": 1215288,
+              "SharedMedia_Causese": 1215285,
+              "BigWigs_Countdown": 1217577
+            },
+            "Neural2_C": {
+              "SharedMedia_Causese": 1214942,
+              "BigWigs_Voice": 1217580,
+              "BigWigs_Countdown": 1217583
+            },
+            "Studio_Q": {
+              "SharedMedia_Causese": 1218351,
+              "BigWigs_Voice": 1218355,
+              "BigWigs_Countdown": 1218357
+            }
+          }
 jobs:
   publish-addon:
     strategy:
       max-parallel: 3
       fail-fast: true
       matrix:
-        include:
-          - voice: Wavenet_E
-            addon: BigWigs_Voice
-            project_id: 1215288
-          - voice: Wavenet_E
-            addon: SharedMedia_Causese
-            project_id: 1215285
-          - voice: Wavenet_E
-            addon: BigWigs_Countdown
-            project_id: 1217577
-          - voice: Neural2_C
-            addon: SharedMedia_Causese
-            project_id: 1214942
-          - voice: Neural2_C
-            addon: BigWigs_Voice
-            project_id: 1217580
-          - voice: Neural2_C
-            addon: BigWigs_Countdown
-            project_id: 1217583
+        voice: ${{ fromJSON(format('[{0}]', inputs.voices)) }}
+        addon: ${{ fromJSON(format('[{0}]', inputs.addons)) }}
+        project_id: ${{ fromJSON('${{ inputs.voice-to-addon-to-project-id-json }}')[matrix.voice][matrix.addon] }}
     runs-on: ubuntu-latest
     name: Publish ${{ matrix.addon }} (${{ matrix.voice }})
     steps:

@@ -396,12 +396,6 @@
     "SSML": "\u003Cspeak\u003EManifested Dream\u003C/speak\u003E"
   },
   {
-    "FileName": "-31482.ogg",
-    "DisplayName": "Darkfuse Technician",
-    "FormattedDisplayName": "Darkfuse Technician",
-    "SSML": "\u003Cspeak\u003EDarkfuse Technician\u003C/speak\u003E"
-  },
-  {
     "FileName": "-31766.ogg",
     "DisplayName": "Mk II Electro Shocker",
     "FormattedDisplayName": "Mk II Electro Shocker",
@@ -534,6 +528,18 @@
     "SSML": "\u003Cspeak\u003EOvertime!\u003C/speak\u003E"
   },
   {
+    "FileName": "1213425.ogg",
+    "DisplayName": "Terrifying Roar",
+    "FormattedDisplayName": "Terrifying Roar",
+    "SSML": "\u003Cspeak\u003ETerrifying Roar\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1213426.ogg",
+    "DisplayName": "Tentacle Slam",
+    "FormattedDisplayName": "Tentacle Slam",
+    "SSML": "\u003Cspeak\u003ETentacle Slam\u003C/speak\u003E"
+  },
+  {
     "FileName": "1213497.ogg",
     "DisplayName": "Me Go Mad",
     "FormattedDisplayName": "Me Go Mad",
@@ -552,6 +558,36 @@
     "SSML": "\u003Cspeak\u003EMolten Phlegm\u003C/speak\u003E"
   },
   {
+    "FileName": "1213700.ogg",
+    "DisplayName": "Unanswered Call",
+    "FormattedDisplayName": "Unanswered Call",
+    "SSML": "\u003Cspeak\u003EUnanswered Call\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1213776.ogg",
+    "DisplayName": "Hopeless Curse",
+    "FormattedDisplayName": "Hopeless Curse",
+    "SSML": "\u003Cspeak\u003EHopeless Curse\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1213785.ogg",
+    "DisplayName": "Tear it Down",
+    "FormattedDisplayName": "Tear it Down",
+    "SSML": "\u003Cspeak\u003ETear it Down\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1213804.ogg",
+    "DisplayName": "Shadow Barrage",
+    "FormattedDisplayName": "Shadow Barrage",
+    "SSML": "\u003Cspeak\u003EShadow Barrage\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1213852.ogg",
+    "DisplayName": "Crush",
+    "FormattedDisplayName": "Crush",
+    "SSML": "\u003Cspeak\u003ECrush\u003C/speak\u003E"
+  },
+  {
     "FileName": "1213994.ogg",
     "DisplayName": "Voltaic Image",
     "FormattedDisplayName": "Voltaic Image",
@@ -564,6 +600,36 @@
     "SSML": "\u003Cspeak\u003EMolten Pool\u003C/speak\u003E"
   },
   {
+    "FileName": "1214043.ogg",
+    "DisplayName": "Molten Cannon",
+    "FormattedDisplayName": "Molten Cannon",
+    "SSML": "\u003Cspeak\u003EMolten Cannon\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1214052.ogg",
+    "DisplayName": "Divert Energy to Shields",
+    "FormattedDisplayName": "Divert Energy to Shields",
+    "SSML": "\u003Cspeak\u003EDivert Energy to Shields\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1214053.ogg",
+    "DisplayName": "Recharge",
+    "FormattedDisplayName": "Recharge",
+    "SSML": "\u003Cspeak\u003ERecharge\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1214135.ogg",
+    "DisplayName": "Make It Rain!",
+    "FormattedDisplayName": "Make It Rain!",
+    "SSML": "\u003Cspeak\u003EMake It Rain!\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1214147.ogg",
+    "DisplayName": "Time Bomb Launcher",
+    "FormattedDisplayName": "Time Bomb Launcher",
+    "SSML": "\u003Cspeak\u003ETime Bomb Launcher\u003C/speak\u003E"
+  },
+  {
     "FileName": "1214164.ogg",
     "DisplayName": "Excitement",
     "FormattedDisplayName": "Excitement",
@@ -574,12 +640,6 @@
     "DisplayName": "Eruption Stomp",
     "FormattedDisplayName": "Eruption Stomp",
     "SSML": "\u003Cspeak\u003EEruption Stomp\u003C/speak\u003E"
-  },
-  {
-    "FileName": "1214226.ogg",
-    "DisplayName": "Cratering",
-    "FormattedDisplayName": "Cratering",
-    "SSML": "\u003Cspeak\u003ECratering\u003C/speak\u003E"
   },
   {
     "FileName": "1214229.ogg",
@@ -624,6 +684,12 @@
     "SSML": "\u003Cspeak\u003ETrickshot\u003C/speak\u003E"
   },
   {
+    "FileName": "1214504.ogg",
+    "DisplayName": "Goblin Ingenuity",
+    "FormattedDisplayName": "Goblin Ingenuity",
+    "SSML": "\u003Cspeak\u003EGoblin Ingenuity\u003C/speak\u003E"
+  },
+  {
     "FileName": "1214523.ogg",
     "DisplayName": "Feasting Void",
     "FormattedDisplayName": "Feasting Void",
@@ -648,6 +714,18 @@
     "SSML": "\u003Cspeak\u003EBigger Badder Bomb Blast\u003C/speak\u003E"
   },
   {
+    "FileName": "1214614.ogg",
+    "DisplayName": "Rip and Tear",
+    "FormattedDisplayName": "Rip and Tear",
+    "SSML": "\u003Cspeak\u003ERip and Tear\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1214620.ogg",
+    "DisplayName": "Whooping Rally",
+    "FormattedDisplayName": "Whooping Rally",
+    "SSML": "\u003Cspeak\u003EWhooping Rally\u003C/speak\u003E"
+  },
+  {
     "FileName": "1214623.ogg",
     "DisplayName": "Enraged",
     "FormattedDisplayName": "Enraged",
@@ -660,10 +738,28 @@
     "SSML": "\u003Cspeak\u003EUnleash Darkness\u003C/speak\u003E"
   },
   {
+    "FileName": "1214656.ogg",
+    "DisplayName": "Aggravating Growl",
+    "FormattedDisplayName": "Aggravating Growl",
+    "SSML": "\u003Cspeak\u003EAggravating Growl\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1214680.ogg",
+    "DisplayName": "Hideous Cackle",
+    "FormattedDisplayName": "Hideous Cackle",
+    "SSML": "\u003Cspeak\u003EHideous Cackle\u003C/speak\u003E"
+  },
+  {
     "FileName": "1214754.ogg",
     "DisplayName": "Massive Slam",
     "FormattedDisplayName": "Massive Slam",
     "SSML": "\u003Cspeak\u003EMassive Slam\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1214755.ogg",
+    "DisplayName": "Overloaded Rockets",
+    "FormattedDisplayName": "Overloaded Rockets",
+    "SSML": "\u003Cspeak\u003EOverloaded Rockets\u003C/speak\u003E"
   },
   {
     "FileName": "1214780.ogg",
@@ -678,10 +774,34 @@
     "SSML": "\u003Cspeak\u003EPyro Party Pack\u003C/speak\u003E"
   },
   {
+    "FileName": "1215015.ogg",
+    "DisplayName": "This One, Boss?",
+    "FormattedDisplayName": "This One, Boss?",
+    "SSML": "\u003Cspeak\u003EThis One, Boss?\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1215033.ogg",
+    "DisplayName": "Long Fuse Missiles",
+    "FormattedDisplayName": "Long Fuse Missiles",
+    "SSML": "\u003Cspeak\u003ELong Fuse Missiles\u003C/speak\u003E"
+  },
+  {
     "FileName": "1215065.ogg",
     "DisplayName": "Platinum Pummel",
     "FormattedDisplayName": "Platinum Pummel",
     "SSML": "\u003Cspeak\u003EPlatinum Pummel\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1215084.ogg",
+    "DisplayName": "Darkfuse Cocktail",
+    "FormattedDisplayName": "Darkfuse Cocktail",
+    "SSML": "\u003Cspeak\u003EDarkfuse Cocktail\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1215090.ogg",
+    "DisplayName": "Evasive Tactics",
+    "FormattedDisplayName": "Evasive Tactics",
+    "SSML": "\u003Cspeak\u003EEvasive Tactics\u003C/speak\u003E"
   },
   {
     "FileName": "1215102.ogg",
@@ -694,6 +814,18 @@
     "DisplayName": "Sabotage Zone",
     "FormattedDisplayName": "Sabotage Zone",
     "SSML": "\u003Cspeak\u003ESabotage Zone\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1215337.ogg",
+    "DisplayName": "Clanker Bomb",
+    "FormattedDisplayName": "Clanker Bomb",
+    "SSML": "\u003Cspeak\u003EClanker Bomb\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1215374.ogg",
+    "DisplayName": "Shock Maintenance",
+    "FormattedDisplayName": "Shock Maintenance",
+    "SSML": "\u003Cspeak\u003EShock Maintenance\u003C/speak\u003E"
   },
   {
     "FileName": "1215409.ogg",
@@ -714,7 +846,13 @@
     "SSML": "\u003Cspeak\u003ECorrosive Gunk\u003C/speak\u003E"
   },
   {
-    "FileName": "1215595.ogg",
+    "FileName": "1215521.ogg",
+    "DisplayName": "Signal Cronies",
+    "FormattedDisplayName": "Signal Cronies",
+    "SSML": "\u003Cspeak\u003ESignal Cronies\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1215591.ogg",
     "DisplayName": "Faulty Wiring",
     "FormattedDisplayName": "Faulty Wiring",
     "SSML": "\u003Cspeak\u003EFaulty Wiring\u003C/speak\u003E"
@@ -750,16 +888,46 @@
     "SSML": "\u003Cspeak\u003EEarthcrusher\u003C/speak\u003E"
   },
   {
+    "FileName": "1215870.ogg",
+    "DisplayName": "Sprocket Smash",
+    "FormattedDisplayName": "Sprocket Smash",
+    "SSML": "\u003Cspeak\u003ESprocket Smash\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1215905.ogg",
+    "DisplayName": "Carnage Cannon",
+    "FormattedDisplayName": "Carnage Cannon",
+    "SSML": "\u003Cspeak\u003ECarnage Cannon\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1215912.ogg",
+    "DisplayName": "Black Blood",
+    "FormattedDisplayName": "Black Blood",
+    "SSML": "\u003Cspeak\u003EBlack Blood\u003C/speak\u003E"
+  },
+  {
     "FileName": "1215953.ogg",
     "DisplayName": "Static Charge",
     "FormattedDisplayName": "Static Charge",
     "SSML": "\u003Cspeak\u003EStatic Charge\u003C/speak\u003E"
   },
   {
+    "FileName": "1215957.ogg",
+    "DisplayName": "Tremor Claw",
+    "FormattedDisplayName": "Tremor Claw",
+    "SSML": "\u003Cspeak\u003ETremor Claw\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1215975.ogg",
+    "DisplayName": "Juice It Up!",
+    "FormattedDisplayName": "Juice It Up!",
+    "SSML": "\u003Cspeak\u003EJuice It Up!\u003C/speak\u003E"
+  },
+  {
     "FileName": "1216039.ogg",
-    "DisplayName": "R.P.G.G.",
-    "FormattedDisplayName": "R.P.G.G.",
-    "SSML": "\u003Cspeak\u003ER.P.G.G.\u003C/speak\u003E"
+    "DisplayName": "R P G G",
+    "FormattedDisplayName": "R P G G",
+    "SSML": "\u003Cspeak\u003ER P G G\u003C/speak\u003E"
   },
   {
     "FileName": "1216142.ogg",
@@ -840,6 +1008,12 @@
     "SSML": "\u003Cspeak\u003ENega-Polarization\u003C/speak\u003E"
   },
   {
+    "FileName": "1216937.ogg",
+    "DisplayName": "Underpin\u0027s Grand Entrance",
+    "FormattedDisplayName": "Underpin\u0027s Grand Entrance",
+    "SSML": "\u003Cspeak\u003EUnderpin\u0027s Grand Entrance\u003C/speak\u003E"
+  },
+  {
     "FileName": "1217122.ogg",
     "DisplayName": "Lingering Voltage",
     "FormattedDisplayName": "Lingering Voltage",
@@ -888,6 +1062,12 @@
     "SSML": "\u003Cspeak\u003EWorthless Adorations\u003C/speak\u003E"
   },
   {
+    "FileName": "1217371.ogg",
+    "DisplayName": "Flamethrower",
+    "FormattedDisplayName": "Flamethrower",
+    "SSML": "\u003Cspeak\u003EFlamethrower\u003C/speak\u003E"
+  },
+  {
     "FileName": "1217418.ogg",
     "DisplayName": "Call My Agent",
     "FormattedDisplayName": "Call My Agent",
@@ -925,15 +1105,51 @@
   },
   {
     "FileName": "1217653.ogg",
-    "DisplayName": "B.B.B.F.G.",
-    "FormattedDisplayName": "B.B.B.F.G.",
-    "SSML": "\u003Cspeak\u003EB.B.B.F.G.\u003C/speak\u003E"
+    "DisplayName": "B B B F G",
+    "FormattedDisplayName": "B B B F G",
+    "SSML": "\u003Cspeak\u003EB B B F G\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1217661.ogg",
+    "DisplayName": "Signal Cronies",
+    "FormattedDisplayName": "Signal Cronies",
+    "SSML": "\u003Cspeak\u003ESignal Cronies\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1217666.ogg",
+    "DisplayName": "Recharge",
+    "FormattedDisplayName": "Recharge",
+    "SSML": "\u003Cspeak\u003ERecharge\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1217667.ogg",
+    "DisplayName": "Divert Energy to Shields",
+    "FormattedDisplayName": "Divert Energy to Shields",
+    "SSML": "\u003Cspeak\u003EDivert Energy to Shields\u003C/speak\u003E"
   },
   {
     "FileName": "1217819.ogg",
     "DisplayName": "Fiery Jaws",
     "FormattedDisplayName": "Fiery Jaws",
     "SSML": "\u003Cspeak\u003EFiery Jaws\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1217903.ogg",
+    "DisplayName": "Firebolt",
+    "FormattedDisplayName": "Firebolt",
+    "SSML": "\u003Cspeak\u003EFirebolt\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1217905.ogg",
+    "DisplayName": "Call Mole Machine",
+    "FormattedDisplayName": "Call Mole Machine",
+    "SSML": "\u003Cspeak\u003ECall Mole Machine\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1217913.ogg",
+    "DisplayName": "Dark Burn",
+    "FormattedDisplayName": "Dark Burn",
+    "SSML": "\u003Cspeak\u003EDark Burn\u003C/speak\u003E"
   },
   {
     "FileName": "1217954.ogg",
@@ -978,6 +1194,12 @@
     "SSML": "\u003Cspeak\u003EBurning Candles\u003C/speak\u003E"
   },
   {
+    "FileName": "1218153.ogg",
+    "DisplayName": "Flaming Wreckage",
+    "FormattedDisplayName": "Flaming Wreckage",
+    "SSML": "\u003Cspeak\u003EFlaming Wreckage\u003C/speak\u003E"
+  },
+  {
     "FileName": "1218319.ogg",
     "DisplayName": "Voidsplosion",
     "FormattedDisplayName": "Voidsplosion",
@@ -1008,16 +1230,16 @@
     "SSML": "\u003Cspeak\u003EPolarized Catastro-Blast\u003C/speak\u003E"
   },
   {
+    "FileName": "1219333.ogg",
+    "DisplayName": "Gallybux Finale Blast",
+    "FormattedDisplayName": "Gallybux Finale Blast",
+    "SSML": "\u003Cspeak\u003EGallybux Finale Blast\u003C/speak\u003E"
+  },
+  {
     "FileName": "1219384.ogg",
     "DisplayName": "Scrap Rockets",
     "FormattedDisplayName": "Scrap Rockets",
     "SSML": "\u003Cspeak\u003EScrap Rockets\u003C/speak\u003E"
-  },
-  {
-    "FileName": "1220290.ogg",
-    "DisplayName": "Trick Shots",
-    "FormattedDisplayName": "Trick Shots",
-    "SSML": "\u003Cspeak\u003ETrick Shots\u003C/speak\u003E"
   },
   {
     "FileName": "1220648.ogg",
@@ -1026,16 +1248,16 @@
     "SSML": "\u003Cspeak\u003EMarked For \u0022Recycling\u0022\u003C/speak\u003E"
   },
   {
+    "FileName": "1220669.ogg",
+    "DisplayName": "Sabotaged Controls",
+    "FormattedDisplayName": "Sabotaged Controls",
+    "SSML": "\u003Cspeak\u003ESabotaged Controls\u003C/speak\u003E"
+  },
+  {
     "FileName": "1220761.ogg",
     "DisplayName": "Mechengineer\u0027s Canisters",
     "FormattedDisplayName": "Mechengineer\u0027s Canisters",
     "Text": "Mech-engineer\u0027s Canisters"
-  },
-  {
-    "FileName": "1220846.ogg",
-    "DisplayName": "Control Meltdown",
-    "FormattedDisplayName": "Control Meltdown",
-    "SSML": "\u003Cspeak\u003EControl Meltdown\u003C/speak\u003E"
   },
   {
     "FileName": "1220869.ogg",
@@ -1048,6 +1270,18 @@
     "DisplayName": "Tiny Tussle",
     "FormattedDisplayName": "Tiny Tussle",
     "SSML": "\u003Cspeak\u003ETiny Tussle\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1222831.ogg",
+    "DisplayName": "Overloaded Coils",
+    "FormattedDisplayName": "Overloaded Coils",
+    "SSML": "\u003Cspeak\u003EOverloaded Coils\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1222948.ogg",
+    "DisplayName": "Electro-Charged Shield",
+    "FormattedDisplayName": "Electro-Charged Shield",
+    "SSML": "\u003Cspeak\u003EElectro-Charged Shield\u003C/speak\u003E"
   },
   {
     "FileName": "1223803.ogg",
@@ -12210,6 +12444,12 @@
     "SSML": "\u003Cspeak\u003ERock Lance\u003C/speak\u003E"
   },
   {
+    "FileName": "263215.ogg",
+    "DisplayName": "Tectonic Barrier",
+    "FormattedDisplayName": "Tectonic Barrier",
+    "SSML": "\u003Cspeak\u003ETectonic Barrier\u003C/speak\u003E"
+  },
+  {
     "FileName": "263235.ogg",
     "DisplayName": "Blood Feast",
     "FormattedDisplayName": "Blood Feast",
@@ -15733,9 +15973,9 @@
   },
   {
     "FileName": "299475.ogg",
-    "DisplayName": "B.O.R.K",
-    "FormattedDisplayName": "B.O.R.K",
-    "SSML": "\u003Cspeak\u003EB.O.R.K\u003C/speak\u003E"
+    "DisplayName": "Bork",
+    "FormattedDisplayName": "Bork",
+    "SSML": "\u003Cspeak\u003EBork\u003C/speak\u003E"
   },
   {
     "FileName": "299502.ogg",
@@ -21294,6 +21534,12 @@
     "SSML": "\u003Cspeak\u003ERage\u003C/speak\u003E"
   },
   {
+    "FileName": "359016.ogg",
+    "DisplayName": "Swiftness",
+    "FormattedDisplayName": "Swiftness",
+    "SSML": "\u003Cspeak\u003ESwiftness\u003C/speak\u003E"
+  },
+  {
     "FileName": "359028.ogg",
     "DisplayName": "Security Slam",
     "FormattedDisplayName": "Security Slam",
@@ -21790,6 +22036,12 @@
     "DisplayName": "Synthesize",
     "FormattedDisplayName": "Synthesize",
     "SSML": "\u003Cspeak\u003ESynthesize\u003C/speak\u003E"
+  },
+  {
+    "FileName": "363194.ogg",
+    "DisplayName": "Slime Trail",
+    "FormattedDisplayName": "Slime Trail",
+    "SSML": "\u003Cspeak\u003ESlime Trail\u003C/speak\u003E"
   },
   {
     "FileName": "363200.ogg",
@@ -24736,6 +24988,12 @@
     "DisplayName": "Shocking Burst",
     "FormattedDisplayName": "Shocking Burst",
     "SSML": "\u003Cspeak\u003EShocking Burst\u003C/speak\u003E"
+  },
+  {
+    "FileName": "390943.ogg",
+    "DisplayName": "Electric Cataclysm",
+    "FormattedDisplayName": "Electric Cataclysm",
+    "SSML": "\u003Cspeak\u003EElectric Cataclysm\u003C/speak\u003E"
   },
   {
     "FileName": "390968.ogg",
@@ -29016,6 +29274,12 @@
     "SSML": "\u003Cspeak\u003EExtraction Strike\u003C/speak\u003E"
   },
   {
+    "FileName": "433040.ogg",
+    "DisplayName": "Illusive Step",
+    "FormattedDisplayName": "Illusive Step",
+    "SSML": "\u003Cspeak\u003EIllusive Step\u003C/speak\u003E"
+  },
+  {
     "FileName": "433045.ogg",
     "DisplayName": "Backstab",
     "FormattedDisplayName": "Backstab",
@@ -31404,6 +31668,12 @@
     "SSML": "\u003Cspeak\u003EAbyssal Reverberation\u003C/speak\u003E"
   },
   {
+    "FileName": "455662.ogg",
+    "DisplayName": "Grasping Shadows",
+    "FormattedDisplayName": "Grasping Shadows",
+    "SSML": "\u003Cspeak\u003EGrasping Shadows\u003C/speak\u003E"
+  },
+  {
     "FileName": "455831.ogg",
     "DisplayName": "Hardened Netting",
     "FormattedDisplayName": "Hardened Netting",
@@ -32088,6 +32358,12 @@
     "SSML": "\u003Cspeak\u003EHaywire\u003C/speak\u003E"
   },
   {
+    "FileName": "466153.ogg",
+    "DisplayName": "Bad Belated Boom",
+    "FormattedDisplayName": "Bad Belated Boom",
+    "SSML": "\u003Cspeak\u003EBad Belated Boom\u003C/speak\u003E"
+  },
+  {
     "FileName": "466154.ogg",
     "DisplayName": "Blast Burns",
     "FormattedDisplayName": "Blast Burns",
@@ -32370,6 +32646,12 @@
     "SSML": "\u003Cspeak\u003EBackwash\u003C/speak\u003E"
   },
   {
+    "FileName": "469795.ogg",
+    "DisplayName": "Giga Bomb Detonation",
+    "FormattedDisplayName": "Giga Bomb Detonation",
+    "SSML": "\u003Cspeak\u003EGiga Bomb Detonation\u003C/speak\u003E"
+  },
+  {
     "FileName": "469799.ogg",
     "DisplayName": "Overcharge",
     "FormattedDisplayName": "Overcharge",
@@ -32412,16 +32694,16 @@
     "SSML": "\u003Cspeak\u003ESwamp Bolt\u003C/speak\u003E"
   },
   {
+    "FileName": "470612.ogg",
+    "DisplayName": "Corrosive Bile",
+    "FormattedDisplayName": "Corrosive Bile",
+    "SSML": "\u003Cspeak\u003ECorrosive Bile\u003C/speak\u003E"
+  },
+  {
     "FileName": "470910.ogg",
     "DisplayName": "Gaol Break",
     "FormattedDisplayName": "Gaol Break",
     "SSML": "\u003Cspeak\u003EGaol Break\u003C/speak\u003E"
-  },
-  {
-    "FileName": "471352.ogg",
-    "DisplayName": "Juice It!",
-    "FormattedDisplayName": "Juice It!",
-    "SSML": "\u003Cspeak\u003EJuice It!\u003C/speak\u003E"
   },
   {
     "FileName": "471403.ogg",
@@ -32526,6 +32808,12 @@
     "SSML": "\u003Cspeak\u003EPay Respects\u003C/speak\u003E"
   },
   {
+    "FileName": "472842.ogg",
+    "DisplayName": "Destroy",
+    "FormattedDisplayName": "Destroy",
+    "SSML": "\u003Cspeak\u003EDestroy\u003C/speak\u003E"
+  },
+  {
     "FileName": "472893.ogg",
     "DisplayName": "Incineration",
     "FormattedDisplayName": "Incineration",
@@ -32542,6 +32830,12 @@
     "DisplayName": "Mudslide",
     "FormattedDisplayName": "Mudslide",
     "SSML": "\u003Cspeak\u003EMudslide\u003C/speak\u003E"
+  },
+  {
+    "FileName": "473119.ogg",
+    "DisplayName": "Short Fuse",
+    "FormattedDisplayName": "Short Fuse",
+    "SSML": "\u003Cspeak\u003EShort Fuse\u003C/speak\u003E"
   },
   {
     "FileName": "473168.ogg",
@@ -32592,6 +32886,12 @@
     "SSML": "\u003Cspeak\u003EFeast of the Damned\u003C/speak\u003E"
   },
   {
+    "FileName": "473541.ogg",
+    "DisplayName": "Flurry of Punches",
+    "FormattedDisplayName": "Flurry of Punches",
+    "SSML": "\u003Cspeak\u003EFlurry of Punches\u003C/speak\u003E"
+  },
+  {
     "FileName": "473550.ogg",
     "DisplayName": "Rocket Barrage",
     "FormattedDisplayName": "Rocket Barrage",
@@ -32620,6 +32920,12 @@
     "DisplayName": "Kinetic Explosive Gel",
     "FormattedDisplayName": "Kinetic Explosive Gel",
     "SSML": "\u003Cspeak\u003EKinetic Explosive Gel\u003C/speak\u003E"
+  },
+  {
+    "FileName": "473696.ogg",
+    "DisplayName": "Molotov Cocktail",
+    "FormattedDisplayName": "Molotov Cocktail",
+    "SSML": "\u003Cspeak\u003EMolotov Cocktail\u003C/speak\u003E"
   },
   {
     "FileName": "473748.ogg",

@@ -18,8 +18,8 @@ jobs:
       max-parallel: 3
       fail-fast: true
       matrix:
-        voice: ${{ fromJSON(format('[{0}]', inputs.voices)) }}
-        addon: ${{ fromJSON(format('[{0}]', inputs.addons)) }}
+        voice: ${{ fromJSON(format('[{0}]', inputs.voices || '"Wavenet_E","Neural2_C","Studio_Q"')) }}
+        addon: ${{ fromJSON(format('[{0}]', inputs.addons || '"BigWigs_Voice","SharedMedia_Causese","BigWigs_Countdown"')) }}
         voice-to-addon-to-project-id-json:
           - '{
             "Wavenet_E": {

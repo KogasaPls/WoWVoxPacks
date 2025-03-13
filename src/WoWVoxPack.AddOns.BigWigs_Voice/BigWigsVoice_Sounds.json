@@ -12,7 +12,7 @@
   {
     "DisplayName": "Discom-BOMB-ulator",
     "FileName": "285454.ogg",
-    "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"dɪs.kəmˈbɑm.bjə.leɪ.tɚ\">Discom-BOMB-bulator</phoneme></speak>"
+    "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"dɪs.kəmˈbɑm.bjə.leɪ.tɚ\">Discom-BOMB-bulator!</phoneme></speak>"
   },
   {
     "DisplayName": "Call Earthrager",
@@ -38,5 +38,10 @@
     "DisplayName": "Unrelenting Carnage",
     "FileName": "471403.ogg",
     "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"ʌn.rɪˈlɛnt.ɪŋ ˈkɑːːrnɪdʒ\">Unrelenting Carnage</phoneme></speak>"
+  },
+  {
+    "DisplayName": "Bomb Voyage!",
+    "FileName": "459978.ogg",
+    "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"bɑm vɔɪˈɑʒ\">Bomb Voyage</phoneme></speak>"
   }
 ]

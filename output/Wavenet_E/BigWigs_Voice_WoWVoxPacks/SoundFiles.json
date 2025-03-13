@@ -14907,7 +14907,7 @@
     "FileName": "285454.ogg",
     "DisplayName": "Discom-BOMB-ulator",
     "FormattedDisplayName": "Discom-BOMB-ulator",
-    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022d\u026As.k\u0259m\u02C8b\u0251m.bj\u0259.le\u026A.t\u025A\u0022\u003EDiscom-BOMB-bulator\u003C/phoneme\u003E\u003C/speak\u003E"
+    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022d\u026As.k\u0259m\u02C8b\u0251m.bj\u0259.le\u026A.t\u025A\u0022\u003EDiscom-BOMB-bulator!\u003C/phoneme\u003E\u003C/speak\u003E"
   },
   {
     "FileName": "285459.ogg",
@@ -31929,7 +31929,7 @@
     "FileName": "459978.ogg",
     "DisplayName": "Bomb Voyage!",
     "FormattedDisplayName": "Bomb Voyage!",
-    "SSML": "\u003Cspeak\u003EBomb Voyage!\u003C/speak\u003E"
+    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022b\u0251m v\u0254\u026A\u02C8\u0251\u0292\u0022\u003EBomb Voyage\u003C/phoneme\u003E\u003C/speak\u003E"
   },
   {
     "FileName": "460092.ogg",

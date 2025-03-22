@@ -18,6 +18,7 @@ jobs:
           owner: BigWigsMods
           repo: BigWigs_Voice
           excludes: prerelease, draft
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Write version to file
         run: echo "${{ steps.get-bigwigsvoice-release.outputs.release }}" > version.txt
       - name: Get previous version
@@ -38,9 +39,9 @@ jobs:
             echo "needs_update=true" >> $GITHUB_OUTPUT
             exit 0
           fi
-          
+
           echo "bigwigs_version=$(cat version.txt)" >> $GITHUB_OUTPUT
-          
+
           if [ "$(cat version.txt)" != "$(cat previous-version.txt)" ]; then
             echo "New version detected (old: $(cat previous-version.txt), new: $(cat version.txt))"
             echo "bigwigs_version=$(cat version.txt)" >> $GITHUB_OUTPUT
@@ -62,6 +63,7 @@ jobs:
           owner: curseforge-mirror
           repo: SharedMedia_Causese
           excludes: prerelease, draft
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Write version to file
         run: echo "${{ steps.get-causese-release.outputs.release }}" > version.txt
       - name: Get previous version

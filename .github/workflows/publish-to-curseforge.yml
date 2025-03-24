@@ -78,3 +78,14 @@ jobs:
           token: ${{ secrets.CURSEFORGE_API_TOKEN }}
           display_name: ${{ matrix.addon }} (${{ matrix.voice }}) ${{ env.RELEASE_TAG }}
           game_versions: '11.1.0'
+
+  rerun-failed-jobs:
+      runs-on: ubuntu-latest
+      needs: [ publish-addon ]
+      if: failure()
+      steps:
+        - name: Rerun failed jobs in the current workflow
+          env:
+            GH_TOKEN: ${{ github.token }}
+          run: sleep 30s && gh run rerun ${{ github.run_id }} --failed
+          shell: bash

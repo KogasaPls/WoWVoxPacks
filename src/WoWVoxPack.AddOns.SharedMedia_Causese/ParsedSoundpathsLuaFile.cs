@@ -73,12 +73,12 @@ public partial class ParsedSoundpathsLuaFile(string content)
                 if (partialSoundFile is not null)
                 {
                     soundFile = new SoundFile($"{baseName}.ogg", displayName: partialSoundFile.DisplayName,
-                        formattedDisplayName: partialSoundFile.FormattedDisplayName, text: entry.Name);
+                        formattedDisplayName: partialSoundFile.FormattedDisplayName, text: baseName);
                 }
                 else
                 {
                     soundFile = new SoundFile($"{baseName}.ogg", displayName: baseName,
-                        formattedDisplayName: $"|cFFFF0000{baseName}|r", text: entry.Name);
+                        formattedDisplayName: $"|cFFFF0000{baseName}|r", text: baseName);
                 }
             }
 

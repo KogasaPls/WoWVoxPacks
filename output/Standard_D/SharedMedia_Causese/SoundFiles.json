@@ -129,13 +129,13 @@
     "FileName": "AMZ.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\AMZ",
     "FormattedDisplayName": "|cFFFF1000AMZ|r |T237510:16|t",
-    "Text": "AMZ.ogg"
+    "Text": "AMZ"
   },
   {
     "FileName": "Angel.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Angel",
     "FormattedDisplayName": "|cFFFF1000Angel|r |T612969:16|t",
-    "Text": "Angel.ogg"
+    "Text": "Angel"
   },
   {
     "FileName": "AoE.ogg",
@@ -147,7 +147,7 @@
     "FileName": "Ascendance.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Ascendance",
     "FormattedDisplayName": "|cFFFF1000Ascendance|r |T135791:16|t",
-    "Text": "Ascendance.ogg"
+    "Text": "Ascendance"
   },
   {
     "FileName": "Assist.ogg",
@@ -159,7 +159,7 @@
     "FileName": "Autumn.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Autumn",
     "FormattedDisplayName": "|cFFFF1000Autumn|r |T3636843:16|t",
-    "Text": "Autumn.ogg"
+    "Text": "Autumn"
   },
   {
     "FileName": "Avoid.ogg",
@@ -195,7 +195,7 @@
     "FileName": "Barrier.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Barrier",
     "FormattedDisplayName": "|cFFFF1000Barrier|r |T253400:16|t",
-    "Text": "Barrier.ogg"
+    "Text": "Barrier"
   },
   {
     "FileName": "Beam.ogg",
@@ -260,7 +260,7 @@
     "FileName": "Cage.ogg",
     "DisplayName": "Cage",
     "FormattedDisplayName": "|cFFFF0000Cage|r",
-    "Text": "Cage.ogg"
+    "Text": "Cage"
   },
   {
     "FileName": "CC.ogg",
@@ -296,7 +296,7 @@
     "FileName": "Chi-Ji.ogg",
     "DisplayName": "Chi-Ji",
     "FormattedDisplayName": "|cFFFF0000Chi-Ji|r",
-    "Text": "Chi-Ji.ogg"
+    "Text": "Chi-Ji"
   },
   {
     "FileName": "Clear.ogg",
@@ -308,7 +308,7 @@
     "FileName": "Cocoon.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Cocoon",
     "FormattedDisplayName": "|cFFFF1000Cocoon|r |T627485:16|t",
-    "Text": "Cocoon.ogg"
+    "Text": "Cocoon"
   },
   {
     "FileName": "Coin.ogg",
@@ -344,7 +344,7 @@
     "FileName": "Darkness.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Darkness",
     "FormattedDisplayName": "|cFFFF1000Darkness|r |T1305154:16|t",
-    "Text": "Darkness.ogg"
+    "Text": "Darkness"
   },
   {
     "FileName": "Debuff.ogg",
@@ -368,7 +368,7 @@
     "FileName": "Devo.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Devo",
     "FormattedDisplayName": "|cFFFF1000Devo|r |T135893:16|t",
-    "Text": "Devo.ogg"
+    "Text": "Devo"
   },
   {
     "FileName": "Disease.ogg",
@@ -416,7 +416,7 @@
     "FileName": "Dwarf.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Dwarf",
     "FormattedDisplayName": "|cFFFF1000Dwarf|r |T136225:16|t",
-    "Text": "Dwarf.ogg"
+    "Text": "Dwarf"
   },
   {
     "FileName": "Enter.ogg",
@@ -440,7 +440,7 @@
     "FileName": "External.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\External",
     "FormattedDisplayName": "|cFFFF0000External|r",
-    "Text": "External.ogg"
+    "Text": "External"
   },
   {
     "FileName": "Feet.ogg",
@@ -482,7 +482,7 @@
     "FileName": "Freedom.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Freedom",
     "FormattedDisplayName": "|cFFFF1000Freedom|r |T135968:16|t",
-    "Text": "Freedom.ogg"
+    "Text": "Freedom"
   },
   {
     "FileName": "Front.ogg",
@@ -518,7 +518,7 @@
     "FileName": "Grip.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Grip",
     "FormattedDisplayName": "|cFFFF0000Grip|r",
-    "Text": "Grip.ogg"
+    "Text": "Grip"
   },
   {
     "FileName": "Healcd.ogg",
@@ -530,7 +530,7 @@
     "FileName": "Healing Tide.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Healing Tide",
     "FormattedDisplayName": "|cFFFF1000Healing Tide|r |T538569:16|t",
-    "Text": "Healing Tide.ogg"
+    "Text": "Healing Tide"
   },
   {
     "FileName": "Hide.ogg",
@@ -554,7 +554,7 @@
     "FileName": "Hymn.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Hymn",
     "FormattedDisplayName": "|cFFFF1000Hymn|r |T237540:16|t",
-    "Text": "Hymn.ogg"
+    "Text": "Hymn"
   },
   {
     "FileName": "Immunity.ogg",
@@ -572,7 +572,7 @@
     "FileName": "Incarn.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Incarn",
     "FormattedDisplayName": "|cFFFF1000Incarn|r |T236157:16|t",
-    "Text": "Incarn.ogg"
+    "Text": "Incarn"
   },
   {
     "FileName": "Innervate.ogg",
@@ -632,7 +632,7 @@
     "FileName": "Lay.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Lay",
     "FormattedDisplayName": "|cFFFF1000Lay|r |T135928:16|t",
-    "Text": "Lay.ogg"
+    "Text": "Lay"
   },
   {
     "FileName": "Left.ogg",
@@ -686,7 +686,7 @@
     "FileName": "Meld.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Meld",
     "FormattedDisplayName": "|cFFFF1000Meld|r |T135928:16|t",
-    "Text": "Meld.ogg"
+    "Text": "Meld"
   },
   {
     "FileName": "Melee.ogg",
@@ -746,7 +746,7 @@
     "FileName": "Paradox.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Paradox",
     "FormattedDisplayName": "|cFFFF1000Paradox|r |T5199645:16|t",
-    "Text": "Paradox.ogg"
+    "Text": "Paradox"
   },
   {
     "FileName": "Physical.ogg",
@@ -770,7 +770,7 @@
     "FileName": "Pop.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Pop",
     "FormattedDisplayName": "|cFFFF0000Pop|r",
-    "Text": "Pop.ogg"
+    "Text": "Pop"
   },
   {
     "FileName": "Pots.ogg",
@@ -782,7 +782,7 @@
     "FileName": "Protection.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Protection",
     "FormattedDisplayName": "|cFFFF1000Protection|r |T135964:16|t",
-    "Text": "Protection.ogg"
+    "Text": "Protection"
   },
   {
     "FileName": "PS.ogg",
@@ -812,7 +812,7 @@
     "FileName": "Rally.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Rally",
     "FormattedDisplayName": "|cFFFF1000Rally|r |T132351:16|t",
-    "Text": "Rally.ogg"
+    "Text": "Rally"
   },
   {
     "FileName": "Range.ogg",
@@ -848,19 +848,19 @@
     "FileName": "Rescue.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Rescue",
     "FormattedDisplayName": "|cFFFF1000Rescue|r |T4622460:16|t",
-    "Text": "Rescue.ogg"
+    "Text": "Rescue"
   },
   {
     "FileName": "Revival.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Revival",
     "FormattedDisplayName": "|cFFFF1000Revival|r |T1020466:16|t",
-    "Text": "Revival.ogg"
+    "Text": "Revival"
   },
   {
     "FileName": "Rewind.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Rewind",
     "FormattedDisplayName": "|cFFFF1000Rewind|r |T4622474:16|t",
-    "Text": "Rewind.ogg"
+    "Text": "Rewind"
   },
   {
     "FileName": "Right.ogg",
@@ -878,7 +878,7 @@
     "FileName": "Roar.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Roar",
     "FormattedDisplayName": "|cFFFF1000Roar|r |T463283:16|t",
-    "Text": "Roar.ogg"
+    "Text": "Roar"
   },
   {
     "FileName": "Root.ogg",
@@ -926,7 +926,7 @@
     "FileName": "Shroud.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Shroud",
     "FormattedDisplayName": "|cFFFF1000Shroud|r |T635350:16|t",
-    "Text": "Shroud.ogg"
+    "Text": "Shroud"
   },
   {
     "FileName": "Side.ogg",
@@ -938,7 +938,7 @@
     "FileName": "SLT.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\SLT",
     "FormattedDisplayName": "|cFFFF1000SLT|r |T237586:16|t",
-    "Text": "SLT.ogg"
+    "Text": "SLT"
   },
   {
     "FileName": "Soak.ogg",
@@ -968,7 +968,7 @@
     "FileName": "Spellwarding.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Spellwarding",
     "FormattedDisplayName": "|cFFFF1000Spellwarding|r |T135880:16|t",
-    "Text": "Spellwarding.ogg"
+    "Text": "Spellwarding"
   },
   {
     "FileName": "Split.ogg",
@@ -986,7 +986,7 @@
     "FileName": "SS.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\SS",
     "FormattedDisplayName": "|cFFFF1000SS|r |T136210:16|t",
-    "Text": "SS.ogg"
+    "Text": "SS"
   },
   {
     "FileName": "Stack.ogg",
@@ -998,7 +998,7 @@
     "FileName": "Stay.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Stay",
     "FormattedDisplayName": "|cFFFF0000Stay|r",
-    "Text": "Stay.ogg"
+    "Text": "Stay"
   },
   {
     "FileName": "Stop.ogg",
@@ -1016,7 +1016,7 @@
     "FileName": "Swap.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Swap",
     "FormattedDisplayName": "|cFFFF0000Swap|r",
-    "Text": "Swap.ogg"
+    "Text": "Swap"
   },
   {
     "FileName": "Switch.ogg",
@@ -1040,7 +1040,7 @@
     "FileName": "TD.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\TD",
     "FormattedDisplayName": "|cFFFF1000TD|r |T4622478:16|t",
-    "Text": "TD.ogg"
+    "Text": "TD"
   },
   {
     "FileName": "Third.ogg",
@@ -1058,7 +1058,7 @@
     "FileName": "Time Spiral.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Time Spiral",
     "FormattedDisplayName": "|cFFFF1000Time Spiral|r |T4622479:16|t",
-    "Text": "Time Spiral.ogg"
+    "Text": "Time Spiral"
   },
   {
     "FileName": "Totem.ogg",
@@ -1070,7 +1070,7 @@
     "FileName": "Tranq.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Tranq",
     "FormattedDisplayName": "|cFFFF1000Tranq|r |T136107:16|t",
-    "Text": "Tranq.ogg"
+    "Text": "Tranq"
   },
   {
     "FileName": "Transition.ogg",
@@ -1088,7 +1088,7 @@
     "FileName": "Tricks.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Tricks",
     "FormattedDisplayName": "|cFFFF1000Tricks|r |T236283:16|t",
-    "Text": "Tricks.ogg"
+    "Text": "Tricks"
   },
   {
     "FileName": "Turn.ogg",
@@ -1106,7 +1106,7 @@
     "FileName": "Volley.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Volley",
     "FormattedDisplayName": "|cFFFF0000Volley|r",
-    "Text": "Volley.ogg"
+    "Text": "Volley"
   },
   {
     "FileName": "Wave.ogg",
@@ -1118,7 +1118,7 @@
     "FileName": "Wind Rush.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Wind Rush",
     "FormattedDisplayName": "|cFFFF1000Wind Rush|r |T538576:16|t",
-    "Text": "Wind Rush.ogg"
+    "Text": "Wind Rush"
   },
   {
     "FileName": "Winds.ogg",
@@ -1136,7 +1136,7 @@
     "FileName": "Zephyr.ogg",
     "DisplayName": "Zephyr",
     "FormattedDisplayName": "|cFFFF0000Zephyr|r",
-    "Text": "Zephyr.ogg"
+    "Text": "Zephyr"
   },
   {
     "FileName": "Zone.ogg",

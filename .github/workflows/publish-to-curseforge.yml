@@ -13,7 +13,15 @@ on:
         default: '"BigWigs_Voice","SharedMedia_Causese","BigWigs_Countdown"'
         required: true
 jobs:
+  wait-for-release-artifacts:
+    runs-on: ubuntu-latest
+    name: Wait for release artifacts
+    steps:
+      - name: Wait a minute
+        run: sleep 60s
+        shell: bash
   publish-addon:
+    needs: wait-for-release-artifacts
     strategy:
       max-parallel: 3
       fail-fast: true

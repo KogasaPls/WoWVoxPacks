@@ -685,7 +685,7 @@
   {
     "FileName": "Meld.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Meld",
-    "FormattedDisplayName": "|cFFFF1000Meld|r |T135928:16|t",
+    "FormattedDisplayName": "|cFFFF1000Meld|r |T132089:16|t",
     "Text": "Meld"
   },
   {
@@ -699,6 +699,12 @@
     "DisplayName": "Mines",
     "FormattedDisplayName": "|cFFFF0000Mines|r",
     "Text": "Mines"
+  },
+  {
+    "FileName": "Misdirect.ogg",
+    "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Misdirect",
+    "FormattedDisplayName": "|cFFFF1000Misdirect|r |T132180:16|t",
+    "Text": "Misdirect"
   },
   {
     "FileName": "Move.ogg",
@@ -983,6 +989,12 @@
     "Text": "Spread"
   },
   {
+    "FileName": "Spring.ogg",
+    "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Spring",
+    "FormattedDisplayName": "|cFFFF1000Spring|r |T3636844:16|t",
+    "Text": "Spring"
+  },
+  {
     "FileName": "SS.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\SS",
     "FormattedDisplayName": "|cFFFF1000SS|r |T136210:16|t",
@@ -1011,6 +1023,12 @@
     "DisplayName": "Stopcast",
     "FormattedDisplayName": "|cFFFF0000Stopcast|r",
     "Text": "Stop cast"
+  },
+  {
+    "FileName": "Summer.ogg",
+    "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Summer",
+    "FormattedDisplayName": "|cFFFF1000Summer|r |T3636845:16|t",
+    "Text": "Summer"
   },
   {
     "FileName": "Swap.ogg",
@@ -1053,6 +1071,12 @@
     "DisplayName": "Throw",
     "FormattedDisplayName": "|cFFFF0000Throw|r",
     "Text": "Throw"
+  },
+  {
+    "FileName": "Tiger\u0027s Lust.ogg",
+    "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Tiger\u0027s Lust",
+    "FormattedDisplayName": "|cFFFF1000Tiger\u0027s Lust|r |T651727:16|t",
+    "Text": "Tiger\u0027s Lust"
   },
   {
     "FileName": "Time Spiral.ogg",
@@ -1125,6 +1149,12 @@
     "DisplayName": "Winds",
     "FormattedDisplayName": "|cFFFF0000Winds|r",
     "Text": "Winds"
+  },
+  {
+    "FileName": "Winter.ogg",
+    "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Winter",
+    "FormattedDisplayName": "|cFFFF1000Winter|r |T3636846:16|t",
+    "Text": "Winter"
   },
   {
     "FileName": "Yellow.ogg",

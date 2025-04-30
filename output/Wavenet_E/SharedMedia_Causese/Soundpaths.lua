@@ -173,6 +173,7 @@ LSM:Register("sound", "|cFFFF1000Healing Tide|r |T538569:16|t", [[Interface\Addo
 LSM:Register("sound", "|cFFFF1000Hymn|r |T237540:16|t", [[Interface\Addons\SharedMedia_Causese\sound\Hymn.ogg]])
 LSM:Register("sound", "|cFFFF1000Incarn|r |T236157:16|t", [[Interface\Addons\SharedMedia_Causese\sound\Incarn.ogg]])
 LSM:Register("sound", "|cFFFF1000Lay|r |T135928:16|t", [[Interface\Addons\SharedMedia_Causese\sound\Lay.ogg]])
+LSM:Register("sound", "|cFFFF0000Leap|r", [[Interface\Addons\SharedMedia_Causese\sound\Leap.ogg]])
 LSM:Register("sound", "|cFFFF1000Meld|r |T132089:16|t", [[Interface\Addons\SharedMedia_Causese\sound\Meld.ogg]])
 LSM:Register("sound", "|cFFFF1000Misdirect|r |T132180:16|t", [[Interface\Addons\SharedMedia_Causese\sound\Misdirect.ogg]])
 LSM:Register("sound", "|cFFFF1000Paradox|r |T5199645:16|t", [[Interface\Addons\SharedMedia_Causese\sound\Paradox.ogg]])

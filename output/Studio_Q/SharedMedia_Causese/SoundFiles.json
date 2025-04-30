@@ -635,6 +635,12 @@
     "Text": "Lay"
   },
   {
+    "FileName": "Leap.ogg",
+    "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Leap",
+    "FormattedDisplayName": "|cFFFF0000Leap|r",
+    "Text": "Leap"
+  },
+  {
     "FileName": "Left.ogg",
     "DisplayName": "Left",
     "FormattedDisplayName": "|cFFFF0000Left|r",

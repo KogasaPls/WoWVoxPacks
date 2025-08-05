@@ -293,6 +293,12 @@
     "Text": "Charge"
   },
   {
+    "FileName": "Check.ogg",
+    "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Check",
+    "FormattedDisplayName": "|cFFFF0000Check|r",
+    "Text": "Check"
+  },
+  {
     "FileName": "Chi-Ji.ogg",
     "DisplayName": "Chi-Ji",
     "FormattedDisplayName": "|cFFFF0000Chi-Ji|r",
@@ -473,6 +479,12 @@
     "Text": "Focus"
   },
   {
+    "FileName": "Follow.ogg",
+    "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Follow",
+    "FormattedDisplayName": "|cFFFF0000Follow|r",
+    "Text": "Follow"
+  },
+  {
     "FileName": "Fourth.ogg",
     "DisplayName": "Fourth",
     "FormattedDisplayName": "|cFFFF00004. Fourth|r",
@@ -635,6 +647,12 @@
     "Text": "Lay"
   },
   {
+    "FileName": "Lead.ogg",
+    "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Lead",
+    "FormattedDisplayName": "|cFFFF0000Lead|r",
+    "Text": "Lead"
+  },
+  {
     "FileName": "Leap.ogg",
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Leap",
     "FormattedDisplayName": "|cFFFF0000Leap|r",
@@ -645,6 +663,12 @@
     "DisplayName": "Left",
     "FormattedDisplayName": "|cFFFF0000Left|r",
     "Text": "Left"
+  },
+  {
+    "FileName": "Line.ogg",
+    "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Line",
+    "FormattedDisplayName": "|cFFFF0000Line|r",
+    "Text": "Line"
   },
   {
     "FileName": "Link.ogg",
@@ -1017,6 +1041,12 @@
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\Stay",
     "FormattedDisplayName": "|cFFFF0000Stay|r",
     "Text": "Stay"
+  },
+  {
+    "FileName": "Stick.ogg",
+    "DisplayName": "Stick",
+    "FormattedDisplayName": "|cFFFF0000Stick|r",
+    "Text": "Stick"
   },
   {
     "FileName": "Stop.ogg",

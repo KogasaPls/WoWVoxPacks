@@ -1,7 +1,7 @@
-## Interface: 110100, 110105, 110107
+## Interface: 110107, 110200
 
 ## Title: SharedMedia_Causese (WoWVoxPacks: Wavenet_E)
-## Version: 11.1.7
+## Version: 11.2.0
 ## Author: KogasaPls
 
 ## X-License: Apache-2.0

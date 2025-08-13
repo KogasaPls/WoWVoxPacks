@@ -402,6 +402,12 @@
     "SSML": "\u003Cspeak\u003EMk II Electro Shocker\u003C/speak\u003E"
   },
   {
+    "FileName": "-32596.ogg",
+    "DisplayName": "Shielded Attendant",
+    "FormattedDisplayName": "Shielded Attendant",
+    "SSML": "\u003Cspeak\u003EShielded Attendant\u003C/speak\u003E"
+  },
+  {
     "FileName": "-5549.ogg",
     "DisplayName": "Intensity",
     "FormattedDisplayName": "Intensity",
@@ -480,7 +486,7 @@
     "SSML": "\u003Cspeak\u003EJade Serpent Kick\u003C/speak\u003E"
   },
   {
-    "FileName": "107110.ogg",
+    "FileName": "107045.ogg",
     "DisplayName": "Jade Fire",
     "FormattedDisplayName": "Jade Fire",
     "SSML": "\u003Cspeak\u003EJade Fire\u003C/speak\u003E"
@@ -526,6 +532,18 @@
     "DisplayName": "Overtime!",
     "FormattedDisplayName": "Overtime!",
     "SSML": "\u003Cspeak\u003EOvertime!\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1213154.ogg",
+    "DisplayName": "Electrified Floor",
+    "FormattedDisplayName": "Electrified Floor",
+    "SSML": "\u003Cspeak\u003EElectrified Floor\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1213275.ogg",
+    "DisplayName": "Wounded",
+    "FormattedDisplayName": "Wounded",
+    "SSML": "\u003Cspeak\u003EWounded\u003C/speak\u003E"
   },
   {
     "FileName": "1213425.ogg",
@@ -576,7 +594,7 @@
     "SSML": "\u003Cspeak\u003ETear it Down\u003C/speak\u003E"
   },
   {
-    "FileName": "1213804.ogg",
+    "FileName": "1213791.ogg",
     "DisplayName": "Shadow Barrage",
     "FormattedDisplayName": "Shadow Barrage",
     "SSML": "\u003Cspeak\u003EShadow Barrage\u003C/speak\u003E"
@@ -748,6 +766,12 @@
     "DisplayName": "Hideous Cackle",
     "FormattedDisplayName": "Hideous Cackle",
     "SSML": "\u003Cspeak\u003EHideous Cackle\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1214751.ogg",
+    "DisplayName": "Brutal Charge",
+    "FormattedDisplayName": "Brutal Charge",
+    "SSML": "\u003Cspeak\u003EBrutal Charge\u003C/speak\u003E"
   },
   {
     "FileName": "1214754.ogg",
@@ -936,6 +960,12 @@
     "SSML": "\u003Cspeak\u003EDouble-Minded Fury\u003C/speak\u003E"
   },
   {
+    "FileName": "1216406.ogg",
+    "DisplayName": "Unstable Explosion",
+    "FormattedDisplayName": "Unstable Explosion",
+    "SSML": "\u003Cspeak\u003EUnstable Explosion\u003C/speak\u003E"
+  },
+  {
     "FileName": "1216431.ogg",
     "DisplayName": "B.4.T.T.L.3. Mine",
     "FormattedDisplayName": "B.4.T.T.L.3. Mine",
@@ -952,6 +982,12 @@
     "DisplayName": "Screw Up",
     "FormattedDisplayName": "Screw Up",
     "SSML": "\u003Cspeak\u003EScrew Up\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1216706.ogg",
+    "DisplayName": "Void Barrage",
+    "FormattedDisplayName": "Void Barrage",
+    "SSML": "\u003Cspeak\u003EVoid Barrage\u003C/speak\u003E"
   },
   {
     "FileName": "1216790.ogg",
@@ -1026,6 +1062,18 @@
     "SSML": "\u003Cspeak\u003EFoot-Blasters\u003C/speak\u003E"
   },
   {
+    "FileName": "1217232.ogg",
+    "DisplayName": "Devour",
+    "FormattedDisplayName": "Devour",
+    "SSML": "\u003Cspeak\u003EDevour\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1217247.ogg",
+    "DisplayName": "Feast",
+    "FormattedDisplayName": "Feast",
+    "SSML": "\u003Cspeak\u003EFeast\u003C/speak\u003E"
+  },
+  {
     "FileName": "1217279.ogg",
     "DisplayName": "Uppercut",
     "FormattedDisplayName": "Uppercut",
@@ -1056,6 +1104,12 @@
     "SSML": "\u003Cspeak\u003ETake a Selfie!\u003C/speak\u003E"
   },
   {
+    "FileName": "1217327.ogg",
+    "DisplayName": "Invading Shriek",
+    "FormattedDisplayName": "Invading Shriek",
+    "SSML": "\u003Cspeak\u003EInvading Shriek\u003C/speak\u003E"
+  },
+  {
     "FileName": "1217361.ogg",
     "DisplayName": "Worthless Adorations",
     "FormattedDisplayName": "Worthless Adorations",
@@ -1074,6 +1128,12 @@
     "SSML": "\u003Cspeak\u003ECall My Agent\u003C/speak\u003E"
   },
   {
+    "FileName": "1217446.ogg",
+    "DisplayName": "Digestive Spittle",
+    "FormattedDisplayName": "Digestive Spittle",
+    "SSML": "\u003Cspeak\u003EDigestive Spittle\u003C/speak\u003E"
+  },
+  {
     "FileName": "1217449.ogg",
     "DisplayName": "Call My Broker",
     "FormattedDisplayName": "Call My Broker",
@@ -1084,12 +1144,6 @@
     "DisplayName": "Call My Mother",
     "FormattedDisplayName": "Call My Mother",
     "SSML": "\u003Cspeak\u003ECall My Mother\u003C/speak\u003E"
-  },
-  {
-    "FileName": "1217496.ogg",
-    "DisplayName": "Splish Splash",
-    "FormattedDisplayName": "Splish Splash",
-    "SSML": "\u003Cspeak\u003ESplish Splash\u003C/speak\u003E"
   },
   {
     "FileName": "1217510.ogg",
@@ -1114,6 +1168,12 @@
     "DisplayName": "Signal Cronies",
     "FormattedDisplayName": "Signal Cronies",
     "SSML": "\u003Cspeak\u003ESignal Cronies\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1217664.ogg",
+    "DisplayName": "Thrash",
+    "FormattedDisplayName": "Thrash",
+    "SSML": "\u003Cspeak\u003EThrash\u003C/speak\u003E"
   },
   {
     "FileName": "1217666.ogg",
@@ -1164,6 +1224,12 @@
     "SSML": "\u003Cspeak\u003EDoomsploded\u003C/speak\u003E"
   },
   {
+    "FileName": "1217987.ogg",
+    "DisplayName": "Combination Canisters",
+    "FormattedDisplayName": "Combination Canisters",
+    "SSML": "\u003Cspeak\u003ECombination Canisters\u003C/speak\u003E"
+  },
+  {
     "FileName": "1218017.ogg",
     "DisplayName": "Crab-a-bomb Barrage",
     "FormattedDisplayName": "Crab-a-bomb Barrage",
@@ -1180,6 +1246,12 @@
     "DisplayName": "Gold Fuse",
     "FormattedDisplayName": "Gold Fuse",
     "SSML": "\u003Cspeak\u003EGold Fuse\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1218103.ogg",
+    "DisplayName": "Eye Beam",
+    "FormattedDisplayName": "Eye Beam",
+    "SSML": "\u003Cspeak\u003EEye Beam\u003C/speak\u003E"
   },
   {
     "FileName": "1218117.ogg",
@@ -1218,6 +1290,36 @@
     "SSML": "\u003Cspeak\u003EWire Transfer\u003C/speak\u003E"
   },
   {
+    "FileName": "1218488.ogg",
+    "DisplayName": "Scatterbomb Canisters",
+    "FormattedDisplayName": "Scatterbomb Canisters",
+    "SSML": "\u003Cspeak\u003EScatterbomb Canisters\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1218546.ogg",
+    "DisplayName": "Biggest Baddest Bomb Barrage",
+    "FormattedDisplayName": "Biggest Baddest Bomb Barrage",
+    "SSML": "\u003Cspeak\u003EBiggest Baddest Bomb Barrage\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1218625.ogg",
+    "DisplayName": "Displacement Matrix",
+    "FormattedDisplayName": "Displacement Matrix",
+    "SSML": "\u003Cspeak\u003EDisplacement Matrix\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1218668.ogg",
+    "DisplayName": "Energy Cutter",
+    "FormattedDisplayName": "Energy Cutter",
+    "SSML": "\u003Cspeak\u003EEnergy Cutter\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1218696.ogg",
+    "DisplayName": "Mayhem Rockets",
+    "FormattedDisplayName": "Mayhem Rockets",
+    "SSML": "\u003Cspeak\u003EMayhem Rockets\u003C/speak\u003E"
+  },
+  {
     "FileName": "1218704.ogg",
     "DisplayName": "Prototype Powercoil",
     "FormattedDisplayName": "Prototype Powercoil",
@@ -1230,10 +1332,34 @@
     "SSML": "\u003Cspeak\u003EPolarized Catastro-Blast\u003C/speak\u003E"
   },
   {
+    "FileName": "1219223.ogg",
+    "DisplayName": "Atomize",
+    "FormattedDisplayName": "Atomize",
+    "SSML": "\u003Cspeak\u003EAtomize\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1219248.ogg",
+    "DisplayName": "Arcane Radiation",
+    "FormattedDisplayName": "Arcane Radiation",
+    "SSML": "\u003Cspeak\u003EArcane Radiation\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1219263.ogg",
+    "DisplayName": "Obliteration Arcanocannon",
+    "FormattedDisplayName": "Obliteration Arcanocannon",
+    "SSML": "\u003Cspeak\u003EObliteration Arcanocannon\u003C/speak\u003E"
+  },
+  {
     "FileName": "1219333.ogg",
     "DisplayName": "Gallybux Finale Blast",
     "FormattedDisplayName": "Gallybux Finale Blast",
     "SSML": "\u003Cspeak\u003EGallybux Finale Blast\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1219354.ogg",
+    "DisplayName": "Potent Mana Residue",
+    "FormattedDisplayName": "Potent Mana Residue",
+    "SSML": "\u003Cspeak\u003EPotent Mana Residue\u003C/speak\u003E"
   },
   {
     "FileName": "1219384.ogg",
@@ -1242,16 +1368,64 @@
     "SSML": "\u003Cspeak\u003EScrap Rockets\u003C/speak\u003E"
   },
   {
+    "FileName": "1219450.ogg",
+    "DisplayName": "Manifest Matrices",
+    "FormattedDisplayName": "Manifest Matrices",
+    "SSML": "\u003Cspeak\u003EManifest Matrices\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1219457.ogg",
+    "DisplayName": "Incorporeal",
+    "FormattedDisplayName": "Incorporeal",
+    "SSML": "\u003Cspeak\u003EIncorporeal\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1219471.ogg",
+    "DisplayName": "Expulsion Zone",
+    "FormattedDisplayName": "Expulsion Zone",
+    "SSML": "\u003Cspeak\u003EExpulsion Zone\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1219482.ogg",
+    "DisplayName": "Rift Claws",
+    "FormattedDisplayName": "Rift Claws",
+    "SSML": "\u003Cspeak\u003ERift Claws\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1219607.ogg",
+    "DisplayName": "Eradicating Salvo",
+    "FormattedDisplayName": "Eradicating Salvo",
+    "SSML": "\u003Cspeak\u003EEradicating Salvo\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1219700.ogg",
+    "DisplayName": "Arcane Blitz",
+    "FormattedDisplayName": "Arcane Blitz",
+    "SSML": "\u003Cspeak\u003EArcane Blitz\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1219731.ogg",
+    "DisplayName": "Destabilized",
+    "FormattedDisplayName": "Destabilized",
+    "SSML": "\u003Cspeak\u003EDestabilized\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1220394.ogg",
+    "DisplayName": "Shattering Backhand",
+    "FormattedDisplayName": "Shattering Backhand",
+    "SSML": "\u003Cspeak\u003EShattering Backhand\u003C/speak\u003E"
+  },
+  {
     "FileName": "1220648.ogg",
     "DisplayName": "Marked For \u0022Recycling\u0022",
     "FormattedDisplayName": "Marked For \u0022Recycling\u0022",
     "SSML": "\u003Cspeak\u003EMarked For \u0022Recycling\u0022\u003C/speak\u003E"
   },
   {
-    "FileName": "1220669.ogg",
-    "DisplayName": "Sabotaged Controls",
-    "FormattedDisplayName": "Sabotaged Controls",
-    "SSML": "\u003Cspeak\u003ESabotaged Controls\u003C/speak\u003E"
+    "FileName": "1220679.ogg",
+    "DisplayName": "Phase Blink",
+    "FormattedDisplayName": "Phase Blink",
+    "SSML": "\u003Cspeak\u003EPhase Blink\u003C/speak\u003E"
   },
   {
     "FileName": "1220761.ogg",
@@ -1266,10 +1440,76 @@
     "SSML": "\u003Cspeak\u003EBonebreaker\u003C/speak\u003E"
   },
   {
+    "FileName": "1221152.ogg",
+    "DisplayName": "Gorging Smash",
+    "FormattedDisplayName": "Gorging Smash",
+    "SSML": "\u003Cspeak\u003EGorging Smash\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1221190.ogg",
+    "DisplayName": "Gluttonous Miasma",
+    "FormattedDisplayName": "Gluttonous Miasma",
+    "SSML": "\u003Cspeak\u003EGluttonous Miasma\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1221320.ogg",
+    "DisplayName": "Activate Inventions!",
+    "FormattedDisplayName": "Activate Inventions!",
+    "SSML": "\u003Cspeak\u003EActivate Inventions!\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1221483.ogg",
+    "DisplayName": "Arcing Energy",
+    "FormattedDisplayName": "Arcing Energy",
+    "SSML": "\u003Cspeak\u003EArcing Energy\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1221490.ogg",
+    "DisplayName": "Fel-Singed",
+    "FormattedDisplayName": "Fel-Singed",
+    "SSML": "\u003Cspeak\u003EFel-Singed\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1221532.ogg",
+    "DisplayName": "Erratic Ritual",
+    "FormattedDisplayName": "Erratic Ritual",
+    "SSML": "\u003Cspeak\u003EErratic Ritual\u003C/speak\u003E"
+  },
+  {
     "FileName": "1221826.ogg",
     "DisplayName": "Tiny Tussle",
     "FormattedDisplayName": "Tiny Tussle",
     "SSML": "\u003Cspeak\u003ETiny Tussle\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1222202.ogg",
+    "DisplayName": "Arcane Burn",
+    "FormattedDisplayName": "Arcane Burn",
+    "SSML": "\u003Cspeak\u003EArcane Burn\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1222232.ogg",
+    "DisplayName": "Devourer\u0027s Ire",
+    "FormattedDisplayName": "Devourer\u0027s Ire",
+    "SSML": "\u003Cspeak\u003EDevourer\u0027s Ire\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1222310.ogg",
+    "DisplayName": "Unending Hunger",
+    "FormattedDisplayName": "Unending Hunger",
+    "SSML": "\u003Cspeak\u003EUnending Hunger\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1222341.ogg",
+    "DisplayName": "Gloom Bite",
+    "FormattedDisplayName": "Gloom Bite",
+    "SSML": "\u003Cspeak\u003EGloom Bite\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1222356.ogg",
+    "DisplayName": "Warp",
+    "FormattedDisplayName": "Warp",
+    "SSML": "\u003Cspeak\u003EWarp\u003C/speak\u003E"
   },
   {
     "FileName": "1222831.ogg",
@@ -1284,10 +1524,1216 @@
     "SSML": "\u003Cspeak\u003EElectro-Charged Shield\u003C/speak\u003E"
   },
   {
+    "FileName": "1223000.ogg",
+    "DisplayName": "Embrace of K\u0027aresh",
+    "FormattedDisplayName": "Embrace of K\u0027aresh",
+    "SSML": "\u003Cspeak\u003EEmbrace of K\u0027aresh\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1223007.ogg",
+    "DisplayName": "Burrowing Eruption",
+    "FormattedDisplayName": "Burrowing Eruption",
+    "SSML": "\u003Cspeak\u003EBurrowing Eruption\u003C/speak\u003E"
+  },
+  {
     "FileName": "1223803.ogg",
     "DisplayName": "Well of Darkness",
     "FormattedDisplayName": "Well of Darkness",
     "SSML": "\u003Cspeak\u003EWell of Darkness\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1223859.ogg",
+    "DisplayName": "Arcane Expulsion",
+    "FormattedDisplayName": "Arcane Expulsion",
+    "SSML": "\u003Cspeak\u003EArcane Expulsion\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1224414.ogg",
+    "DisplayName": "Crystalline Shockwave",
+    "FormattedDisplayName": "Crystalline Shockwave",
+    "SSML": "\u003Cspeak\u003ECrystalline Shockwave\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1224737.ogg",
+    "DisplayName": "Oath-Bound",
+    "FormattedDisplayName": "Oath-Bound",
+    "SSML": "\u003Cspeak\u003EOath-Bound\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1224767.ogg",
+    "DisplayName": "King\u0027s Thrall",
+    "FormattedDisplayName": "King\u0027s Thrall",
+    "SSML": "\u003Cspeak\u003EKing\u0027s Thrall\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1224776.ogg",
+    "DisplayName": "Subjugation Rule",
+    "FormattedDisplayName": "Subjugation Rule",
+    "SSML": "\u003Cspeak\u003ESubjugation Rule\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1224787.ogg",
+    "DisplayName": "Conquer",
+    "FormattedDisplayName": "Conquer",
+    "SSML": "\u003Cspeak\u003EConquer\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1224793.ogg",
+    "DisplayName": "Whispers of Fate",
+    "FormattedDisplayName": "Whispers of Fate",
+    "SSML": "\u003Cspeak\u003EWhispers of Fate\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1224812.ogg",
+    "DisplayName": "Vanquish",
+    "FormattedDisplayName": "Vanquish",
+    "SSML": "\u003Cspeak\u003EVanquish\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1224827.ogg",
+    "DisplayName": "Behead",
+    "FormattedDisplayName": "Behead",
+    "SSML": "\u003Cspeak\u003EBehead\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1224865.ogg",
+    "DisplayName": "Fatebound",
+    "FormattedDisplayName": "Fatebound",
+    "SSML": "\u003Cspeak\u003EFatebound\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1224906.ogg",
+    "DisplayName": "Invoke the Oath",
+    "FormattedDisplayName": "Invoke the Oath",
+    "SSML": "\u003Cspeak\u003EInvoke the Oath\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1225130.ogg",
+    "DisplayName": "Felblade",
+    "FormattedDisplayName": "Felblade",
+    "SSML": "\u003Cspeak\u003EFelblade\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1225174.ogg",
+    "DisplayName": "Ceremonial Dagger",
+    "FormattedDisplayName": "Ceremonial Dagger",
+    "SSML": "\u003Cspeak\u003ECeremonial Dagger\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1225218.ogg",
+    "DisplayName": "Dread of the Unknown",
+    "FormattedDisplayName": "Dread of the Unknown",
+    "SSML": "\u003Cspeak\u003EDread of the Unknown\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1225444.ogg",
+    "DisplayName": "Atomized",
+    "FormattedDisplayName": "Atomized",
+    "SSML": "\u003Cspeak\u003EAtomized\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1225582.ogg",
+    "DisplayName": "Soul Calling",
+    "FormattedDisplayName": "Soul Calling",
+    "SSML": "\u003Cspeak\u003ESoul Calling\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1225616.ogg",
+    "DisplayName": "Soulfire Convergence",
+    "FormattedDisplayName": "Soulfire Convergence",
+    "SSML": "\u003Cspeak\u003ESoulfire Convergence\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1225634.ogg",
+    "DisplayName": "World in Twilight",
+    "FormattedDisplayName": "World in Twilight",
+    "SSML": "\u003Cspeak\u003EWorld in Twilight\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1225645.ogg",
+    "DisplayName": "Twilight Spikes",
+    "FormattedDisplayName": "Twilight Spikes",
+    "SSML": "\u003Cspeak\u003ETwilight Spikes\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1225673.ogg",
+    "DisplayName": "Enraged Shattering",
+    "FormattedDisplayName": "Enraged Shattering",
+    "SSML": "\u003Cspeak\u003EEnraged Shattering\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1226111.ogg",
+    "DisplayName": "Volatile Ejection",
+    "FormattedDisplayName": "Volatile Ejection",
+    "SSML": "\u003Cspeak\u003EVolatile Ejection\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1226311.ogg",
+    "DisplayName": "Infusion Tether",
+    "FormattedDisplayName": "Infusion Tether",
+    "SSML": "\u003Cspeak\u003EInfusion Tether\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1226362.ogg",
+    "DisplayName": "Twilight Scar",
+    "FormattedDisplayName": "Twilight Scar",
+    "SSML": "\u003Cspeak\u003ETwilight Scar\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1226366.ogg",
+    "DisplayName": "Living Silk",
+    "FormattedDisplayName": "Living Silk",
+    "SSML": "\u003Cspeak\u003ELiving Silk\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1226395.ogg",
+    "DisplayName": "Overinfusion Burst",
+    "FormattedDisplayName": "Overinfusion Burst",
+    "SSML": "\u003Cspeak\u003EOverinfusion Burst\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1226413.ogg",
+    "DisplayName": "Starshattered",
+    "FormattedDisplayName": "Starshattered",
+    "SSML": "\u003Cspeak\u003EStarshattered\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1226442.ogg",
+    "DisplayName": "Starkiller Swing",
+    "FormattedDisplayName": "Starkiller Swing",
+    "SSML": "\u003Cspeak\u003EStarkiller Swing\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1226444.ogg",
+    "DisplayName": "Wounded Fate",
+    "FormattedDisplayName": "Wounded Fate",
+    "SSML": "\u003Cspeak\u003EWounded Fate\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1226492.ogg",
+    "DisplayName": "Ritual Disrupted",
+    "FormattedDisplayName": "Ritual Disrupted",
+    "SSML": "\u003Cspeak\u003ERitual Disrupted\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1226493.ogg",
+    "DisplayName": "Shattered Soul",
+    "FormattedDisplayName": "Shattered Soul",
+    "SSML": "\u003Cspeak\u003EShattered Soul\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1226648.ogg",
+    "DisplayName": "Galactic Smash",
+    "FormattedDisplayName": "Galactic Smash",
+    "SSML": "\u003Cspeak\u003EGalactic Smash\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1226721.ogg",
+    "DisplayName": "Silken Snare",
+    "FormattedDisplayName": "Silken Snare",
+    "SSML": "\u003Cspeak\u003ESilken Snare\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1226827.ogg",
+    "DisplayName": "Soulrend Orb",
+    "FormattedDisplayName": "Soulrend Orb",
+    "SSML": "\u003Cspeak\u003ESoulrend Orb\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1227048.ogg",
+    "DisplayName": "Voidblade Ambush",
+    "FormattedDisplayName": "Voidblade Ambush",
+    "SSML": "\u003Cspeak\u003EVoidblade Ambush\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1227052.ogg",
+    "DisplayName": "Void Burst",
+    "FormattedDisplayName": "Void Burst",
+    "SSML": "\u003Cspeak\u003EVoid Burst\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1227226.ogg",
+    "DisplayName": "Writhing Wave",
+    "FormattedDisplayName": "Writhing Wave",
+    "SSML": "\u003Cspeak\u003EWrithing Wave\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1227276.ogg",
+    "DisplayName": "Soulfray Annihilation",
+    "FormattedDisplayName": "Soulfray Annihilation",
+    "SSML": "\u003Cspeak\u003ESoulfray Annihilation\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1227355.ogg",
+    "DisplayName": "Voidstep",
+    "FormattedDisplayName": "Voidstep",
+    "SSML": "\u003Cspeak\u003EVoidstep\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1227373.ogg",
+    "DisplayName": "Shattershell",
+    "FormattedDisplayName": "Shattershell",
+    "SSML": "\u003Cspeak\u003EShattershell\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1227378.ogg",
+    "DisplayName": "Crystal Encasement",
+    "FormattedDisplayName": "Crystal Encasement",
+    "SSML": "\u003Cspeak\u003ECrystal Encasement\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1227470.ogg",
+    "DisplayName": "Besiege",
+    "FormattedDisplayName": "Besiege",
+    "SSML": "\u003Cspeak\u003EBesiege\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1227549.ogg",
+    "DisplayName": "Banishment",
+    "FormattedDisplayName": "Banishment",
+    "SSML": "\u003Cspeak\u003EBanishment\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1227631.ogg",
+    "DisplayName": "Arcane Expulsion",
+    "FormattedDisplayName": "Arcane Expulsion",
+    "SSML": "\u003Cspeak\u003EArcane Expulsion\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1227685.ogg",
+    "DisplayName": "Hungering Slash",
+    "FormattedDisplayName": "Hungering Slash",
+    "SSML": "\u003Cspeak\u003EHungering Slash\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1227734.ogg",
+    "DisplayName": "Coalesce Voidwing",
+    "FormattedDisplayName": "Coalesce Voidwing",
+    "SSML": "\u003Cspeak\u003ECoalesce Voidwing\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1227745.ogg",
+    "DisplayName": "Toxic Regurgitation",
+    "FormattedDisplayName": "Toxic Regurgitation",
+    "SSML": "\u003Cspeak\u003EToxic Regurgitation\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1227782.ogg",
+    "DisplayName": "Arcane Outrage",
+    "FormattedDisplayName": "Arcane Outrage",
+    "SSML": "\u003Cspeak\u003EArcane Outrage\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1227794.ogg",
+    "DisplayName": "Arcane Lightning",
+    "FormattedDisplayName": "Arcane Lightning",
+    "SSML": "\u003Cspeak\u003EArcane Lightning\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1227809.ogg",
+    "DisplayName": "The Hunt",
+    "FormattedDisplayName": "The Hunt",
+    "SSML": "\u003Cspeak\u003EThe Hunt\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1227918.ogg",
+    "DisplayName": "Warp Strike",
+    "FormattedDisplayName": "Warp Strike",
+    "SSML": "\u003Cspeak\u003EWarp Strike\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1228059.ogg",
+    "DisplayName": "Unbound Rage",
+    "FormattedDisplayName": "Unbound Rage",
+    "SSML": "\u003Cspeak\u003EUnbound Rage\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1228075.ogg",
+    "DisplayName": "Nexus Beams",
+    "FormattedDisplayName": "Nexus Beams",
+    "SSML": "\u003Cspeak\u003ENexus Beams\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1228115.ogg",
+    "DisplayName": "Netherbreaker",
+    "FormattedDisplayName": "Netherbreaker",
+    "SSML": "\u003Cspeak\u003ENetherbreaker\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1228163.ogg",
+    "DisplayName": "Dimension Breath",
+    "FormattedDisplayName": "Dimension Breath",
+    "SSML": "\u003Cspeak\u003EDimension Breath\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1228188.ogg",
+    "DisplayName": "Silencing Tempest",
+    "FormattedDisplayName": "Silencing Tempest",
+    "SSML": "\u003Cspeak\u003ESilencing Tempest\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1228206.ogg",
+    "DisplayName": "Excess Mass",
+    "FormattedDisplayName": "Excess Mass",
+    "SSML": "\u003Cspeak\u003EExcess Mass\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1228207.ogg",
+    "DisplayName": "Collective Gravity",
+    "FormattedDisplayName": "Collective Gravity",
+    "SSML": "\u003Cspeak\u003ECollective Gravity\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1228214.ogg",
+    "DisplayName": "Astral Harvest",
+    "FormattedDisplayName": "Astral Harvest",
+    "SSML": "\u003Cspeak\u003EAstral Harvest\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1228216.ogg",
+    "DisplayName": "Arcane Obliteration",
+    "FormattedDisplayName": "Arcane Obliteration",
+    "SSML": "\u003Cspeak\u003EArcane Obliteration\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1228219.ogg",
+    "DisplayName": "Astral Mark",
+    "FormattedDisplayName": "Astral Mark",
+    "SSML": "\u003Cspeak\u003EAstral Mark\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1228265.ogg",
+    "DisplayName": "King\u0027s Hunger",
+    "FormattedDisplayName": "King\u0027s Hunger",
+    "SSML": "\u003Cspeak\u003EKing\u0027s Hunger\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1228502.ogg",
+    "DisplayName": "Overwhelming Power",
+    "FormattedDisplayName": "Overwhelming Power",
+    "SSML": "\u003Cspeak\u003EOverwhelming Power\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1229038.ogg",
+    "DisplayName": "Devour",
+    "FormattedDisplayName": "Devour",
+    "SSML": "\u003Cspeak\u003EDevour\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1229474.ogg",
+    "DisplayName": "Gorge",
+    "FormattedDisplayName": "Gorge",
+    "SSML": "\u003Cspeak\u003EGorge\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1229510.ogg",
+    "DisplayName": "Arcing Zap",
+    "FormattedDisplayName": "Arcing Zap",
+    "SSML": "\u003Cspeak\u003EArcing Zap\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1230087.ogg",
+    "DisplayName": "Massive Smash",
+    "FormattedDisplayName": "Massive Smash",
+    "SSML": "\u003Cspeak\u003EMassive Smash\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1230168.ogg",
+    "DisplayName": "Mortal Fragility",
+    "FormattedDisplayName": "Mortal Fragility",
+    "SSML": "\u003Cspeak\u003EMortal Fragility\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1230261.ogg",
+    "DisplayName": "Netherblast",
+    "FormattedDisplayName": "Netherblast",
+    "SSML": "\u003Cspeak\u003ENetherblast\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1230302.ogg",
+    "DisplayName": "Self-Destruct",
+    "FormattedDisplayName": "Self-Destruct",
+    "SSML": "\u003Cspeak\u003ESelf-Destruct\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1230674.ogg",
+    "DisplayName": "Spaghettification",
+    "FormattedDisplayName": "Spaghettification",
+    "SSML": "\u003Cspeak\u003ESpaghettification\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1230979.ogg",
+    "DisplayName": "Dark Matter",
+    "FormattedDisplayName": "Dark Matter",
+    "SSML": "\u003Cspeak\u003EDark Matter\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1231002.ogg",
+    "DisplayName": "Dark Energy",
+    "FormattedDisplayName": "Dark Energy",
+    "SSML": "\u003Cspeak\u003EDark Energy\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1231097.ogg",
+    "DisplayName": "Cosmic Rip",
+    "FormattedDisplayName": "Cosmic Rip",
+    "SSML": "\u003Cspeak\u003ECosmic Rip\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1231244.ogg",
+    "DisplayName": "Unstable Core",
+    "FormattedDisplayName": "Unstable Core",
+    "SSML": "\u003Cspeak\u003EUnstable Core\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1231716.ogg",
+    "DisplayName": "Extinguish The Stars",
+    "FormattedDisplayName": "Extinguish The Stars",
+    "SSML": "\u003Cspeak\u003EExtinguish The Stars\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1231720.ogg",
+    "DisplayName": "Invoke Collector",
+    "FormattedDisplayName": "Invoke Collector",
+    "SSML": "\u003Cspeak\u003EInvoke Collector\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1231871.ogg",
+    "DisplayName": "Shockwave Slam",
+    "FormattedDisplayName": "Shockwave Slam",
+    "SSML": "\u003Cspeak\u003EShockwave Slam\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1232130.ogg",
+    "DisplayName": "Nexus Shrapnel",
+    "FormattedDisplayName": "Nexus Shrapnel",
+    "SSML": "\u003Cspeak\u003ENexus Shrapnel\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1232221.ogg",
+    "DisplayName": "Death Throes",
+    "FormattedDisplayName": "Death Throes",
+    "SSML": "\u003Cspeak\u003EDeath Throes\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1232394.ogg",
+    "DisplayName": "Gravity Well",
+    "FormattedDisplayName": "Gravity Well",
+    "SSML": "\u003Cspeak\u003EGravity Well\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1232399.ogg",
+    "DisplayName": "Dread Mortar",
+    "FormattedDisplayName": "Dread Mortar",
+    "SSML": "\u003Cspeak\u003EDread Mortar\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1232412.ogg",
+    "DisplayName": "Focusing Iris",
+    "FormattedDisplayName": "Focusing Iris",
+    "SSML": "\u003Cspeak\u003EFocusing Iris\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1232590.ogg",
+    "DisplayName": "Arcane Convergence",
+    "FormattedDisplayName": "Arcane Convergence",
+    "SSML": "\u003Cspeak\u003EArcane Convergence\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1232760.ogg",
+    "DisplayName": "Crystal Lacerations",
+    "FormattedDisplayName": "Crystal Lacerations",
+    "SSML": "\u003Cspeak\u003ECrystal Lacerations\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1232973.ogg",
+    "DisplayName": "Supernova",
+    "FormattedDisplayName": "Supernova",
+    "SSML": "\u003Cspeak\u003ESupernova\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1233074.ogg",
+    "DisplayName": "Crushing Darkness",
+    "FormattedDisplayName": "Crushing Darkness",
+    "SSML": "\u003Cspeak\u003ECrushing Darkness\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1233105.ogg",
+    "DisplayName": "Dark Residue",
+    "FormattedDisplayName": "Dark Residue",
+    "SSML": "\u003Cspeak\u003EDark Residue\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1233110.ogg",
+    "DisplayName": "Purging Lightning",
+    "FormattedDisplayName": "Purging Lightning",
+    "SSML": "\u003Cspeak\u003EPurging Lightning\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1233292.ogg",
+    "DisplayName": "Accretion Disk",
+    "FormattedDisplayName": "Accretion Disk",
+    "SSML": "\u003Cspeak\u003EAccretion Disk\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1233381.ogg",
+    "DisplayName": "Withering Flames",
+    "FormattedDisplayName": "Withering Flames",
+    "SSML": "\u003Cspeak\u003EWithering Flames\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1233415.ogg",
+    "DisplayName": "Mana Splinter",
+    "FormattedDisplayName": "Mana Splinter",
+    "SSML": "\u003Cspeak\u003EMana Splinter\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1233416.ogg",
+    "DisplayName": "Crystalline Shockwave",
+    "FormattedDisplayName": "Crystalline Shockwave",
+    "SSML": "\u003Cspeak\u003ECrystalline Shockwave\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1233539.ogg",
+    "DisplayName": "Devour",
+    "FormattedDisplayName": "Devour",
+    "SSML": "\u003Cspeak\u003EDevour\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1233672.ogg",
+    "DisplayName": "Infernal Strike",
+    "FormattedDisplayName": "Infernal Strike",
+    "SSML": "\u003Cspeak\u003EInfernal Strike\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1233968.ogg",
+    "DisplayName": "Event Horizon",
+    "FormattedDisplayName": "Event Horizon",
+    "SSML": "\u003Cspeak\u003EEvent Horizon\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1234044.ogg",
+    "DisplayName": "Darkened Sky",
+    "FormattedDisplayName": "Darkened Sky",
+    "SSML": "\u003Cspeak\u003EDarkened Sky\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1234054.ogg",
+    "DisplayName": "Shadowquake",
+    "FormattedDisplayName": "Shadowquake",
+    "SSML": "\u003Cspeak\u003EShadowquake\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1234263.ogg",
+    "DisplayName": "Cosmic Collapse",
+    "FormattedDisplayName": "Cosmic Collapse",
+    "SSML": "\u003Cspeak\u003ECosmic Collapse\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1234266.ogg",
+    "DisplayName": "Cosmic Fragility",
+    "FormattedDisplayName": "Cosmic Fragility",
+    "SSML": "\u003Cspeak\u003ECosmic Fragility\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1234328.ogg",
+    "DisplayName": "Photon Blast",
+    "FormattedDisplayName": "Photon Blast",
+    "SSML": "\u003Cspeak\u003EPhoton Blast\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1234529.ogg",
+    "DisplayName": "Cosmic Maw",
+    "FormattedDisplayName": "Cosmic Maw",
+    "SSML": "\u003Cspeak\u003ECosmic Maw\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1235045.ogg",
+    "DisplayName": "Encroaching Oblivion",
+    "FormattedDisplayName": "Encroaching Oblivion",
+    "SSML": "\u003Cspeak\u003EEncroaching Oblivion\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1235060.ogg",
+    "DisplayName": "Anima Tainted Armor",
+    "FormattedDisplayName": "Anima Tainted Armor",
+    "SSML": "\u003Cspeak\u003EAnima Tainted Armor\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1235114.ogg",
+    "DisplayName": "Soaring Reshii",
+    "FormattedDisplayName": "Soaring Reshii",
+    "SSML": "\u003Cspeak\u003ESoaring Reshii\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1235326.ogg",
+    "DisplayName": "Disrupting Screech",
+    "FormattedDisplayName": "Disrupting Screech",
+    "SSML": "\u003Cspeak\u003EDisrupting Screech\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1235368.ogg",
+    "DisplayName": "Arcane Slash",
+    "FormattedDisplayName": "Arcane Slash",
+    "SSML": "\u003Cspeak\u003EArcane Slash\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1235762.ogg",
+    "DisplayName": "Turn to Stone",
+    "FormattedDisplayName": "Turn to Stone",
+    "SSML": "\u003Cspeak\u003ETurn to Stone\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1235766.ogg",
+    "DisplayName": "Mortal Strike",
+    "FormattedDisplayName": "Mortal Strike",
+    "SSML": "\u003Cspeak\u003EMortal Strike\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1236130.ogg",
+    "DisplayName": "Binding Javelin",
+    "FormattedDisplayName": "Binding Javelin",
+    "SSML": "\u003Cspeak\u003EBinding Javelin\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1236207.ogg",
+    "DisplayName": "Astral Surge",
+    "FormattedDisplayName": "Astral Surge",
+    "SSML": "\u003Cspeak\u003EAstral Surge\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1236348.ogg",
+    "DisplayName": "Charged Slash",
+    "FormattedDisplayName": "Charged Slash",
+    "SSML": "\u003Cspeak\u003ECharged Slash\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1236512.ogg",
+    "DisplayName": "Unstable Anima",
+    "FormattedDisplayName": "Unstable Anima",
+    "SSML": "\u003Cspeak\u003EUnstable Anima\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1236614.ogg",
+    "DisplayName": "Display of Power",
+    "FormattedDisplayName": "Display of Power",
+    "SSML": "\u003Cspeak\u003EDisplay of Power\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1236703.ogg",
+    "DisplayName": "Eternal Weave",
+    "FormattedDisplayName": "Eternal Weave",
+    "SSML": "\u003Cspeak\u003EEternal Weave\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1236973.ogg",
+    "DisplayName": "Erupting Torment",
+    "FormattedDisplayName": "Erupting Torment",
+    "SSML": "\u003Cspeak\u003EErupting Torment\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1236981.ogg",
+    "DisplayName": "Disruption Grenade",
+    "FormattedDisplayName": "Disruption Grenade",
+    "SSML": "\u003Cspeak\u003EDisruption Grenade\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1237071.ogg",
+    "DisplayName": "Stone Fist",
+    "FormattedDisplayName": "Stone Fist",
+    "SSML": "\u003Cspeak\u003EStone Fist\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1237097.ogg",
+    "DisplayName": "Astrophysical Jet",
+    "FormattedDisplayName": "Astrophysical Jet",
+    "SSML": "\u003Cspeak\u003EAstrophysical Jet\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1237160.ogg",
+    "DisplayName": "Radiation Pool",
+    "FormattedDisplayName": "Radiation Pool",
+    "SSML": "\u003Cspeak\u003ERadiation Pool\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1237195.ogg",
+    "DisplayName": "Burrow Charge",
+    "FormattedDisplayName": "Burrow Charge",
+    "SSML": "\u003Cspeak\u003EBurrow Charge\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1237212.ogg",
+    "DisplayName": "Piercing Strand",
+    "FormattedDisplayName": "Piercing Strand",
+    "SSML": "\u003Cspeak\u003EPiercing Strand\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1237220.ogg",
+    "DisplayName": "Stinging Sandstorm",
+    "FormattedDisplayName": "Stinging Sandstorm",
+    "SSML": "\u003Cspeak\u003EStinging Sandstorm\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1237272.ogg",
+    "DisplayName": "Lair Weaving",
+    "FormattedDisplayName": "Lair Weaving",
+    "SSML": "\u003Cspeak\u003ELair Weaving\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1237319.ogg",
+    "DisplayName": "Gamma Burst",
+    "FormattedDisplayName": "Gamma Burst",
+    "SSML": "\u003Cspeak\u003EGamma Burst\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1237602.ogg",
+    "DisplayName": "Gushing Wound",
+    "FormattedDisplayName": "Gushing Wound",
+    "SSML": "\u003Cspeak\u003EGushing Wound\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1237690.ogg",
+    "DisplayName": "Eclipse",
+    "FormattedDisplayName": "Eclipse",
+    "SSML": "\u003Cspeak\u003EEclipse\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1237694.ogg",
+    "DisplayName": "Mass Ejection",
+    "FormattedDisplayName": "Mass Ejection",
+    "SSML": "\u003Cspeak\u003EMass Ejection\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1237695.ogg",
+    "DisplayName": "Stardust Nova",
+    "FormattedDisplayName": "Stardust Nova",
+    "SSML": "\u003Cspeak\u003EStardust Nova\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1237696.ogg",
+    "DisplayName": "Debris Field",
+    "FormattedDisplayName": "Debris Field",
+    "SSML": "\u003Cspeak\u003EDebris Field\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1238266.ogg",
+    "DisplayName": "Ramping Power",
+    "FormattedDisplayName": "Ramping Power",
+    "SSML": "\u003Cspeak\u003ERamping Power\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1238502.ogg",
+    "DisplayName": "Woven Ward",
+    "FormattedDisplayName": "Woven Ward",
+    "SSML": "\u003Cspeak\u003EWoven Ward\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1238765.ogg",
+    "DisplayName": "Extinction",
+    "FormattedDisplayName": "Extinction",
+    "SSML": "\u003Cspeak\u003EExtinction\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1238780.ogg",
+    "DisplayName": "Earthshattering Spear",
+    "FormattedDisplayName": "Earthshattering Spear",
+    "SSML": "\u003Cspeak\u003EEarthshattering Spear\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1238892.ogg",
+    "DisplayName": "Null Breath",
+    "FormattedDisplayName": "Null Breath",
+    "SSML": "\u003Cspeak\u003ENull Breath\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1238909.ogg",
+    "DisplayName": "Umbral Devastation",
+    "FormattedDisplayName": "Umbral Devastation",
+    "SSML": "\u003Cspeak\u003EUmbral Devastation\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1238919.ogg",
+    "DisplayName": "Void Empowerment",
+    "FormattedDisplayName": "Void Empowerment",
+    "SSML": "\u003Cspeak\u003EVoid Empowerment\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1238930.ogg",
+    "DisplayName": "Impale",
+    "FormattedDisplayName": "Impale",
+    "SSML": "\u003Cspeak\u003EImpale\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1238975.ogg",
+    "DisplayName": "Vengeful Oath",
+    "FormattedDisplayName": "Vengeful Oath",
+    "SSML": "\u003Cspeak\u003EVengeful Oath\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1239134.ogg",
+    "DisplayName": "Cosmic Tranquilization",
+    "FormattedDisplayName": "Cosmic Tranquilization",
+    "SSML": "\u003Cspeak\u003ECosmic Tranquilization\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1239229.ogg",
+    "DisplayName": "K\u0027areshi Surge",
+    "FormattedDisplayName": "K\u0027areshi Surge",
+    "SSML": "\u003Cspeak\u003EK\u0027areshi Surge\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1239262.ogg",
+    "DisplayName": "Conqueror\u0027s Cross",
+    "FormattedDisplayName": "Conqueror\u0027s Cross",
+    "SSML": "\u003Cspeak\u003EConqueror\u0027s Cross\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1239270.ogg",
+    "DisplayName": "Voidwarding",
+    "FormattedDisplayName": "Voidwarding",
+    "SSML": "\u003Cspeak\u003EVoidwarding\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1239350.ogg",
+    "DisplayName": "All Hands!",
+    "FormattedDisplayName": "All Hands!",
+    "SSML": "\u003Cspeak\u003EAll Hands!\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1239407.ogg",
+    "DisplayName": "Run Through",
+    "FormattedDisplayName": "Run Through",
+    "SSML": "\u003Cspeak\u003ERun Through\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1239427.ogg",
+    "DisplayName": "Scuttle That One!",
+    "FormattedDisplayName": "Scuttle That One!",
+    "SSML": "\u003Cspeak\u003EScuttle That One!\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1239445.ogg",
+    "DisplayName": "Broadside",
+    "FormattedDisplayName": "Broadside",
+    "SSML": "\u003Cspeak\u003EBroadside\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1239533.ogg",
+    "DisplayName": "Cosmic Waste",
+    "FormattedDisplayName": "Cosmic Waste",
+    "SSML": "\u003Cspeak\u003ECosmic Waste\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1240102.ogg",
+    "DisplayName": "Time Bombs",
+    "FormattedDisplayName": "Time Bombs",
+    "SSML": "\u003Cspeak\u003ETime Bombs\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1240437.ogg",
+    "DisplayName": "Volatile Surge",
+    "FormattedDisplayName": "Volatile Surge",
+    "SSML": "\u003Cspeak\u003EVolatile Surge\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1240705.ogg",
+    "DisplayName": "Astral Burn",
+    "FormattedDisplayName": "Astral Burn",
+    "SSML": "\u003Cspeak\u003EAstral Burn\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1240821.ogg",
+    "DisplayName": "Energized Slam",
+    "FormattedDisplayName": "Energized Slam",
+    "SSML": "\u003Cspeak\u003EEnergized Slam\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1240891.ogg",
+    "DisplayName": "Sigil of Chains",
+    "FormattedDisplayName": "Sigil of Chains",
+    "SSML": "\u003Cspeak\u003ESigil of Chains\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1240912.ogg",
+    "DisplayName": "Pierce",
+    "FormattedDisplayName": "Pierce",
+    "SSML": "\u003Cspeak\u003EPierce\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1241032.ogg",
+    "DisplayName": "Final Warning",
+    "FormattedDisplayName": "Final Warning",
+    "SSML": "\u003Cspeak\u003EFinal Warning\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1241100.ogg",
+    "DisplayName": "Mystic Lash",
+    "FormattedDisplayName": "Mystic Lash",
+    "SSML": "\u003Cspeak\u003EMystic Lash\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1241306.ogg",
+    "DisplayName": "Blade Dance",
+    "FormattedDisplayName": "Blade Dance",
+    "SSML": "\u003Cspeak\u003EBlade Dance\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1241693.ogg",
+    "DisplayName": "Locust Swarm",
+    "FormattedDisplayName": "Locust Swarm",
+    "SSML": "\u003Cspeak\u003ELocust Swarm\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1241753.ogg",
+    "DisplayName": "Portal Infusion",
+    "FormattedDisplayName": "Portal Infusion",
+    "SSML": "\u003Cspeak\u003EPortal Infusion\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1241785.ogg",
+    "DisplayName": "Tainted Blood",
+    "FormattedDisplayName": "Tainted Blood",
+    "SSML": "\u003Cspeak\u003ETainted Blood\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1241833.ogg",
+    "DisplayName": "Fracture",
+    "FormattedDisplayName": "Fracture",
+    "SSML": "\u003Cspeak\u003EFracture\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1241946.ogg",
+    "DisplayName": "Frailty",
+    "FormattedDisplayName": "Frailty",
+    "SSML": "\u003Cspeak\u003EFrailty\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1241991.ogg",
+    "DisplayName": "Kareshi Timebomb",
+    "FormattedDisplayName": "Kareshi Timebomb",
+    "SSML": "\u003Cspeak\u003EKareshi Timebomb\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1242074.ogg",
+    "DisplayName": "Intensifying Aggression",
+    "FormattedDisplayName": "Intensifying Aggression",
+    "SSML": "\u003Cspeak\u003EIntensifying Aggression\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1242086.ogg",
+    "DisplayName": "Arcane Energy",
+    "FormattedDisplayName": "Arcane Energy",
+    "SSML": "\u003Cspeak\u003EArcane Energy\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1242142.ogg",
+    "DisplayName": "Implosion",
+    "FormattedDisplayName": "Implosion",
+    "SSML": "\u003Cspeak\u003EImplosion\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1242259.ogg",
+    "DisplayName": "Spirit Bomb",
+    "FormattedDisplayName": "Spirit Bomb",
+    "SSML": "\u003Cspeak\u003ESpirit Bomb\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1242284.ogg",
+    "DisplayName": "Soulcrush",
+    "FormattedDisplayName": "Soulcrush",
+    "SSML": "\u003Cspeak\u003ESoulcrush\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1242304.ogg",
+    "DisplayName": "Expulsed Soul",
+    "FormattedDisplayName": "Expulsed Soul",
+    "SSML": "\u003Cspeak\u003EExpulsed Soul\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1243577.ogg",
+    "DisplayName": "Reverse Gravity",
+    "FormattedDisplayName": "Reverse Gravity",
+    "SSML": "\u003Cspeak\u003EReverse Gravity\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1243609.ogg",
+    "DisplayName": "Airborne",
+    "FormattedDisplayName": "Airborne",
+    "SSML": "\u003Cspeak\u003EAirborne\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1243641.ogg",
+    "DisplayName": "Void Surge",
+    "FormattedDisplayName": "Void Surge",
+    "SSML": "\u003Cspeak\u003EVoid Surge\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1243690.ogg",
+    "DisplayName": "Shattered Space",
+    "FormattedDisplayName": "Shattered Space",
+    "SSML": "\u003Cspeak\u003EShattered Space\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1243699.ogg",
+    "DisplayName": "Spatial Fragment",
+    "FormattedDisplayName": "Spatial Fragment",
+    "SSML": "\u003Cspeak\u003ESpatial Fragment\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1243702.ogg",
+    "DisplayName": "Antimatter",
+    "FormattedDisplayName": "Antimatter",
+    "SSML": "\u003Cspeak\u003EAntimatter\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1243771.ogg",
+    "DisplayName": "Arcane Ichor",
+    "FormattedDisplayName": "Arcane Ichor",
+    "SSML": "\u003Cspeak\u003EArcane Ichor\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1243901.ogg",
+    "DisplayName": "Void Harvest",
+    "FormattedDisplayName": "Void Harvest",
+    "SSML": "\u003Cspeak\u003EVoid Harvest\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1244443.ogg",
+    "DisplayName": "Force Multiplier",
+    "FormattedDisplayName": "Force Multiplier",
+    "SSML": "\u003Cspeak\u003EForce Multiplier\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1244462.ogg",
+    "DisplayName": "Invoke the Shadows",
+    "FormattedDisplayName": "Invoke the Shadows",
+    "SSML": "\u003Cspeak\u003EInvoke the Shadows\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1244600.ogg",
+    "DisplayName": "Shadow Eruption",
+    "FormattedDisplayName": "Shadow Eruption",
+    "SSML": "\u003Cspeak\u003EShadow Eruption\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1244650.ogg",
+    "DisplayName": "Tidal Burst",
+    "FormattedDisplayName": "Tidal Burst",
+    "SSML": "\u003Cspeak\u003ETidal Burst\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1245203.ogg",
+    "DisplayName": "Dark Massacre",
+    "FormattedDisplayName": "Dark Massacre",
+    "SSML": "\u003Cspeak\u003EDark Massacre\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1245240.ogg",
+    "DisplayName": "Nexus Daggers",
+    "FormattedDisplayName": "Nexus Daggers",
+    "SSML": "\u003Cspeak\u003ENexus Daggers\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1245292.ogg",
+    "DisplayName": "Destabilized",
+    "FormattedDisplayName": "Destabilized",
+    "SSML": "\u003Cspeak\u003EDestabilized\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1245579.ogg",
+    "DisplayName": "Shuri",
+    "FormattedDisplayName": "Shuri",
+    "SSML": "\u003Cspeak\u003EShuri\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1245582.ogg",
+    "DisplayName": "Nether Rift",
+    "FormattedDisplayName": "Nether Rift",
+    "SSML": "\u003Cspeak\u003ENether Rift\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1245634.ogg",
+    "DisplayName": "Divide",
+    "FormattedDisplayName": "Divide",
+    "SSML": "\u003Cspeak\u003EDivide\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1245669.ogg",
+    "DisplayName": "Double Technique",
+    "FormattedDisplayName": "Double Technique",
+    "SSML": "\u003Cspeak\u003EDouble Technique\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1245752.ogg",
+    "DisplayName": "Triple Technique",
+    "FormattedDisplayName": "Triple Technique",
+    "SSML": "\u003Cspeak\u003ETriple Technique\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1246145.ogg",
+    "DisplayName": "Touch of Oblivion",
+    "FormattedDisplayName": "Touch of Oblivion",
+    "SSML": "\u003Cspeak\u003ETouch of Oblivion\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1246541.ogg",
+    "DisplayName": "Null Binding",
+    "FormattedDisplayName": "Null Binding",
+    "SSML": "\u003Cspeak\u003ENull Binding\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1246921.ogg",
+    "DisplayName": "Infusion Pylons",
+    "FormattedDisplayName": "Infusion Pylons",
+    "SSML": "\u003Cspeak\u003EInfusion Pylons\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1246930.ogg",
+    "DisplayName": "Stellar Core",
+    "FormattedDisplayName": "Stellar Core",
+    "SSML": "\u003Cspeak\u003EStellar Core\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1247424.ogg",
+    "DisplayName": "Null Consumption",
+    "FormattedDisplayName": "Null Consumption",
+    "SSML": "\u003Cspeak\u003ENull Consumption\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1248009.ogg",
+    "DisplayName": "Dark Terminus",
+    "FormattedDisplayName": "Dark Terminus",
+    "SSML": "\u003Cspeak\u003EDark Terminus\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1248171.ogg",
+    "DisplayName": "Void Tear",
+    "FormattedDisplayName": "Void Tear",
+    "SSML": "\u003Cspeak\u003EVoid Tear\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1248209.ogg",
+    "DisplayName": "Phase Slash",
+    "FormattedDisplayName": "Phase Slash",
+    "SSML": "\u003Cspeak\u003EPhase Slash\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1248699.ogg",
+    "DisplayName": "Consume Spirit",
+    "FormattedDisplayName": "Consume Spirit",
+    "SSML": "\u003Cspeak\u003EConsume Spirit\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1250052.ogg",
+    "DisplayName": "The Shadows",
+    "FormattedDisplayName": "The Shadows",
+    "SSML": "\u003Cspeak\u003EThe Shadows\u003C/speak\u003E"
+  },
+  {
+    "FileName": "1250055.ogg",
+    "DisplayName": "Voidgrasp",
+    "FormattedDisplayName": "Voidgrasp",
+    "SSML": "\u003Cspeak\u003EVoidgrasp\u003C/speak\u003E"
   },
   {
     "FileName": "143834.ogg",
@@ -12438,6 +13884,12 @@
     "SSML": "\u003Cspeak\u003EDeploy Crawler Mine\u003C/speak\u003E"
   },
   {
+    "FileName": "262794.ogg",
+    "DisplayName": "Mind Lash",
+    "FormattedDisplayName": "Mind Lash",
+    "SSML": "\u003Cspeak\u003EMind Lash\u003C/speak\u003E"
+  },
+  {
     "FileName": "263202.ogg",
     "DisplayName": "Rock Lance",
     "FormattedDisplayName": "Rock Lance",
@@ -13276,6 +14728,12 @@
     "DisplayName": "Tidal Surge",
     "FormattedDisplayName": "Tidal Surge",
     "SSML": "\u003Cspeak\u003ETidal Surge\u003C/speak\u003E"
+  },
+  {
+    "FileName": "267980.ogg",
+    "DisplayName": "Grease Gun",
+    "FormattedDisplayName": "Grease Gun",
+    "SSML": "\u003Cspeak\u003EGrease Gun\u003C/speak\u003E"
   },
   {
     "FileName": "267981.ogg",
@@ -15318,12 +16776,6 @@
     "SSML": "\u003Cspeak\u003EAir Drop\u003C/speak\u003E"
   },
   {
-    "FileName": "291937.ogg",
-    "DisplayName": "Hiding Behind Junk",
-    "FormattedDisplayName": "Hiding Behind Junk",
-    "SSML": "\u003Cspeak\u003EHiding Behind Junk\u003C/speak\u003E"
-  },
-  {
     "FileName": "291946.ogg",
     "DisplayName": "Venting Flames",
     "FormattedDisplayName": "Venting Flames",
@@ -15394,6 +16846,12 @@
     "DisplayName": "Gaze from Below",
     "FormattedDisplayName": "Gaze from Below",
     "SSML": "\u003Cspeak\u003EGaze from Below\u003C/speak\u003E"
+  },
+  {
+    "FileName": "292332.ogg",
+    "DisplayName": "Self-Trimming Hedge",
+    "FormattedDisplayName": "Self-Trimming Hedge",
+    "SSML": "\u003Cspeak\u003ESelf-Trimming Hedge\u003C/speak\u003E"
   },
   {
     "FileName": "292963.ogg",
@@ -17694,7 +19152,7 @@
     "SSML": "\u003Cspeak\u003EBewildering Pollen\u003C/speak\u003E"
   },
   {
-    "FileName": "323143.ogg",
+    "FileName": "323142.ogg",
     "DisplayName": "Telekinetic Toss",
     "FormattedDisplayName": "Telekinetic Toss",
     "SSML": "\u003Cspeak\u003ETelekinetic Toss\u003C/speak\u003E"
@@ -17730,12 +19188,6 @@
     "SSML": "\u003Cspeak\u003EClinging Darkness\u003C/speak\u003E"
   },
   {
-    "FileName": "323437.ogg",
-    "DisplayName": "Stigma of Pride",
-    "FormattedDisplayName": "Stigma of Pride",
-    "SSML": "\u003Cspeak\u003EStigma of Pride\u003C/speak\u003E"
-  },
-  {
     "FileName": "323471.ogg",
     "DisplayName": "Throw Cleaver",
     "FormattedDisplayName": "Throw Cleaver",
@@ -17749,21 +19201,15 @@
   },
   {
     "FileName": "323538.ogg",
-    "DisplayName": "Bolt of Power",
-    "FormattedDisplayName": "Bolt of Power",
-    "SSML": "\u003Cspeak\u003EBolt of Power\u003C/speak\u003E"
+    "DisplayName": "Anima Bolt",
+    "FormattedDisplayName": "Anima Bolt",
+    "SSML": "\u003Cspeak\u003EAnima Bolt\u003C/speak\u003E"
   },
   {
     "FileName": "323551.ogg",
     "DisplayName": "Residue",
     "FormattedDisplayName": "Residue",
     "SSML": "\u003Cspeak\u003EResidue\u003C/speak\u003E"
-  },
-  {
-    "FileName": "323552.ogg",
-    "DisplayName": "Volley of Power",
-    "FormattedDisplayName": "Volley of Power",
-    "SSML": "\u003Cspeak\u003EVolley of Power\u003C/speak\u003E"
   },
   {
     "FileName": "323569.ogg",
@@ -17776,6 +19222,12 @@
     "DisplayName": "Rolling Plague",
     "FormattedDisplayName": "Rolling Plague",
     "SSML": "\u003Cspeak\u003ERolling Plague\u003C/speak\u003E"
+  },
+  {
+    "FileName": "323597.ogg",
+    "DisplayName": "Spectral Procession",
+    "FormattedDisplayName": "Spectral Procession",
+    "SSML": "\u003Cspeak\u003ESpectral Procession\u003C/speak\u003E"
   },
   {
     "FileName": "323608.ogg",
@@ -18054,22 +19506,10 @@
     "SSML": "\u003Cspeak\u003EConcussive Smash\u003C/speak\u003E"
   },
   {
-    "FileName": "325523.ogg",
-    "DisplayName": "Deadly Thrust",
-    "FormattedDisplayName": "Deadly Thrust",
-    "SSML": "\u003Cspeak\u003EDeadly Thrust\u003C/speak\u003E"
-  },
-  {
     "FileName": "325552.ogg",
     "DisplayName": "Cytotoxic Slash",
     "FormattedDisplayName": "Cytotoxic Slash",
     "SSML": "\u003Cspeak\u003ECytotoxic Slash\u003C/speak\u003E"
-  },
-  {
-    "FileName": "325700.ogg",
-    "DisplayName": "Collect Sins",
-    "FormattedDisplayName": "Collect Sins",
-    "SSML": "\u003Cspeak\u003ECollect Sins\u003C/speak\u003E"
   },
   {
     "FileName": "325701.ogg",
@@ -18096,16 +19536,10 @@
     "SSML": "\u003Cspeak\u003EBottled Anima\u003C/speak\u003E"
   },
   {
-    "FileName": "325799.ogg",
-    "DisplayName": "Rapid Fire",
-    "FormattedDisplayName": "Rapid Fire",
-    "SSML": "\u003Cspeak\u003ERapid Fire\u003C/speak\u003E"
-  },
-  {
     "FileName": "325876.ogg",
-    "DisplayName": "Curse of Obliteration",
-    "FormattedDisplayName": "Curse of Obliteration",
-    "SSML": "\u003Cspeak\u003ECurse of Obliteration\u003C/speak\u003E"
+    "DisplayName": "Mark of Obliteration",
+    "FormattedDisplayName": "Mark of Obliteration",
+    "SSML": "\u003Cspeak\u003EMark of Obliteration\u003C/speak\u003E"
   },
   {
     "FileName": "325877.ogg",
@@ -18210,10 +19644,10 @@
     "SSML": "\u003Cspeak\u003EBurning Remnants\u003C/speak\u003E"
   },
   {
-    "FileName": "326607.ogg",
-    "DisplayName": "Turn to Stone",
-    "FormattedDisplayName": "Turn to Stone",
-    "SSML": "\u003Cspeak\u003ETurn to Stone\u003C/speak\u003E"
+    "FileName": "326638.ogg",
+    "DisplayName": "Hurl Glaive",
+    "FormattedDisplayName": "Hurl Glaive",
+    "SSML": "\u003Cspeak\u003EHurl Glaive\u003C/speak\u003E"
   },
   {
     "FileName": "326699.ogg",
@@ -18228,6 +19662,12 @@
     "SSML": "\u003Cspeak\u003ECleansing Pain\u003C/speak\u003E"
   },
   {
+    "FileName": "326794.ogg",
+    "DisplayName": "Dark Communion",
+    "FormattedDisplayName": "Dark Communion",
+    "SSML": "\u003Cspeak\u003EDark Communion\u003C/speak\u003E"
+  },
+  {
     "FileName": "326827.ogg",
     "DisplayName": "Dread Bindings",
     "FormattedDisplayName": "Dread Bindings",
@@ -18238,6 +19678,12 @@
     "DisplayName": "Curse of Suppression",
     "FormattedDisplayName": "Curse of Suppression",
     "SSML": "\u003Cspeak\u003ECurse of Suppression\u003C/speak\u003E"
+  },
+  {
+    "FileName": "326847.ogg",
+    "DisplayName": "Disperse Sin",
+    "FormattedDisplayName": "Disperse Sin",
+    "SSML": "\u003Cspeak\u003EDisperse Sin\u003C/speak\u003E"
   },
   {
     "FileName": "326851.ogg",
@@ -18408,12 +19854,6 @@
     "SSML": "\u003Cspeak\u003EBlightbeak\u003C/speak\u003E"
   },
   {
-    "FileName": "327885.ogg",
-    "DisplayName": "Erupting Torment",
-    "FormattedDisplayName": "Erupting Torment",
-    "SSML": "\u003Cspeak\u003EErupting Torment\u003C/speak\u003E"
-  },
-  {
     "FileName": "327902.ogg",
     "DisplayName": "Fixate",
     "FormattedDisplayName": "Fixate",
@@ -18463,9 +19903,9 @@
   },
   {
     "FileName": "328206.ogg",
-    "DisplayName": "Curse of Stone",
-    "FormattedDisplayName": "Curse of Stone",
-    "SSML": "\u003Cspeak\u003ECurse of Stone\u003C/speak\u003E"
+    "DisplayName": "Flesh to Stone",
+    "FormattedDisplayName": "Flesh to Stone",
+    "SSML": "\u003Cspeak\u003EFlesh to Stone\u003C/speak\u003E"
   },
   {
     "FileName": "328276.ogg",
@@ -18736,6 +20176,12 @@
     "DisplayName": "Wing Buffet=b\u028Cf.\u026At",
     "FormattedDisplayName": "Wing Buffet=b\u028Cf.\u026At",
     "SSML": "\u003Cspeak\u003EWing \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022b\u028Cf.\u026At\u0022\u003EBuffet=b\u028Cf.\u026At\u003C/phoneme\u003E\u003C/speak\u003E"
+  },
+  {
+    "FileName": "330532.ogg",
+    "DisplayName": "Jagged Quarrel",
+    "FormattedDisplayName": "Jagged Quarrel",
+    "SSML": "\u003Cspeak\u003EJagged Quarrel\u003C/speak\u003E"
   },
   {
     "FileName": "330562.ogg",
@@ -19884,12 +21330,6 @@
     "SSML": "\u003Cspeak\u003EInterrupting Roar\u003C/speak\u003E"
   },
   {
-    "FileName": "342171.ogg",
-    "DisplayName": "Loyal Stoneborn",
-    "FormattedDisplayName": "Loyal Stoneborn",
-    "SSML": "\u003Cspeak\u003ELoyal Stoneborn\u003C/speak\u003E"
-  },
-  {
     "FileName": "342256.ogg",
     "DisplayName": "Call Shadow Forces",
     "FormattedDisplayName": "Call Shadow Forces",
@@ -20046,12 +21486,6 @@
     "SSML": "\u003Cspeak\u003EVengeful Wail\u003C/speak\u003E"
   },
   {
-    "FileName": "344993.ogg",
-    "DisplayName": "Jagged Swipe",
-    "FormattedDisplayName": "Jagged Swipe",
-    "SSML": "\u003Cspeak\u003EJagged Swipe\u003C/speak\u003E"
-  },
-  {
     "FileName": "345397.ogg",
     "DisplayName": "Wave of Blood",
     "FormattedDisplayName": "Wave of Blood",
@@ -20110,6 +21544,12 @@
     "DisplayName": "Violent Uproar",
     "FormattedDisplayName": "Violent Uproar",
     "SSML": "\u003Cspeak\u003EViolent Uproar\u003C/speak\u003E"
+  },
+  {
+    "FileName": "346329.ogg",
+    "DisplayName": "Spilled Liquids",
+    "FormattedDisplayName": "Spilled Liquids",
+    "SSML": "\u003Cspeak\u003ESpilled Liquids\u003C/speak\u003E"
   },
   {
     "FileName": "346459.ogg",
@@ -20178,12 +21618,6 @@
     "SSML": "\u003Cspeak\u003EWaltz of Blood\u003C/speak\u003E"
   },
   {
-    "FileName": "346866.ogg",
-    "DisplayName": "Stone Breath",
-    "FormattedDisplayName": "Stone Breath",
-    "SSML": "\u003Cspeak\u003EStone Breath\u003C/speak\u003E"
-  },
-  {
     "FileName": "346945.ogg",
     "DisplayName": "Manifest Pain",
     "FormattedDisplayName": "Manifest Pain",
@@ -20196,7 +21630,7 @@
     "SSML": "\u003Cspeak\u003EUnstable Goods\u003C/speak\u003E"
   },
   {
-    "FileName": "346959.ogg",
+    "FileName": "346957.ogg",
     "DisplayName": "Purged by Fire",
     "FormattedDisplayName": "Purged by Fire",
     "SSML": "\u003Cspeak\u003EPurged by Fire\u003C/speak\u003E"
@@ -20230,18 +21664,6 @@
     "DisplayName": "Infinite Breath",
     "FormattedDisplayName": "Infinite Breath",
     "SSML": "\u003Cspeak\u003EInfinite Breath\u003C/speak\u003E"
-  },
-  {
-    "FileName": "347151.ogg",
-    "DisplayName": "Hook Swipe",
-    "FormattedDisplayName": "Hook Swipe",
-    "SSML": "\u003Cspeak\u003EHook Swipe\u003C/speak\u003E"
-  },
-  {
-    "FileName": "347249.ogg",
-    "DisplayName": "Divide",
-    "FormattedDisplayName": "Divide",
-    "SSML": "\u003Cspeak\u003EDivide\u003C/speak\u003E"
   },
   {
     "FileName": "347269.ogg",
@@ -20292,12 +21714,6 @@
     "SSML": "\u003Cspeak\u003EThe Jailer\u0027s Gaze\u003C/speak\u003E"
   },
   {
-    "FileName": "347371.ogg",
-    "DisplayName": "Grapeshot",
-    "FormattedDisplayName": "Grapeshot",
-    "SSML": "\u003Cspeak\u003EGrapeshot\u003C/speak\u003E"
-  },
-  {
     "FileName": "347490.ogg",
     "DisplayName": "Fury of the Ages",
     "FormattedDisplayName": "Fury of the Ages",
@@ -20320,18 +21736,6 @@
     "DisplayName": "Wailing Arrow",
     "FormattedDisplayName": "Wailing Arrow",
     "SSML": "\u003Cspeak\u003EWailing Arrow\u003C/speak\u003E"
-  },
-  {
-    "FileName": "347610.ogg",
-    "DisplayName": "Shuri",
-    "FormattedDisplayName": "Shuri",
-    "SSML": "\u003Cspeak\u003EShuri\u003C/speak\u003E"
-  },
-  {
-    "FileName": "347623.ogg",
-    "DisplayName": "Quickblade",
-    "FormattedDisplayName": "Quickblade",
-    "SSML": "\u003Cspeak\u003EQuickblade\u003C/speak\u003E"
   },
   {
     "FileName": "347668.ogg",
@@ -20358,22 +21762,28 @@
     "SSML": "\u003Cspeak\u003EVeil of Darkness\u003C/speak\u003E"
   },
   {
+    "FileName": "347716.ogg",
+    "DisplayName": "Letter Opener",
+    "FormattedDisplayName": "Letter Opener",
+    "SSML": "\u003Cspeak\u003ELetter Opener\u003C/speak\u003E"
+  },
+  {
     "FileName": "347721.ogg",
     "DisplayName": "Open Cage",
     "FormattedDisplayName": "Open Cage",
     "SSML": "\u003Cspeak\u003EOpen Cage\u003C/speak\u003E"
   },
   {
+    "FileName": "347775.ogg",
+    "DisplayName": "Spam Filter",
+    "FormattedDisplayName": "Spam Filter",
+    "SSML": "\u003Cspeak\u003ESpam Filter\u003C/speak\u003E"
+  },
+  {
     "FileName": "347807.ogg",
     "DisplayName": "Barbed Arrow",
     "FormattedDisplayName": "Barbed Arrow",
     "SSML": "\u003Cspeak\u003EBarbed Arrow\u003C/speak\u003E"
-  },
-  {
-    "FileName": "347949.ogg",
-    "DisplayName": "Interrogation",
-    "FormattedDisplayName": "Interrogation",
-    "SSML": "\u003Cspeak\u003EInterrogation\u003C/speak\u003E"
   },
   {
     "FileName": "348071.ogg",
@@ -20392,6 +21802,18 @@
     "DisplayName": "Banshee Wail",
     "FormattedDisplayName": "Banshee Wail",
     "SSML": "\u003Cspeak\u003EBanshee Wail\u003C/speak\u003E"
+  },
+  {
+    "FileName": "348128.ogg",
+    "DisplayName": "Fully Armed",
+    "FormattedDisplayName": "Fully Armed",
+    "SSML": "\u003Cspeak\u003EFully Armed\u003C/speak\u003E"
+  },
+  {
+    "FileName": "348350.ogg",
+    "DisplayName": "Interrogation",
+    "FormattedDisplayName": "Interrogation",
+    "SSML": "\u003Cspeak\u003EInterrogation\u003C/speak\u003E"
   },
   {
     "FileName": "348428.ogg",
@@ -20508,10 +21930,22 @@
     "SSML": "\u003Cspeak\u003EAgatha\u0027s Eternal Blade\u003C/speak\u003E"
   },
   {
+    "FileName": "350037.ogg",
+    "DisplayName": "Exposed Anima Core",
+    "FormattedDisplayName": "Exposed Anima Core",
+    "SSML": "\u003Cspeak\u003EExposed Anima Core\u003C/speak\u003E"
+  },
+  {
     "FileName": "350039.ogg",
     "DisplayName": "Arthura\u0027s Crushing Gaze",
     "FormattedDisplayName": "Arthura\u0027s Crushing Gaze",
     "SSML": "\u003Cspeak\u003EArthura\u0027s Crushing Gaze\u003C/speak\u003E"
+  },
+  {
+    "FileName": "350045.ogg",
+    "DisplayName": "Corrosive Anima",
+    "FormattedDisplayName": "Corrosive Anima",
+    "SSML": "\u003Cspeak\u003ECorrosive Anima\u003C/speak\u003E"
   },
   {
     "FileName": "350073.ogg",
@@ -20664,12 +22098,6 @@
     "SSML": "\u003Cspeak\u003EThreat Neutralization\u003C/speak\u003E"
   },
   {
-    "FileName": "350517.ogg",
-    "DisplayName": "Double Time",
-    "FormattedDisplayName": "Double Time",
-    "SSML": "\u003Cspeak\u003EDouble Time\u003C/speak\u003E"
-  },
-  {
     "FileName": "350542.ogg",
     "DisplayName": "Fragments of Destiny",
     "FormattedDisplayName": "Fragments of Destiny",
@@ -20772,6 +22200,12 @@
     "SSML": "\u003Cspeak\u003EBanshee Shroud\u003C/speak\u003E"
   },
   {
+    "FileName": "350875.ogg",
+    "DisplayName": "Hyperlight Jolt",
+    "FormattedDisplayName": "Hyperlight Jolt",
+    "SSML": "\u003Cspeak\u003EHyperlight Jolt\u003C/speak\u003E"
+  },
+  {
     "FileName": "350916.ogg",
     "DisplayName": "Security Slam",
     "FormattedDisplayName": "Security Slam",
@@ -20860,6 +22294,12 @@
     "DisplayName": "Filth",
     "FormattedDisplayName": "Filth",
     "SSML": "\u003Cspeak\u003EFilth\u003C/speak\u003E"
+  },
+  {
+    "FileName": "351646.ogg",
+    "DisplayName": "Hyperlight Nova",
+    "FormattedDisplayName": "Hyperlight Nova",
+    "SSML": "\u003Cspeak\u003EHyperlight Nova\u003C/speak\u003E"
   },
   {
     "FileName": "351672.ogg",
@@ -21018,6 +22458,12 @@
     "SSML": "\u003Cspeak\u003EForm Sentry\u003C/speak\u003E"
   },
   {
+    "FileName": "352796.ogg",
+    "DisplayName": "Proxy Strike",
+    "FormattedDisplayName": "Proxy Strike",
+    "SSML": "\u003Cspeak\u003EProxy Strike\u003C/speak\u003E"
+  },
+  {
     "FileName": "352833.ogg",
     "DisplayName": "Disintegration",
     "FormattedDisplayName": "Disintegration",
@@ -21084,12 +22530,6 @@
     "SSML": "\u003Cspeak\u003ETeleport\u003C/speak\u003E"
   },
   {
-    "FileName": "353835.ogg",
-    "DisplayName": "Suppression",
-    "FormattedDisplayName": "Suppression",
-    "SSML": "\u003Cspeak\u003ESuppression\u003C/speak\u003E"
-  },
-  {
     "FileName": "353929.ogg",
     "DisplayName": "Banshee\u0027s Bane",
     "FormattedDisplayName": "Banshee\u0027s Bane",
@@ -21150,12 +22590,6 @@
     "SSML": "\u003Cspeak\u003ESinister Miasma\u003C/speak\u003E"
   },
   {
-    "FileName": "354334.ogg",
-    "DisplayName": "Hook\u0027d!",
-    "FormattedDisplayName": "Hook\u0027d!",
-    "SSML": "\u003Cspeak\u003EHook\u0027d!\u003C/speak\u003E"
-  },
-  {
     "FileName": "354367.ogg",
     "DisplayName": "Grim Portent",
     "FormattedDisplayName": "Grim Portent",
@@ -21172,6 +22606,12 @@
     "DisplayName": "Runic Affinity",
     "FormattedDisplayName": "Runic Affinity",
     "SSML": "\u003Cspeak\u003ERunic Affinity\u003C/speak\u003E"
+  },
+  {
+    "FileName": "355048.ogg",
+    "DisplayName": "Shellcracker",
+    "FormattedDisplayName": "Shellcracker",
+    "SSML": "\u003Cspeak\u003EShellcracker\u003C/speak\u003E"
   },
   {
     "FileName": "355055.ogg",
@@ -21216,6 +22656,12 @@
     "SSML": "\u003Cspeak\u003EScorn and Ire\u003C/speak\u003E"
   },
   {
+    "FileName": "355234.ogg",
+    "DisplayName": "Volatile Pufferfish",
+    "FormattedDisplayName": "Volatile Pufferfish",
+    "SSML": "\u003Cspeak\u003EVolatile Pufferfish\u003C/speak\u003E"
+  },
+  {
     "FileName": "355294.ogg",
     "DisplayName": "Resentment",
     "FormattedDisplayName": "Resentment",
@@ -21246,13 +22692,25 @@
     "SSML": "\u003Cspeak\u003ESuppression Spark\u003C/speak\u003E"
   },
   {
+    "FileName": "355464.ogg",
+    "DisplayName": "Boulder Throw",
+    "FormattedDisplayName": "Boulder Throw",
+    "SSML": "\u003Cspeak\u003EBoulder Throw\u003C/speak\u003E"
+  },
+  {
+    "FileName": "355473.ogg",
+    "DisplayName": "Shock Mines",
+    "FormattedDisplayName": "Shock Mines",
+    "SSML": "\u003Cspeak\u003EShock Mines\u003C/speak\u003E"
+  },
+  {
     "FileName": "355477.ogg",
     "DisplayName": "Power Kick",
     "FormattedDisplayName": "Power Kick",
     "SSML": "\u003Cspeak\u003EPower Kick\u003C/speak\u003E"
   },
   {
-    "FileName": "355480.ogg",
+    "FileName": "355479.ogg",
     "DisplayName": "Lethal Force",
     "FormattedDisplayName": "Lethal Force",
     "SSML": "\u003Cspeak\u003ELethal Force\u003C/speak\u003E"
@@ -21306,6 +22764,12 @@
     "SSML": "\u003Cspeak\u003EQuelling Strike\u003C/speak\u003E"
   },
   {
+    "FileName": "355640.ogg",
+    "DisplayName": "Phalanx Field",
+    "FormattedDisplayName": "Phalanx Field",
+    "SSML": "\u003Cspeak\u003EPhalanx Field\u003C/speak\u003E"
+  },
+  {
     "FileName": "355642.ogg",
     "DisplayName": "Hyperlight Salvo",
     "FormattedDisplayName": "Hyperlight Salvo",
@@ -21318,16 +22782,40 @@
     "SSML": "\u003Cspeak\u003EDualblade Scythe\u003C/speak\u003E"
   },
   {
-    "FileName": "355782.ogg",
-    "DisplayName": "Force Multiplier",
-    "FormattedDisplayName": "Force Multiplier",
-    "SSML": "\u003Cspeak\u003EForce Multiplier\u003C/speak\u003E"
-  },
-  {
     "FileName": "355786.ogg",
     "DisplayName": "Blackened Armor",
     "FormattedDisplayName": "Blackened Armor",
     "SSML": "\u003Cspeak\u003EBlackened Armor\u003C/speak\u003E"
+  },
+  {
+    "FileName": "355830.ogg",
+    "DisplayName": "Quickblade",
+    "FormattedDisplayName": "Quickblade",
+    "SSML": "\u003Cspeak\u003EQuickblade\u003C/speak\u003E"
+  },
+  {
+    "FileName": "355888.ogg",
+    "DisplayName": "Hard Light Baton",
+    "FormattedDisplayName": "Hard Light Baton",
+    "SSML": "\u003Cspeak\u003EHard Light Baton\u003C/speak\u003E"
+  },
+  {
+    "FileName": "355891.ogg",
+    "DisplayName": "Teleport",
+    "FormattedDisplayName": "Teleport",
+    "SSML": "\u003Cspeak\u003ETeleport\u003C/speak\u003E"
+  },
+  {
+    "FileName": "355900.ogg",
+    "DisplayName": "Disruption Grenade",
+    "FormattedDisplayName": "Disruption Grenade",
+    "SSML": "\u003Cspeak\u003EDisruption Grenade\u003C/speak\u003E"
+  },
+  {
+    "FileName": "355915.ogg",
+    "DisplayName": "Glyph of Restraint",
+    "FormattedDisplayName": "Glyph of Restraint",
+    "SSML": "\u003Cspeak\u003EGlyph of Restraint\u003C/speak\u003E"
   },
   {
     "FileName": "355934.ogg",
@@ -21354,12 +22842,6 @@
     "SSML": "\u003Cspeak\u003EDark Communion\u003C/speak\u003E"
   },
   {
-    "FileName": "356031.ogg",
-    "DisplayName": "Stasis Beam",
-    "FormattedDisplayName": "Stasis Beam",
-    "SSML": "\u003Cspeak\u003EStasis Beam\u003C/speak\u003E"
-  },
-  {
     "FileName": "356093.ogg",
     "DisplayName": "Energy Absorption",
     "FormattedDisplayName": "Energy Absorption",
@@ -21370,12 +22852,6 @@
     "DisplayName": "Super Saison",
     "FormattedDisplayName": "Super Saison",
     "SSML": "\u003Cspeak\u003ESuper Saison\u003C/speak\u003E"
-  },
-  {
-    "FileName": "356324.ogg",
-    "DisplayName": "Empowered Glyph of Restraint",
-    "FormattedDisplayName": "Empowered Glyph of Restraint",
-    "SSML": "\u003Cspeak\u003EEmpowered Glyph of Restraint\u003C/speak\u003E"
   },
   {
     "FileName": "356377.ogg",
@@ -21400,6 +22876,12 @@
     "DisplayName": "Rotten Food",
     "FormattedDisplayName": "Rotten Food",
     "SSML": "\u003Cspeak\u003ERotten Food\u003C/speak\u003E"
+  },
+  {
+    "FileName": "356537.ogg",
+    "DisplayName": "Empowered Glyph of Restraint",
+    "FormattedDisplayName": "Empowered Glyph of Restraint",
+    "SSML": "\u003Cspeak\u003EEmpowered Glyph of Restraint\u003C/speak\u003E"
   },
   {
     "FileName": "356548.ogg",
@@ -21438,16 +22920,28 @@
     "SSML": "\u003Cspeak\u003EDespair\u003C/speak\u003E"
   },
   {
-    "FileName": "357188.ogg",
-    "DisplayName": "Double Technique",
-    "FormattedDisplayName": "Double Technique",
-    "SSML": "\u003Cspeak\u003EDouble Technique\u003C/speak\u003E"
+    "FileName": "357190.ogg",
+    "DisplayName": "Star Vulnerability",
+    "FormattedDisplayName": "Star Vulnerability",
+    "SSML": "\u003Cspeak\u003EStar Vulnerability\u003C/speak\u003E"
+  },
+  {
+    "FileName": "357197.ogg",
+    "DisplayName": "Lightshard Retreat",
+    "FormattedDisplayName": "Lightshard Retreat",
+    "SSML": "\u003Cspeak\u003ELightshard Retreat\u003C/speak\u003E"
   },
   {
     "FileName": "357226.ogg",
     "DisplayName": "Drifting Star",
     "FormattedDisplayName": "Drifting Star",
     "SSML": "\u003Cspeak\u003EDrifting Star\u003C/speak\u003E"
+  },
+  {
+    "FileName": "357229.ogg",
+    "DisplayName": "Chronolight Enhancer",
+    "FormattedDisplayName": "Chronolight Enhancer",
+    "SSML": "\u003Cspeak\u003EChronolight Enhancer\u003C/speak\u003E"
   },
   {
     "FileName": "357238.ogg",
@@ -21462,16 +22956,34 @@
     "SSML": "\u003Cspeak\u003EUnstable Rift\u003C/speak\u003E"
   },
   {
-    "FileName": "357284.ogg",
-    "DisplayName": "Reinvigorate",
-    "FormattedDisplayName": "Reinvigorate",
-    "SSML": "\u003Cspeak\u003EReinvigorate\u003C/speak\u003E"
+    "FileName": "357404.ogg",
+    "DisplayName": "Dischordant Song",
+    "FormattedDisplayName": "Dischordant Song",
+    "SSML": "\u003Cspeak\u003EDischordant Song\u003C/speak\u003E"
+  },
+  {
+    "FileName": "357436.ogg",
+    "DisplayName": "Infectious Solo",
+    "FormattedDisplayName": "Infectious Solo",
+    "SSML": "\u003Cspeak\u003EInfectious Solo\u003C/speak\u003E"
+  },
+  {
+    "FileName": "357508.ogg",
+    "DisplayName": "Wild Thrash",
+    "FormattedDisplayName": "Wild Thrash",
+    "SSML": "\u003Cspeak\u003EWild Thrash\u003C/speak\u003E"
   },
   {
     "FileName": "357512.ogg",
     "DisplayName": "Frenzied Charge",
     "FormattedDisplayName": "Frenzied Charge",
     "SSML": "\u003Cspeak\u003EFrenzied Charge\u003C/speak\u003E"
+  },
+  {
+    "FileName": "357542.ogg",
+    "DisplayName": "Rip Chord",
+    "FormattedDisplayName": "Rip Chord",
+    "SSML": "\u003Cspeak\u003ERip Chord\u003C/speak\u003E"
   },
   {
     "FileName": "357735.ogg",
@@ -21484,6 +22996,12 @@
     "DisplayName": "Realign Fate",
     "FormattedDisplayName": "Realign Fate",
     "SSML": "\u003Cspeak\u003ERealign Fate\u003C/speak\u003E"
+  },
+  {
+    "FileName": "358131.ogg",
+    "DisplayName": "Lightning Nova",
+    "FormattedDisplayName": "Lightning Nova",
+    "SSML": "\u003Cspeak\u003ELightning Nova\u003C/speak\u003E"
   },
   {
     "FileName": "358181.ogg",
@@ -21532,6 +23050,12 @@
     "DisplayName": "Rage",
     "FormattedDisplayName": "Rage",
     "SSML": "\u003Cspeak\u003ERage\u003C/speak\u003E"
+  },
+  {
+    "FileName": "358947.ogg",
+    "DisplayName": "Burning Tar",
+    "FormattedDisplayName": "Burning Tar",
+    "SSML": "\u003Cspeak\u003EBurning Tar\u003C/speak\u003E"
   },
   {
     "FileName": "359016.ogg",
@@ -22408,6 +23932,12 @@
     "DisplayName": "Death Sentence",
     "FormattedDisplayName": "Death Sentence",
     "SSML": "\u003Cspeak\u003EDeath Sentence\u003C/speak\u003E"
+  },
+  {
+    "FileName": "368661.ogg",
+    "DisplayName": "Sword Toss",
+    "FormattedDisplayName": "Sword Toss",
+    "SSML": "\u003Cspeak\u003ESword Toss\u003C/speak\u003E"
   },
   {
     "FileName": "368969.ogg",
@@ -28062,12 +29592,6 @@
     "SSML": "\u003Cspeak\u003EBattle Cry\u003C/speak\u003E"
   },
   {
-    "FileName": "424420.ogg",
-    "DisplayName": "Cinderblast",
-    "FormattedDisplayName": "Cinderblast",
-    "SSML": "\u003Cspeak\u003ECinderblast\u003C/speak\u003E"
-  },
-  {
     "FileName": "424423.ogg",
     "DisplayName": "Lunging Strike",
     "FormattedDisplayName": "Lunging Strike",
@@ -28692,6 +30216,12 @@
     "SSML": "\u003Cspeak\u003EEnergized Barrage\u003C/speak\u003E"
   },
   {
+    "FileName": "427621.ogg",
+    "DisplayName": "Impale",
+    "FormattedDisplayName": "Impale",
+    "SSML": "\u003Cspeak\u003EImpale\u003C/speak\u003E"
+  },
+  {
     "FileName": "427668.ogg",
     "DisplayName": "Festering Shockwave",
     "FormattedDisplayName": "Festering Shockwave",
@@ -28708,6 +30238,12 @@
     "DisplayName": "Bubbling Fissure",
     "FormattedDisplayName": "Bubbling Fissure",
     "SSML": "\u003Cspeak\u003EBubbling Fissure\u003C/speak\u003E"
+  },
+  {
+    "FileName": "427710.ogg",
+    "DisplayName": "Sporesplosion",
+    "FormattedDisplayName": "Sporesplosion",
+    "SSML": "\u003Cspeak\u003ESporesplosion\u003C/speak\u003E"
   },
   {
     "FileName": "427771.ogg",
@@ -29142,12 +30678,6 @@
     "SSML": "\u003Cspeak\u003EAttracting Shadows\u003C/speak\u003E"
   },
   {
-    "FileName": "431304.ogg",
-    "DisplayName": "Dark Floes",
-    "FormattedDisplayName": "Dark Floes",
-    "SSML": "\u003Cspeak\u003EDark Floes\u003C/speak\u003E"
-  },
-  {
     "FileName": "431309.ogg",
     "DisplayName": "Ensnaring Shadows",
     "FormattedDisplayName": "Ensnaring Shadows",
@@ -29176,12 +30706,6 @@
     "DisplayName": "Black Edge",
     "FormattedDisplayName": "Black Edge",
     "SSML": "\u003Cspeak\u003EBlack Edge\u003C/speak\u003E"
-  },
-  {
-    "FileName": "431637.ogg",
-    "DisplayName": "Umbral Rush",
-    "FormattedDisplayName": "Umbral Rush",
-    "SSML": "\u003Cspeak\u003EUmbral Rush\u003C/speak\u003E"
   },
   {
     "FileName": "431895.ogg",
@@ -29322,10 +30846,10 @@
     "SSML": "\u003Cspeak\u003EEye of the Swarm\u003C/speak\u003E"
   },
   {
-    "FileName": "433785.ogg",
-    "DisplayName": "Grasping Slash",
-    "FormattedDisplayName": "Grasping Slash",
-    "SSML": "\u003Cspeak\u003EGrasping Slash\u003C/speak\u003E"
+    "FileName": "433781.ogg",
+    "DisplayName": "Ceaseless Swarm",
+    "FormattedDisplayName": "Ceaseless Swarm",
+    "SSML": "\u003Cspeak\u003ECeaseless Swarm\u003C/speak\u003E"
   },
   {
     "FileName": "433821.ogg",
@@ -29356,12 +30880,6 @@
     "DisplayName": "Venomous Spray",
     "FormattedDisplayName": "Venomous Spray",
     "SSML": "\u003Cspeak\u003EVenomous Spray\u003C/speak\u003E"
-  },
-  {
-    "FileName": "434252.ogg",
-    "DisplayName": "Massive Slam",
-    "FormattedDisplayName": "Massive Slam",
-    "SSML": "\u003Cspeak\u003EMassive Slam\u003C/speak\u003E"
   },
   {
     "FileName": "434281.ogg",
@@ -29410,6 +30928,18 @@
     "DisplayName": "Shadow Barrier",
     "FormattedDisplayName": "Shadow Barrier",
     "SSML": "\u003Cspeak\u003EShadow Barrier\u003C/speak\u003E"
+  },
+  {
+    "FileName": "434756.ogg",
+    "DisplayName": "Throw Chair",
+    "FormattedDisplayName": "Throw Chair",
+    "SSML": "\u003Cspeak\u003EThrow Chair\u003C/speak\u003E"
+  },
+  {
+    "FileName": "434773.ogg",
+    "DisplayName": "Mean Mug",
+    "FormattedDisplayName": "Mean Mug",
+    "SSML": "\u003Cspeak\u003EMean Mug\u003C/speak\u003E"
   },
   {
     "FileName": "434778.ogg",
@@ -29694,12 +31224,6 @@
     "SSML": "\u003Cspeak\u003EToxic Waves\u003C/speak\u003E"
   },
   {
-    "FileName": "438622.ogg",
-    "DisplayName": "Amplification!",
-    "FormattedDisplayName": "Amplification!",
-    "SSML": "\u003Cspeak\u003EAmplification!\u003C/speak\u003E"
-  },
-  {
     "FileName": "438656.ogg",
     "DisplayName": "Venomous Rain",
     "FormattedDisplayName": "Venomous Rain",
@@ -29758,6 +31282,12 @@
     "DisplayName": "Call of the Brood",
     "FormattedDisplayName": "Call of the Brood",
     "SSML": "\u003Cspeak\u003ECall of the Brood\u003C/speak\u003E"
+  },
+  {
+    "FileName": "438971.ogg",
+    "DisplayName": "Shredding Sting",
+    "FormattedDisplayName": "Shredding Sting",
+    "SSML": "\u003Cspeak\u003EShredding Sting\u003C/speak\u003E"
   },
   {
     "FileName": "438976.ogg",
@@ -29958,6 +31488,12 @@
     "SSML": "\u003Cspeak\u003EBinding Webs\u003C/speak\u003E"
   },
   {
+    "FileName": "440087.ogg",
+    "DisplayName": "Oozing Honey",
+    "FormattedDisplayName": "Oozing Honey",
+    "SSML": "\u003Cspeak\u003EOozing Honey\u003C/speak\u003E"
+  },
+  {
     "FileName": "440134.ogg",
     "DisplayName": "Honey Marinade",
     "FormattedDisplayName": "Honey Marinade",
@@ -30090,6 +31626,12 @@
     "SSML": "\u003Cspeak\u003EOozing Honey\u003C/speak\u003E"
   },
   {
+    "FileName": "441214.ogg",
+    "DisplayName": "Spill Drink",
+    "FormattedDisplayName": "Spill Drink",
+    "SSML": "\u003Cspeak\u003ESpill Drink\u003C/speak\u003E"
+  },
+  {
     "FileName": "441242.ogg",
     "DisplayName": "Free Samples?",
     "FormattedDisplayName": "Free Samples?",
@@ -30130,6 +31672,12 @@
     "DisplayName": "Dark Pulse",
     "FormattedDisplayName": "Dark Pulse",
     "SSML": "\u003Cspeak\u003EDark Pulse\u003C/speak\u003E"
+  },
+  {
+    "FileName": "441408.ogg",
+    "DisplayName": "Thirsty",
+    "FormattedDisplayName": "Thirsty",
+    "SSML": "\u003Cspeak\u003EThirsty\u003C/speak\u003E"
   },
   {
     "FileName": "441434.ogg",
@@ -30772,12 +32320,6 @@
     "DisplayName": "Skullsplitter",
     "FormattedDisplayName": "Skullsplitter",
     "SSML": "\u003Cspeak\u003ESkullsplitter\u003C/speak\u003E"
-  },
-  {
-    "FileName": "447270.ogg",
-    "DisplayName": "Hurl Spear",
-    "FormattedDisplayName": "Hurl Spear",
-    "SSML": "\u003Cspeak\u003EHurl Spear\u003C/speak\u003E"
   },
   {
     "FileName": "447271.ogg",
@@ -32004,6 +33546,12 @@
     "SSML": "\u003Cspeak\u003EEntropic Barrage\u003C/speak\u003E"
   },
   {
+    "FileName": "460602.ogg",
+    "DisplayName": "Quick Shot",
+    "FormattedDisplayName": "Quick Shot",
+    "SSML": "\u003Cspeak\u003EQuick Shot\u003C/speak\u003E"
+  },
+  {
     "FileName": "460867.ogg",
     "DisplayName": "Big Bada BOOM!",
     "FormattedDisplayName": "Big Bada BOOM!",
@@ -32092,6 +33640,12 @@
     "DisplayName": "Bloodthirsty Cackle",
     "FormattedDisplayName": "Bloodthirsty Cackle",
     "SSML": "\u003Cspeak\u003EBloodthirsty Cackle\u003C/speak\u003E"
+  },
+  {
+    "FileName": "463169.ogg",
+    "DisplayName": "EZ-Thro Dynamite III",
+    "FormattedDisplayName": "EZ-Thro Dynamite III",
+    "SSML": "\u003Cspeak\u003EEZ-Thro Dynamite III\u003C/speak\u003E"
   },
   {
     "FileName": "463182.ogg",
@@ -32220,12 +33774,6 @@
     "SSML": "\u003Cspeak\u003EExplosive Gaze\u003C/speak\u003E"
   },
   {
-    "FileName": "465012.ogg",
-    "DisplayName": "Slam",
-    "FormattedDisplayName": "Slam",
-    "SSML": "\u003Cspeak\u003ESlam\u003C/speak\u003E"
-  },
-  {
     "FileName": "465120.ogg",
     "DisplayName": "Wind Up",
     "FormattedDisplayName": "Wind Up",
@@ -32238,7 +33786,19 @@
     "SSML": "\u003Cspeak\u003ESonic Ba-Boom\u003C/speak\u003E"
   },
   {
+    "FileName": "465309.ogg",
+    "DisplayName": "Cheat to Win!",
+    "FormattedDisplayName": "Cheat to Win!",
+    "SSML": "\u003Cspeak\u003ECheat to Win!\u003C/speak\u003E"
+  },
+  {
     "FileName": "465322.ogg",
+    "DisplayName": "Hot Hot Heat",
+    "FormattedDisplayName": "Hot Hot Heat",
+    "SSML": "\u003Cspeak\u003EHot Hot Heat\u003C/speak\u003E"
+  },
+  {
+    "FileName": "465325.ogg",
     "DisplayName": "Hot Hot Heat",
     "FormattedDisplayName": "Hot Hot Heat",
     "SSML": "\u003Cspeak\u003EHot Hot Heat\u003C/speak\u003E"
@@ -32260,12 +33820,6 @@
     "DisplayName": "Turbo Charge",
     "FormattedDisplayName": "Turbo Charge",
     "SSML": "\u003Cspeak\u003ETurbo Charge\u003C/speak\u003E"
-  },
-  {
-    "FileName": "465580.ogg",
-    "DisplayName": "Scattered Payout",
-    "FormattedDisplayName": "Scattered Payout",
-    "SSML": "\u003Cspeak\u003EScattered Payout\u003C/speak\u003E"
   },
   {
     "FileName": "465587.ogg",
@@ -32388,6 +33942,12 @@
     "SSML": "\u003Cspeak\u003EThunder Punch\u003C/speak\u003E"
   },
   {
+    "FileName": "466235.ogg",
+    "DisplayName": "Wire Transfer",
+    "FormattedDisplayName": "Wire Transfer",
+    "SSML": "\u003Cspeak\u003EWire Transfer\u003C/speak\u003E"
+  },
+  {
     "FileName": "466246.ogg",
     "DisplayName": "Focused Detonation",
     "FormattedDisplayName": "Focused Detonation",
@@ -32472,16 +34032,16 @@
     "SSML": "\u003Cspeak\u003EVenting Heat\u003C/speak\u003E"
   },
   {
+    "FileName": "466765.ogg",
+    "DisplayName": "Beta Launch",
+    "FormattedDisplayName": "Beta Launch",
+    "SSML": "\u003Cspeak\u003EBeta Launch\u003C/speak\u003E"
+  },
+  {
     "FileName": "466834.ogg",
     "DisplayName": "Shock Barrage",
     "FormattedDisplayName": "Shock Barrage",
     "SSML": "\u003Cspeak\u003EShock Barrage\u003C/speak\u003E"
-  },
-  {
-    "FileName": "466860.ogg",
-    "DisplayName": "Bleeding Edge",
-    "FormattedDisplayName": "Bleeding Edge",
-    "SSML": "\u003Cspeak\u003EBleeding Edge\u003C/speak\u003E"
   },
   {
     "FileName": "466866.ogg",
@@ -32502,16 +34062,16 @@
     "SSML": "\u003Cspeak\u003EFaulty Zap\u003C/speak\u003E"
   },
   {
+    "FileName": "467109.ogg",
+    "DisplayName": "Trash Compactor",
+    "FormattedDisplayName": "Trash Compactor",
+    "SSML": "\u003Cspeak\u003ETrash Compactor\u003C/speak\u003E"
+  },
+  {
     "FileName": "467117.ogg",
     "DisplayName": "Overdrive",
     "FormattedDisplayName": "Overdrive",
     "SSML": "\u003Cspeak\u003EOverdrive\u003C/speak\u003E"
-  },
-  {
-    "FileName": "467135.ogg",
-    "DisplayName": "Trash Compactor",
-    "FormattedDisplayName": "Trash Compactor",
-    "SSML": "\u003Cspeak\u003ETrash Compactor\u003C/speak\u003E"
   },
   {
     "FileName": "467182.ogg",
@@ -32640,10 +34200,10 @@
     "SSML": "\u003Cspeak\u003EDouble Whammy Shot\u003C/speak\u003E"
   },
   {
-    "FileName": "469721.ogg",
-    "DisplayName": "Backwash",
-    "FormattedDisplayName": "Backwash",
-    "SSML": "\u003Cspeak\u003EBackwash\u003C/speak\u003E"
+    "FileName": "469620.ogg",
+    "DisplayName": "Creeping Shadow",
+    "FormattedDisplayName": "Creeping Shadow",
+    "SSML": "\u003Cspeak\u003ECreeping Shadow\u003C/speak\u003E"
   },
   {
     "FileName": "469795.ogg",
@@ -32656,12 +34216,6 @@
     "DisplayName": "Overcharge",
     "FormattedDisplayName": "Overcharge",
     "SSML": "\u003Cspeak\u003EOvercharge\u003C/speak\u003E"
-  },
-  {
-    "FileName": "469818.ogg",
-    "DisplayName": "Bubble Burp",
-    "FormattedDisplayName": "Bubble Burp",
-    "SSML": "\u003Cspeak\u003EBubble Burp\u003C/speak\u003E"
   },
   {
     "FileName": "469981.ogg",
@@ -32692,6 +34246,18 @@
     "DisplayName": "Swamp Bolt",
     "FormattedDisplayName": "Swamp Bolt",
     "SSML": "\u003Cspeak\u003ESwamp Bolt\u003C/speak\u003E"
+  },
+  {
+    "FileName": "470592.ogg",
+    "DisplayName": "Blessing of Dusk",
+    "FormattedDisplayName": "Blessing of Dusk",
+    "SSML": "\u003Cspeak\u003EBlessing of Dusk\u003C/speak\u003E"
+  },
+  {
+    "FileName": "470593.ogg",
+    "DisplayName": "Inflict Death",
+    "FormattedDisplayName": "Inflict Death",
+    "SSML": "\u003Cspeak\u003EInflict Death\u003C/speak\u003E"
   },
   {
     "FileName": "470612.ogg",
@@ -32844,6 +34410,12 @@
     "SSML": "\u003Cspeak\u003ERapid Extraction\u003C/speak\u003E"
   },
   {
+    "FileName": "473195.ogg",
+    "DisplayName": "Linked Machines",
+    "FormattedDisplayName": "Linked Machines",
+    "SSML": "\u003Cspeak\u003ELinked Machines\u003C/speak\u003E"
+  },
+  {
     "FileName": "473220.ogg",
     "DisplayName": "Sonic Boom",
     "FormattedDisplayName": "Sonic Boom",
@@ -32884,6 +34456,12 @@
     "DisplayName": "Feast of the Damned",
     "FormattedDisplayName": "Feast of the Damned",
     "SSML": "\u003Cspeak\u003EFeast of the Damned\u003C/speak\u003E"
+  },
+  {
+    "FileName": "473537.ogg",
+    "DisplayName": "Uppercut",
+    "FormattedDisplayName": "Uppercut",
+    "SSML": "\u003Cspeak\u003EUppercut\u003C/speak\u003E"
   },
   {
     "FileName": "473541.ogg",
@@ -32974,6 +34552,12 @@
     "DisplayName": "Necrotic Eruption",
     "FormattedDisplayName": "Necrotic Eruption",
     "SSML": "\u003Cspeak\u003ENecrotic Eruption\u003C/speak\u003E"
+  },
+  {
+    "FileName": "474130.ogg",
+    "DisplayName": "Mechmastermind\u0027s Canisters",
+    "FormattedDisplayName": "Mechmastermind\u0027s Canisters",
+    "SSML": "\u003Cspeak\u003EMechmastermind\u0027s Canisters\u003C/speak\u003E"
   },
   {
     "FileName": "474155.ogg",

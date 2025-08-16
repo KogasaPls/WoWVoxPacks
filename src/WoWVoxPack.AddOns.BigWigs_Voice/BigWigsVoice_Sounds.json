@@ -43,5 +43,15 @@
     "DisplayName": "Bomb Voyage!",
     "FileName": "459978.ogg",
     "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"bɑm vɔɪˈɑʒ\">Bomb Voyage</phoneme></speak>"
+  },
+  {
+    "DisplayName": "Embrace of K'aresh",
+    "FileName": "1223000.ogg",
+    "Text": "Embrace of Karesh"
+  },
+  {
+    "DisplayName": "Voidstep",
+    "FileName": "1227355.ogg",
+    "Text": "Void Step"
   }
 ]

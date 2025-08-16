@@ -1527,7 +1527,7 @@
     "FileName": "1223000.ogg",
     "DisplayName": "Embrace of K\u0027aresh",
     "FormattedDisplayName": "Embrace of K\u0027aresh",
-    "SSML": "\u003Cspeak\u003EEmbrace of K\u0027aresh\u003C/speak\u003E"
+    "Text": "Embrace of Karesh"
   },
   {
     "FileName": "1223007.ogg",
@@ -1767,7 +1767,7 @@
     "FileName": "1227355.ogg",
     "DisplayName": "Voidstep",
     "FormattedDisplayName": "Voidstep",
-    "SSML": "\u003Cspeak\u003EVoidstep\u003C/speak\u003E"
+    "Text": "Void Step"
   },
   {
     "FileName": "1227373.ogg",

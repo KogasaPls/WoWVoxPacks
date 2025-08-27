@@ -204,6 +204,12 @@
     "Text": "Beam"
   },
   {
+    "FileName": "Big.ogg",
+    "DisplayName": "Big",
+    "FormattedDisplayName": "|cFFFF0000Big|r",
+    "Text": "Big"
+  },
+  {
     "FileName": "BITE.ogg",
     "DisplayName": "BITE",
     "FormattedDisplayName": "|cFFFF0000BITE|r"
@@ -975,6 +981,12 @@
     "DisplayName": "Interface\\Addons\\SharedMedia_Causese\\sound\\SLT",
     "FormattedDisplayName": "|cFFFF1000SLT|r |T237586:16|t",
     "Text": "SLT"
+  },
+  {
+    "FileName": "Small.ogg",
+    "DisplayName": "Small",
+    "FormattedDisplayName": "|cFFFF0000Small|r",
+    "Text": "Small"
   },
   {
     "FileName": "Soak.ogg",

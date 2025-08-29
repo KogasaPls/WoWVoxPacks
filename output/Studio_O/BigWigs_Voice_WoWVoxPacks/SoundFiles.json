@@ -2709,7 +2709,7 @@
     "FileName": "1248171.ogg",
     "DisplayName": "Void Tear",
     "FormattedDisplayName": "Void Tear",
-    "SSML": "\u003Cspeak\u003EVoid Tear\u003C/speak\u003E"
+    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022void t\u025B\u0279\u0022\u003EVoid Tear\u003C/phoneme\u003E\u003C/speak\u003E"
   },
   {
     "FileName": "1248209.ogg",

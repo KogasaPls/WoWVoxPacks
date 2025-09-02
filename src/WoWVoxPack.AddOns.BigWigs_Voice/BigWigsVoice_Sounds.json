@@ -63,5 +63,10 @@
     "DisplayName": "Void Tear",
     "FileName": "1248171.ogg",
     "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"void tɛɹ\">Void Tear</phoneme></speak>"
+  },
+  {
+    "DisplayName": "Plant Arathi Bomb",
+    "FileName": "451091.ogg",
+    "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"plænt\">Plant</phoneme><phoneme alphabet=\"ipa\" ph=\"əˈɹɑθi\">Arathi</phoneme><phoneme alphabet=\"ipa\" ph=\"ˈbɑm\">Bomb</phoneme></speak>"
   }
 ]

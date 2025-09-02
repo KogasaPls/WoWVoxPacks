@@ -32895,7 +32895,7 @@
     "FileName": "451091.ogg",
     "DisplayName": "Plant Arathi Bomb",
     "FormattedDisplayName": "Plant Arathi Bomb",
-    "SSML": "\u003Cspeak\u003EPlant Arathi Bomb\u003C/speak\u003E"
+    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022pl\u00E6nt\u0022\u003EPlant\u003C/phoneme\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022\u0259\u02C8\u0279\u0251\u03B8i\u0022\u003EArathi\u003C/phoneme\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022\u02C8b\u0251m\u0022\u003EBomb\u003C/phoneme\u003E\u003C/speak\u003E"
   },
   {
     "FileName": "451097.ogg",

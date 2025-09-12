@@ -2451,7 +2451,7 @@
     "FileName": "1240891.ogg",
     "DisplayName": "Sigil of Chains",
     "FormattedDisplayName": "Sigil of Chains",
-    "SSML": "\u003Cspeak\u003ESigil of Chains\u003C/speak\u003E"
+    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022\u02C8s\u026Ad\u0292\u026Al\u0022\u003ESigil\u003C/phoneme\u003E of Chains\u003C/speak\u003E"
   },
   {
     "FileName": "1240912.ogg",

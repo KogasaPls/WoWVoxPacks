@@ -68,5 +68,10 @@
     "DisplayName": "Plant Arathi Bomb",
     "FileName": "451091.ogg",
     "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"plænt\">Plant</phoneme><phoneme alphabet=\"ipa\" ph=\"əˈɹɑθi\">Arathi</phoneme><phoneme alphabet=\"ipa\" ph=\"ˈbɑm\">Bomb</phoneme></speak>"
+  },
+  {
+    "DisplayName": "Sigil of Chains",
+    "FileName": "1240891",
+    "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"ˈsɪdʒɪl\">Sigil</phoneme> of Chains</speak>"
   }
 ]

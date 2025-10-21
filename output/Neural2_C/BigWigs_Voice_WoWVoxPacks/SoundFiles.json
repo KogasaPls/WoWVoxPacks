@@ -129,7 +129,7 @@
     "FileName": "-13460.ogg",
     "DisplayName": "Lumbering Mindgorger",
     "FormattedDisplayName": "Lumbering Mindgorger",
-    "SSML": "\u003Cspeak\u003ELumbering Mindgorger\u003C/speak\u003E"
+    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022\u02C8l\u028Cm.b\u025A.\u026A\u014B\u0022\u003ELumbering\u003C/phoneme\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022\u02C8ma\u026And\u02CC\u0261\u0254\u0279.d\u0361\u0292\u025A\u0022\u003EMindgorger\u003C/phoneme\u003E\u003C/speak\u003E"
   },
   {
     "FileName": "-13767.ogg",
@@ -30897,7 +30897,7 @@
     "FileName": "434655.ogg",
     "DisplayName": "Arathi Bombs",
     "FormattedDisplayName": "Arathi Bombs",
-    "SSML": "\u003Cspeak\u003EArathi Bombs\u003C/speak\u003E"
+    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022\u0259\u02C8\u0279\u0251\u03B8i\u0022\u003EArathi\u003C/phoneme\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022\u02C8b\u0251mz\u0022\u003EBombs\u003C/phoneme\u003E\u003C/speak\u003E"
   },
   {
     "FileName": "434697.ogg",

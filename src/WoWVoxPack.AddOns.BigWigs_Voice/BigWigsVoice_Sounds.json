@@ -71,7 +71,17 @@
   },
   {
     "DisplayName": "Sigil of Chains",
-    "FileName": "1240891",
+    "FileName": "1240891.ogg",
     "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"ˈsɪdʒɪl\">Sigil</phoneme> of Chains</speak>"
+  },
+  {
+    "DisplayName": "Arathi Bombs",
+    "FileName": "434655.ogg",
+    "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"əˈɹɑθi\">Arathi</phoneme><phoneme alphabet=\"ipa\" ph=\"ˈbɑmz\">Bombs</phoneme></speak>"
+  },
+  {
+    "DisplayName": "Lumbering Mindgorger",
+    "FileName": "-13460.ogg",
+    "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"ˈlʌm.bɚ.ɪŋ\">Lumbering</phoneme><phoneme alphabet=\"ipa\" ph=\"ˈmaɪndˌɡɔɹ.d͡ʒɚ\">Mindgorger</phoneme></speak>"
   }
 ]

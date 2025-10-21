@@ -77,7 +77,7 @@ jobs:
           project_id: ${{ env.CF_PROJECT_ID }}
           token: ${{ secrets.CURSEFORGE_API_TOKEN }}
           display_name: ${{ matrix.addon }} (${{ matrix.voice }}) ${{ env.RELEASE_TAG }}
-          game_versions: '11.1.5'
+          game_versions: '11.2.5'
 
   rerun-failed-jobs:
       runs-on: ubuntu-latest

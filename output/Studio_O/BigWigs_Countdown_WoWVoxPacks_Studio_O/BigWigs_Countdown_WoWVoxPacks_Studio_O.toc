@@ -1,7 +1,7 @@
-## Interface: 110107, 110200
+## Interface: 110250, 110270
 
 ## Title: BigWigs |cffff7f3f+|r|cffffffffCountdown: WoWVoxPacks (Studio_O)|r
-## Version: 11.2.0
+## Version: 11.2.5
 ## Notes: A BigWigs plugin that adds a new countdown voice pack.
 ## Author: KogasaPls
 

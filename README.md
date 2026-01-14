@@ -1,7 +1,10 @@
 # WoWVoxPacks
-[![Auto-update](https://github.com/KogasaPls/WoWVoxPacks/actions/workflows/update.yml/badge.svg)](https://github.com/KogasaPls/WoWVoxPacks/actions/workflows/update.yml)
-[![Create Release](https://github.com/KogasaPls/WoWVoxPacks/actions/workflows/create-release.yml/badge.svg)](https://github.com/KogasaPls/WoWVoxPacks/actions/workflows/create-release.yml)
-[![Publish to CurseForge](https://github.com/KogasaPls/WoWVoxPacks/actions/workflows/publish-to-curseforge.yml/badge.svg)](https://github.com/KogasaPls/WoWVoxPacks/actions/workflows/publish-to-curseforge.yml)
+
+## Deprecation Notice
+
+These packs, along with BigWigs_Voice, are no longer usable as of the Midnight expansion. New sound files will not be generated.
+
+--
 
 A collection of modern TTS voices for World of Warcraft addons.
 

@@ -1,0 +1,162 @@
+name: Check for updates
+on:
+  workflow_dispatch:
+
+jobs:
+  check-bigwigs-voice-version:
+    runs-on: ubuntu-latest
+    outputs:
+      bigwigs_version: ${{ steps.compare-versions.outputs.bigwigs_version }}
+      needs_update: ${{ steps.compare-versions.outputs.needs_update }}
+    steps:
+      - name: Get latest BigWigsVoice release
+        id: get-bigwigsvoice-release
+        uses: pozetroninc/github-action-get-latest-release@master
+        with:
+          owner: BigWigsMods
+          repo: BigWigs_Voice
+          excludes: prerelease, draft
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Write version to file
+        run: echo "${{ steps.get-bigwigsvoice-release.outputs.release }}" > version.txt
+      - name: Get previous version
+        run: |
+          curl -L \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+              https://api.github.com/repos/KogasaPls/WoWVoxPacks/releases/latest \
+            | jq -r '.assets[] | select(.name == "bigwigs-voice-version.txt") | .browser_download_url'  \
+            | xargs curl -L -o previous-version.txt
+      - name: Compare versions
+        id: compare-versions
+        run: |
+          if [ ! -f previous-version.txt ]; then
+            echo "No previous version detected"
+            echo "bigwigs_version=$(cat version.txt)" >> $GITHUB_OUTPUT
+            echo "needs_update=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          echo "bigwigs_version=$(cat version.txt)" >> $GITHUB_OUTPUT
+
+          if [ "$(cat version.txt)" != "$(cat previous-version.txt)" ]; then
+            echo "New version detected (old: $(cat previous-version.txt), new: $(cat version.txt))"
+            echo "bigwigs_version=$(cat version.txt)" >> $GITHUB_OUTPUT
+            echo "needs_update=true" >> $GITHUB_OUTPUT
+          else
+            echo "No new version detected"
+          fi
+  check-causese-version:
+    runs-on: ubuntu-latest
+    if: false
+    outputs:
+      causese_version: ${{ steps.compare-versions.outputs.causese_version }}
+      needs_update: ${{ steps.compare-versions.outputs.needs_update }}
+    steps:
+      - name: Get latest SharedMedia_Causese release
+        id: get-causese-release
+        uses: pozetroninc/github-action-get-latest-release@master
+        with:
+          owner: curseforge-mirror
+          repo: SharedMedia_Causese
+          excludes: prerelease, draft
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Write version to file
+        run: echo "${{ steps.get-causese-release.outputs.release }}" > version.txt
+      - name: Get previous version
+        run: |
+          curl -L \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+              https://api.github.com/repos/KogasaPls/WoWVoxPacks/releases/latest \
+            | jq -r '.assets[] | select(.name == "sharedmedia-causese-version.txt") | .browser_download_url'  \
+            | xargs curl -L -o previous-version.txt
+      - name: Compare versions
+        id: compare-versions
+        run: |
+          if [ ! -f previous-version.txt ]; then
+            echo "No previous version detected"
+            echo "causese_version=$(cat version.txt)" >> $GITHUB_OUTPUT
+            echo "needs_update=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          echo "causese_version=$(cat version.txt)" >> $GITHUB_OUTPUT
+
+          if [ "$(cat version.txt)" != "$(cat previous-version.txt)" ]; then
+            echo "New version detected (old: $(cat previous-version.txt), new: $(cat version.txt))"
+            echo "needs_update=true" >> $GITHUB_OUTPUT
+          else
+            echo "No new version detected"
+          fi
+  create-pull-request:
+    needs: [ check-bigwigs-voice-version ]
+    if: ${{ needs.check-bigwigs-voice-version.outputs.needs_update != '' || needs.check-causese-version.outputs.needs_update != '' }}
+    runs-on: ubuntu-latest
+    permissions: write-all
+    outputs:
+      upload_url: ${{ steps.create-release.outputs.upload_url }}
+    env:
+      CI: true
+      DOTNET_ENVIRONMENT: Release
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+      GH_TOKEN: ${{ secrets.WORKFLOW_RELEASE_PAT }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+      - name: Read new version
+        id: read-version
+        run: |
+          echo "$BIGWIGS_VERSION" > bigwigs-voice-version.txt
+          echo "$CAUSESE_VERSION" > sharedmedia-causese-version.txt
+        env:
+          BIGWIGS_VERSION: ${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version }}
+          CAUSESE_VERSION: ${{ needs.check-causese-version.outputs.causese_version }}
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+      - uses: FedericoCarboni/setup-ffmpeg@v3
+        with:
+          ffmpeg-version: release
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+      - name: Build new version
+        run: |
+          VERSION=${TAG#"v"} dotnet build
+      - name: Run addon builder
+        run: |
+          VERSION=${TAG#"v"} dotnet run --project src/WoWVoxPack.Builder/WoWVoxPack.Builder.csproj
+        env:
+          TAG: ${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version }}
+      - name: Create a pull request
+        uses: peter-evans/create-pull-request@v7
+        id: create-pull-request
+        with:
+          token: ${{ secrets.WORKFLOW_RELEASE_PAT }}
+          commit-message: "[ci] Automatic update"
+          title: Automatic update
+          body: |
+            Automatically created by the update workflow.
+
+            - BigWigs_Voice version: ${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version }}
+          branch: ci/update-bigwigs-voice-${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version }}
+          delete-branch: true
+          base: main
+          add-paths: |
+            output/
+            bigwigs-voice-version.txt
+            sharedmedia-causese-version.txt
+          sign-commits: true
+      - name: Enable Pull Request Automerge
+        run: gh pr merge --merge --auto --delete-branch "$PR_NUMBER"
+        env:
+          PR_NUMBER: ${{ steps.create-pull-request.outputs.pull-request-number }}

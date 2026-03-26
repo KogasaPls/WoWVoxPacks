@@ -1,0 +1,97 @@
+name: Publish to CurseForge
+on:
+  release:
+    types: [ published ]
+  workflow_dispatch:
+    inputs:
+      voices:
+        description: 'Comma separated list of voices to publish e.g. "Wavenet_E,Neural2_C,Studio_Q"'
+        default: '"Wavenet_E","Neural2_C","Studio_Q"'
+        required: true
+      addons:
+        description: 'Comma separated list of addons to publish e.g. "BigWigs_Voice","SharedMedia_Causese","BigWigs_Countdown"'
+        default: '"BigWigs_Voice","SharedMedia_Causese","BigWigs_Countdown"'
+        required: true
+jobs:
+  wait-for-release-artifacts:
+    runs-on: ubuntu-latest
+    name: Wait for release artifacts
+    steps:
+      - name: Wait a minute
+        run: sleep 60s
+        shell: bash
+  publish-addon:
+    needs: wait-for-release-artifacts
+    strategy:
+      max-parallel: 3
+      fail-fast: true
+      matrix:
+        voice: ${{ fromJSON(format('[{0}]', inputs.voices || '"Wavenet_E","Neural2_C","Studio_Q"')) }}
+        addon: ${{ fromJSON(format('[{0}]', inputs.addons || '"BigWigs_Voice","SharedMedia_Causese","BigWigs_Countdown"')) }}
+        voice-to-addon-to-project-id-json:
+          - '{
+            "Wavenet_E": {
+              "BigWigs_Voice": 1215288,
+              "SharedMedia_Causese": 1215285,
+              "BigWigs_Countdown": 1217577
+            },
+            "Neural2_C": {
+              "SharedMedia_Causese": 1214942,
+              "BigWigs_Voice": 1217580,
+              "BigWigs_Countdown": 1217583
+            },
+            "Studio_Q": {
+              "SharedMedia_Causese": 1218351,
+              "BigWigs_Voice": 1218355,
+              "BigWigs_Countdown": 1218357
+            }
+          }'
+
+    runs-on: ubuntu-latest
+    name: Publish ${{ matrix.addon }} (${{ matrix.voice }}) (Project ID ${{ fromJSON(matrix.voice-to-addon-to-project-id-json)[matrix.voice][matrix.addon] }})
+    steps:
+      - name: Set release tag
+        id: set-release-tag-push
+        if: github.event_name == 'push' || github.event_name == 'release'
+        run: echo "RELEASE_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - name: Set release tag
+        id: set-release-tag
+        if: github.event_name != 'push' && github.event_name != 'release'
+        run: |
+          RELEASE_TAG=$(curl -s https://api.github.com/repos/KogasaPls/WoWVoxPacks/releases/latest | jq -r '.tag_name')
+          echo "RELEASE_TAG=${RELEASE_TAG}" >> $GITHUB_ENV
+      - name: Set release game_versions
+        id: set-release-game-versions
+        run: |
+          RELEASE_GAME_VERSION="${RELEASE_TAG#v}"
+          RELEASE_GAME_VERSION="${RELEASE_GAME_VERSION%%-*}"
+          echo "RELEASE_GAME_VERSION=${RELEASE_GAME_VERSION}" >> $GITHUB_ENV
+      - name: Download release assets
+        uses: robinraju/release-downloader@v1
+        with:
+          tag: ${{ env.RELEASE_TAG }}
+          fileName: WoWVoxPacks_${{ matrix.voice }}_${{ matrix.addon }}_${{ env.RELEASE_TAG }}.zip
+          extract: false
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload to CurseForge
+        uses: itsmeow/curseforge-upload@v3
+        env:
+          CF_PROJECT_ID: ${{ fromJSON(matrix.voice-to-addon-to-project-id-json)[matrix.voice][matrix.addon] }}
+        with:
+          file_path: WoWVoxPacks_${{ matrix.voice }}_${{ matrix.addon }}_${{ env.RELEASE_TAG }}.zip
+          game_endpoint: 'wow'
+          project_id: ${{ env.CF_PROJECT_ID }}
+          token: ${{ secrets.CURSEFORGE_API_TOKEN }}
+          display_name: ${{ matrix.addon }} (${{ matrix.voice }}) ${{ env.RELEASE_TAG }}
+          game_versions: ${{ env.RELEASE_GAME_VERSION }}
+
+  rerun-failed-jobs:
+      runs-on: ubuntu-latest
+      needs: [ publish-addon ]
+      if: failure()
+      steps:
+        - name: Rerun failed jobs in the current workflow
+          env:
+            GH_TOKEN: ${{ github.token }}
+          run: sleep 30s && gh run rerun ${{ github.run_id }} --failed
+          shell: bash

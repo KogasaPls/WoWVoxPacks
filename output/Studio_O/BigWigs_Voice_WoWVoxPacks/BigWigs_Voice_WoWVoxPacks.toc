@@ -1,7 +1,7 @@
-## Interface: 110250, 110270
+## Interface: 120001, 120005, 120000
 
 ## Title: BigWigs |cffff7f3f+|r|cffffffffVoice: WoWVoxPacks (Studio_O)|r
-## Version: 11.2.5
+## Version: 12.0.1
 ## Notes: A plugin for BigWigs that will play Text-To-Speech sounds for boss abilities.
 ## Notes-deDE: A plugin for BigWigs that will play Text-To-Speech sounds for boss abilities.
 ## Notes-esES: A plugin for BigWigs that will play Text-To-Speech sounds for boss abilities.

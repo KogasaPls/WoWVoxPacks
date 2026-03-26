@@ -1,11 +1,5 @@
 # WoWVoxPacks
 
-## Deprecation Notice
-
-These packs, along with BigWigs_Voice, are no longer usable as of the Midnight expansion. New sound files will not be generated.
-
---
-
 A collection of modern TTS voices for World of Warcraft addons.
 
 This collection does not have any standalone functionality. Instead, it replaces the audio files used by the following

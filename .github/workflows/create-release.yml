@@ -1,0 +1,50 @@
+name: Create release
+on:
+  pull_request:
+    types: [ closed ]
+    branches: [ main ]
+  workflow_dispatch:
+  push:
+    tags: [ 'v*' ]
+jobs:
+  create-release:
+    if: github.event.pull_request.merged == true || github.event_name  != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+      - name: Set release tag
+        id: set-release-tag
+        if: github.event_name != 'push'
+        run: echo "RELEASE_TAG=$(cat bigwigs-voice-version.txt)" >> $GITHUB_ENV
+      - name: Set release tag from push event
+        id: set-release-tag-push
+        if: github.event_name == 'push'
+        run: echo "RELEASE_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - name: Package artifacts
+        run: ./scripts/package.sh
+      - name: Create GitHub Release
+        id: create-release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.RELEASE_TAG }}
+          name: Release ${{ env.RELEASE_TAG }}
+          body: |
+            Automatically created by the release workflow.
+          draft: false
+          prerelease: false
+          fail_on_unmatched_files: true
+          make_latest: true
+          generate_release_notes: true
+          preserve_order: true
+          files: |
+            ./dist/*.zip
+            ./bigwigs-voice-version.txt
+            ./sharedmedia-causese-version.txt
+        env:
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_RELEASE_PAT }}

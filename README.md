@@ -12,7 +12,6 @@ This collection does not have any standalone functionality. Instead, it replaces
 addons.
 
 - BigWigs_Voice
-- SharedMedia_Causese
 
 **These addons must be uninstalled for the VoxPacks voices to work.** Simply disabling them ingame will not work.
 You can rename the .toc file of the addon, or move the addon folder out of the `Interface\AddOns` directory.

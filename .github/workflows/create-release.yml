@@ -45,6 +45,5 @@ jobs:
           files: |
             ./dist/*.zip
             ./bigwigs-voice-version.txt
-            ./sharedmedia-causese-version.txt
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_RELEASE_PAT }}

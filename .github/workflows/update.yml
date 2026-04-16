@@ -1,6 +1,9 @@
 name: Check for updates
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "0 14 * * 2-4"
+      timezone: "America/New_York"
 
 jobs:
   check-bigwigs-voice-version:

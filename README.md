@@ -2,13 +2,14 @@
 
 A collection of modern TTS voices for World of Warcraft addons.
 
-This collection does not have any standalone functionality. Instead, it replaces the audio files used by the following
-addons.
+## AddOns
 
-- BigWigs_Voice
-
-**These addons must be uninstalled for the VoxPacks voices to work.** Simply disabling them ingame will not work.
-You can rename the .toc file of the addon, or move the addon folder out of the `Interface\AddOns` directory.
+- WoWVoxPacks_{Voice}_BigWigs_Voice: A clone of the [BigWigs_Voice](https://www.curseforge.com/wow/addons/bigwigs_voice)
+  with a different TTS voice. **Not compatible with BigWigs_Voice. Only one version may be installed at a time.** Simply
+  disabling the conflicting addons ingame will not work.
+- WoWVoxPacks_{Voice}_BigWigs_Countdown: Adds a new voice option for BigWigs' countdown (must be configured in BigWigs).
+- WoWVoxPacks_{Voice}_SharedMedia_Abilities: Adds sound effects via SharedMedia that contains ability names and other
+  phrasses for automated callouts.
 
 <video src='https://github.com/user-attachments/assets/8bceffae-2e57-49cb-bb74-aab43ac65ae7' width=180></video>
 
@@ -33,6 +34,3 @@ The following voices are available.
   - <video src='https://github.com/user-attachments/assets/c6f39c01-4934-41dd-9f4e-7b3ca7acffdc' width=10></video>
 - Studio_O (Female)
   - <video src='https://github.com/user-attachments/assets/04bd2217-f757-4165-8414-9ea080eec041' width=10></video>
-
-
-

@@ -1,0 +1,172 @@
+[
+  {
+    "FileName": "tranquility.ogg",
+    "Text": "Tranquility",
+    "DisplayName": "Tranquility"
+  },
+  {
+    "FileName": "tranq.ogg",
+    "Text": "Tranq=træŋk",
+    "DisplayName": "Tranq"
+  },
+  {
+    "FileName": "convoke_the_spirits.ogg",
+    "Text": "Convoke the Spirits",
+    "DisplayName": "Convoke the Spirits"
+  },
+  {
+    "FileName": "convoke.ogg",
+    "Text": "Convoke",
+    "DisplayName": "Convoke"
+  },
+  {
+    "FileName": "barkskin.ogg",
+    "Text": "Barkskin",
+    "DisplayName": "Barkskin"
+  },
+  {
+    "FileName": "stampeding_roar.ogg",
+    "Text": "Stampeding Roar",
+    "DisplayName": "Stampeding Roar"
+  },
+  {
+    "FileName": "roar.ogg",
+    "Text": "Roar",
+    "DisplayName": "Roar"
+  },
+  {
+    "FileName": "incarnation_tree_of_life.ogg",
+    "Text": "Incarnation: Tree of Life",
+    "DisplayName": "Incarnation: Tree of Life"
+  },
+  {
+    "FileName": "incarn.ogg",
+    "Text": "Incarn",
+    "DisplayName": "Incarn"
+  },
+  {
+    "FileName": "tree_of_life.ogg",
+    "Text": "Tree of Life",
+    "DisplayName": "Tree of Life"
+  },
+  {
+    "FileName": "innervate.ogg",
+    "Text": "Innervate=ˈɪnɚveɪt",
+    "DisplayName": "Innervate"
+  },
+  {
+    "FileName": "ironbark.ogg",
+    "Text": "Ironbark",
+    "DisplayName": "Ironbark"
+  },
+  {
+    "FileName": "revival.ogg",
+    "Text": "Revival",
+    "DisplayName": "Revival"
+  },
+  {
+    "FileName": "restoral.ogg",
+    "Text": "Restoral",
+    "DisplayName": "Restoral"
+  },
+  {
+    "FileName": "invoke_yulon_the_jade_serpent.ogg",
+    "DisplayName": "Invoke Yu'lon, the Jade Serpent",
+    "SSML": "<speak>Invoke <phoneme alphabet=\"IPA\" ph=\"ˈjuːlɒn\">Yu'lon</phoneme>, the Jade Serpent</speak>"
+  },
+  {
+    "FileName": "yulon.ogg",
+    "Text": "Yu'lon=ˈjuːlɒn",
+    "DisplayName": "Yu'lon"
+  },
+  {
+    "FileName": "invoke_chiji_the_red_crane.ogg",
+    "DisplayName": "Invoke Chi-ji, the Red Crane",
+    "SSML": "<speak>Invoke <phoneme alphabet=\"IPA\" ph=\"tʃiːdʒiː\">Chi-ji</phoneme>, the Red Crane</speak>"
+  },
+  {
+    "FileName": "chiji.ogg",
+    "Text": "Chi-ji=tʃiːdʒiː",
+    "DisplayName": "Chi-ji"
+  },
+  {
+    "FileName": "celestial_conduit.ogg",
+    "Text": "Celestial Conduit",
+    "DisplayName": "Celestial Conduit"
+  },
+  {
+    "FileName": "conduit.ogg",
+    "Text": "Conduit",
+    "DisplayName": "Conduit"
+  },
+  {
+    "FileName": "fortifying_brew.ogg",
+    "Text": "Fortifying Brew",
+    "DisplayName": "Fortifying Brew"
+  },
+  {
+    "FileName": "life_cocoon.ogg",
+    "Text": "Life Cocoon",
+    "DisplayName": "Life Cocoon"
+  },
+  {
+    "FileName": "cocoon.ogg",
+    "Text": "Cocoon",
+    "DisplayName": "Cocoon"
+  },
+  {
+    "FileName": "arrows.ogg",
+    "Text": "Arrows",
+    "DisplayName": "Arrows"
+  },
+  {
+    "FileName": "stop_cast.ogg",
+    "Text": "Stop Cast",
+    "DisplayName": "Stop Cast"
+  },
+  {
+    "FileName": "bait.ogg",
+    "Text": "Bait",
+    "DisplayName": "Bait"
+  },
+  {
+    "FileName": "explosion.ogg",
+    "Text": "Explosion",
+    "DisplayName": "Explosion"
+  },
+  {
+    "FileName": "big_boom.ogg",
+    "Text": "Big Boom",
+    "DisplayName": "Big Boom"
+  },
+  {
+    "FileName": "tether.ogg",
+    "Text": "Tether",
+    "DisplayName": "Tether"
+  },
+  {
+    "FileName": "miss.ogg",
+    "Text": "Miss",
+    "DisplayName": "Miss"
+  },
+  {
+    "FileName": "immune.ogg",
+    "Text": "Immune",
+    "DisplayName": "Immune"
+  },
+  {
+    "FileName": "hit_demiar.ogg",
+    "Text": "Hit Demiar",
+    "DisplayName": "Hit Demiar"
+  },
+  {
+    "FileName": "hit_morium.ogg",
+    "Text": "Hit Morium",
+    "DisplayName": "Hit Morium"
+  },
+  {
+    "FileName": "hit_vorelus.ogg",
+    "Text": "Hit Vorelus",
+    "DisplayName": "Hit Vorelus"
+  }
+]

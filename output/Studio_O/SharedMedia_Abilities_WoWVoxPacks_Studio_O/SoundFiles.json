@@ -1,0 +1,206 @@
+[
+  {
+    "FileName": "arrows.ogg",
+    "DisplayName": "Arrows",
+    "FormattedDisplayName": "Arrows",
+    "Text": "Arrows"
+  },
+  {
+    "FileName": "bait.ogg",
+    "DisplayName": "Bait",
+    "FormattedDisplayName": "Bait",
+    "Text": "Bait"
+  },
+  {
+    "FileName": "barkskin.ogg",
+    "DisplayName": "Barkskin",
+    "FormattedDisplayName": "Barkskin",
+    "Text": "Barkskin"
+  },
+  {
+    "FileName": "big_boom.ogg",
+    "DisplayName": "Big Boom",
+    "FormattedDisplayName": "Big Boom",
+    "Text": "Big Boom"
+  },
+  {
+    "FileName": "celestial_conduit.ogg",
+    "DisplayName": "Celestial Conduit",
+    "FormattedDisplayName": "Celestial Conduit",
+    "Text": "Celestial Conduit"
+  },
+  {
+    "FileName": "chiji.ogg",
+    "DisplayName": "Chi-ji",
+    "FormattedDisplayName": "Chi-ji",
+    "SSML": "\u003Cspeak\u003E\n  \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022t\u0283i\u02D0d\u0292i\u02D0\u0022\u003EChi-ji=t\u0283i\u02D0d\u0292i\u02D0\u003C/phoneme\u003E\n\u003C/speak\u003E"
+  },
+  {
+    "FileName": "cocoon.ogg",
+    "DisplayName": "Cocoon",
+    "FormattedDisplayName": "Cocoon",
+    "Text": "Cocoon"
+  },
+  {
+    "FileName": "conduit.ogg",
+    "DisplayName": "Conduit",
+    "FormattedDisplayName": "Conduit",
+    "Text": "Conduit"
+  },
+  {
+    "FileName": "convoke_the_spirits.ogg",
+    "DisplayName": "Convoke the Spirits",
+    "FormattedDisplayName": "Convoke the Spirits",
+    "Text": "Convoke the Spirits"
+  },
+  {
+    "FileName": "convoke.ogg",
+    "DisplayName": "Convoke",
+    "FormattedDisplayName": "Convoke",
+    "Text": "Convoke"
+  },
+  {
+    "FileName": "explosion.ogg",
+    "DisplayName": "Explosion",
+    "FormattedDisplayName": "Explosion",
+    "Text": "Explosion"
+  },
+  {
+    "FileName": "fortifying_brew.ogg",
+    "DisplayName": "Fortifying Brew",
+    "FormattedDisplayName": "Fortifying Brew",
+    "Text": "Fortifying Brew"
+  },
+  {
+    "FileName": "hit_demiar.ogg",
+    "DisplayName": "Hit Demiar",
+    "FormattedDisplayName": "Hit Demiar",
+    "Text": "Hit Demiar"
+  },
+  {
+    "FileName": "hit_morium.ogg",
+    "DisplayName": "Hit Morium",
+    "FormattedDisplayName": "Hit Morium",
+    "Text": "Hit Morium"
+  },
+  {
+    "FileName": "hit_vorelus.ogg",
+    "DisplayName": "Hit Vorelus",
+    "FormattedDisplayName": "Hit Vorelus",
+    "Text": "Hit Vorelus"
+  },
+  {
+    "FileName": "immune.ogg",
+    "DisplayName": "Immune",
+    "FormattedDisplayName": "Immune",
+    "Text": "Immune"
+  },
+  {
+    "FileName": "incarn.ogg",
+    "DisplayName": "Incarn",
+    "FormattedDisplayName": "Incarn",
+    "Text": "Incarn"
+  },
+  {
+    "FileName": "incarnation_tree_of_life.ogg",
+    "DisplayName": "Incarnation: Tree of Life",
+    "FormattedDisplayName": "Incarnation: Tree of Life",
+    "Text": "Incarnation: Tree of Life"
+  },
+  {
+    "FileName": "innervate.ogg",
+    "DisplayName": "Innervate",
+    "FormattedDisplayName": "Innervate",
+    "SSML": "\u003Cspeak\u003E\n  \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022\u02C8\u026An\u025Ave\u026At\u0022\u003EInnervate=\u02C8\u026An\u025Ave\u026At\u003C/phoneme\u003E\n\u003C/speak\u003E"
+  },
+  {
+    "FileName": "invoke_chiji_the_red_crane.ogg",
+    "DisplayName": "Invoke Chi-ji, the Red Crane",
+    "FormattedDisplayName": "Invoke Chi-ji, the Red Crane",
+    "SSML": "\u003Cspeak\u003EInvoke \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022t\u0283i\u02D0d\u0292i\u02D0\u0022\u003EChi-ji\u003C/phoneme\u003E, the Red Crane\u003C/speak\u003E"
+  },
+  {
+    "FileName": "invoke_yulon_the_jade_serpent.ogg",
+    "DisplayName": "Invoke Yu\u0027lon, the Jade Serpent",
+    "FormattedDisplayName": "Invoke Yu\u0027lon, the Jade Serpent",
+    "SSML": "\u003Cspeak\u003EInvoke \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022\u02C8ju\u02D0l\u0252n\u0022\u003EYu\u0027lon\u003C/phoneme\u003E, the Jade Serpent\u003C/speak\u003E"
+  },
+  {
+    "FileName": "ironbark.ogg",
+    "DisplayName": "Ironbark",
+    "FormattedDisplayName": "Ironbark",
+    "Text": "Ironbark"
+  },
+  {
+    "FileName": "life_cocoon.ogg",
+    "DisplayName": "Life Cocoon",
+    "FormattedDisplayName": "Life Cocoon",
+    "Text": "Life Cocoon"
+  },
+  {
+    "FileName": "miss.ogg",
+    "DisplayName": "Miss",
+    "FormattedDisplayName": "Miss",
+    "Text": "Miss"
+  },
+  {
+    "FileName": "restoral.ogg",
+    "DisplayName": "Restoral",
+    "FormattedDisplayName": "Restoral",
+    "Text": "Restoral"
+  },
+  {
+    "FileName": "revival.ogg",
+    "DisplayName": "Revival",
+    "FormattedDisplayName": "Revival",
+    "Text": "Revival"
+  },
+  {
+    "FileName": "roar.ogg",
+    "DisplayName": "Roar",
+    "FormattedDisplayName": "Roar",
+    "Text": "Roar"
+  },
+  {
+    "FileName": "stampeding_roar.ogg",
+    "DisplayName": "Stampeding Roar",
+    "FormattedDisplayName": "Stampeding Roar",
+    "Text": "Stampeding Roar"
+  },
+  {
+    "FileName": "stop_cast.ogg",
+    "DisplayName": "Stop Cast",
+    "FormattedDisplayName": "Stop Cast",
+    "Text": "Stop Cast"
+  },
+  {
+    "FileName": "tether.ogg",
+    "DisplayName": "Tether",
+    "FormattedDisplayName": "Tether",
+    "Text": "Tether"
+  },
+  {
+    "FileName": "tranq.ogg",
+    "DisplayName": "Tranq",
+    "FormattedDisplayName": "Tranq",
+    "SSML": "\u003Cspeak\u003E\n  \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022tr\u00E6\u014Bk\u0022\u003ETranq=tr\u00E6\u014Bk\u003C/phoneme\u003E\n\u003C/speak\u003E"
+  },
+  {
+    "FileName": "tranquility.ogg",
+    "DisplayName": "Tranquility",
+    "FormattedDisplayName": "Tranquility",
+    "Text": "Tranquility"
+  },
+  {
+    "FileName": "tree_of_life.ogg",
+    "DisplayName": "Tree of Life",
+    "FormattedDisplayName": "Tree of Life",
+    "Text": "Tree of Life"
+  },
+  {
+    "FileName": "yulon.ogg",
+    "DisplayName": "Yu\u0027lon",
+    "FormattedDisplayName": "Yu\u0027lon",
+    "SSML": "\u003Cspeak\u003E\n  \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022\u02C8ju\u02D0l\u0252n\u0022\u003EYu\u0027lon=\u02C8ju\u02D0l\u0252n\u003C/phoneme\u003E\n\u003C/speak\u003E"
+  }
+]

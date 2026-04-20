@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using WoWVoxPack.AddOns;
 using WoWVoxPack.AddOns.BigWigs_Countdown;
 using WoWVoxPack.AddOns.BigWigs_Voice;
+using WoWVoxPack.AddOns.SharedMedia_Abilities;
 using WoWVoxPack.Builder;
 using WoWVoxPack.TTS;
 
@@ -21,11 +22,15 @@ IHostBuilder hostBuilder = Host.CreateDefaultBuilder(args)
         services.AddHttpClient<IBigWigsVoiceUpstreamClient, BigWigsVoiceUpstreamClient>();
         services.TryAddEnumerable(ServiceDescriptor.Singleton<IAddOnService, BigWigsVoiceAddOnService>());
         services.TryAddEnumerable(ServiceDescriptor.Singleton<IAddOnService, BigWigsCountdownAddOnService>());
+        services.TryAddEnumerable(ServiceDescriptor.Singleton<IAddOnService, SharedMediaAbilitiesAddOnService>());
         services.AddOptionsWithValidateOnStart<BuildMatrix>().BindConfiguration("Matrix");
         services.AddOptionsWithValidateOnStart<AddOnSettings>("BigWigs_Voice").BindConfiguration("AddOn:BigWigs_Voice")
             .BindConfiguration("AddOn");
         services.AddOptionsWithValidateOnStart<AddOnSettings>("BigWigs_Countdown")
             .BindConfiguration("AddOn:BigWigs_Countdown")
+            .BindConfiguration("AddOn");
+        services.AddOptionsWithValidateOnStart<AddOnSettings>("SharedMedia_Abilities")
+            .BindConfiguration("AddOn:SharedMedia_Abilities")
             .BindConfiguration("AddOn");
         services.AddHostedService<Worker>();
     }).ConfigureLogging((_, logging) =>

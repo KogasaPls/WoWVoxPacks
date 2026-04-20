@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\WoWVoxPack.Core\WoWVoxPack.Core.csproj"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="AbilitiesLuaFile.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>AbilitiesLuaFile.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="AbilitiesLuaFile.cs">
+      <DependentUpon>AbilitiesLuaFile.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="SharedMedia_Abilities_Sounds.json"/>
+    <AdditionalFiles Include="SharedMedia_Abilities_Sounds.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
+  </ItemGroup>
+
+</Project>

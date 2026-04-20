@@ -1,0 +1,6 @@
+<#@ template language="C#" #>
+local LSM = LibStub("LibSharedMedia-3.0")
+local path = "Interface\\AddOns\\<#= AddOnDirectoryName #>\\Sounds\\"
+<# foreach (var sound in SoundFiles) { #>
+LSM:Register("sound", "<#= GetLsmKey(sound) #>", path .. "<#= sound.FileName #>")
+<# } #>

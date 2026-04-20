@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using System.Xml.Linq;
 
 namespace WoWVoxPack.TTS;
 
@@ -40,4 +41,20 @@ public class SoundFile
 
     [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
     public string? CopyFromPath { get; set; }
+
+    public static string GetSsml(string text)
+    {
+        string[] words = text.Split([' '], StringSplitOptions.RemoveEmptyEntries);
+        IEnumerable<XNode> content = words.Select((word, index) => new
+            {
+                Word = word + (index == words.Length - 1 ? "" : " "),
+                WordIpa = word.Split('=').ElementAtOrDefault(1)
+            })
+            .Select(x => x.WordIpa is null
+                ? new XText(x.Word) as XNode
+                : new XElement("phoneme", new XAttribute("alphabet", "IPA"),
+                    new XAttribute("ph", x.WordIpa), x.Word));
+
+        return new XDocument(new XElement("speak", content)).ToString().TrimEnd();
+    }
 }

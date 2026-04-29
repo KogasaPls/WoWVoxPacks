@@ -168,5 +168,25 @@
     "FileName": "hit_vorelus.ogg",
     "Text": "Hit Vorelus",
     "DisplayName": "Hit Vorelus"
+  },
+  {
+    "FileName": "quills.ogg",
+    "Text": "Quills",
+    "DisplayName": "Quills"
+  },
+  {
+    "FileName": "soaks.ogg",
+    "Text": "Soaks",
+    "DisplayName": "Soaks"
+  },
+  {
+    "FileName": "external_void.ogg",
+    "Text": "External Void",
+    "DisplayName": "External Void"
+  },
+  {
+    "FileName": "external_light.ogg",
+    "Text": "External Light",
+    "DisplayName": "External Light"
   }
 ]

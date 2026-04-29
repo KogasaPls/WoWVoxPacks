@@ -66,6 +66,18 @@
     "Text": "Explosion"
   },
   {
+    "FileName": "external_light.ogg",
+    "DisplayName": "External Light",
+    "FormattedDisplayName": "External Light",
+    "Text": "External Light"
+  },
+  {
+    "FileName": "external_void.ogg",
+    "DisplayName": "External Void",
+    "FormattedDisplayName": "External Void",
+    "Text": "External Void"
+  },
+  {
     "FileName": "fortifying_brew.ogg",
     "DisplayName": "Fortifying Brew",
     "FormattedDisplayName": "Fortifying Brew",
@@ -144,6 +156,12 @@
     "Text": "Miss"
   },
   {
+    "FileName": "quills.ogg",
+    "DisplayName": "Quills",
+    "FormattedDisplayName": "Quills",
+    "Text": "Quills"
+  },
+  {
     "FileName": "restoral.ogg",
     "DisplayName": "Restoral",
     "FormattedDisplayName": "Restoral",
@@ -160,6 +178,12 @@
     "DisplayName": "Roar",
     "FormattedDisplayName": "Roar",
     "Text": "Roar"
+  },
+  {
+    "FileName": "soaks.ogg",
+    "DisplayName": "Soaks",
+    "FormattedDisplayName": "Soaks",
+    "Text": "Soaks"
   },
   {
     "FileName": "stampeding_roar.ogg",

@@ -1,7 +1,7 @@
-## Interface: 120001, 120005, 120007, 120000
+## Interface: 120005, 120007
 
 ## Title: BigWigs |cffff7f3f+|r|cffffffffCountdown: WoWVoxPacks (Neural2_C)|r
-## Version: 12.0.1
+## Version: 12.0.5
 ## Notes: A BigWigs plugin that adds a new countdown voice pack.
 ## Author: KogasaPls
 

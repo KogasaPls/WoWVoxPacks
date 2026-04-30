@@ -83,7 +83,7 @@ jobs:
       - uses: FedericoCarboni/setup-ffmpeg@v3
         with:
           ffmpeg-version: release
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: '10.0.x'
       - name: Build new version
@@ -95,7 +95,7 @@ jobs:
         env:
           TAG: ${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version }}
       - name: Create a pull request
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         id: create-pull-request
         with:
           token: ${{ secrets.WORKFLOW_RELEASE_PAT }}
@@ -113,6 +113,9 @@ jobs:
             bigwigs-voice-version.txt
           sign-commits: true
       - name: Enable Pull Request Automerge
-        run: gh pr merge --merge --auto --delete-branch "$PR_NUMBER"
+        run: |
+          [[ "$PR_OPERATION" != "none" ]] && gh pr merge --merge --auto "$PR_NUMBER"
         env:
+          GH_TOKEN: ${{ secrets.WORKFLOW_RELEASE_PAT }}
           PR_NUMBER: ${{ steps.create-pull-request.outputs.pull-request-number }}
+          PR_OPERATION: ${{ steps.create-pull-request.outputs.pull-request-operation }}

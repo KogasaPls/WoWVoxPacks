@@ -188,5 +188,55 @@
     "FileName": "external_light.ogg",
     "Text": "External Light",
     "DisplayName": "External Light"
+  },
+  {
+    "FileName": "interrupts.ogg",
+    "Text": "Interrupts",
+    "DisplayName": "Interrupts"
+  },
+  {
+    "FileName": "glaives.ogg",
+    "Text": "Glaives",
+    "DisplayName": "Glaives"
+  },
+  {
+    "FileName": "memory_game.ogg",
+    "Text": "Memory Game",
+    "DisplayName": "Memory Game"
+  },
+  {
+    "FileName": "beams.ogg",
+    "Text": "Beams",
+    "DisplayName": "Beams"
+  },
+  {
+    "FileName": "full_blaze.ogg",
+    "Text": "Full Blaze",
+    "DisplayName": "Full Blaze"
+  },
+  {
+    "FileName": "seed_drop.ogg",
+    "Text": "Seed Drop",
+    "DisplayName": "Seed Drop"
+  },
+  {
+    "FileName": "orbs.ogg",
+    "Text": "Orbs",
+    "DisplayName": "Orbs"
+  },
+  {
+    "FileName": "stars.ogg",
+    "Text": "Stars",
+    "DisplayName": "Stars"
+  },
+  {
+    "FileName": "move.ogg",
+    "Text": "Move",
+    "DisplayName": "Move"
+  },
+  {
+    "FileName": "blazes.ogg",
+    "Text": "Blazes",
+    "DisplayName": "Blazes"
   }
 ]

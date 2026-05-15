@@ -18,10 +18,22 @@
     "Text": "Barkskin"
   },
   {
+    "FileName": "beams.ogg",
+    "DisplayName": "Beams",
+    "FormattedDisplayName": "Beams",
+    "Text": "Beams"
+  },
+  {
     "FileName": "big_boom.ogg",
     "DisplayName": "Big Boom",
     "FormattedDisplayName": "Big Boom",
     "Text": "Big Boom"
+  },
+  {
+    "FileName": "blazes.ogg",
+    "DisplayName": "Blazes",
+    "FormattedDisplayName": "Blazes",
+    "Text": "Blazes"
   },
   {
     "FileName": "celestial_conduit.ogg",
@@ -84,6 +96,18 @@
     "Text": "Fortifying Brew"
   },
   {
+    "FileName": "full_blaze.ogg",
+    "DisplayName": "Full Blaze",
+    "FormattedDisplayName": "Full Blaze",
+    "Text": "Full Blaze"
+  },
+  {
+    "FileName": "glaives.ogg",
+    "DisplayName": "Glaives",
+    "FormattedDisplayName": "Glaives",
+    "Text": "Glaives"
+  },
+  {
     "FileName": "hit_demiar.ogg",
     "DisplayName": "Hit Demiar",
     "FormattedDisplayName": "Hit Demiar",
@@ -126,6 +150,12 @@
     "SSML": "\u003Cspeak\u003E\n  \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022\u02C8\u026An\u025Ave\u026At\u0022\u003EInnervate=\u02C8\u026An\u025Ave\u026At\u003C/phoneme\u003E\n\u003C/speak\u003E"
   },
   {
+    "FileName": "interrupts.ogg",
+    "DisplayName": "Interrupts",
+    "FormattedDisplayName": "Interrupts",
+    "Text": "Interrupts"
+  },
+  {
     "FileName": "invoke_chiji_the_red_crane.ogg",
     "DisplayName": "Invoke Chi-ji, the Red Crane",
     "FormattedDisplayName": "Invoke Chi-ji, the Red Crane",
@@ -150,10 +180,28 @@
     "Text": "Life Cocoon"
   },
   {
+    "FileName": "memory_game.ogg",
+    "DisplayName": "Memory Game",
+    "FormattedDisplayName": "Memory Game",
+    "Text": "Memory Game"
+  },
+  {
     "FileName": "miss.ogg",
     "DisplayName": "Miss",
     "FormattedDisplayName": "Miss",
     "Text": "Miss"
+  },
+  {
+    "FileName": "move.ogg",
+    "DisplayName": "Move",
+    "FormattedDisplayName": "Move",
+    "Text": "Move"
+  },
+  {
+    "FileName": "orbs.ogg",
+    "DisplayName": "Orbs",
+    "FormattedDisplayName": "Orbs",
+    "Text": "Orbs"
   },
   {
     "FileName": "quills.ogg",
@@ -180,6 +228,12 @@
     "Text": "Roar"
   },
   {
+    "FileName": "seed_drop.ogg",
+    "DisplayName": "Seed Drop",
+    "FormattedDisplayName": "Seed Drop",
+    "Text": "Seed Drop"
+  },
+  {
     "FileName": "soaks.ogg",
     "DisplayName": "Soaks",
     "FormattedDisplayName": "Soaks",
@@ -190,6 +244,12 @@
     "DisplayName": "Stampeding Roar",
     "FormattedDisplayName": "Stampeding Roar",
     "Text": "Stampeding Roar"
+  },
+  {
+    "FileName": "stars.ogg",
+    "DisplayName": "Stars",
+    "FormattedDisplayName": "Stars",
+    "Text": "Stars"
   },
   {
     "FileName": "stop_cast.ogg",

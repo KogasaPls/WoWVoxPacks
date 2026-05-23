@@ -10,7 +10,7 @@ public sealed class ExBossAddOn : AddOn
         : base(outputDirectory, settings, ttsSettings)
     {
         Title = $"ExBoss WoWVoxPacks {ttsSettings.Voice}";
-        DisplayTitle = $"ExBoss WoWVoxPacks |cffff7f3f+|r|cffffffffAbilities: WoWVoxPacks ({ttsSettings.Voice})|r";
+        DisplayTitle = $"ExBoss WoWVoxPacks ({ttsSettings.Voice})";
 
         string file = Path.Combine(AppContext.BaseDirectory, "Labels.json");
         LoadSoundsFromJson(file);

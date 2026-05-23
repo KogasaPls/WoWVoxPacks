@@ -1,6 +1,36 @@
 [
   {
-    "FileName": "5-4-3-2-1.ogg",
+    "FileName": "1.ogg",
+    "DisplayName": "1",
+    "FormattedDisplayName": "1",
+    "Text": "One"
+  },
+  {
+    "FileName": "2.ogg",
+    "DisplayName": "2",
+    "FormattedDisplayName": "2",
+    "Text": "Two"
+  },
+  {
+    "FileName": "3.ogg",
+    "DisplayName": "3",
+    "FormattedDisplayName": "3",
+    "Text": "Three"
+  },
+  {
+    "FileName": "4.ogg",
+    "DisplayName": "4",
+    "FormattedDisplayName": "4",
+    "Text": "Four"
+  },
+  {
+    "FileName": "5.ogg",
+    "DisplayName": "5",
+    "FormattedDisplayName": "5",
+    "Text": "Five"
+  },
+  {
+    "FileName": "54321.ogg",
     "DisplayName": "54321",
     "FormattedDisplayName": "54321",
     "Text": "5 4 3 2 1"
@@ -21,7 +51,7 @@
     "FileName": "adds.ogg",
     "DisplayName": "\u8F6C\u706B\u5C0F\u602A",
     "FormattedDisplayName": "\u8F6C\u706B\u5C0F\u602A",
-    "Text": "ADDS"
+    "Text": "Adds"
   },
   {
     "FileName": "adds.ogg",
@@ -54,10 +84,22 @@
     "Text": "Adds"
   },
   {
+    "FileName": "amp-over.ogg",
+    "DisplayName": "\u6613\u4F24\u7ED3\u675F",
+    "FormattedDisplayName": "\u6613\u4F24\u7ED3\u675F",
+    "Text": "Amp Over"
+  },
+  {
     "FileName": "amp-soon.ogg",
     "DisplayName": "\u51C6\u5907\u6613\u4F24",
     "FormattedDisplayName": "\u51C6\u5907\u6613\u4F24",
     "Text": "Amp Soon"
+  },
+  {
+    "FileName": "amp.ogg",
+    "DisplayName": "\u6613\u4F24\u7206\u53D1",
+    "FormattedDisplayName": "\u6613\u4F24\u7206\u53D1",
+    "Text": "Amp"
   },
   {
     "FileName": "amp.ogg",
@@ -177,7 +219,7 @@
     "FileName": "black.ogg",
     "DisplayName": "\u4F60\u662F\u9ED1\u8272",
     "FormattedDisplayName": "\u4F60\u662F\u9ED1\u8272",
-    "Text": "BLACK"
+    "Text": "Black"
   },
   {
     "FileName": "black.ogg",
@@ -249,7 +291,7 @@
     "FileName": "cc.ogg",
     "DisplayName": "\u63A7\u5236\u5C0F\u602A",
     "FormattedDisplayName": "\u63A7\u5236\u5C0F\u602A",
-    "Text": "CC"
+    "Text": "C C"
   },
   {
     "FileName": "cc.ogg",
@@ -387,7 +429,7 @@
     "FileName": "dodge.ogg",
     "DisplayName": "\u6CE8\u610F\u8EB2\u907F",
     "FormattedDisplayName": "\u6CE8\u610F\u8EB2\u907F",
-    "Text": "DODGE"
+    "Text": "Dodge"
   },
   {
     "FileName": "dodge.ogg",
@@ -486,12 +528,6 @@
     "Text": "Explosion"
   },
   {
-    "FileName": "five.ogg",
-    "DisplayName": "5",
-    "FormattedDisplayName": "5",
-    "Text": "Five"
-  },
-  {
     "FileName": "fixate.ogg",
     "DisplayName": "\u8FFD\u4EBA",
     "FormattedDisplayName": "\u8FFD\u4EBA",
@@ -502,12 +538,6 @@
     "DisplayName": "\u51C6\u5907\u8FFD\u4EBA",
     "FormattedDisplayName": "\u51C6\u5907\u8FFD\u4EBA",
     "Text": "Fixated"
-  },
-  {
-    "FileName": "four.ogg",
-    "DisplayName": "4",
-    "FormattedDisplayName": "4",
-    "Text": "Four"
   },
   {
     "FileName": "frontal.ogg",
@@ -717,13 +747,13 @@
     "FileName": "los.ogg",
     "DisplayName": "\u5FEB\u5361\u89C6\u89D2",
     "FormattedDisplayName": "\u5FEB\u5361\u89C6\u89D2",
-    "Text": "L O S"
+    "Text": "LoS"
   },
   {
     "FileName": "los.ogg",
     "DisplayName": "\u5361\u89C6\u91CE",
     "FormattedDisplayName": "\u5361\u89C6\u91CE",
-    "Text": "L O S"
+    "Text": "LoS"
   },
   {
     "FileName": "mark.ogg",
@@ -784,12 +814,6 @@
     "DisplayName": "\u7784\u51C6\u97F3\u7B26",
     "FormattedDisplayName": "\u7784\u51C6\u97F3\u7B26",
     "Text": "Note"
-  },
-  {
-    "FileName": "one.ogg",
-    "DisplayName": "1",
-    "FormattedDisplayName": "1",
-    "Text": "One"
   },
   {
     "FileName": "orb.ogg",
@@ -1020,12 +1044,6 @@
     "Text": "Targeted"
   },
   {
-    "FileName": "three.ogg",
-    "DisplayName": "3",
-    "FormattedDisplayName": "3",
-    "Text": "Three"
-  },
-  {
     "FileName": "totem.ogg",
     "DisplayName": "\u56FE\u817E",
     "FormattedDisplayName": "\u56FE\u817E",
@@ -1044,28 +1062,10 @@
     "Text": "Trap"
   },
   {
-    "FileName": "two.ogg",
-    "DisplayName": "2",
-    "FormattedDisplayName": "2",
-    "Text": "Two"
-  },
-  {
     "FileName": "volley.ogg",
     "DisplayName": "\u9F50\u5C04",
     "FormattedDisplayName": "\u9F50\u5C04",
     "Text": "Volley"
-  },
-  {
-    "FileName": "vuln-over.ogg",
-    "DisplayName": "\u6613\u4F24\u7ED3\u675F",
-    "FormattedDisplayName": "\u6613\u4F24\u7ED3\u675F",
-    "Text": "Vuln Over"
-  },
-  {
-    "FileName": "vulnerability.ogg",
-    "DisplayName": "\u6613\u4F24\u7206\u53D1",
-    "FormattedDisplayName": "\u6613\u4F24\u7206\u53D1",
-    "Text": "Vulnerability"
   },
   {
     "FileName": "watch-step.ogg",
@@ -1083,7 +1083,7 @@
     "FileName": "white.ogg",
     "DisplayName": "\u4F60\u662F\u767D\u8272",
     "FormattedDisplayName": "\u4F60\u662F\u767D\u8272",
-    "Text": "WHITE"
+    "Text": "White"
   },
   {
     "FileName": "white.ogg",

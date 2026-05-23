@@ -27,23 +27,26 @@ jobs:
       fail-fast: true
       matrix:
         voice: ${{ fromJSON(format('[{0}]', inputs.voices || '"Wavenet_E","Neural2_C","Studio_Q"')) }}
-        addon: ${{ fromJSON(format('[{0}]', inputs.addons || '"BigWigs_Voice","BigWigs_Countdown","SharedMedia_Abilities"')) }}
+        addon: ${{ fromJSON(format('[{0}]', inputs.addons || '"BigWigs_Voice","BigWigs_Countdown","SharedMedia_Abilities","ExBoss"')) }}
         voice-to-addon-to-project-id-json:
           - '{
             "Wavenet_E": {
               "BigWigs_Voice": 1215288,
               "BigWigs_Countdown": 1217577,
-              "SharedMedia_Abilities": 1520297
+              "SharedMedia_Abilities": 1520297,
+              "ExBoss": 1551653
             },
             "Neural2_C": {
               "BigWigs_Voice": 1217580,
               "BigWigs_Countdown": 1217583,
-              "SharedMedia_Abilities": 1520293
+              "SharedMedia_Abilities": 1520293,
+              "ExBoss": 1551645
             },
             "Studio_Q": {
               "BigWigs_Voice": 1218355,
               "BigWigs_Countdown": 1218357,
-              "SharedMedia_Abilities": 1520296
+              "SharedMedia_Abilities": 1520296,
+              "ExBoss": 1551655
             }
           }'
 

@@ -87,7 +87,7 @@
   {
     "DisplayName": "快卡视角",
     "FileName": "los.ogg",
-    "Text": "L O S"
+    "Text": "LoS"
   },
   {
     "DisplayName": "快去消水",
@@ -106,7 +106,7 @@
   },
   {
     "DisplayName": "54321",
-    "FileName": "5-4-3-2-1.ogg",
+    "FileName": "54321.ogg",
     "Text": "5 4 3 2 1"
   },
   {
@@ -132,7 +132,7 @@
   {
     "DisplayName": "注意躲避",
     "FileName": "dodge.ogg",
-    "Text": "DODGE"
+    "Text": "Dodge"
   },
   {
     "DisplayName": "点名头前",
@@ -157,7 +157,7 @@
   {
     "DisplayName": "转火小怪",
     "FileName": "adds.ogg",
-    "Text": "ADDS"
+    "Text": "Adds"
   },
   {
     "DisplayName": "转阶段",
@@ -192,12 +192,12 @@
   {
     "DisplayName": "你是白色",
     "FileName": "white.ogg",
-    "Text": "WHITE"
+    "Text": "White"
   },
   {
     "DisplayName": "你是黑色",
     "FileName": "black.ogg",
-    "Text": "BLACK"
+    "Text": "Black"
   },
   {
     "DisplayName": "准备AOE(断条)",
@@ -281,8 +281,8 @@
   },
   {
     "DisplayName": "易伤爆发",
-    "FileName": "vulnerability.ogg",
-    "Text": "Vulnerability"
+    "FileName": "amp.ogg",
+    "Text": "Amp"
   },
   {
     "DisplayName": "注意减伤",
@@ -316,27 +316,27 @@
   },
   {
     "DisplayName": "5",
-    "FileName": "five.ogg",
+    "FileName": "5.ogg",
     "Text": "Five"
   },
   {
     "DisplayName": "4",
-    "FileName": "four.ogg",
+    "FileName": "4.ogg",
     "Text": "Four"
   },
   {
     "DisplayName": "3",
-    "FileName": "three.ogg",
+    "FileName": "3.ogg",
     "Text": "Three"
   },
   {
     "DisplayName": "2",
-    "FileName": "two.ogg",
+    "FileName": "2.ogg",
     "Text": "Two"
   },
   {
     "DisplayName": "1",
-    "FileName": "one.ogg",
+    "FileName": "1.ogg",
     "Text": "One"
   },
   {
@@ -412,7 +412,7 @@
   {
     "DisplayName": "控制小怪",
     "FileName": "cc.ogg",
-    "Text": "CC"
+    "Text": "C C"
   },
   {
     "DisplayName": "瞄准音符",
@@ -571,8 +571,8 @@
   },
   {
     "DisplayName": "易伤结束",
-    "FileName": "vuln-over.ogg",
-    "Text": "Vuln Over"
+    "FileName": "amp-over.ogg",
+    "Text": "Amp Over"
   },
   {
     "DisplayName": "音效_Glass",
@@ -787,7 +787,7 @@
   {
     "DisplayName": "卡视野",
     "FileName": "los.ogg",
-    "Text": "L O S"
+    "Text": "LoS"
   },
   {
     "DisplayName": "点名",

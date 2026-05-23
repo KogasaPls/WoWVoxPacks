@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\WoWVoxPack.Core\WoWVoxPack.Core.csproj"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="LabelsFile.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>LabelsFile.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="LabelsFile.cs">
+      <DependentUpon>LabelsFile.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Labels.json"/>
+    <AdditionalFiles Include="Labels.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,927 @@
+[
+  {
+    "DisplayName": "准备AOE",
+    "FileName": "aoe-inc.ogg",
+    "Text": "AOE=ˌeɪ.joʊˈwi"
+  },
+  {
+    "DisplayName": "准备引线",
+    "FileName": "bait.ogg",
+    "Text": "Bait"
+  },
+  {
+    "DisplayName": "准备打断",
+    "FileName": "interrupt.ogg",
+    "Text": "Interrupt"
+  },
+  {
+    "DisplayName": "准备拉人",
+    "FileName": "pull.ogg",
+    "Text": "Pull"
+  },
+  {
+    "DisplayName": "准备挡线",
+    "FileName": "line.ogg",
+    "Text": "Line"
+  },
+  {
+    "DisplayName": "准备接圈",
+    "FileName": "soak.ogg",
+    "Text": "Soak"
+  },
+  {
+    "DisplayName": "准备消层",
+    "FileName": "clear.ogg",
+    "Text": "Clear"
+  },
+  {
+    "DisplayName": "准备点名",
+    "FileName": "mark.ogg",
+    "Text": "Mark"
+  },
+  {
+    "DisplayName": "准备踩箭",
+    "FileName": "arrow.ogg",
+    "Text": "Arrow"
+  },
+  {
+    "DisplayName": "准备进圈",
+    "FileName": "in.ogg",
+    "Text": "In"
+  },
+  {
+    "DisplayName": "准备连线",
+    "FileName": "line.ogg",
+    "Text": "Line"
+  },
+  {
+    "DisplayName": "准备送球",
+    "FileName": "pass.ogg",
+    "Text": "Pass"
+  },
+  {
+    "DisplayName": "准备钩人",
+    "FileName": "hook.ogg",
+    "Text": "Hook"
+  },
+  {
+    "DisplayName": "准备集合",
+    "FileName": "stack.ogg",
+    "Text": "Stack"
+  },
+  {
+    "DisplayName": "准备驱散",
+    "FileName": "dispel.ogg",
+    "Text": "Dispel"
+  },
+  {
+    "DisplayName": "去撞分身",
+    "FileName": "clone.ogg",
+    "Text": "Clone"
+  },
+  {
+    "DisplayName": "坦克尖刺",
+    "FileName": "tank-hit.ogg",
+    "Text": "Tank Hit"
+  },
+  {
+    "DisplayName": "快卡视角",
+    "FileName": "los.ogg",
+    "Text": "L O S"
+  },
+  {
+    "DisplayName": "快去消水",
+    "FileName": "clear.ogg",
+    "Text": "Clear"
+  },
+  {
+    "DisplayName": "快找光柱",
+    "FileName": "clear.ogg",
+    "Text": "Clear"
+  },
+  {
+    "DisplayName": "快踩陷阱",
+    "FileName": "trap.ogg",
+    "Text": "Trap"
+  },
+  {
+    "DisplayName": "54321",
+    "FileName": "5-4-3-2-1.ogg",
+    "Text": "5 4 3 2 1"
+  },
+  {
+    "DisplayName": "注意击退",
+    "FileName": "knock.ogg",
+    "Text": "Knock"
+  },
+  {
+    "DisplayName": "注意头前",
+    "FileName": "frontal.ogg",
+    "Text": "FRONTAL"
+  },
+  {
+    "DisplayName": "注意挡球",
+    "FileName": "orb.ogg",
+    "Text": "Orb"
+  },
+  {
+    "DisplayName": "注意消球",
+    "FileName": "clear.ogg",
+    "Text": "Clear"
+  },
+  {
+    "DisplayName": "注意躲避",
+    "FileName": "dodge.ogg",
+    "Text": "DODGE"
+  },
+  {
+    "DisplayName": "点名头前",
+    "FileName": "frontal.ogg",
+    "Text": "Frontal"
+  },
+  {
+    "DisplayName": "点名放水",
+    "FileName": "drop.ogg",
+    "Text": "Drop"
+  },
+  {
+    "DisplayName": "点名消线",
+    "FileName": "clear.ogg",
+    "Text": "Clear"
+  },
+  {
+    "DisplayName": "躲开头前",
+    "FileName": "frontal.ogg",
+    "Text": "Frontal"
+  },
+  {
+    "DisplayName": "转火小怪",
+    "FileName": "adds.ogg",
+    "Text": "ADDS"
+  },
+  {
+    "DisplayName": "转阶段",
+    "FileName": "intermission.ogg",
+    "Text": "Intermission"
+  },
+  {
+    "DisplayName": "远离BOSS",
+    "FileName": "away.ogg",
+    "Text": "Away"
+  },
+  {
+    "DisplayName": "靠近分散",
+    "FileName": "spread.ogg",
+    "Text": "Spread"
+  },
+  {
+    "DisplayName": "风筝小怪",
+    "FileName": "kite.ogg",
+    "Text": "Kite"
+  },
+  {
+    "DisplayName": "Boss狂暴",
+    "FileName": "enrage.ogg",
+    "Text": "Enrage"
+  },
+  {
+    "DisplayName": "Boss易伤",
+    "FileName": "Amp.ogg",
+    "Text": "Amp"
+  },
+  {
+    "DisplayName": "你是白色",
+    "FileName": "white.ogg",
+    "Text": "WHITE"
+  },
+  {
+    "DisplayName": "你是黑色",
+    "FileName": "black.ogg",
+    "Text": "BLACK"
+  },
+  {
+    "DisplayName": "准备AOE(断条)",
+    "FileName": "aoe-break.ogg",
+    "Text": "AOE=ˌeɪ.joʊˈwi Break"
+  },
+  {
+    "DisplayName": "准备吸球",
+    "FileName": "orb.ogg",
+    "Text": "Orb"
+  },
+  {
+    "DisplayName": "出去放水",
+    "FileName": "drop.ogg",
+    "Text": "Drop"
+  },
+  {
+    "DisplayName": "去接小怪",
+    "FileName": "adds.ogg",
+    "Text": "Adds"
+  },
+  {
+    "DisplayName": "射线点你",
+    "FileName": "beam.ogg",
+    "Text": "Beam"
+  },
+  {
+    "DisplayName": "小心冲击波",
+    "FileName": "dodge.ogg",
+    "Text": "Dodge"
+  },
+  {
+    "DisplayName": "小心击飞",
+    "FileName": "knock.ogg",
+    "Text": "Knock"
+  },
+  {
+    "DisplayName": "强化奶骑",
+    "FileName": "empower-hpal.ogg",
+    "Text": "Empower Hpal"
+  },
+  {
+    "DisplayName": "强化惩戒骑",
+    "FileName": "empower-ret.ogg",
+    "Text": "Empower Ret"
+  },
+  {
+    "DisplayName": "强化防骑",
+    "FileName": "empower-prot.ogg",
+    "Text": "Empower Prot"
+  },
+  {
+    "DisplayName": "快分散",
+    "FileName": "spread.ogg",
+    "Text": "Spread"
+  },
+  {
+    "DisplayName": "快打断",
+    "FileName": "kick.ogg",
+    "Text": "Kick"
+  },
+  {
+    "DisplayName": "快救人",
+    "FileName": "save.ogg",
+    "Text": "Save"
+  },
+  {
+    "DisplayName": "快破盾",
+    "FileName": "break.ogg",
+    "Text": "Break"
+  },
+  {
+    "DisplayName": "快进罩子",
+    "FileName": "in.ogg",
+    "Text": "In"
+  },
+  {
+    "DisplayName": "拉断连线",
+    "FileName": "break.ogg",
+    "Text": "Break"
+  },
+  {
+    "DisplayName": "易伤爆发",
+    "FileName": "vulnerability.ogg",
+    "Text": "Vulnerability"
+  },
+  {
+    "DisplayName": "注意减伤",
+    "FileName": "defensive.ogg",
+    "Text": "Defensive"
+  },
+  {
+    "DisplayName": "注意治疗",
+    "FileName": "heal.ogg",
+    "Text": "Heal"
+  },
+  {
+    "DisplayName": "特殊技能",
+    "FileName": "special.ogg",
+    "Text": "Special"
+  },
+  {
+    "DisplayName": "转火大怪",
+    "FileName": "adds.ogg",
+    "Text": "Adds"
+  },
+  {
+    "DisplayName": "远离大怪",
+    "FileName": "away.ogg",
+    "Text": "Away"
+  },
+  {
+    "DisplayName": "集合分摊",
+    "FileName": "soak.ogg",
+    "Text": "Soak"
+  },
+  {
+    "DisplayName": "5",
+    "FileName": "five.ogg",
+    "Text": "Five"
+  },
+  {
+    "DisplayName": "4",
+    "FileName": "four.ogg",
+    "Text": "Four"
+  },
+  {
+    "DisplayName": "3",
+    "FileName": "three.ogg",
+    "Text": "Three"
+  },
+  {
+    "DisplayName": "2",
+    "FileName": "two.ogg",
+    "Text": "Two"
+  },
+  {
+    "DisplayName": "1",
+    "FileName": "one.ogg",
+    "Text": "One"
+  },
+  {
+    "DisplayName": "集合放圈",
+    "FileName": "stack.ogg",
+    "Text": "Stack"
+  },
+  {
+    "DisplayName": "控断钢条",
+    "FileName": "cc.ogg",
+    "Text": "C C"
+  },
+  {
+    "DisplayName": "坦克击退",
+    "FileName": "tank-knock.ogg",
+    "Text": "Tank Knock"
+  },
+  {
+    "DisplayName": "召唤小怪",
+    "FileName": "adds.ogg",
+    "Text": "Adds"
+  },
+  {
+    "DisplayName": "注意点名",
+    "FileName": "mark.ogg",
+    "Text": "Mark"
+  },
+  {
+    "DisplayName": "注意躲圈",
+    "FileName": "dodge.ogg",
+    "Text": "Dodge"
+  },
+  {
+    "DisplayName": "注意击飞",
+    "FileName": "dodge.ogg",
+    "Text": "Dodge"
+  },
+  {
+    "DisplayName": "准备跑圈",
+    "FileName": "dance.ogg",
+    "Text": "Dance"
+  },
+  {
+    "DisplayName": "准备追人",
+    "FileName": "fixated.ogg",
+    "Text": "Fixated"
+  },
+  {
+    "DisplayName": "召唤分身",
+    "FileName": "mirror.ogg",
+    "Text": "Mirror"
+  },
+  {
+    "DisplayName": "AOE",
+    "FileName": "aoe.ogg",
+    "Text": "AOE=ˌeɪ.joʊˈwi"
+  },
+  {
+    "DisplayName": "小心脚下",
+    "FileName": "watch-step.ogg",
+    "Text": "Watch Step"
+  },
+  {
+    "DisplayName": "连续躲圈",
+    "FileName": "dodge.ogg",
+    "Text": "Dodge"
+  },
+  {
+    "DisplayName": "准备抓人",
+    "FileName": "grab.ogg",
+    "Text": "Grab"
+  },
+  {
+    "DisplayName": "控制小怪",
+    "FileName": "cc.ogg",
+    "Text": "CC"
+  },
+  {
+    "DisplayName": "瞄准音符",
+    "FileName": "note.ogg",
+    "Text": "Note"
+  },
+  {
+    "DisplayName": "唤醒小怪",
+    "FileName": "adds.ogg",
+    "Text": "Adds"
+  },
+  {
+    "DisplayName": "贴边放水",
+    "FileName": "drop-edge.ogg",
+    "Text": "Drop Edge"
+  },
+  {
+    "DisplayName": "靠近BOSS",
+    "FileName": "in.ogg",
+    "Text": "In"
+  },
+  {
+    "DisplayName": "消除连线",
+    "FileName": "clear.ogg",
+    "Text": "Clear"
+  },
+  {
+    "DisplayName": "5秒后AOE",
+    "FileName": "aoe-5.ogg",
+    "Text": "AOE=ˌeɪ.joʊˈwi 5"
+  },
+  {
+    "DisplayName": "补给协议",
+    "FileName": "supply.ogg",
+    "Text": "Supply"
+  },
+  {
+    "DisplayName": "超大AOE",
+    "FileName": "massive-aoe.ogg",
+    "Text": "Massive AOE=ˌeɪ.joʊˈwi"
+  },
+  {
+    "DisplayName": "持续AOE",
+    "FileName": "aoe-cont.ogg",
+    "Text": "AOE=ˌeɪ.joʊˈwi Cont"
+  },
+  {
+    "DisplayName": "打背面",
+    "FileName": "hit-back.ogg",
+    "Text": "Hit Back"
+  },
+  {
+    "DisplayName": "召唤大怪",
+    "FileName": "big-adds.ogg",
+    "Text": "Big Adds"
+  },
+  {
+    "DisplayName": "躲开冲锋",
+    "FileName": "charge.ogg",
+    "Text": "Charge"
+  },
+  {
+    "DisplayName": "躲球",
+    "FileName": "orb.ogg",
+    "Text": "Orb"
+  },
+  {
+    "DisplayName": "躲圈",
+    "FileName": "circle.ogg",
+    "Text": "Circle"
+  },
+  {
+    "DisplayName": "躲射线",
+    "FileName": "beam.ogg",
+    "Text": "Beam"
+  },
+  {
+    "DisplayName": "勾BOSS",
+    "FileName": "hook.ogg",
+    "Text": "Hook"
+  },
+  {
+    "DisplayName": "获得增益",
+    "FileName": "buff.ogg",
+    "Text": "Buff"
+  },
+  {
+    "DisplayName": "集合移动",
+    "FileName": "move.ogg",
+    "Text": "Move"
+  },
+  {
+    "DisplayName": "靠近连线",
+    "FileName": "link.ogg",
+    "Text": "Link"
+  },
+  {
+    "DisplayName": "快打宝珠",
+    "FileName": "orb.ogg",
+    "Text": "Orb"
+  },
+  {
+    "DisplayName": "快躲开",
+    "FileName": "dodge.ogg",
+    "Text": "Dodge"
+  },
+  {
+    "DisplayName": "快跑",
+    "FileName": "run.ogg",
+    "Text": "Run"
+  },
+  {
+    "DisplayName": "快跑！你被点名",
+    "FileName": "run.ogg",
+    "Text": "Run"
+  },
+  {
+    "DisplayName": "连线点你",
+    "FileName": "link.ogg",
+    "Text": "Link"
+  },
+  {
+    "DisplayName": "裂隙点你",
+    "FileName": "rift.ogg",
+    "Text": "Rift"
+  },
+  {
+    "DisplayName": "你被点名",
+    "FileName": "marked.ogg",
+    "Text": "Marked"
+  },
+  {
+    "DisplayName": "圈住电水",
+    "FileName": "lightning-soak.ogg",
+    "Text": "Lightning Soak"
+  },
+  {
+    "DisplayName": "停止施法",
+    "FileName": "stop-cast.ogg",
+    "Text": "Stop Cast"
+  },
+  {
+    "DisplayName": "吸收治疗",
+    "FileName": "heal-absorb.ogg",
+    "Text": "Heal Absorb"
+  },
+  {
+    "DisplayName": "小心炸弹",
+    "FileName": "bomb.ogg",
+    "Text": "Bomb"
+  },
+  {
+    "DisplayName": "小心自爆",
+    "FileName": "explosion.ogg",
+    "Text": "Explosion"
+  },
+  {
+    "DisplayName": "易伤结束",
+    "FileName": "vuln-over.ogg",
+    "Text": "Vuln Over"
+  },
+  {
+    "DisplayName": "音效_Glass",
+    "FileName": "glass.ogg",
+    "Text": "Glass"
+  },
+  {
+    "DisplayName": "音效_Info",
+    "FileName": "info.ogg",
+    "Text": "Info"
+  },
+  {
+    "DisplayName": "音效_叮咚",
+    "FileName": "ding.ogg",
+    "Text": "Ding"
+  },
+  {
+    "DisplayName": "远离人群",
+    "FileName": "away.ogg",
+    "Text": "Away"
+  },
+  {
+    "DisplayName": "注意躲风",
+    "FileName": "wind.ogg",
+    "Text": "Wind"
+  },
+  {
+    "DisplayName": "注意吐息",
+    "FileName": "breath.ogg",
+    "Text": "Breath"
+  },
+  {
+    "DisplayName": "准备易伤",
+    "FileName": "amp-soon.ogg",
+    "Text": "Amp Soon"
+  },
+  {
+    "DisplayName": "目标是你",
+    "FileName": "targeted.ogg",
+    "Text": "Targeted"
+  },
+  {
+    "DisplayName": "吸收盾",
+    "FileName": "absorb.ogg",
+    "Text": "Absorb"
+  },
+  {
+    "DisplayName": "注意大怪",
+    "FileName": "add.ogg",
+    "Text": "Add"
+  },
+  {
+    "DisplayName": "小怪快打",
+    "FileName": "adds.ogg",
+    "Text": "Adds"
+  },
+  {
+    "DisplayName": "注意箭矢",
+    "FileName": "arrow.ogg",
+    "Text": "Arrow"
+  },
+  {
+    "DisplayName": "远离",
+    "FileName": "away.ogg",
+    "Text": "Away"
+  },
+  {
+    "DisplayName": "引导位置",
+    "FileName": "bait.ogg",
+    "Text": "Bait"
+  },
+  {
+    "DisplayName": "注意射线",
+    "FileName": "beam.ogg",
+    "Text": "Beam"
+  },
+  {
+    "DisplayName": "黑色",
+    "FileName": "black.ogg",
+    "Text": "Black"
+  },
+  {
+    "DisplayName": "蓝色",
+    "FileName": "blue.ogg",
+    "Text": "Blue"
+  },
+  {
+    "DisplayName": "炸弹",
+    "FileName": "bomb.ogg",
+    "Text": "Bomb"
+  },
+  {
+    "DisplayName": "打破",
+    "FileName": "break.ogg",
+    "Text": "Break"
+  },
+  {
+    "DisplayName": "吐息",
+    "FileName": "breath.ogg",
+    "Text": "Breath"
+  },
+  {
+    "DisplayName": "注意控断",
+    "FileName": "cc.ogg",
+    "Text": "C C"
+  },
+  {
+    "DisplayName": "锁链",
+    "FileName": "chain.ogg",
+    "Text": "Chain"
+  },
+  {
+    "DisplayName": "冲锋",
+    "FileName": "charge.ogg",
+    "Text": "Charge"
+  },
+  {
+    "DisplayName": "清除",
+    "FileName": "clear.ogg",
+    "Text": "Clear"
+  },
+  {
+    "DisplayName": "分身",
+    "FileName": "clone.ogg",
+    "Text": "Clone"
+  },
+  {
+    "DisplayName": "诅咒",
+    "FileName": "curse.ogg",
+    "Text": "Curse"
+  },
+  {
+    "DisplayName": "躲地板",
+    "FileName": "dance.ogg",
+    "Text": "Dance"
+  },
+  {
+    "DisplayName": "疾病",
+    "FileName": "disease.ogg",
+    "Text": "Disease"
+  },
+  {
+    "DisplayName": "驱散",
+    "FileName": "dispel.ogg",
+    "Text": "Dispel"
+  },
+  {
+    "DisplayName": "持续伤害",
+    "FileName": "dot.ogg",
+    "Text": "Dot"
+  },
+  {
+    "DisplayName": "放水",
+    "FileName": "drop.ogg",
+    "Text": "Drop"
+  },
+  {
+    "DisplayName": "激怒",
+    "FileName": "enrage.ogg",
+    "Text": "Enrage"
+  },
+  {
+    "DisplayName": "追人",
+    "FileName": "fixate.ogg",
+    "Text": "Fixate"
+  },
+  {
+    "DisplayName": "抓握",
+    "FileName": "grasp.ogg",
+    "Text": "Grasp"
+  },
+  {
+    "DisplayName": "注意钩人",
+    "FileName": "hook.ogg",
+    "Text": "Hook"
+  },
+  {
+    "DisplayName": "进入",
+    "FileName": "in.ogg",
+    "Text": "In"
+  },
+  {
+    "DisplayName": "阶段转换",
+    "FileName": "intermission.ogg",
+    "Text": "Intermission"
+  },
+  {
+    "DisplayName": "打断施法",
+    "FileName": "interrupt.ogg",
+    "Text": "Interrupt"
+  },
+  {
+    "DisplayName": "风筝",
+    "FileName": "kite.ogg",
+    "Text": "Kite"
+  },
+  {
+    "DisplayName": "击飞",
+    "FileName": "knock.ogg",
+    "Text": "Knock"
+  },
+  {
+    "DisplayName": "跳跃",
+    "FileName": "leap.ogg",
+    "Text": "Leap"
+  },
+  {
+    "DisplayName": "连线",
+    "FileName": "line.ogg",
+    "Text": "Line"
+  },
+  {
+    "DisplayName": "卡视野",
+    "FileName": "los.ogg",
+    "Text": "L O S"
+  },
+  {
+    "DisplayName": "点名",
+    "FileName": "mark.ogg",
+    "Text": "Mark"
+  },
+  {
+    "DisplayName": "移动",
+    "FileName": "move.ogg",
+    "Text": "Move"
+  },
+  {
+    "DisplayName": "靠近",
+    "FileName": "near.ogg",
+    "Text": "Near"
+  },
+  {
+    "DisplayName": "宝珠",
+    "FileName": "orb.ogg",
+    "Text": "Orb"
+  },
+  {
+    "DisplayName": "出出出",
+    "FileName": "out.ogg",
+    "Text": "Out"
+  },
+  {
+    "DisplayName": "传递",
+    "FileName": "pass.ogg",
+    "Text": "Pass"
+  },
+  {
+    "DisplayName": "刷新",
+    "FileName": "refresh.ogg",
+    "Text": "Refresh"
+  },
+  {
+    "DisplayName": "注意大圈",
+    "FileName": "ring.ogg",
+    "Text": "Ring"
+  },
+  {
+    "DisplayName": "定身",
+    "FileName": "root.ogg",
+    "Text": "Root"
+  },
+  {
+    "DisplayName": "救人",
+    "FileName": "secure.ogg",
+    "Text": "Secure"
+  },
+  {
+    "DisplayName": "护盾",
+    "FileName": "shield.ogg",
+    "Text": "Shield"
+  },
+  {
+    "DisplayName": "吸收",
+    "FileName": "soak.ogg",
+    "Text": "Soak"
+  },
+  {
+    "DisplayName": "进攻驱散",
+    "FileName": "spellsteal.ogg",
+    "Text": "Spellsteal"
+  },
+  {
+    "DisplayName": "分裂",
+    "FileName": "split.ogg",
+    "Text": "Split"
+  },
+  {
+    "DisplayName": "分散",
+    "FileName": "spread.ogg",
+    "Text": "Spread"
+  },
+  {
+    "DisplayName": "集合站位",
+    "FileName": "stack.ogg",
+    "Text": "Stack"
+  },
+  {
+    "DisplayName": "目标转换",
+    "FileName": "switch.ogg",
+    "Text": "Switch"
+  },
+  {
+    "DisplayName": "坦克承伤",
+    "FileName": "tank-hit.ogg",
+    "Text": "Tank Hit"
+  },
+  {
+    "DisplayName": "坦克击飞",
+    "FileName": "tank-knock.ogg",
+    "Text": "Tank Knock"
+  },
+  {
+    "DisplayName": "图腾",
+    "FileName": "totem.ogg",
+    "Text": "Totem"
+  },
+  {
+    "DisplayName": "陷阱",
+    "FileName": "trap.ogg",
+    "Text": "Trap"
+  },
+  {
+    "DisplayName": "易伤",
+    "FileName": "amp.ogg",
+    "Text": "Amp"
+  },
+  {
+    "DisplayName": "齐射",
+    "FileName": "volley.ogg",
+    "Text": "Volley"
+  },
+  {
+    "DisplayName": "注意躲波",
+    "FileName": "wave.ogg",
+    "Text": "Wave"
+  },
+  {
+    "DisplayName": "白色",
+    "FileName": "white.ogg",
+    "Text": "White"
+  },
+  {
+    "DisplayName": "躲风",
+    "FileName": "wind.ogg",
+    "Text": "Wind"
+  },
+  {
+    "DisplayName": "黄色",
+    "FileName": "yellow.ogg",
+    "Text": "Yellow"
+  }
+]

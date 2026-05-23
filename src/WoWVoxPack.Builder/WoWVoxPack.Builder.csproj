@@ -9,6 +9,7 @@
     <ProjectReference Include="..\WoWVoxPack.Core\WoWVoxPack.Core.csproj"/>
     <ProjectReference Include="..\WoWVoxPack.AddOns.BigWigs_Voice\WoWVoxPack.AddOns.BigWigs_Voice.csproj"/>
     <ProjectReference Include="..\WoWVoxPack.AddOns.SharedMedia_Abilities\WoWVoxPack.AddOns.SharedMedia_Abilities.csproj"/>
+    <ProjectReference Include="..\WoWVoxPack.AddOns.ExBoss\WoWVoxPack.AddOns.ExBoss.csproj"/>
   </ItemGroup>
 
   <ItemGroup>

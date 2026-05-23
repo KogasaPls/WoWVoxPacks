@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using WoWVoxPack.AddOns;
 using WoWVoxPack.AddOns.BigWigs_Countdown;
 using WoWVoxPack.AddOns.BigWigs_Voice;
+using WoWVoxPack.AddOns.ExBoss;
 using WoWVoxPack.AddOns.SharedMedia_Abilities;
 using WoWVoxPack.Builder;
 using WoWVoxPack.TTS;
@@ -23,6 +24,7 @@ IHostBuilder hostBuilder = Host.CreateDefaultBuilder(args)
         services.TryAddEnumerable(ServiceDescriptor.Singleton<IAddOnService, BigWigsVoiceAddOnService>());
         services.TryAddEnumerable(ServiceDescriptor.Singleton<IAddOnService, BigWigsCountdownAddOnService>());
         services.TryAddEnumerable(ServiceDescriptor.Singleton<IAddOnService, SharedMediaAbilitiesAddOnService>());
+        services.TryAddEnumerable(ServiceDescriptor.Singleton<IAddOnService, ExBossAddOnService>());
         services.AddOptionsWithValidateOnStart<BuildMatrix>().BindConfiguration("Matrix");
         services.AddOptionsWithValidateOnStart<AddOnSettings>("BigWigs_Voice").BindConfiguration("AddOn:BigWigs_Voice")
             .BindConfiguration("AddOn");
@@ -31,6 +33,9 @@ IHostBuilder hostBuilder = Host.CreateDefaultBuilder(args)
             .BindConfiguration("AddOn");
         services.AddOptionsWithValidateOnStart<AddOnSettings>("SharedMedia_Abilities")
             .BindConfiguration("AddOn:SharedMedia_Abilities")
+            .BindConfiguration("AddOn");
+        services.AddOptionsWithValidateOnStart<AddOnSettings>("ExBoss")
+            .BindConfiguration("AddOn:ExBoss")
             .BindConfiguration("AddOn");
         services.AddHostedService<Worker>();
     }).ConfigureLogging((_, logging) =>

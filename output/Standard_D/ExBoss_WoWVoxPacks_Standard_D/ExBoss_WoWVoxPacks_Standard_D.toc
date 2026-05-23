@@ -1,0 +1,10 @@
+## Interface: 120005, 120007
+
+## Title: ExBoss WoWVoxPacks |cffff7f3f+|r|cffffffffAbilities: WoWVoxPacks (Standard_D)|r
+## Version: 12.0.5
+## Notes: A voice pack for ExBoss.
+## Author: KogasaPls
+
+## X-License: Apache-2.0
+
+Core.lua

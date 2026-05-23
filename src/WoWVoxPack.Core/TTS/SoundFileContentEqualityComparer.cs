@@ -21,7 +21,7 @@ public class SoundFileContentEqualityComparer : IEqualityComparer<SoundFile>
             return false;
         }
 
-        return x.Text == y.Text && x.Ssml == y.Ssml && x.FileName == y.FileName;
+        return x.Text == y.Text && x.Ssml == y.Ssml && x.FileName == y.FileName && x.DisplayName == y.DisplayName;
     }
 
     public int GetHashCode(SoundFile obj)

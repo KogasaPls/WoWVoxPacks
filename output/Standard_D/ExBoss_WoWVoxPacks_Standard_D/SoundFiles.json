@@ -1,0 +1,1112 @@
+[
+  {
+    "FileName": "5-4-3-2-1.ogg",
+    "DisplayName": "54321",
+    "FormattedDisplayName": "54321",
+    "Text": "5 4 3 2 1"
+  },
+  {
+    "FileName": "absorb.ogg",
+    "DisplayName": "\u5438\u6536\u76FE",
+    "FormattedDisplayName": "\u5438\u6536\u76FE",
+    "Text": "Absorb"
+  },
+  {
+    "FileName": "add.ogg",
+    "DisplayName": "\u6CE8\u610F\u5927\u602A",
+    "FormattedDisplayName": "\u6CE8\u610F\u5927\u602A",
+    "Text": "Add"
+  },
+  {
+    "FileName": "adds.ogg",
+    "DisplayName": "\u8F6C\u706B\u5C0F\u602A",
+    "FormattedDisplayName": "\u8F6C\u706B\u5C0F\u602A",
+    "Text": "ADDS"
+  },
+  {
+    "FileName": "adds.ogg",
+    "DisplayName": "\u53BB\u63A5\u5C0F\u602A",
+    "FormattedDisplayName": "\u53BB\u63A5\u5C0F\u602A",
+    "Text": "Adds"
+  },
+  {
+    "FileName": "adds.ogg",
+    "DisplayName": "\u8F6C\u706B\u5927\u602A",
+    "FormattedDisplayName": "\u8F6C\u706B\u5927\u602A",
+    "Text": "Adds"
+  },
+  {
+    "FileName": "adds.ogg",
+    "DisplayName": "\u53EC\u5524\u5C0F\u602A",
+    "FormattedDisplayName": "\u53EC\u5524\u5C0F\u602A",
+    "Text": "Adds"
+  },
+  {
+    "FileName": "adds.ogg",
+    "DisplayName": "\u5524\u9192\u5C0F\u602A",
+    "FormattedDisplayName": "\u5524\u9192\u5C0F\u602A",
+    "Text": "Adds"
+  },
+  {
+    "FileName": "adds.ogg",
+    "DisplayName": "\u5C0F\u602A\u5FEB\u6253",
+    "FormattedDisplayName": "\u5C0F\u602A\u5FEB\u6253",
+    "Text": "Adds"
+  },
+  {
+    "FileName": "amp-soon.ogg",
+    "DisplayName": "\u51C6\u5907\u6613\u4F24",
+    "FormattedDisplayName": "\u51C6\u5907\u6613\u4F24",
+    "Text": "Amp Soon"
+  },
+  {
+    "FileName": "amp.ogg",
+    "DisplayName": "\u6613\u4F24",
+    "FormattedDisplayName": "\u6613\u4F24",
+    "Text": "Amp"
+  },
+  {
+    "FileName": "Amp.ogg",
+    "DisplayName": "Boss\u6613\u4F24",
+    "FormattedDisplayName": "Boss\u6613\u4F24",
+    "Text": "Amp"
+  },
+  {
+    "FileName": "aoe-5.ogg",
+    "DisplayName": "5\u79D2\u540EAOE",
+    "FormattedDisplayName": "5\u79D2\u540EAOE",
+    "SSML": "\u003Cspeak\u003E\n  \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022\u02CCe\u026A.jo\u028A\u02C8wi\u0022\u003EAOE=\u02CCe\u026A.jo\u028A\u02C8wi \u003C/phoneme\u003E5\u003C/speak\u003E"
+  },
+  {
+    "FileName": "aoe-break.ogg",
+    "DisplayName": "\u51C6\u5907AOE(\u65AD\u6761)",
+    "FormattedDisplayName": "\u51C6\u5907AOE(\u65AD\u6761)",
+    "SSML": "\u003Cspeak\u003E\n  \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022\u02CCe\u026A.jo\u028A\u02C8wi\u0022\u003EAOE=\u02CCe\u026A.jo\u028A\u02C8wi \u003C/phoneme\u003EBreak\u003C/speak\u003E"
+  },
+  {
+    "FileName": "aoe-cont.ogg",
+    "DisplayName": "\u6301\u7EEDAOE",
+    "FormattedDisplayName": "\u6301\u7EEDAOE",
+    "SSML": "\u003Cspeak\u003E\n  \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022\u02CCe\u026A.jo\u028A\u02C8wi\u0022\u003EAOE=\u02CCe\u026A.jo\u028A\u02C8wi \u003C/phoneme\u003ECont\u003C/speak\u003E"
+  },
+  {
+    "FileName": "aoe-inc.ogg",
+    "DisplayName": "\u51C6\u5907AOE",
+    "FormattedDisplayName": "\u51C6\u5907AOE",
+    "SSML": "\u003Cspeak\u003E\n  \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022\u02CCe\u026A.jo\u028A\u02C8wi\u0022\u003EAOE=\u02CCe\u026A.jo\u028A\u02C8wi\u003C/phoneme\u003E\n\u003C/speak\u003E"
+  },
+  {
+    "FileName": "aoe.ogg",
+    "DisplayName": "AOE",
+    "FormattedDisplayName": "AOE",
+    "SSML": "\u003Cspeak\u003E\n  \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022\u02CCe\u026A.jo\u028A\u02C8wi\u0022\u003EAOE=\u02CCe\u026A.jo\u028A\u02C8wi\u003C/phoneme\u003E\n\u003C/speak\u003E"
+  },
+  {
+    "FileName": "arrow.ogg",
+    "DisplayName": "\u51C6\u5907\u8E29\u7BAD",
+    "FormattedDisplayName": "\u51C6\u5907\u8E29\u7BAD",
+    "Text": "Arrow"
+  },
+  {
+    "FileName": "arrow.ogg",
+    "DisplayName": "\u6CE8\u610F\u7BAD\u77E2",
+    "FormattedDisplayName": "\u6CE8\u610F\u7BAD\u77E2",
+    "Text": "Arrow"
+  },
+  {
+    "FileName": "away.ogg",
+    "DisplayName": "\u8FDC\u79BBBOSS",
+    "FormattedDisplayName": "\u8FDC\u79BBBOSS",
+    "Text": "Away"
+  },
+  {
+    "FileName": "away.ogg",
+    "DisplayName": "\u8FDC\u79BB\u5927\u602A",
+    "FormattedDisplayName": "\u8FDC\u79BB\u5927\u602A",
+    "Text": "Away"
+  },
+  {
+    "FileName": "away.ogg",
+    "DisplayName": "\u8FDC\u79BB\u4EBA\u7FA4",
+    "FormattedDisplayName": "\u8FDC\u79BB\u4EBA\u7FA4",
+    "Text": "Away"
+  },
+  {
+    "FileName": "away.ogg",
+    "DisplayName": "\u8FDC\u79BB",
+    "FormattedDisplayName": "\u8FDC\u79BB",
+    "Text": "Away"
+  },
+  {
+    "FileName": "bait.ogg",
+    "DisplayName": "\u51C6\u5907\u5F15\u7EBF",
+    "FormattedDisplayName": "\u51C6\u5907\u5F15\u7EBF",
+    "Text": "Bait"
+  },
+  {
+    "FileName": "bait.ogg",
+    "DisplayName": "\u5F15\u5BFC\u4F4D\u7F6E",
+    "FormattedDisplayName": "\u5F15\u5BFC\u4F4D\u7F6E",
+    "Text": "Bait"
+  },
+  {
+    "FileName": "beam.ogg",
+    "DisplayName": "\u5C04\u7EBF\u70B9\u4F60",
+    "FormattedDisplayName": "\u5C04\u7EBF\u70B9\u4F60",
+    "Text": "Beam"
+  },
+  {
+    "FileName": "beam.ogg",
+    "DisplayName": "\u8EB2\u5C04\u7EBF",
+    "FormattedDisplayName": "\u8EB2\u5C04\u7EBF",
+    "Text": "Beam"
+  },
+  {
+    "FileName": "beam.ogg",
+    "DisplayName": "\u6CE8\u610F\u5C04\u7EBF",
+    "FormattedDisplayName": "\u6CE8\u610F\u5C04\u7EBF",
+    "Text": "Beam"
+  },
+  {
+    "FileName": "big-adds.ogg",
+    "DisplayName": "\u53EC\u5524\u5927\u602A",
+    "FormattedDisplayName": "\u53EC\u5524\u5927\u602A",
+    "Text": "Big Adds"
+  },
+  {
+    "FileName": "black.ogg",
+    "DisplayName": "\u4F60\u662F\u9ED1\u8272",
+    "FormattedDisplayName": "\u4F60\u662F\u9ED1\u8272",
+    "Text": "BLACK"
+  },
+  {
+    "FileName": "black.ogg",
+    "DisplayName": "\u9ED1\u8272",
+    "FormattedDisplayName": "\u9ED1\u8272",
+    "Text": "Black"
+  },
+  {
+    "FileName": "blue.ogg",
+    "DisplayName": "\u84DD\u8272",
+    "FormattedDisplayName": "\u84DD\u8272",
+    "Text": "Blue"
+  },
+  {
+    "FileName": "bomb.ogg",
+    "DisplayName": "\u5C0F\u5FC3\u70B8\u5F39",
+    "FormattedDisplayName": "\u5C0F\u5FC3\u70B8\u5F39",
+    "Text": "Bomb"
+  },
+  {
+    "FileName": "bomb.ogg",
+    "DisplayName": "\u70B8\u5F39",
+    "FormattedDisplayName": "\u70B8\u5F39",
+    "Text": "Bomb"
+  },
+  {
+    "FileName": "break.ogg",
+    "DisplayName": "\u5FEB\u7834\u76FE",
+    "FormattedDisplayName": "\u5FEB\u7834\u76FE",
+    "Text": "Break"
+  },
+  {
+    "FileName": "break.ogg",
+    "DisplayName": "\u62C9\u65AD\u8FDE\u7EBF",
+    "FormattedDisplayName": "\u62C9\u65AD\u8FDE\u7EBF",
+    "Text": "Break"
+  },
+  {
+    "FileName": "break.ogg",
+    "DisplayName": "\u6253\u7834",
+    "FormattedDisplayName": "\u6253\u7834",
+    "Text": "Break"
+  },
+  {
+    "FileName": "breath.ogg",
+    "DisplayName": "\u6CE8\u610F\u5410\u606F",
+    "FormattedDisplayName": "\u6CE8\u610F\u5410\u606F",
+    "Text": "Breath"
+  },
+  {
+    "FileName": "breath.ogg",
+    "DisplayName": "\u5410\u606F",
+    "FormattedDisplayName": "\u5410\u606F",
+    "Text": "Breath"
+  },
+  {
+    "FileName": "buff.ogg",
+    "DisplayName": "\u83B7\u5F97\u589E\u76CA",
+    "FormattedDisplayName": "\u83B7\u5F97\u589E\u76CA",
+    "Text": "Buff"
+  },
+  {
+    "FileName": "cc.ogg",
+    "DisplayName": "\u63A7\u65AD\u94A2\u6761",
+    "FormattedDisplayName": "\u63A7\u65AD\u94A2\u6761",
+    "Text": "C C"
+  },
+  {
+    "FileName": "cc.ogg",
+    "DisplayName": "\u63A7\u5236\u5C0F\u602A",
+    "FormattedDisplayName": "\u63A7\u5236\u5C0F\u602A",
+    "Text": "CC"
+  },
+  {
+    "FileName": "cc.ogg",
+    "DisplayName": "\u6CE8\u610F\u63A7\u65AD",
+    "FormattedDisplayName": "\u6CE8\u610F\u63A7\u65AD",
+    "Text": "C C"
+  },
+  {
+    "FileName": "chain.ogg",
+    "DisplayName": "\u9501\u94FE",
+    "FormattedDisplayName": "\u9501\u94FE",
+    "Text": "Chain"
+  },
+  {
+    "FileName": "charge.ogg",
+    "DisplayName": "\u8EB2\u5F00\u51B2\u950B",
+    "FormattedDisplayName": "\u8EB2\u5F00\u51B2\u950B",
+    "Text": "Charge"
+  },
+  {
+    "FileName": "charge.ogg",
+    "DisplayName": "\u51B2\u950B",
+    "FormattedDisplayName": "\u51B2\u950B",
+    "Text": "Charge"
+  },
+  {
+    "FileName": "circle.ogg",
+    "DisplayName": "\u8EB2\u5708",
+    "FormattedDisplayName": "\u8EB2\u5708",
+    "Text": "Circle"
+  },
+  {
+    "FileName": "clear.ogg",
+    "DisplayName": "\u51C6\u5907\u6D88\u5C42",
+    "FormattedDisplayName": "\u51C6\u5907\u6D88\u5C42",
+    "Text": "Clear"
+  },
+  {
+    "FileName": "clear.ogg",
+    "DisplayName": "\u5FEB\u53BB\u6D88\u6C34",
+    "FormattedDisplayName": "\u5FEB\u53BB\u6D88\u6C34",
+    "Text": "Clear"
+  },
+  {
+    "FileName": "clear.ogg",
+    "DisplayName": "\u5FEB\u627E\u5149\u67F1",
+    "FormattedDisplayName": "\u5FEB\u627E\u5149\u67F1",
+    "Text": "Clear"
+  },
+  {
+    "FileName": "clear.ogg",
+    "DisplayName": "\u6CE8\u610F\u6D88\u7403",
+    "FormattedDisplayName": "\u6CE8\u610F\u6D88\u7403",
+    "Text": "Clear"
+  },
+  {
+    "FileName": "clear.ogg",
+    "DisplayName": "\u70B9\u540D\u6D88\u7EBF",
+    "FormattedDisplayName": "\u70B9\u540D\u6D88\u7EBF",
+    "Text": "Clear"
+  },
+  {
+    "FileName": "clear.ogg",
+    "DisplayName": "\u6D88\u9664\u8FDE\u7EBF",
+    "FormattedDisplayName": "\u6D88\u9664\u8FDE\u7EBF",
+    "Text": "Clear"
+  },
+  {
+    "FileName": "clear.ogg",
+    "DisplayName": "\u6E05\u9664",
+    "FormattedDisplayName": "\u6E05\u9664",
+    "Text": "Clear"
+  },
+  {
+    "FileName": "clone.ogg",
+    "DisplayName": "\u53BB\u649E\u5206\u8EAB",
+    "FormattedDisplayName": "\u53BB\u649E\u5206\u8EAB",
+    "Text": "Clone"
+  },
+  {
+    "FileName": "clone.ogg",
+    "DisplayName": "\u5206\u8EAB",
+    "FormattedDisplayName": "\u5206\u8EAB",
+    "Text": "Clone"
+  },
+  {
+    "FileName": "curse.ogg",
+    "DisplayName": "\u8BC5\u5492",
+    "FormattedDisplayName": "\u8BC5\u5492",
+    "Text": "Curse"
+  },
+  {
+    "FileName": "dance.ogg",
+    "DisplayName": "\u51C6\u5907\u8DD1\u5708",
+    "FormattedDisplayName": "\u51C6\u5907\u8DD1\u5708",
+    "Text": "Dance"
+  },
+  {
+    "FileName": "dance.ogg",
+    "DisplayName": "\u8EB2\u5730\u677F",
+    "FormattedDisplayName": "\u8EB2\u5730\u677F",
+    "Text": "Dance"
+  },
+  {
+    "FileName": "defensive.ogg",
+    "DisplayName": "\u6CE8\u610F\u51CF\u4F24",
+    "FormattedDisplayName": "\u6CE8\u610F\u51CF\u4F24",
+    "Text": "Defensive"
+  },
+  {
+    "FileName": "ding.ogg",
+    "DisplayName": "\u97F3\u6548_\u53EE\u549A",
+    "FormattedDisplayName": "\u97F3\u6548_\u53EE\u549A",
+    "Text": "Ding"
+  },
+  {
+    "FileName": "disease.ogg",
+    "DisplayName": "\u75BE\u75C5",
+    "FormattedDisplayName": "\u75BE\u75C5",
+    "Text": "Disease"
+  },
+  {
+    "FileName": "dispel.ogg",
+    "DisplayName": "\u51C6\u5907\u9A71\u6563",
+    "FormattedDisplayName": "\u51C6\u5907\u9A71\u6563",
+    "Text": "Dispel"
+  },
+  {
+    "FileName": "dispel.ogg",
+    "DisplayName": "\u9A71\u6563",
+    "FormattedDisplayName": "\u9A71\u6563",
+    "Text": "Dispel"
+  },
+  {
+    "FileName": "dodge.ogg",
+    "DisplayName": "\u6CE8\u610F\u8EB2\u907F",
+    "FormattedDisplayName": "\u6CE8\u610F\u8EB2\u907F",
+    "Text": "DODGE"
+  },
+  {
+    "FileName": "dodge.ogg",
+    "DisplayName": "\u5C0F\u5FC3\u51B2\u51FB\u6CE2",
+    "FormattedDisplayName": "\u5C0F\u5FC3\u51B2\u51FB\u6CE2",
+    "Text": "Dodge"
+  },
+  {
+    "FileName": "dodge.ogg",
+    "DisplayName": "\u6CE8\u610F\u8EB2\u5708",
+    "FormattedDisplayName": "\u6CE8\u610F\u8EB2\u5708",
+    "Text": "Dodge"
+  },
+  {
+    "FileName": "dodge.ogg",
+    "DisplayName": "\u6CE8\u610F\u51FB\u98DE",
+    "FormattedDisplayName": "\u6CE8\u610F\u51FB\u98DE",
+    "Text": "Dodge"
+  },
+  {
+    "FileName": "dodge.ogg",
+    "DisplayName": "\u8FDE\u7EED\u8EB2\u5708",
+    "FormattedDisplayName": "\u8FDE\u7EED\u8EB2\u5708",
+    "Text": "Dodge"
+  },
+  {
+    "FileName": "dodge.ogg",
+    "DisplayName": "\u5FEB\u8EB2\u5F00",
+    "FormattedDisplayName": "\u5FEB\u8EB2\u5F00",
+    "Text": "Dodge"
+  },
+  {
+    "FileName": "dot.ogg",
+    "DisplayName": "\u6301\u7EED\u4F24\u5BB3",
+    "FormattedDisplayName": "\u6301\u7EED\u4F24\u5BB3",
+    "Text": "Dot"
+  },
+  {
+    "FileName": "drop-edge.ogg",
+    "DisplayName": "\u8D34\u8FB9\u653E\u6C34",
+    "FormattedDisplayName": "\u8D34\u8FB9\u653E\u6C34",
+    "Text": "Drop Edge"
+  },
+  {
+    "FileName": "drop.ogg",
+    "DisplayName": "\u70B9\u540D\u653E\u6C34",
+    "FormattedDisplayName": "\u70B9\u540D\u653E\u6C34",
+    "Text": "Drop"
+  },
+  {
+    "FileName": "drop.ogg",
+    "DisplayName": "\u51FA\u53BB\u653E\u6C34",
+    "FormattedDisplayName": "\u51FA\u53BB\u653E\u6C34",
+    "Text": "Drop"
+  },
+  {
+    "FileName": "drop.ogg",
+    "DisplayName": "\u653E\u6C34",
+    "FormattedDisplayName": "\u653E\u6C34",
+    "Text": "Drop"
+  },
+  {
+    "FileName": "empower-hpal.ogg",
+    "DisplayName": "\u5F3A\u5316\u5976\u9A91",
+    "FormattedDisplayName": "\u5F3A\u5316\u5976\u9A91",
+    "Text": "Empower Hpal"
+  },
+  {
+    "FileName": "empower-prot.ogg",
+    "DisplayName": "\u5F3A\u5316\u9632\u9A91",
+    "FormattedDisplayName": "\u5F3A\u5316\u9632\u9A91",
+    "Text": "Empower Prot"
+  },
+  {
+    "FileName": "empower-ret.ogg",
+    "DisplayName": "\u5F3A\u5316\u60E9\u6212\u9A91",
+    "FormattedDisplayName": "\u5F3A\u5316\u60E9\u6212\u9A91",
+    "Text": "Empower Ret"
+  },
+  {
+    "FileName": "enrage.ogg",
+    "DisplayName": "Boss\u72C2\u66B4",
+    "FormattedDisplayName": "Boss\u72C2\u66B4",
+    "Text": "Enrage"
+  },
+  {
+    "FileName": "enrage.ogg",
+    "DisplayName": "\u6FC0\u6012",
+    "FormattedDisplayName": "\u6FC0\u6012",
+    "Text": "Enrage"
+  },
+  {
+    "FileName": "explosion.ogg",
+    "DisplayName": "\u5C0F\u5FC3\u81EA\u7206",
+    "FormattedDisplayName": "\u5C0F\u5FC3\u81EA\u7206",
+    "Text": "Explosion"
+  },
+  {
+    "FileName": "five.ogg",
+    "DisplayName": "5",
+    "FormattedDisplayName": "5",
+    "Text": "Five"
+  },
+  {
+    "FileName": "fixate.ogg",
+    "DisplayName": "\u8FFD\u4EBA",
+    "FormattedDisplayName": "\u8FFD\u4EBA",
+    "Text": "Fixate"
+  },
+  {
+    "FileName": "fixated.ogg",
+    "DisplayName": "\u51C6\u5907\u8FFD\u4EBA",
+    "FormattedDisplayName": "\u51C6\u5907\u8FFD\u4EBA",
+    "Text": "Fixated"
+  },
+  {
+    "FileName": "four.ogg",
+    "DisplayName": "4",
+    "FormattedDisplayName": "4",
+    "Text": "Four"
+  },
+  {
+    "FileName": "frontal.ogg",
+    "DisplayName": "\u6CE8\u610F\u5934\u524D",
+    "FormattedDisplayName": "\u6CE8\u610F\u5934\u524D",
+    "Text": "FRONTAL"
+  },
+  {
+    "FileName": "frontal.ogg",
+    "DisplayName": "\u70B9\u540D\u5934\u524D",
+    "FormattedDisplayName": "\u70B9\u540D\u5934\u524D",
+    "Text": "Frontal"
+  },
+  {
+    "FileName": "frontal.ogg",
+    "DisplayName": "\u8EB2\u5F00\u5934\u524D",
+    "FormattedDisplayName": "\u8EB2\u5F00\u5934\u524D",
+    "Text": "Frontal"
+  },
+  {
+    "FileName": "glass.ogg",
+    "DisplayName": "\u97F3\u6548_Glass",
+    "FormattedDisplayName": "\u97F3\u6548_Glass",
+    "Text": "Glass"
+  },
+  {
+    "FileName": "grab.ogg",
+    "DisplayName": "\u51C6\u5907\u6293\u4EBA",
+    "FormattedDisplayName": "\u51C6\u5907\u6293\u4EBA",
+    "Text": "Grab"
+  },
+  {
+    "FileName": "grasp.ogg",
+    "DisplayName": "\u6293\u63E1",
+    "FormattedDisplayName": "\u6293\u63E1",
+    "Text": "Grasp"
+  },
+  {
+    "FileName": "heal-absorb.ogg",
+    "DisplayName": "\u5438\u6536\u6CBB\u7597",
+    "FormattedDisplayName": "\u5438\u6536\u6CBB\u7597",
+    "Text": "Heal Absorb"
+  },
+  {
+    "FileName": "heal.ogg",
+    "DisplayName": "\u6CE8\u610F\u6CBB\u7597",
+    "FormattedDisplayName": "\u6CE8\u610F\u6CBB\u7597",
+    "Text": "Heal"
+  },
+  {
+    "FileName": "hit-back.ogg",
+    "DisplayName": "\u6253\u80CC\u9762",
+    "FormattedDisplayName": "\u6253\u80CC\u9762",
+    "Text": "Hit Back"
+  },
+  {
+    "FileName": "hook.ogg",
+    "DisplayName": "\u51C6\u5907\u94A9\u4EBA",
+    "FormattedDisplayName": "\u51C6\u5907\u94A9\u4EBA",
+    "Text": "Hook"
+  },
+  {
+    "FileName": "hook.ogg",
+    "DisplayName": "\u52FEBOSS",
+    "FormattedDisplayName": "\u52FEBOSS",
+    "Text": "Hook"
+  },
+  {
+    "FileName": "hook.ogg",
+    "DisplayName": "\u6CE8\u610F\u94A9\u4EBA",
+    "FormattedDisplayName": "\u6CE8\u610F\u94A9\u4EBA",
+    "Text": "Hook"
+  },
+  {
+    "FileName": "in.ogg",
+    "DisplayName": "\u51C6\u5907\u8FDB\u5708",
+    "FormattedDisplayName": "\u51C6\u5907\u8FDB\u5708",
+    "Text": "In"
+  },
+  {
+    "FileName": "in.ogg",
+    "DisplayName": "\u5FEB\u8FDB\u7F69\u5B50",
+    "FormattedDisplayName": "\u5FEB\u8FDB\u7F69\u5B50",
+    "Text": "In"
+  },
+  {
+    "FileName": "in.ogg",
+    "DisplayName": "\u9760\u8FD1BOSS",
+    "FormattedDisplayName": "\u9760\u8FD1BOSS",
+    "Text": "In"
+  },
+  {
+    "FileName": "in.ogg",
+    "DisplayName": "\u8FDB\u5165",
+    "FormattedDisplayName": "\u8FDB\u5165",
+    "Text": "In"
+  },
+  {
+    "FileName": "info.ogg",
+    "DisplayName": "\u97F3\u6548_Info",
+    "FormattedDisplayName": "\u97F3\u6548_Info",
+    "Text": "Info"
+  },
+  {
+    "FileName": "intermission.ogg",
+    "DisplayName": "\u8F6C\u9636\u6BB5",
+    "FormattedDisplayName": "\u8F6C\u9636\u6BB5",
+    "Text": "Intermission"
+  },
+  {
+    "FileName": "intermission.ogg",
+    "DisplayName": "\u9636\u6BB5\u8F6C\u6362",
+    "FormattedDisplayName": "\u9636\u6BB5\u8F6C\u6362",
+    "Text": "Intermission"
+  },
+  {
+    "FileName": "interrupt.ogg",
+    "DisplayName": "\u51C6\u5907\u6253\u65AD",
+    "FormattedDisplayName": "\u51C6\u5907\u6253\u65AD",
+    "Text": "Interrupt"
+  },
+  {
+    "FileName": "interrupt.ogg",
+    "DisplayName": "\u6253\u65AD\u65BD\u6CD5",
+    "FormattedDisplayName": "\u6253\u65AD\u65BD\u6CD5",
+    "Text": "Interrupt"
+  },
+  {
+    "FileName": "kick.ogg",
+    "DisplayName": "\u5FEB\u6253\u65AD",
+    "FormattedDisplayName": "\u5FEB\u6253\u65AD",
+    "Text": "Kick"
+  },
+  {
+    "FileName": "kite.ogg",
+    "DisplayName": "\u98CE\u7B5D\u5C0F\u602A",
+    "FormattedDisplayName": "\u98CE\u7B5D\u5C0F\u602A",
+    "Text": "Kite"
+  },
+  {
+    "FileName": "kite.ogg",
+    "DisplayName": "\u98CE\u7B5D",
+    "FormattedDisplayName": "\u98CE\u7B5D",
+    "Text": "Kite"
+  },
+  {
+    "FileName": "knock.ogg",
+    "DisplayName": "\u6CE8\u610F\u51FB\u9000",
+    "FormattedDisplayName": "\u6CE8\u610F\u51FB\u9000",
+    "Text": "Knock"
+  },
+  {
+    "FileName": "knock.ogg",
+    "DisplayName": "\u5C0F\u5FC3\u51FB\u98DE",
+    "FormattedDisplayName": "\u5C0F\u5FC3\u51FB\u98DE",
+    "Text": "Knock"
+  },
+  {
+    "FileName": "knock.ogg",
+    "DisplayName": "\u51FB\u98DE",
+    "FormattedDisplayName": "\u51FB\u98DE",
+    "Text": "Knock"
+  },
+  {
+    "FileName": "leap.ogg",
+    "DisplayName": "\u8DF3\u8DC3",
+    "FormattedDisplayName": "\u8DF3\u8DC3",
+    "Text": "Leap"
+  },
+  {
+    "FileName": "lightning-soak.ogg",
+    "DisplayName": "\u5708\u4F4F\u7535\u6C34",
+    "FormattedDisplayName": "\u5708\u4F4F\u7535\u6C34",
+    "Text": "Lightning Soak"
+  },
+  {
+    "FileName": "line.ogg",
+    "DisplayName": "\u51C6\u5907\u6321\u7EBF",
+    "FormattedDisplayName": "\u51C6\u5907\u6321\u7EBF",
+    "Text": "Line"
+  },
+  {
+    "FileName": "line.ogg",
+    "DisplayName": "\u51C6\u5907\u8FDE\u7EBF",
+    "FormattedDisplayName": "\u51C6\u5907\u8FDE\u7EBF",
+    "Text": "Line"
+  },
+  {
+    "FileName": "line.ogg",
+    "DisplayName": "\u8FDE\u7EBF",
+    "FormattedDisplayName": "\u8FDE\u7EBF",
+    "Text": "Line"
+  },
+  {
+    "FileName": "link.ogg",
+    "DisplayName": "\u9760\u8FD1\u8FDE\u7EBF",
+    "FormattedDisplayName": "\u9760\u8FD1\u8FDE\u7EBF",
+    "Text": "Link"
+  },
+  {
+    "FileName": "link.ogg",
+    "DisplayName": "\u8FDE\u7EBF\u70B9\u4F60",
+    "FormattedDisplayName": "\u8FDE\u7EBF\u70B9\u4F60",
+    "Text": "Link"
+  },
+  {
+    "FileName": "los.ogg",
+    "DisplayName": "\u5FEB\u5361\u89C6\u89D2",
+    "FormattedDisplayName": "\u5FEB\u5361\u89C6\u89D2",
+    "Text": "L O S"
+  },
+  {
+    "FileName": "los.ogg",
+    "DisplayName": "\u5361\u89C6\u91CE",
+    "FormattedDisplayName": "\u5361\u89C6\u91CE",
+    "Text": "L O S"
+  },
+  {
+    "FileName": "mark.ogg",
+    "DisplayName": "\u51C6\u5907\u70B9\u540D",
+    "FormattedDisplayName": "\u51C6\u5907\u70B9\u540D",
+    "Text": "Mark"
+  },
+  {
+    "FileName": "mark.ogg",
+    "DisplayName": "\u6CE8\u610F\u70B9\u540D",
+    "FormattedDisplayName": "\u6CE8\u610F\u70B9\u540D",
+    "Text": "Mark"
+  },
+  {
+    "FileName": "mark.ogg",
+    "DisplayName": "\u70B9\u540D",
+    "FormattedDisplayName": "\u70B9\u540D",
+    "Text": "Mark"
+  },
+  {
+    "FileName": "marked.ogg",
+    "DisplayName": "\u4F60\u88AB\u70B9\u540D",
+    "FormattedDisplayName": "\u4F60\u88AB\u70B9\u540D",
+    "Text": "Marked"
+  },
+  {
+    "FileName": "massive-aoe.ogg",
+    "DisplayName": "\u8D85\u5927AOE",
+    "FormattedDisplayName": "\u8D85\u5927AOE",
+    "SSML": "\u003Cspeak\u003EMassive \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022\u02CCe\u026A.jo\u028A\u02C8wi\u0022\u003EAOE=\u02CCe\u026A.jo\u028A\u02C8wi\u003C/phoneme\u003E\u003C/speak\u003E"
+  },
+  {
+    "FileName": "mirror.ogg",
+    "DisplayName": "\u53EC\u5524\u5206\u8EAB",
+    "FormattedDisplayName": "\u53EC\u5524\u5206\u8EAB",
+    "Text": "Mirror"
+  },
+  {
+    "FileName": "move.ogg",
+    "DisplayName": "\u96C6\u5408\u79FB\u52A8",
+    "FormattedDisplayName": "\u96C6\u5408\u79FB\u52A8",
+    "Text": "Move"
+  },
+  {
+    "FileName": "move.ogg",
+    "DisplayName": "\u79FB\u52A8",
+    "FormattedDisplayName": "\u79FB\u52A8",
+    "Text": "Move"
+  },
+  {
+    "FileName": "near.ogg",
+    "DisplayName": "\u9760\u8FD1",
+    "FormattedDisplayName": "\u9760\u8FD1",
+    "Text": "Near"
+  },
+  {
+    "FileName": "note.ogg",
+    "DisplayName": "\u7784\u51C6\u97F3\u7B26",
+    "FormattedDisplayName": "\u7784\u51C6\u97F3\u7B26",
+    "Text": "Note"
+  },
+  {
+    "FileName": "one.ogg",
+    "DisplayName": "1",
+    "FormattedDisplayName": "1",
+    "Text": "One"
+  },
+  {
+    "FileName": "orb.ogg",
+    "DisplayName": "\u6CE8\u610F\u6321\u7403",
+    "FormattedDisplayName": "\u6CE8\u610F\u6321\u7403",
+    "Text": "Orb"
+  },
+  {
+    "FileName": "orb.ogg",
+    "DisplayName": "\u51C6\u5907\u5438\u7403",
+    "FormattedDisplayName": "\u51C6\u5907\u5438\u7403",
+    "Text": "Orb"
+  },
+  {
+    "FileName": "orb.ogg",
+    "DisplayName": "\u8EB2\u7403",
+    "FormattedDisplayName": "\u8EB2\u7403",
+    "Text": "Orb"
+  },
+  {
+    "FileName": "orb.ogg",
+    "DisplayName": "\u5FEB\u6253\u5B9D\u73E0",
+    "FormattedDisplayName": "\u5FEB\u6253\u5B9D\u73E0",
+    "Text": "Orb"
+  },
+  {
+    "FileName": "orb.ogg",
+    "DisplayName": "\u5B9D\u73E0",
+    "FormattedDisplayName": "\u5B9D\u73E0",
+    "Text": "Orb"
+  },
+  {
+    "FileName": "out.ogg",
+    "DisplayName": "\u51FA\u51FA\u51FA",
+    "FormattedDisplayName": "\u51FA\u51FA\u51FA",
+    "Text": "Out"
+  },
+  {
+    "FileName": "pass.ogg",
+    "DisplayName": "\u51C6\u5907\u9001\u7403",
+    "FormattedDisplayName": "\u51C6\u5907\u9001\u7403",
+    "Text": "Pass"
+  },
+  {
+    "FileName": "pass.ogg",
+    "DisplayName": "\u4F20\u9012",
+    "FormattedDisplayName": "\u4F20\u9012",
+    "Text": "Pass"
+  },
+  {
+    "FileName": "pull.ogg",
+    "DisplayName": "\u51C6\u5907\u62C9\u4EBA",
+    "FormattedDisplayName": "\u51C6\u5907\u62C9\u4EBA",
+    "Text": "Pull"
+  },
+  {
+    "FileName": "refresh.ogg",
+    "DisplayName": "\u5237\u65B0",
+    "FormattedDisplayName": "\u5237\u65B0",
+    "Text": "Refresh"
+  },
+  {
+    "FileName": "rift.ogg",
+    "DisplayName": "\u88C2\u9699\u70B9\u4F60",
+    "FormattedDisplayName": "\u88C2\u9699\u70B9\u4F60",
+    "Text": "Rift"
+  },
+  {
+    "FileName": "ring.ogg",
+    "DisplayName": "\u6CE8\u610F\u5927\u5708",
+    "FormattedDisplayName": "\u6CE8\u610F\u5927\u5708",
+    "Text": "Ring"
+  },
+  {
+    "FileName": "root.ogg",
+    "DisplayName": "\u5B9A\u8EAB",
+    "FormattedDisplayName": "\u5B9A\u8EAB",
+    "Text": "Root"
+  },
+  {
+    "FileName": "run.ogg",
+    "DisplayName": "\u5FEB\u8DD1",
+    "FormattedDisplayName": "\u5FEB\u8DD1",
+    "Text": "Run"
+  },
+  {
+    "FileName": "run.ogg",
+    "DisplayName": "\u5FEB\u8DD1\uFF01\u4F60\u88AB\u70B9\u540D",
+    "FormattedDisplayName": "\u5FEB\u8DD1\uFF01\u4F60\u88AB\u70B9\u540D",
+    "Text": "Run"
+  },
+  {
+    "FileName": "save.ogg",
+    "DisplayName": "\u5FEB\u6551\u4EBA",
+    "FormattedDisplayName": "\u5FEB\u6551\u4EBA",
+    "Text": "Save"
+  },
+  {
+    "FileName": "secure.ogg",
+    "DisplayName": "\u6551\u4EBA",
+    "FormattedDisplayName": "\u6551\u4EBA",
+    "Text": "Secure"
+  },
+  {
+    "FileName": "shield.ogg",
+    "DisplayName": "\u62A4\u76FE",
+    "FormattedDisplayName": "\u62A4\u76FE",
+    "Text": "Shield"
+  },
+  {
+    "FileName": "soak.ogg",
+    "DisplayName": "\u51C6\u5907\u63A5\u5708",
+    "FormattedDisplayName": "\u51C6\u5907\u63A5\u5708",
+    "Text": "Soak"
+  },
+  {
+    "FileName": "soak.ogg",
+    "DisplayName": "\u96C6\u5408\u5206\u644A",
+    "FormattedDisplayName": "\u96C6\u5408\u5206\u644A",
+    "Text": "Soak"
+  },
+  {
+    "FileName": "soak.ogg",
+    "DisplayName": "\u5438\u6536",
+    "FormattedDisplayName": "\u5438\u6536",
+    "Text": "Soak"
+  },
+  {
+    "FileName": "special.ogg",
+    "DisplayName": "\u7279\u6B8A\u6280\u80FD",
+    "FormattedDisplayName": "\u7279\u6B8A\u6280\u80FD",
+    "Text": "Special"
+  },
+  {
+    "FileName": "spellsteal.ogg",
+    "DisplayName": "\u8FDB\u653B\u9A71\u6563",
+    "FormattedDisplayName": "\u8FDB\u653B\u9A71\u6563",
+    "Text": "Spellsteal"
+  },
+  {
+    "FileName": "split.ogg",
+    "DisplayName": "\u5206\u88C2",
+    "FormattedDisplayName": "\u5206\u88C2",
+    "Text": "Split"
+  },
+  {
+    "FileName": "spread.ogg",
+    "DisplayName": "\u9760\u8FD1\u5206\u6563",
+    "FormattedDisplayName": "\u9760\u8FD1\u5206\u6563",
+    "Text": "Spread"
+  },
+  {
+    "FileName": "spread.ogg",
+    "DisplayName": "\u5FEB\u5206\u6563",
+    "FormattedDisplayName": "\u5FEB\u5206\u6563",
+    "Text": "Spread"
+  },
+  {
+    "FileName": "spread.ogg",
+    "DisplayName": "\u5206\u6563",
+    "FormattedDisplayName": "\u5206\u6563",
+    "Text": "Spread"
+  },
+  {
+    "FileName": "stack.ogg",
+    "DisplayName": "\u51C6\u5907\u96C6\u5408",
+    "FormattedDisplayName": "\u51C6\u5907\u96C6\u5408",
+    "Text": "Stack"
+  },
+  {
+    "FileName": "stack.ogg",
+    "DisplayName": "\u96C6\u5408\u653E\u5708",
+    "FormattedDisplayName": "\u96C6\u5408\u653E\u5708",
+    "Text": "Stack"
+  },
+  {
+    "FileName": "stack.ogg",
+    "DisplayName": "\u96C6\u5408\u7AD9\u4F4D",
+    "FormattedDisplayName": "\u96C6\u5408\u7AD9\u4F4D",
+    "Text": "Stack"
+  },
+  {
+    "FileName": "stop-cast.ogg",
+    "DisplayName": "\u505C\u6B62\u65BD\u6CD5",
+    "FormattedDisplayName": "\u505C\u6B62\u65BD\u6CD5",
+    "Text": "Stop Cast"
+  },
+  {
+    "FileName": "supply.ogg",
+    "DisplayName": "\u8865\u7ED9\u534F\u8BAE",
+    "FormattedDisplayName": "\u8865\u7ED9\u534F\u8BAE",
+    "Text": "Supply"
+  },
+  {
+    "FileName": "switch.ogg",
+    "DisplayName": "\u76EE\u6807\u8F6C\u6362",
+    "FormattedDisplayName": "\u76EE\u6807\u8F6C\u6362",
+    "Text": "Switch"
+  },
+  {
+    "FileName": "tank-hit.ogg",
+    "DisplayName": "\u5766\u514B\u5C16\u523A",
+    "FormattedDisplayName": "\u5766\u514B\u5C16\u523A",
+    "Text": "Tank Hit"
+  },
+  {
+    "FileName": "tank-hit.ogg",
+    "DisplayName": "\u5766\u514B\u627F\u4F24",
+    "FormattedDisplayName": "\u5766\u514B\u627F\u4F24",
+    "Text": "Tank Hit"
+  },
+  {
+    "FileName": "tank-knock.ogg",
+    "DisplayName": "\u5766\u514B\u51FB\u9000",
+    "FormattedDisplayName": "\u5766\u514B\u51FB\u9000",
+    "Text": "Tank Knock"
+  },
+  {
+    "FileName": "tank-knock.ogg",
+    "DisplayName": "\u5766\u514B\u51FB\u98DE",
+    "FormattedDisplayName": "\u5766\u514B\u51FB\u98DE",
+    "Text": "Tank Knock"
+  },
+  {
+    "FileName": "targeted.ogg",
+    "DisplayName": "\u76EE\u6807\u662F\u4F60",
+    "FormattedDisplayName": "\u76EE\u6807\u662F\u4F60",
+    "Text": "Targeted"
+  },
+  {
+    "FileName": "three.ogg",
+    "DisplayName": "3",
+    "FormattedDisplayName": "3",
+    "Text": "Three"
+  },
+  {
+    "FileName": "totem.ogg",
+    "DisplayName": "\u56FE\u817E",
+    "FormattedDisplayName": "\u56FE\u817E",
+    "Text": "Totem"
+  },
+  {
+    "FileName": "trap.ogg",
+    "DisplayName": "\u5FEB\u8E29\u9677\u9631",
+    "FormattedDisplayName": "\u5FEB\u8E29\u9677\u9631",
+    "Text": "Trap"
+  },
+  {
+    "FileName": "trap.ogg",
+    "DisplayName": "\u9677\u9631",
+    "FormattedDisplayName": "\u9677\u9631",
+    "Text": "Trap"
+  },
+  {
+    "FileName": "two.ogg",
+    "DisplayName": "2",
+    "FormattedDisplayName": "2",
+    "Text": "Two"
+  },
+  {
+    "FileName": "volley.ogg",
+    "DisplayName": "\u9F50\u5C04",
+    "FormattedDisplayName": "\u9F50\u5C04",
+    "Text": "Volley"
+  },
+  {
+    "FileName": "vuln-over.ogg",
+    "DisplayName": "\u6613\u4F24\u7ED3\u675F",
+    "FormattedDisplayName": "\u6613\u4F24\u7ED3\u675F",
+    "Text": "Vuln Over"
+  },
+  {
+    "FileName": "vulnerability.ogg",
+    "DisplayName": "\u6613\u4F24\u7206\u53D1",
+    "FormattedDisplayName": "\u6613\u4F24\u7206\u53D1",
+    "Text": "Vulnerability"
+  },
+  {
+    "FileName": "watch-step.ogg",
+    "DisplayName": "\u5C0F\u5FC3\u811A\u4E0B",
+    "FormattedDisplayName": "\u5C0F\u5FC3\u811A\u4E0B",
+    "Text": "Watch Step"
+  },
+  {
+    "FileName": "wave.ogg",
+    "DisplayName": "\u6CE8\u610F\u8EB2\u6CE2",
+    "FormattedDisplayName": "\u6CE8\u610F\u8EB2\u6CE2",
+    "Text": "Wave"
+  },
+  {
+    "FileName": "white.ogg",
+    "DisplayName": "\u4F60\u662F\u767D\u8272",
+    "FormattedDisplayName": "\u4F60\u662F\u767D\u8272",
+    "Text": "WHITE"
+  },
+  {
+    "FileName": "white.ogg",
+    "DisplayName": "\u767D\u8272",
+    "FormattedDisplayName": "\u767D\u8272",
+    "Text": "White"
+  },
+  {
+    "FileName": "wind.ogg",
+    "DisplayName": "\u6CE8\u610F\u8EB2\u98CE",
+    "FormattedDisplayName": "\u6CE8\u610F\u8EB2\u98CE",
+    "Text": "Wind"
+  },
+  {
+    "FileName": "wind.ogg",
+    "DisplayName": "\u8EB2\u98CE",
+    "FormattedDisplayName": "\u8EB2\u98CE",
+    "Text": "Wind"
+  },
+  {
+    "FileName": "yellow.ogg",
+    "DisplayName": "\u9EC4\u8272",
+    "FormattedDisplayName": "\u9EC4\u8272",
+    "Text": "Yellow"
+  }
+]

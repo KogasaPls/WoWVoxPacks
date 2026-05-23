@@ -5,6 +5,8 @@
 ## Notes: A voice pack for ExBoss.
 ## Author: KogasaPls
 
+## Dependencies: EXBoss
+## OptionalDeps: LibSharedMedia-3.0
 ## X-License: Apache-2.0
 
 Core.lua

@@ -243,5 +243,15 @@
     "FileName": "spread.ogg",
     "Text": "Spread",
     "DisplayName": "Spread"
+  },
+  {
+    "FileName": "litany.ogg",
+    "Text": "Litany",
+    "DisplayName": "Litany"
+  },
+  {
+    "FileName": "ramp.ogg",
+    "Text": "Ramp",
+    "DisplayName": "Ramp"
   }
 ]

@@ -10,7 +10,7 @@ public class SoundFile
     public SoundFile(string fileName, string? text = null, string? ssml = null, string? displayName = null,
         string? formattedDisplayName = null)
     {
-        FileName = Path.ChangeExtension(fileName, ".ogg");
+        FileName = Path.ChangeExtension(fileName, ".ogg").ToLowerInvariant();
         Text = text;
         Ssml = ssml;
         DisplayName = displayName ?? Path.ChangeExtension(fileName, null);

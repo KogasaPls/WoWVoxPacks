@@ -37,7 +37,7 @@ LSM:Register("sound", "[ExBoss WoWVoxPacks Standard_D]远离BOSS", path .. "away
 LSM:Register("sound", "[ExBoss WoWVoxPacks Standard_D]靠近分散", path .. "spread.ogg")
 LSM:Register("sound", "[ExBoss WoWVoxPacks Standard_D]风筝小怪", path .. "kite.ogg")
 LSM:Register("sound", "[ExBoss WoWVoxPacks Standard_D]Boss狂暴", path .. "enrage.ogg")
-LSM:Register("sound", "[ExBoss WoWVoxPacks Standard_D]Boss易伤", path .. "Amp.ogg")
+LSM:Register("sound", "[ExBoss WoWVoxPacks Standard_D]Boss易伤", path .. "amp.ogg")
 LSM:Register("sound", "[ExBoss WoWVoxPacks Standard_D]你是白色", path .. "white.ogg")
 LSM:Register("sound", "[ExBoss WoWVoxPacks Standard_D]你是黑色", path .. "black.ogg")
 LSM:Register("sound", "[ExBoss WoWVoxPacks Standard_D]准备AOE(断条)", path .. "aoe-break.ogg")

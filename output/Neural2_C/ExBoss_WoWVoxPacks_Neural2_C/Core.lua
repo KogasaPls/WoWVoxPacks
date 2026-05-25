@@ -37,7 +37,7 @@ LSM:Register("sound", "[ExBoss WoWVoxPacks Neural2_C]远离BOSS", path .. "away.
 LSM:Register("sound", "[ExBoss WoWVoxPacks Neural2_C]靠近分散", path .. "spread.ogg")
 LSM:Register("sound", "[ExBoss WoWVoxPacks Neural2_C]风筝小怪", path .. "kite.ogg")
 LSM:Register("sound", "[ExBoss WoWVoxPacks Neural2_C]Boss狂暴", path .. "enrage.ogg")
-LSM:Register("sound", "[ExBoss WoWVoxPacks Neural2_C]Boss易伤", path .. "Amp.ogg")
+LSM:Register("sound", "[ExBoss WoWVoxPacks Neural2_C]Boss易伤", path .. "amp.ogg")
 LSM:Register("sound", "[ExBoss WoWVoxPacks Neural2_C]你是白色", path .. "white.ogg")
 LSM:Register("sound", "[ExBoss WoWVoxPacks Neural2_C]你是黑色", path .. "black.ogg")
 LSM:Register("sound", "[ExBoss WoWVoxPacks Neural2_C]准备AOE(断条)", path .. "aoe-break.ogg")

@@ -9,8 +9,8 @@ on:
         default: '"Wavenet_E","Neural2_C","Studio_Q"'
         required: true
       addons:
-        description: 'Comma separated list of addons to publish e.g. "BigWigs_Voice","BigWigs_Countdown"'
-        default: '"BigWigs_Voice","BigWigs_Countdown","SharedMedia_Abilities"'
+        description: 'Comma separated list of addons to publish e.g. "BigWigs_Voice","BigWigs_Countdown","ExBoss"'
+        default: '"BigWigs_Voice","BigWigs_Countdown","SharedMedia_Abilities","ExBoss"'
         required: true
 jobs:
   wait-for-release-artifacts:

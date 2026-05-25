@@ -97,6 +97,12 @@
   },
   {
     "FileName": "amp.ogg",
+    "DisplayName": "Boss\u6613\u4F24",
+    "FormattedDisplayName": "Boss\u6613\u4F24",
+    "Text": "Amp"
+  },
+  {
+    "FileName": "amp.ogg",
     "DisplayName": "\u6613\u4F24\u7206\u53D1",
     "FormattedDisplayName": "\u6613\u4F24\u7206\u53D1",
     "Text": "Amp"
@@ -105,12 +111,6 @@
     "FileName": "amp.ogg",
     "DisplayName": "\u6613\u4F24",
     "FormattedDisplayName": "\u6613\u4F24",
-    "Text": "Amp"
-  },
-  {
-    "FileName": "Amp.ogg",
-    "DisplayName": "Boss\u6613\u4F24",
-    "FormattedDisplayName": "Boss\u6613\u4F24",
     "Text": "Amp"
   },
   {

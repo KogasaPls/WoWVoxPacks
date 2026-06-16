@@ -2,6 +2,12 @@ name: Publish to CurseForge
 on:
   release:
     types: [ published ]
+  workflow_run:
+    # Releases created by the GITHUB_TOKEN / github-actions[bot] do not emit the
+    # `release` event, so also publish whenever the Create release workflow
+    # finishes successfully.
+    workflows: [ "Create release" ]
+    types: [ completed ]
   workflow_dispatch:
     inputs:
       voices:
@@ -14,6 +20,8 @@ on:
         required: true
 jobs:
   wait-for-release-artifacts:
+    # Skip if triggered by a failed Create release run; release/dispatch always run.
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     name: Wait for release artifacts
     steps:

@@ -246,10 +246,82 @@
     "Text": "Seed Drop"
   },
   {
+    "FileName": "soak_circle.ogg",
+    "DisplayName": "Soak Circle",
+    "FormattedDisplayName": "Soak Circle",
+    "Text": "Soak Circle"
+  },
+  {
+    "FileName": "soak_cross.ogg",
+    "DisplayName": "Soak Cross",
+    "FormattedDisplayName": "Soak Cross",
+    "Text": "Soak Cross"
+  },
+  {
+    "FileName": "soak_skull.ogg",
+    "DisplayName": "Soak Skull",
+    "FormattedDisplayName": "Soak Skull",
+    "Text": "Soak Skull"
+  },
+  {
+    "FileName": "soak_square.ogg",
+    "DisplayName": "Soak Square",
+    "FormattedDisplayName": "Soak Square",
+    "Text": "Soak Square"
+  },
+  {
+    "FileName": "soak_triangle.ogg",
+    "DisplayName": "Soak Triangle",
+    "FormattedDisplayName": "Soak Triangle",
+    "Text": "Soak Triangle"
+  },
+  {
     "FileName": "soaks.ogg",
     "DisplayName": "Soaks",
     "FormattedDisplayName": "Soaks",
     "Text": "Soaks"
+  },
+  {
+    "FileName": "spread_at_cross.ogg",
+    "DisplayName": "Spread at Cross",
+    "FormattedDisplayName": "Spread at Cross",
+    "Text": "Spread at Cross"
+  },
+  {
+    "FileName": "spread_at_moon.ogg",
+    "DisplayName": "Spread at Moon",
+    "FormattedDisplayName": "Spread at Moon",
+    "Text": "Spread at Moon"
+  },
+  {
+    "FileName": "spread_at_skull.ogg",
+    "DisplayName": "Spread at Skull",
+    "FormattedDisplayName": "Spread at Skull",
+    "Text": "Spread at Skull"
+  },
+  {
+    "FileName": "spread_at_square.ogg",
+    "DisplayName": "Spread at Square",
+    "FormattedDisplayName": "Spread at Square",
+    "Text": "Spread at Square"
+  },
+  {
+    "FileName": "spread_at_star.ogg",
+    "DisplayName": "Spread at Star",
+    "FormattedDisplayName": "Spread at Star",
+    "Text": "Spread at Star"
+  },
+  {
+    "FileName": "spread_at_sun.ogg",
+    "DisplayName": "Spread at Sun",
+    "FormattedDisplayName": "Spread at Sun",
+    "Text": "Spread at Sun"
+  },
+  {
+    "FileName": "spread_at_triangle.ogg",
+    "DisplayName": "Spread at Triangle",
+    "FormattedDisplayName": "Spread at Triangle",
+    "Text": "Spread at Triangle"
   },
   {
     "FileName": "spread.ogg",

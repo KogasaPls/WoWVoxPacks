@@ -31,7 +31,7 @@ public class AddOn
         Version = Guard.Against.Null(settings.Version);
         Author = Guard.Against.Null(settings.Author);
         PrimaryNote = settings.Notes is null ? null : new Note(null, settings.Notes);
-        _interfaces = Guard.Against.NullOrEmpty(settings.Interfaces).ToArray();
+        _interfaces = [ToInterfaceNumber(Version)];
         _additionalNotes = settings.AdditionalNotes?.Select(n => new Note(n.Key, n.Value)).ToArray() ?? [];
         _additionalProperties = new Dictionary<string, string>(
             settings.AdditionalProperties ?? new Dictionary<string, string>(),
@@ -178,4 +178,24 @@ public class AddOn
     }
 
     public record Note(string? LanguageCode, string Text);
+
+    /// <summary>
+    /// Converts a dotted game version (e.g. "12.0.7") into the WoW toc Interface number
+    /// (e.g. "120007"): the major version followed by two-digit minor and patch components.
+    /// </summary>
+    internal static string ToInterfaceNumber(string version)
+    {
+        Guard.Against.NullOrWhiteSpace(version);
+
+        int[] parts = version
+            .Split('.', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Select(int.Parse)
+            .ToArray();
+
+        int major = parts.Length > 0 ? parts[0] : 0;
+        int minor = parts.Length > 1 ? parts[1] : 0;
+        int patch = parts.Length > 2 ? parts[2] : 0;
+
+        return $"{major}{minor:D2}{patch:D2}";
+    }
 }

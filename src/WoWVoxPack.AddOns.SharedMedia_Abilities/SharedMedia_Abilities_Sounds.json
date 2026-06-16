@@ -253,5 +253,65 @@
     "FileName": "ramp.ogg",
     "Text": "Ramp",
     "DisplayName": "Ramp"
+  },
+  {
+    "FileName": "soak_cross.ogg",
+    "Text": "Soak Cross",
+    "DisplayName": "Soak Cross"
+  },
+  {
+    "FileName": "soak_circle.ogg",
+    "Text": "Soak Circle",
+    "DisplayName": "Soak Circle"
+  },
+  {
+    "FileName": "soak_square.ogg",
+    "Text": "Soak Square",
+    "DisplayName": "Soak Square"
+  },
+  {
+    "FileName": "soak_triangle.ogg",
+    "Text": "Soak Triangle",
+    "DisplayName": "Soak Triangle"
+  },
+  {
+    "FileName": "soak_skull.ogg",
+    "Text": "Soak Skull",
+    "DisplayName": "Soak Skull"
+  },
+  {
+    "FileName": "spread_at_star.ogg",
+    "Text": "Spread at Star",
+    "DisplayName": "Spread at Star"
+  },
+  {
+    "FileName": "spread_at_moon.ogg",
+    "Text": "Spread at Moon",
+    "DisplayName": "Spread at Moon"
+  },
+  {
+    "FileName": "spread_at_sun.ogg",
+    "Text": "Spread at Sun",
+    "DisplayName": "Spread at Sun"
+  },
+  {
+    "FileName": "spread_at_skull.ogg",
+    "Text": "Spread at Skull",
+    "DisplayName": "Spread at Skull"
+  },
+  {
+    "FileName": "spread_at_cross.ogg",
+    "Text": "Spread at Cross",
+    "DisplayName": "Spread at Cross"
+  },
+  {
+    "FileName": "spread_at_square.ogg",
+    "Text": "Spread at Square",
+    "DisplayName": "Spread at Square"
+  },
+  {
+    "FileName": "spread_at_triangle.ogg",
+    "Text": "Spread at Triangle",
+    "DisplayName": "Spread at Triangle"
   }
 ]

@@ -5,6 +5,10 @@ on:
     - cron: "0 14 * * 2-4"
       timezone: "America/New_York"
 
+concurrency:
+  group: check-for-updates
+  cancel-in-progress: true
+
 jobs:
   check-bigwigs-voice-version:
     runs-on: ubuntu-latest
@@ -14,7 +18,7 @@ jobs:
     steps:
       - name: Get latest BigWigsVoice release
         id: get-bigwigsvoice-release
-        uses: pozetroninc/github-action-get-latest-release@master
+        uses: pozetroninc/github-action-get-latest-release@2a8af5b876b50f31b8aff77e95cce4bcd7d10d6f # v0.8.0
         with:
           owner: BigWigsMods
           repo: BigWigs_Voice
@@ -33,36 +37,34 @@ jobs:
       - name: Compare versions
         id: compare-versions
         run: |
-          if [ ! -f previous-version.txt ]; then
+          new_version=$(cat version.txt)
+          echo "bigwigs_version=${new_version}" >> "$GITHUB_OUTPUT"
+
+          if [ ! -s previous-version.txt ]; then
             echo "No previous version detected"
-            echo "bigwigs_version=$(cat version.txt)" >> $GITHUB_OUTPUT
-            echo "needs_update=true" >> $GITHUB_OUTPUT
+            echo "needs_update=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
-          echo "bigwigs_version=$(cat version.txt)" >> $GITHUB_OUTPUT
-
-          if [ "$(cat version.txt)" != "$(cat previous-version.txt)" ]; then
-            echo "New version detected (old: $(cat previous-version.txt), new: $(cat version.txt))"
-            echo "bigwigs_version=$(cat version.txt)" >> $GITHUB_OUTPUT
-            echo "needs_update=true" >> $GITHUB_OUTPUT
+          if [ "${new_version}" != "$(cat previous-version.txt)" ]; then
+            echo "New version detected (old: $(cat previous-version.txt), new: ${new_version})"
+            echo "needs_update=true" >> "$GITHUB_OUTPUT"
           else
             echo "No new version detected"
+            echo "needs_update=false" >> "$GITHUB_OUTPUT"
           fi
   create-pull-request:
     needs: [ check-bigwigs-voice-version ]
-    if: ${{ needs.check-bigwigs-voice-version.outputs.needs_update != '' }}
+    if: ${{ needs.check-bigwigs-voice-version.outputs.needs_update == 'true' }}
     runs-on: ubuntu-latest
     permissions: write-all
-    outputs:
-      upload_url: ${{ steps.create-release.outputs.upload_url }}
     env:
       CI: true
       DOTNET_ENVIRONMENT: Release
       DOTNET_CLI_TELEMETRY_OPTOUT: true
       GH_TOKEN: ${{ secrets.WORKFLOW_RELEASE_PAT }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: List files in the repository
@@ -76,7 +78,7 @@ jobs:
           BIGWIGS_VERSION: ${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version }}
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
-        uses: 'google-github-actions/auth@v2'
+        uses: 'google-github-actions/auth@v3'
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
       - uses: FedericoCarboni/setup-ffmpeg@v3
@@ -113,7 +115,11 @@ jobs:
           sign-commits: true
       - name: Enable Pull Request Automerge
         run: |
-          [[ "$PR_OPERATION" != "none" ]] && gh pr merge --merge --auto "$PR_NUMBER"
+          if [[ "$PR_OPERATION" != "none" && -n "$PR_NUMBER" ]]; then
+            gh pr merge --merge --auto "$PR_NUMBER"
+          else
+            echo "No pull request changes to merge (operation: ${PR_OPERATION:-none})"
+          fi
         env:
           GH_TOKEN: ${{ secrets.WORKFLOW_RELEASE_PAT }}
           PR_NUMBER: ${{ steps.create-pull-request.outputs.pull-request-number }}

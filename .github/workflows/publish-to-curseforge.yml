@@ -18,6 +18,13 @@ on:
         description: 'Comma separated list of addons to publish e.g. "BigWigs_Voice","BigWigs_Countdown","ExBoss"'
         default: '"BigWigs_Voice","BigWigs_Countdown","SharedMedia_Abilities","ExBoss"'
         required: true
+
+# The `release` and `workflow_run` triggers can both fire for the same release.
+# Serialize runs so concurrent publishes don't race on the same CurseForge project.
+concurrency:
+  group: publish-to-curseforge
+  cancel-in-progress: false
+
 jobs:
   wait-for-release-artifacts:
     # Skip if triggered by a failed Create release run; release/dispatch always run.
@@ -31,8 +38,10 @@ jobs:
   publish-addon:
     needs: wait-for-release-artifacts
     strategy:
+      # Each voice×addon publish is independent; don't cancel the rest when one
+      # fails so a single bad upload can't block every other package.
       max-parallel: 3
-      fail-fast: true
+      fail-fast: false
       matrix:
         voice: ${{ fromJSON(format('[{0}]', inputs.voices || '"Wavenet_E","Neural2_C","Studio_Q"')) }}
         addon: ${{ fromJSON(format('[{0}]', inputs.addons || '"BigWigs_Voice","BigWigs_Countdown","SharedMedia_Abilities","ExBoss"')) }}
@@ -69,8 +78,14 @@ jobs:
         id: set-release-tag
         if: github.event_name != 'push' && github.event_name != 'release'
         run: |
-          RELEASE_TAG=$(curl -s https://api.github.com/repos/KogasaPls/WoWVoxPacks/releases/latest | jq -r '.tag_name')
-          echo "RELEASE_TAG=${RELEASE_TAG}" >> $GITHUB_ENV
+          RELEASE_TAG=$(curl -sf \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/releases/latest" | jq -r '.tag_name')
+          if [ -z "$RELEASE_TAG" ] || [ "$RELEASE_TAG" = "null" ]; then
+            echo "Could not determine latest release tag" >&2
+            exit 1
+          fi
+          echo "RELEASE_TAG=${RELEASE_TAG}" >> "$GITHUB_ENV"
       - name: Set release game_versions
         id: set-release-game-versions
         run: |
@@ -99,7 +114,8 @@ jobs:
   rerun-failed-jobs:
       runs-on: ubuntu-latest
       needs: [ publish-addon ]
-      if: failure()
+      # Cap automatic retries so a permanently-failing publish can't loop forever.
+      if: failure() && github.run_attempt < 3
       steps:
         - name: Rerun failed jobs in the current workflow
           env:

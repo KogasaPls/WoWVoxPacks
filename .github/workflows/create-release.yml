@@ -6,13 +6,18 @@ on:
   workflow_dispatch:
   push:
     tags: [ 'v*' ]
+
+concurrency:
+  group: create-release-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   create-release:
     if: github.event.pull_request.merged == true || github.event_name  != 'pull_request'
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: List files in the repository
@@ -30,7 +35,7 @@ jobs:
         run: ./scripts/package.sh
       - name: Create GitHub Release
         id: create-release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ env.RELEASE_TAG }}
           name: Release ${{ env.RELEASE_TAG }}

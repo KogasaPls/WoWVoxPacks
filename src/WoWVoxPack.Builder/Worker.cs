@@ -50,23 +50,27 @@ public class Worker : IHostedService
             string outputDirectory =
                 Path.Combine(OutputDirectoryBase, Guard.Against.Null(ttsSettings.Voice).ToString());
             AddOn addOn = await addOnService.BuildAddOnAsync(outputDirectory, ttsSettings, cancellationToken);
-            await addOn.LoadSoundFilesJsonAsync(cancellationToken);
 
             Logger.LogInformation("Building {AddOnName} addon in directory {OutputDirectory}", addOn.Title,
                 addOn.AddOnDirectory);
 
-            await addOn.WriteAllFilesAsync(cancellationToken);
+            await AddOnFileWriter.WriteAllFilesAsync(addOn, cancellationToken);
 
             string soundOutputDirectory = addOn.SoundDirectory;
             Directory.CreateDirectory(soundOutputDirectory);
 
-            Task[]? createSoundFileTasks = addOn.SoundFilesToCreate.Select(
+            SoundFileManifest manifest =
+                await SoundFileManifest.LoadAsync(addOn.SoundFilesJsonPath, cancellationToken);
+            SoundFile[] soundFilesToCreate =
+                manifest.FilesToCreate(addOn.SoundFiles, soundOutputDirectory).ToArray();
+
+            Task[] createSoundFileTasks = soundFilesToCreate.Select(
                 soundFile =>
                     SoundFileService.CreateSoundFileAsync(soundFile, soundOutputDirectory, ttsSettings,
                         cancellationToken)).ToArray();
 
             await Task.WhenAll(createSoundFileTasks);
-            await addOn.WriteSoundFilesJsonAsync(cancellationToken);
+            await manifest.SaveAsync(addOn.SoundFilesJsonPath, addOn.SoundFiles, cancellationToken);
 
             Logger.LogInformation("Finished building addon: {AddOnName}", addOn.Title);
         }

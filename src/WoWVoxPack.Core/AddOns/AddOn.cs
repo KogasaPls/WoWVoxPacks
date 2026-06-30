@@ -95,14 +95,14 @@ public class AddOn
             throw new Exception("Failed to deserialize sound files.");
 
         SoundFilesFromJson = soundFiles
-            .ToDictionary(f => f.DisplayName.ToLowerInvariant(), StringComparer.OrdinalIgnoreCase).AsReadOnly();
+            .ToDictionary(f => f.DisplayName, StringComparer.OrdinalIgnoreCase).AsReadOnly();
     }
 
     private bool IsSameContentAsSoundFileInJson(SoundFile soundFile)
     {
         ArgumentNullException.ThrowIfNull(SoundFilesFromJson);
 
-        if (!SoundFilesFromJson.TryGetValue(soundFile.DisplayName.ToLowerInvariant(), out SoundFile? soundFileFromJson))
+        if (!SoundFilesFromJson.TryGetValue(soundFile.DisplayName, out SoundFile? soundFileFromJson))
         {
             return true;
         }
@@ -131,9 +131,9 @@ public class AddOn
 
     protected void AddSoundFile(SoundFile soundFile, bool overwrite = false)
     {
-        if (overwrite || !_soundFiles.ContainsKey(soundFile.DisplayName.ToLowerInvariant()))
+        if (overwrite || !_soundFiles.ContainsKey(soundFile.DisplayName))
         {
-            _soundFiles[soundFile.DisplayName.ToLowerInvariant()] = soundFile;
+            _soundFiles[soundFile.DisplayName] = soundFile;
         }
     }
 

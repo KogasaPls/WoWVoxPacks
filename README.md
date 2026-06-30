@@ -9,7 +9,7 @@ A collection of modern TTS voices for World of Warcraft addons.
   disabling the conflicting addons ingame will not work.
 - WoWVoxPacks_{Voice}_BigWigs_Countdown: Adds a new voice option for BigWigs' countdown (must be configured in BigWigs).
 - WoWVoxPacks_{Voice}_SharedMedia_Abilities: Adds sound effects via SharedMedia that contains ability names and other
-  phrasses for automated callouts.
+  phrases for automated callouts.
 
 <video src='https://github.com/user-attachments/assets/8bceffae-2e57-49cb-bb74-aab43ac65ae7' width=180></video>
 

@@ -14,21 +14,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="AddOn\AddOnTocFile.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AddOnTocFile.tt</DependentUpon>
-    </Compile>
     <Compile Update="AddOns\AddOnTocFile.cs">
       <DependentUpon>AddOnTocFile.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="AddOn\AddOnTocFile.tt">
-      <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>AddOnTocFile.cs</LastGenOutput>
-    </None>
     <None Update="AddOns\AddOnTocFile.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>AddOnTocFile.cs</LastGenOutput>

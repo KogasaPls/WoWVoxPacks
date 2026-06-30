@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
 ## Ensure the RELEASE_TAG variable is set
 if [ -z "$RELEASE_TAG" ]; then
@@ -27,11 +28,6 @@ while IFS= read -r -d '' file; do
 
   archive_name="WoWVoxPacks_${voice_name}_${addon_name}_${RELEASE_TAG}.zip"
   zip -r -q -9 "../../dist/$archive_name" "${addon_dir}" -x "*.wav"
-
-  if [ $? -ne 0 ]; then
-    echo "Failed to create archive for $file"
-    exit 1
-  fi
 
   echo "Created archive: dist/$archive_name"
 

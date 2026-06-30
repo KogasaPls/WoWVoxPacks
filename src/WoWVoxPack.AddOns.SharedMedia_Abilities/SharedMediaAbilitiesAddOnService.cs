@@ -1,17 +1,12 @@
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 using WoWVoxPack.TTS;
 
 namespace WoWVoxPack.AddOns.SharedMedia_Abilities;
 
-public sealed class SharedMediaAbilitiesAddOnService(
-    ILogger<SharedMediaAbilitiesAddOnService> logger,
-    IOptionsSnapshot<AddOnSettings> addOnOptions)
+public sealed class SharedMediaAbilitiesAddOnService(IOptionsSnapshot<AddOnSettings> addOnOptions)
     : IAddOnService<SharedMediaAbilitiesAddOn>
 {
-    private ILogger<SharedMediaAbilitiesAddOnService> Logger { get; } = logger;
-
     private AddOnSettings AddOnSettings { get; } = addOnOptions.Get("SharedMedia_Abilities");
 
     public Task<SharedMediaAbilitiesAddOn> BuildAddOnAsync(string outputDirectoryBase,

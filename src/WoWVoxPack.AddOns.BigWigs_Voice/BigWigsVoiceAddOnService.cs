@@ -1,4 +1,3 @@
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 using WoWVoxPack.TTS;
@@ -6,14 +5,11 @@ using WoWVoxPack.TTS;
 namespace WoWVoxPack.AddOns.BigWigs_Voice;
 
 public sealed class BigWigsVoiceAddOnService(
-    ILogger<BigWigsVoiceAddOnService> logger,
     IOptionsSnapshot<AddOnSettings> addOnOptions,
     IBigWigsVoiceUpstreamClient upstreamClient)
     : IAddOnService<BigWigsVoiceAddOn>
 {
     private BigWigsVoiceSoundFile[]? _soundFiles;
-
-    private ILogger<BigWigsVoiceAddOnService> Logger { get; } = logger;
 
     private IBigWigsVoiceUpstreamClient UpstreamClient { get; } = upstreamClient;
     private AddOnSettings AddOnSettings { get; } = addOnOptions.Get("BigWigs_Voice");

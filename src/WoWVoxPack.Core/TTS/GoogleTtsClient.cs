@@ -1,6 +1,5 @@
 using System.Threading.RateLimiting;
 
-using Google.Api.Gax.Grpc.Rest;
 using Google.Cloud.TextToSpeech.V1;
 using Google.Protobuf;
 
@@ -137,14 +136,6 @@ public sealed class GoogleTtsClient(ILogger<GoogleTtsClient> logger, TextToSpeec
         }
 
         return result.AudioContent;
-    }
-
-    private TextToSpeechClient CreateClient()
-    {
-        return new TextToSpeechClientBuilder
-        {
-            GrpcAdapter = RestGrpcAdapter.Default, Settings = TextToSpeechSettings.GetDefault(), Logger = logger
-        }.Build();
     }
 
     public void Dispose()

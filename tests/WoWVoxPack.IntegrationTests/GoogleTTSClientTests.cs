@@ -21,8 +21,15 @@ public class GoogleTTSClientTests
     [Fact]
     public async Task SynthesizeText_Should_ReturnAudioContent()
     {
+        if (!HasGoogleCredentials())
+        {
+            Output.WriteLine("Google credentials not configured; skipping live TTS integration test.");
+            return;
+        }
+
         IServiceCollection services = new ServiceCollection()
             .AddLogging(builder => builder.AddXUnit(Output))
+            .AddTextToSpeechClient()
             .AddSingleton<GoogleTtsClient>();
 
         GoogleTtsClient client = services.BuildServiceProvider().GetRequiredService<GoogleTtsClient>();
@@ -33,5 +40,16 @@ public class GoogleTTSClientTests
 
         Output.WriteLine($"Audio content length: {audioContent.Length}");
         Output.WriteLine(audioContent.ToBase64());
+    }
+
+    private static bool HasGoogleCredentials()
+    {
+        if (!string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS")))
+        {
+            return true;
+        }
+
+        string applicationDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        return File.Exists(Path.Combine(applicationDataPath, "gcloud", "application_default_credentials.json"));
     }
 }

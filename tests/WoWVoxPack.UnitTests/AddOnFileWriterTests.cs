@@ -1,7 +1,7 @@
-namespace WoWVoxPack.UnitTests;
-
 using WoWVoxPack.AddOns;
 using WoWVoxPack.TTS;
+
+namespace WoWVoxPack.UnitTests;
 
 public class AddOnFileWriterTests : IDisposable
 {
@@ -81,6 +81,30 @@ public class AddOnFileWriterTests : IDisposable
         string luaPath = Path.Combine(secondAddOn.AddOnDirectory, "Core.lua");
 
         Assert.Equal("-- second content", await File.ReadAllTextAsync(luaPath));
+    }
+
+    [Fact]
+    public async Task WriteAllFilesAsync_WritesFilesBeforeAFailingFactory_RatherThanNone()
+    {
+        AddOnSettings settings = new()
+        {
+            Title = "Test_AddOn",
+            Version = "12.0.7",
+            Author = "Tester",
+            Notes = "A test addon."
+        };
+        TtsSettings ttsSettings = new() { Voice = VoiceName.Neural2_C };
+
+        AddOn addOn = new AddOnBuilder(settings, ttsSettings)
+            .AddFile("First.lua", _ => "-- first content")
+            .AddFile("Second.lua", _ => throw new InvalidOperationException("template failed"))
+            .Build(_tempDirectory);
+
+        await Assert.ThrowsAsync<InvalidOperationException>(() => AddOnFileWriter.WriteAllFilesAsync(addOn));
+
+        string firstPath = Path.Combine(addOn.AddOnDirectory, "First.lua");
+        Assert.True(File.Exists(firstPath));
+        Assert.Equal("-- first content", await File.ReadAllTextAsync(firstPath));
     }
 
     public void Dispose()

@@ -1,11 +1,11 @@
-namespace WoWVoxPack.UnitTests;
-
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 
 using WoWVoxPack.AddOns;
-using WoWVoxPack.Builder;
+using WoWVoxPack.Core.Builder;
 using WoWVoxPack.TTS;
+
+namespace WoWVoxPack.UnitTests;
 
 public class AddOnBuildOrchestratorTests : IDisposable
 {

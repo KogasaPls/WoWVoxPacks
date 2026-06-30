@@ -10,6 +10,9 @@ public sealed class BigWigsVoiceAddOnService(
     IBigWigsVoiceUpstreamClient upstreamClient)
     : IAddOnService
 {
+    private static readonly Lazy<List<SoundFile>> JsonSoundFiles = new(() =>
+        AddOnBuilder.LoadSoundFileJson(Path.Combine(AppContext.BaseDirectory, "BigWigsVoice_Sounds.json")));
+
     private BigWigsVoiceSoundFile[]? _soundFiles;
 
     private IBigWigsVoiceUpstreamClient UpstreamClient { get; } = upstreamClient;
@@ -19,12 +22,11 @@ public sealed class BigWigsVoiceAddOnService(
         CancellationToken cancellationToken = default)
     {
         IEnumerable<BigWigsVoiceSoundFile> soundFiles = await GetSoundFilesAsync(cancellationToken);
-        string soundFileJsonPath = Path.Combine(AppContext.BaseDirectory, "BigWigsVoice_Sounds.json");
 
         return new AddOnBuilder(AddOnSettings, ttsSettings)
             .WithDisplayTitle($"BigWigs |cffff7f3f+|r|cffffffffVoice: WoWVoxPacks ({ttsSettings.Voice})|r")
             .AddFile("Core.lua", addon => new CoreLuaFile(addon).TransformText())
-            .AddSoundFileJson(soundFileJsonPath)
+            .AddSoundFiles(JsonSoundFiles.Value, overwrite: true)
             .AddSoundFiles(soundFiles)
             .Build(outputDirectoryBase);
     }

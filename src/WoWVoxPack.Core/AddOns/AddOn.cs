@@ -9,7 +9,6 @@ public sealed class AddOn
     private readonly string _outputDirectoryBase;
     private readonly IReadOnlyDictionary<string, SoundFile> _soundFiles;
     private readonly IReadOnlyDictionary<string, Func<AddOn, string>> _fileFactories;
-    private Dictionary<string, string>? _fileContents;
 
     internal AddOn(
         string outputDirectoryBase,
@@ -52,12 +51,7 @@ public sealed class AddOn
 
     public IEnumerable<string> Files => _fileFactories.Keys;
 
-    // File factories must not read FileContents while they run: this getter isn't
-    // re-entrancy-safe, and a factory that reads FileContents during its own
-    // evaluation will recurse until the stack overflows.
-    public IReadOnlyDictionary<string, string> FileContents =>
-        _fileContents ??= _fileFactories.ToDictionary(kvp => kvp.Key, kvp => kvp.Value(this),
-            StringComparer.OrdinalIgnoreCase);
+    public string GetFileContent(string fileName) => _fileFactories[fileName](this);
 
     public string AddOnDirectory => Path.Combine(_outputDirectoryBase, AddOnDirectoryName);
     public string AddOnDirectoryName => Title.Replace(' ', '_');

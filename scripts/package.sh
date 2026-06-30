@@ -27,7 +27,10 @@ while IFS= read -r -d '' file; do
   cd "$voice_name" || exit 1
 
   archive_name="WoWVoxPacks_${voice_name}_${addon_name}_${RELEASE_TAG}.zip"
-  zip -r -q -9 "../../dist/$archive_name" "${addon_dir}" -x "*.wav"
+  zip -r -q -9 "../../dist/$archive_name" "${addon_dir}" -x "*.wav" || {
+    echo "Failed to create archive for $file"
+    exit 1
+  }
 
   echo "Created archive: dist/$archive_name"
 

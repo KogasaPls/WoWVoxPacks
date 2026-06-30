@@ -1,7 +1,7 @@
-namespace WoWVoxPack.UnitTests;
-
 using WoWVoxPack.AddOns;
 using WoWVoxPack.TTS;
+
+namespace WoWVoxPack.UnitTests;
 
 public class AddOnBuilderTests
 {
@@ -80,6 +80,58 @@ public class AddOnBuilderTests
             .AddFile("Core.lua", built => string.Join(",", built.SoundFiles.Select(f => f.DisplayName)))
             .Build("/tmp/output");
 
-        Assert.Equal("Alert", addOn.FileContents["Core.lua"]);
+        Assert.Equal("Alert", addOn.GetFileContent("Core.lua"));
+    }
+
+    [Fact]
+    public void LoadSoundFileJson_DeserializesSoundFilesFromDisk()
+    {
+        string path = WriteTempJson(
+            """[{"FileName":"alert.ogg","DisplayName":"Alert","Text":"incoming"}]""");
+        try
+        {
+            List<SoundFile> soundFiles = AddOnBuilder.LoadSoundFileJson(path);
+
+            SoundFile soundFile = Assert.Single(soundFiles);
+            Assert.Equal("alert.ogg", soundFile.FileName);
+            Assert.Equal("Alert", soundFile.DisplayName);
+            Assert.Equal("incoming", soundFile.Text);
+        }
+        finally
+        {
+            File.Delete(path);
+        }
+    }
+
+    [Fact]
+    public void LoadSoundFileJsonWithSsmlFallback_BackfillsSsml_OnlyForEntriesWithIpaEscape()
+    {
+        string path = WriteTempJson("""
+            [
+              {"FileName":"plain.ogg","DisplayName":"Plain","Text":"incoming"},
+              {"FileName":"taivan.ogg","DisplayName":"Taivan","Text":"Taivan=t1 incoming"}
+            ]
+            """);
+        try
+        {
+            List<SoundFile> soundFiles = AddOnBuilder.LoadSoundFileJsonWithSsmlFallback(path);
+
+            SoundFile plain = soundFiles.Single(f => f.DisplayName == "Plain");
+            SoundFile taivan = soundFiles.Single(f => f.DisplayName == "Taivan");
+
+            Assert.Null(plain.Ssml);
+            Assert.Equal(SoundFile.GetSsml("Taivan=t1 incoming"), taivan.Ssml);
+        }
+        finally
+        {
+            File.Delete(path);
+        }
+    }
+
+    private static string WriteTempJson(string json)
+    {
+        string path = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.json");
+        File.WriteAllText(path, json);
+        return path;
     }
 }

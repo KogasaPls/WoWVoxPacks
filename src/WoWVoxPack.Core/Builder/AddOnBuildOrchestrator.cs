@@ -6,7 +6,7 @@ using Microsoft.Extensions.Options;
 using WoWVoxPack.AddOns;
 using WoWVoxPack.TTS;
 
-namespace WoWVoxPack.Builder;
+namespace WoWVoxPack.Core.Builder;
 
 public class AddOnBuildOrchestrator(
     ILogger<AddOnBuildOrchestrator> logger,

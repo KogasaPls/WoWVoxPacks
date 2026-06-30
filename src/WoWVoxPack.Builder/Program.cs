@@ -14,6 +14,7 @@ using WoWVoxPack.AddOns.BigWigs_Voice;
 using WoWVoxPack.AddOns.ExBoss;
 using WoWVoxPack.AddOns.SharedMedia_Abilities;
 using WoWVoxPack.Builder;
+using WoWVoxPack.Core.Builder;
 using WoWVoxPack.TTS;
 
 static string ResolveOutputDirectoryBase()

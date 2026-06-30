@@ -1,6 +1,6 @@
-namespace WoWVoxPack.UnitTests;
-
 using WoWVoxPack.TTS;
+
+namespace WoWVoxPack.UnitTests;
 
 public class SoundFileManifestTests : IDisposable
 {

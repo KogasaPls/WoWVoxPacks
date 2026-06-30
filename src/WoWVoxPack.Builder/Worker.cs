@@ -1,5 +1,7 @@
 using Microsoft.Extensions.Hosting;
 
+using WoWVoxPack.Core.Builder;
+
 namespace WoWVoxPack.Builder;
 
 public class Worker(AddOnBuildOrchestrator orchestrator, IHostApplicationLifetime applicationLifetime)

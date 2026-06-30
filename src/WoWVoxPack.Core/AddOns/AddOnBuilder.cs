@@ -47,11 +47,39 @@ public sealed class AddOnBuilder(AddOnSettings settings, TtsSettings ttsSettings
 
     public AddOnBuilder AddSoundFileJson(string filePath, bool overwrite = true)
     {
-        List<SoundFile> soundFiles = Guard.Against.Null(
+        return AddSoundFiles(LoadSoundFileJson(filePath), overwrite);
+    }
+
+    /// <summary>
+    /// Deserializes a list of <see cref="SoundFile"/> from a JSON manifest file. Exposed
+    /// statically so callers can cache the result across repeated builds of the same addon
+    /// (e.g. once per voice in the build matrix) instead of re-reading the file from disk
+    /// every time.
+    /// </summary>
+    public static List<SoundFile> LoadSoundFileJson(string filePath)
+    {
+        return Guard.Against.Null(
             JsonSerializer.Deserialize<List<SoundFile>>(File.ReadAllText(filePath),
                 SoundFileJsonContext.Default.ListSoundFile));
+    }
 
-        return AddSoundFiles(soundFiles, overwrite);
+    /// <summary>
+    /// Like <see cref="LoadSoundFileJson"/>, but backfills SSML phoneme markup for entries
+    /// whose <see cref="SoundFile.Text"/> contains an IPA escape ('=') and has no explicit
+    /// <see cref="SoundFile.Ssml"/> set. Shared by addons (SharedMedia_Abilities, ExBoss)
+    /// whose sound-file JSON manifests use this convention.
+    /// </summary>
+    public static List<SoundFile> LoadSoundFileJsonWithSsmlFallback(string filePath)
+    {
+        return LoadSoundFileJson(filePath).Select(RewriteSsmlFallback).ToList();
+    }
+
+    private static SoundFile RewriteSsmlFallback(SoundFile soundFile)
+    {
+        return soundFile.Ssml is null && soundFile.Text?.Contains('=') == true
+            ? new SoundFile(soundFile.FileName, ssml: SoundFile.GetSsml(soundFile.Text),
+                displayName: soundFile.DisplayName, formattedDisplayName: soundFile.FormattedDisplayName)
+            : soundFile;
     }
 
     public AddOnBuilder AddFile(string fileName, Func<AddOn, string> contentFactory)

@@ -1,15 +1,16 @@
+using WoWVoxPack.AddOns;
 using WoWVoxPack.TTS;
 
 namespace WoWVoxPack.AddOns.ExBoss;
 
 public partial class LabelsFile
 {
-    public LabelsFile(ExBossAddOn addOn)
+    public LabelsFile(AddOn addOn)
     {
         AddOn = addOn;
     }
 
-    private ExBossAddOn AddOn { get; }
+    private AddOn AddOn { get; }
 
     public IEnumerable<SoundFile> SoundFiles => AddOn.SoundFiles;
 

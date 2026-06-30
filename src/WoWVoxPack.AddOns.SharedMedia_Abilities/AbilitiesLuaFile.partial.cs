@@ -1,15 +1,16 @@
+using WoWVoxPack.AddOns;
 using WoWVoxPack.TTS;
 
 namespace WoWVoxPack.AddOns.SharedMedia_Abilities;
 
 public partial class AbilitiesLuaFile
 {
-    public AbilitiesLuaFile(SharedMediaAbilitiesAddOn addOn)
+    public AbilitiesLuaFile(AddOn addOn)
     {
         AddOn = addOn;
     }
 
-    public SharedMediaAbilitiesAddOn AddOn { get; }
+    public AddOn AddOn { get; }
 
     public string AddOnDirectoryName => AddOn.AddOnDirectoryName;
 

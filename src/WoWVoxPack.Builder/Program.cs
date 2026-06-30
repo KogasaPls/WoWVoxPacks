@@ -1,9 +1,13 @@
-﻿using Microsoft.Extensions.Configuration;
+using System.Reflection;
+
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
+using WoWVoxPack;
 using WoWVoxPack.AddOns;
 using WoWVoxPack.AddOns.BigWigs_Countdown;
 using WoWVoxPack.AddOns.BigWigs_Voice;
@@ -11,6 +15,16 @@ using WoWVoxPack.AddOns.ExBoss;
 using WoWVoxPack.AddOns.SharedMedia_Abilities;
 using WoWVoxPack.Builder;
 using WoWVoxPack.TTS;
+
+static string ResolveOutputDirectoryBase()
+{
+    string solutionFile =
+        Assembly.GetExecutingAssembly().GetCustomAttribute<SolutionFileAttribute>()?.SolutionFile ??
+        throw new Exception("Solution file not found.");
+    return Path.Combine(
+        Path.GetDirectoryName(solutionFile) ?? throw new Exception("Solution file not found."),
+        "output");
+}
 
 IHostBuilder hostBuilder = Host.CreateDefaultBuilder(args)
     .UseConsoleLifetime()
@@ -37,6 +51,12 @@ IHostBuilder hostBuilder = Host.CreateDefaultBuilder(args)
         services.AddOptionsWithValidateOnStart<AddOnSettings>("ExBoss")
             .BindConfiguration("AddOn:ExBoss")
             .BindConfiguration("AddOn");
+        services.AddSingleton(sp => new AddOnBuildOrchestrator(
+            sp.GetRequiredService<ILogger<AddOnBuildOrchestrator>>(),
+            sp.GetRequiredService<IEnumerable<IAddOnService>>(),
+            sp.GetRequiredService<IOptions<BuildMatrix>>(),
+            sp.GetRequiredService<ISoundFileService>(),
+            ResolveOutputDirectoryBase()));
         services.AddHostedService<Worker>();
     }).ConfigureLogging((_, logging) =>
     {

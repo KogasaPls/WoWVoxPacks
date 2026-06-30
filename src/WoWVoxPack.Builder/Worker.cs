@@ -1,84 +1,15 @@
-using System.Reflection;
-
-using Ardalis.GuardClauses;
-
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-
-using WoWVoxPack.AddOns;
-using WoWVoxPack.TTS;
 
 namespace WoWVoxPack.Builder;
 
-public class Worker : IHostedService
+public class Worker(AddOnBuildOrchestrator orchestrator, IHostApplicationLifetime applicationLifetime)
+    : IHostedService
 {
-    public Worker(ILogger<Worker> logger, IEnumerable<IAddOnService> addOnServices, IOptions<BuildMatrix> buildMatrix,
-        IHostApplicationLifetime applicationLifetime, ISoundFileService soundFileService)
-    {
-        Logger = logger;
-        AddOnServices = addOnServices.ToList();
-        BuildMatrix = buildMatrix.Value;
-        ApplicationLifetime = applicationLifetime;
-        SoundFileService = soundFileService;
-
-        string solutionFile =
-            Assembly.GetExecutingAssembly().GetCustomAttribute<SolutionFileAttribute>()?.SolutionFile ??
-            throw new Exception("Solution file not found.");
-        OutputDirectoryBase = Path.Combine(
-            Path.GetDirectoryName(solutionFile) ?? throw new Exception("Solution file not found."),
-            "output");
-    }
-
-    private ILogger<Worker> Logger { get; }
-    private List<IAddOnService> AddOnServices { get; }
-    private BuildMatrix BuildMatrix { get; }
-    private IHostApplicationLifetime ApplicationLifetime { get; }
-    private ISoundFileService SoundFileService { get; }
-
-    private string OutputDirectoryBase { get; }
-
-    private IEnumerable<(IAddOnService addOnService, TtsSettings ttsSettings)> Matrix =>
-        from addOnService in AddOnServices
-        from ttsSettings in BuildMatrix.TtsSettings
-        select (addOnService, ttsSettings);
-
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        foreach ((IAddOnService addOnService, TtsSettings ttsSettings) in Matrix)
-        {
-            string outputDirectory =
-                Path.Combine(OutputDirectoryBase, Guard.Against.Null(ttsSettings.Voice).ToString());
-            AddOn addOn = await addOnService.BuildAddOnAsync(outputDirectory, ttsSettings, cancellationToken);
-
-            Logger.LogInformation("Building {AddOnName} addon in directory {OutputDirectory}", addOn.Title,
-                addOn.AddOnDirectory);
-
-            await AddOnFileWriter.WriteAllFilesAsync(addOn, cancellationToken);
-
-            string soundOutputDirectory = addOn.SoundDirectory;
-            Directory.CreateDirectory(soundOutputDirectory);
-
-            SoundFileManifest manifest =
-                await SoundFileManifest.LoadAsync(addOn.SoundFilesJsonPath, cancellationToken);
-            SoundFile[] soundFilesToCreate =
-                manifest.FilesToCreate(addOn.SoundFiles, soundOutputDirectory).ToArray();
-
-            Task[] createSoundFileTasks = soundFilesToCreate.Select(
-                soundFile =>
-                    SoundFileService.CreateSoundFileAsync(soundFile, soundOutputDirectory, ttsSettings,
-                        cancellationToken)).ToArray();
-
-            await Task.WhenAll(createSoundFileTasks);
-            await manifest.SaveAsync(addOn.SoundFilesJsonPath, addOn.SoundFiles, cancellationToken);
-
-            Logger.LogInformation("Finished building addon: {AddOnName}", addOn.Title);
-        }
-
-        Logger.LogInformation("Finished building add-ons, stopping");
-        ApplicationLifetime.StopApplication();
+        await orchestrator.RunAsync(cancellationToken);
+        applicationLifetime.StopApplication();
     }
-
 
     public Task StopAsync(CancellationToken cancellationToken)
     {

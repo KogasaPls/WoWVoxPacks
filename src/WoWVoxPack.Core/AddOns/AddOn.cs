@@ -52,6 +52,9 @@ public sealed class AddOn
 
     public IEnumerable<string> Files => _fileFactories.Keys;
 
+    // File factories must not read FileContents while they run: this getter isn't
+    // re-entrancy-safe, and a factory that reads FileContents during its own
+    // evaluation will recurse until the stack overflows.
     public IReadOnlyDictionary<string, string> FileContents =>
         _fileContents ??= _fileFactories.ToDictionary(kvp => kvp.Key, kvp => kvp.Value(this),
             StringComparer.OrdinalIgnoreCase);

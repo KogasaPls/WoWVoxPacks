@@ -200,9 +200,12 @@ git commit -m "feat: extract SoundFileManifest from AddOn's JSON cache logic"
 **Files:**
 - Modify: `src/WoWVoxPack.Core/AddOns/AddOn.cs`
 - Create: `src/WoWVoxPack.Core/AddOns/AddOnBuilder.cs`
+- Modify: `src/WoWVoxPack.Core/AddOns/IAddOnService.cs`
 - Test: `tests/WoWVoxPack.UnitTests/AddOnBuilderTests.cs`
 
 `AddOn` loses its constructor, protected builder methods (`AddFile`, `AddSoundFile(s)`, `AddSoundFileJson`), and all I/O/cache methods (those moved in Task 1, and `WriteAllFilesAsync`/`WriteTocFileAsync`/`WriteAddonFilesAsync` move in Task 3). It keeps metadata properties and gains an `internal` constructor only `AddOnBuilder` can call, plus `FileContents` (filename → rendered content, for `AddOnFileWriter`) alongside the existing `Files` (filenames only, for `AddOnTocFile.tt`'s load directives — unchanged shape, so the template doesn't need editing).
+
+**Plan correction (found during implementation):** sealing `AddOn` makes it an invalid generic constraint for `IAddOnService<T> : IAddOnService where T : AddOn` in `src/WoWVoxPack.Core/AddOns/IAddOnService.cs` (`CS0701: 'AddOn' is not a valid constraint. A type used as a constraint must be an interface, a non-sealed class or a type parameter.`). This breaks `WoWVoxPack.Core` itself, not just the downstream addon projects, so deleting `IAddOnService<T>` can't wait for Task 6 — it has to happen in this task, as Step 5 below. Task 6 no longer touches `IAddOnService.cs` (see its updated Files list).
 
 - [ ] **Step 1: Write the failing tests**
 
@@ -488,22 +491,36 @@ public sealed class AddOnBuilder(AddOnSettings settings, TtsSettings ttsSettings
 }
 ```
 
-- [ ] **Step 5: Run tests to verify they pass**
+- [ ] **Step 5: Delete `IAddOnService<T>` from `IAddOnService.cs`**
+
+```csharp
+using WoWVoxPack.TTS;
+
+namespace WoWVoxPack.AddOns;
+
+public interface IAddOnService
+{
+    Task<AddOn> BuildAddOnAsync(string outputDirectoryBase, TtsSettings ttsSettings,
+        CancellationToken cancellationToken = default);
+}
+```
+
+- [ ] **Step 6: Run tests to verify they pass**
 
 Run:
 ```bash
 DOTNET_CLI_HOME=/tmp DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1 MSBuildEnableWorkloadResolver=false dotnet test tests/WoWVoxPack.UnitTests/WoWVoxPack.UnitTests.csproj -m:1 /nr:false
 ```
-Expected: PASS, `AddOnBuilderTests`: 5 passed, plus the existing `SoundFileTests` and `SoundFileManifestTests` still passing.
+Expected: PASS, `AddOnBuilderTests`: 5 passed, plus the existing `SoundFileTests` and `SoundFileManifestTests` still passing. This is now the full `WoWVoxPack.Core` + tests build (no longer blocked by `IAddOnService<T>`'s constraint), so this scoped command exercising green is a real, not partial, signal for this task.
 
-- [ ] **Step 6: Commit**
+- [ ] **Step 7: Commit**
 
 ```bash
-git add src/WoWVoxPack.Core/AddOns/AddOn.cs src/WoWVoxPack.Core/AddOns/AddOnBuilder.cs tests/WoWVoxPack.UnitTests/AddOnBuilderTests.cs
+git add src/WoWVoxPack.Core/AddOns/AddOn.cs src/WoWVoxPack.Core/AddOns/AddOnBuilder.cs src/WoWVoxPack.Core/AddOns/IAddOnService.cs tests/WoWVoxPack.UnitTests/AddOnBuilderTests.cs
 git commit -m "feat: make AddOn a pure-data class assembled by AddOnBuilder"
 ```
 
-Note: this commit leaves `WoWVoxPack.AddOns.BigWigs_Voice`, `WoWVoxPack.AddOns.BigWigs_Countdown`, `WoWVoxPack.AddOns.SharedMedia_Abilities`, `WoWVoxPack.AddOns.ExBoss`, and `WoWVoxPack.Builder` non-compiling — expected, fixed in Tasks 4–6.
+Note: this commit leaves `WoWVoxPack.AddOns.BigWigs_Voice`, `WoWVoxPack.AddOns.BigWigs_Countdown`, `WoWVoxPack.AddOns.SharedMedia_Abilities`, `WoWVoxPack.AddOns.ExBoss`, and `WoWVoxPack.Builder` non-compiling — expected, fixed in Tasks 4–6. `WoWVoxPack.Core` itself, however, now compiles cleanly.
 
 ---
 
@@ -927,27 +944,14 @@ git commit -m "refactor: build SharedMedia_Abilities and ExBoss addons via AddOn
 
 ---
 
-### Task 6: `Worker`, `IAddOnService`, and full solution verification
+### Task 6: `Worker` and full solution verification
 
 **Files:**
-- Modify: `src/WoWVoxPack.Core/AddOns/IAddOnService.cs`
 - Modify: `src/WoWVoxPack.Builder/Worker.cs`
 
-- [ ] **Step 1: Delete `IAddOnService<T>` from `IAddOnService.cs`**
+Note: `IAddOnService<T>` was already deleted in Task 2, Step 5 (sealing `AddOn` made it an invalid generic constraint immediately, so that cleanup couldn't wait until this task — see the plan correction noted under Task 2). This task only touches `Worker.cs`.
 
-```csharp
-using WoWVoxPack.TTS;
-
-namespace WoWVoxPack.AddOns;
-
-public interface IAddOnService
-{
-    Task<AddOn> BuildAddOnAsync(string outputDirectoryBase, TtsSettings ttsSettings,
-        CancellationToken cancellationToken = default);
-}
-```
-
-- [ ] **Step 2: Update `Worker.StartAsync` to use `AddOnFileWriter` and `SoundFileManifest`**
+- [ ] **Step 1: Update `Worker.StartAsync` to use `AddOnFileWriter` and `SoundFileManifest`**
 
 Replace the body of `StartAsync` in `src/WoWVoxPack.Builder/Worker.cs`:
 
@@ -991,7 +995,7 @@ Replace the body of `StartAsync` in `src/WoWVoxPack.Builder/Worker.cs`:
 
 The rest of `Worker.cs` (constructor, properties, `Matrix`, `StopAsync`) is unchanged.
 
-- [ ] **Step 3: Build the full solution**
+- [ ] **Step 2: Build the full solution**
 
 Run:
 ```bash
@@ -999,7 +1003,7 @@ DOTNET_CLI_HOME=/tmp DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1 MSBuildEnableWorkloadRe
 ```
 Expected: `Build succeeded`, 0 errors.
 
-- [ ] **Step 4: Run the full test suite**
+- [ ] **Step 3: Run the full test suite**
 
 Run (per this repo's documented sandbox workaround — needs escalated permissions for the VSTest socket):
 ```bash
@@ -1007,11 +1011,11 @@ DOTNET_CLI_HOME=/tmp DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1 MSBuildEnableWorkloadRe
 ```
 Expected: `WoWVoxPack.UnitTests`: all tests passed (3 pre-existing `SoundFileTests` + 4 `SoundFileManifestTests` + 5 `AddOnBuilderTests` + 1 `AddOnFileWriterTests` = 13 passed). `WoWVoxPack.IntegrationTests`: Passed 1, Failed 0 (unchanged, lives behind credentials).
 
-- [ ] **Step 5: Commit**
+- [ ] **Step 4: Commit**
 
 ```bash
-git add src/WoWVoxPack.Core/AddOns/IAddOnService.cs src/WoWVoxPack.Builder/Worker.cs
-git commit -m "refactor: wire Worker to AddOnFileWriter and SoundFileManifest, drop IAddOnService<T>"
+git add src/WoWVoxPack.Builder/Worker.cs
+git commit -m "refactor: wire Worker to AddOnFileWriter and SoundFileManifest"
 ```
 
 ---
@@ -1020,7 +1024,7 @@ git commit -m "refactor: wire Worker to AddOnFileWriter and SoundFileManifest, d
 
 - `AddOn` pure-data, no subclasses, no virtual `AddOnDirectoryName`/`SoundDirectoryName` — Task 2.
 - `AddOnBuilder` fluent assembly, resolves the file-factory self-reference — Task 2.
-- Four `IAddOnService.BuildAddOnAsync` implementations build via `AddOnBuilder`; `IAddOnService<T>` deleted — Tasks 4, 5, 6.
+- Four `IAddOnService.BuildAddOnAsync` implementations build via `AddOnBuilder` — Tasks 4, 5. `IAddOnService<T>` deleted — Task 2 (pulled forward from Task 6; sealing `AddOn` made it an invalid generic constraint immediately).
 - `AddOnFileWriter` extracted — Task 3.
 - `SoundFileManifest` extracted, diff semantics preserved exactly (including the "not in manifest → treated as same" fallback) — Task 1.
 - `Worker` orchestrates the separated pieces — Task 6.

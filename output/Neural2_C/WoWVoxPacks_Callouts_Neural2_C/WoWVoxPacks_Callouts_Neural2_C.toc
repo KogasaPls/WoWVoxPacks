@@ -1,7 +1,7 @@
 ## Interface: 120007, 120100
 
 ## Title: WoWVoxPacks |cffff7f3fCallouts|r|cffffffff (Neural2_C)|r
-## Version: 12.0.7
+## Version: 12.1.0
 ## Notes: WoWVoxPacks Text-To-Speech sound keys, selectable via LibSharedMedia in Northern Sky Raid Tools, WeakAuras and BigWigs. Entries are now orange, named 'WVP {Voice}: {Name}', and sit at the bottom of sound dropdowns, so sounds picked from an earlier release have to be re-selected once.
 ## Author: KogasaPls
 

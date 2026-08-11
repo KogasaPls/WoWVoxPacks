@@ -1,7 +1,7 @@
 ## Interface: 120007, 120100
 
 ## Title: WoWVoxPacks |cffff7f3fNorthern Sky Raid Tools|r|cffffffff (Standard_D)|r
-## Version: 12.0.7
+## Version: 12.1.0
 ## Notes: A Northern Sky Raid Tools sound pack for one WoWVoxPacks voice.
 ## Author: KogasaPls
 

@@ -164,7 +164,7 @@ public class CalloutNameVocabularyTests
     }
 
     [Fact]
-    public void CuratedInitialisms_HaveExplicitSynthesisText()
+    public void CuratedInitialisms_HaveExplicitLetterNameIpa()
     {
         using JsonDocument curated = JsonDocument.Parse(File.ReadAllText(FindRepoFile(
             "src/WoWVoxPack.AddOns.Callouts/Callouts_Sounds.json")));
@@ -173,10 +173,13 @@ public class CalloutNameVocabularyTests
                 entry => entry.GetProperty("DisplayName").GetString()!,
                 StringComparer.Ordinal);
 
-        Assert.Equal("A M S", entries["AMS"].GetProperty("Text").GetString());
-        Assert.Equal("A M Z", entries["AMZ"].GetProperty("Text").GetString());
+        Assert.Equal("<speak><phoneme alphabet=\"ipa\" ph=\"eɪ.ɛm.ɛs\">AMS</phoneme></speak>",
+            entries["AMS"].GetProperty("SSML").GetString());
+        Assert.Equal("<speak><phoneme alphabet=\"ipa\" ph=\"eɪ.ɛm.zi\">AMZ</phoneme></speak>",
+            entries["AMZ"].GetProperty("SSML").GetString());
         Assert.Equal("Bop", entries["BoP"].GetProperty("Text").GetString());
-        Assert.Equal("P I", entries["PI"].GetProperty("Text").GetString());
+        Assert.Equal("<speak><phoneme alphabet=\"ipa\" ph=\"pi.aɪ\">PI</phoneme></speak>",
+            entries["PI"].GetProperty("SSML").GetString());
     }
 
     [Fact]

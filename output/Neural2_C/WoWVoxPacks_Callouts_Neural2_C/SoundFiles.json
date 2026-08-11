@@ -21,13 +21,13 @@
     "FileName": "ams.ogg",
     "DisplayName": "AMS",
     "FormattedDisplayName": "AMS",
-    "Text": "A M S"
+    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022e\u026A.\u025Bm.\u025Bs\u0022\u003EAMS\u003C/phoneme\u003E\u003C/speak\u003E"
   },
   {
     "FileName": "amz.ogg",
     "DisplayName": "AMZ",
     "FormattedDisplayName": "AMZ",
-    "Text": "A M Z"
+    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022e\u026A.\u025Bm.zi\u0022\u003EAMZ\u003C/phoneme\u003E\u003C/speak\u003E"
   },
   {
     "FileName": "ankh.ogg",
@@ -1156,7 +1156,7 @@
     "FileName": "pi.ogg",
     "DisplayName": "PI",
     "FormattedDisplayName": "PI",
-    "Text": "P I"
+    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022pi.a\u026A\u0022\u003EPI\u003C/phoneme\u003E\u003C/speak\u003E"
   },
   {
     "FileName": "pillar_of_frost.ogg",

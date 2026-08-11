@@ -1,6 +1,3 @@
-local L = BigWigsAPI:GetLocale("BigWigs")
-local LSM = LibStub("LibSharedMedia-3.0")
-
 local key = "WoWVoxPacks: Neural2_C"
 local path = "Interface\\AddOns\\BigWigs_Countdown_WoWVoxPacks_Neural2_C\\Sounds\\countdown_%d.ogg"
 --------------------------------------------------------------------------------

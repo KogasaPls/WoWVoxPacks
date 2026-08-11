@@ -4,11 +4,11 @@ namespace WoWVoxPack.TTS;
 
 public sealed class SoundFileManifest
 {
-    private readonly IReadOnlyDictionary<string, SoundFile> _soundFilesByDisplayName;
+    private readonly IReadOnlyDictionary<string, SoundFile> _soundFilesByKey;
 
-    private SoundFileManifest(IReadOnlyDictionary<string, SoundFile> soundFilesByDisplayName)
+    private SoundFileManifest(IReadOnlyDictionary<string, SoundFile> soundFilesByKey)
     {
-        _soundFilesByDisplayName = soundFilesByDisplayName;
+        _soundFilesByKey = soundFilesByKey;
     }
 
     public static async Task<SoundFileManifest> LoadAsync(string path, CancellationToken cancellationToken = default)
@@ -24,7 +24,7 @@ public sealed class SoundFileManifest
             throw new Exception("Failed to deserialize sound files.");
 
         return new SoundFileManifest(
-            soundFiles.ToDictionary(f => f.DisplayName, StringComparer.OrdinalIgnoreCase));
+            soundFiles.ToDictionary(f => f.Key, StringComparer.OrdinalIgnoreCase));
     }
 
     public IEnumerable<SoundFile> FilesToCreate(IEnumerable<SoundFile> currentSoundFiles, string soundDirectory)
@@ -45,9 +45,13 @@ public sealed class SoundFileManifest
         return File.WriteAllTextAsync(path, json, cancellationToken);
     }
 
+    /// <summary>
+    /// A key the manifest has never seen counts as unchanged: with the file already on disk there
+    /// is nothing to render, and a re-key of an addon therefore costs nothing.
+    /// </summary>
     private bool IsSameContentAsManifestEntry(SoundFile soundFile)
     {
-        if (!_soundFilesByDisplayName.TryGetValue(soundFile.DisplayName, out SoundFile? existing))
+        if (!_soundFilesByKey.TryGetValue(soundFile.Key, out SoundFile? existing))
         {
             return true;
         }

@@ -12,7 +12,7 @@ using WoWVoxPack.AddOns;
 using WoWVoxPack.AddOns.BigWigs_Countdown;
 using WoWVoxPack.AddOns.BigWigs_Voice;
 using WoWVoxPack.AddOns.ExBoss;
-using WoWVoxPack.AddOns.SharedMedia_Abilities;
+using WoWVoxPack.AddOns.Callouts;
 using WoWVoxPack.Builder;
 using WoWVoxPack.Core.Builder;
 using WoWVoxPack.TTS;
@@ -36,18 +36,38 @@ IHostBuilder hostBuilder = Host.CreateDefaultBuilder(args)
         services.AddSingleton<ITtsProvider, GoogleTtsProvider>();
         services.AddSingleton<ISoundFileService, SoundFileService>();
         services.AddHttpClient<IBigWigsVoiceUpstreamClient, BigWigsVoiceUpstreamClient>();
+        services.AddSingleton(_ => new CalloutsVocabularyProvider(
+            Path.Combine(AppContext.BaseDirectory, "Callouts_Sounds.json"),
+            Path.Combine(AppContext.BaseDirectory, "CalloutPronunciations.json"),
+            Path.Combine(Path.GetDirectoryName(
+                Assembly.GetExecutingAssembly().GetCustomAttribute<SolutionFileAttribute>()!.SolutionFile)!,
+                "lorrgs-vocabulary.txt"),
+            Path.Combine(AppContext.BaseDirectory, "RetiredCallouts.json")));
+        services.AddSingleton(_ => new NorthernSkyRaidToolsVocabularyProvider(
+            Path.Combine(Path.GetDirectoryName(
+                Assembly.GetExecutingAssembly().GetCustomAttribute<SolutionFileAttribute>()!.SolutionFile)!,
+                "nsrt-vocabulary.txt"),
+            Path.Combine(AppContext.BaseDirectory, "CalloutPronunciations.json")));
         services.TryAddEnumerable(ServiceDescriptor.Singleton<IAddOnService, BigWigsVoiceAddOnService>());
         services.TryAddEnumerable(ServiceDescriptor.Singleton<IAddOnService, BigWigsCountdownAddOnService>());
-        services.TryAddEnumerable(ServiceDescriptor.Singleton<IAddOnService, SharedMediaAbilitiesAddOnService>());
+        services.TryAddEnumerable(ServiceDescriptor.Singleton<IAddOnService, CalloutsMediaAddOnService>());
+        services.TryAddEnumerable(
+            ServiceDescriptor.Singleton<IAddOnService, NorthernSkyRaidToolsAddOnService>());
         services.TryAddEnumerable(ServiceDescriptor.Singleton<IAddOnService, ExBossAddOnService>());
         services.AddOptionsWithValidateOnStart<BuildMatrix>().BindConfiguration("Matrix");
+        // Each addon binds its own AddOn:{Name} section and then the AddOn root. The binder
+        // appends to a List<T>, so Interfaces is root-only: a per-addon list would be
+        // concatenated with the root's, not replace it.
         services.AddOptionsWithValidateOnStart<AddOnSettings>("BigWigs_Voice").BindConfiguration("AddOn:BigWigs_Voice")
             .BindConfiguration("AddOn");
         services.AddOptionsWithValidateOnStart<AddOnSettings>("BigWigs_Countdown")
             .BindConfiguration("AddOn:BigWigs_Countdown")
             .BindConfiguration("AddOn");
-        services.AddOptionsWithValidateOnStart<AddOnSettings>("SharedMedia_Abilities")
-            .BindConfiguration("AddOn:SharedMedia_Abilities")
+        services.AddOptionsWithValidateOnStart<AddOnSettings>("Callouts")
+            .BindConfiguration("AddOn:Callouts")
+            .BindConfiguration("AddOn");
+        services.AddOptionsWithValidateOnStart<AddOnSettings>("NorthernSkyRaidTools")
+            .BindConfiguration("AddOn:NorthernSkyRaidTools")
             .BindConfiguration("AddOn");
         services.AddOptionsWithValidateOnStart<AddOnSettings>("ExBoss")
             .BindConfiguration("AddOn:ExBoss")

@@ -31,6 +31,48 @@ public class AddOnBuilderTests
     }
 
     [Fact]
+    public void Build_UsesConfiguredInterfaces_AndFallsBackToVersionDerivedInterface_WhenNotConfigured()
+    {
+        AddOnSettings configured = DefaultSettings;
+        configured.Interfaces = ["120007", "120100"];
+        AddOn withConfiguredInterfaces = new AddOnBuilder(configured, DefaultTtsSettings).Build("/tmp/output");
+        Assert.Equal(["120007", "120100"], withConfiguredInterfaces.Interfaces);
+
+        AddOn withoutConfiguredInterfaces = new AddOnBuilder(DefaultSettings, DefaultTtsSettings).Build("/tmp/output");
+        Assert.Equal(["120007"], withoutConfiguredInterfaces.Interfaces);
+    }
+
+    [Fact]
+    public void Build_DeduplicatesInterfaces()
+    {
+        // Every addon binds its own AddOn:{Name} section and then the AddOn root, and the
+        // configuration binder appends to a list rather than replacing it.
+        AddOnSettings configured = DefaultSettings;
+        configured.Interfaces = ["120007", "120100", "120007"];
+
+        AddOn addOn = new AddOnBuilder(configured, DefaultTtsSettings).Build("/tmp/output");
+
+        Assert.Equal(["120007", "120100"], addOn.Interfaces);
+    }
+
+    [Theory]
+    [InlineData("12.0.7")]
+    [InlineData("1200o7")]
+    [InlineData("1200")]
+    [InlineData("1200077")]
+    [InlineData("")]
+    public void Build_RejectsAnInterfaceThatIsNotATocInterfaceNumber(string @interface)
+    {
+        // WoW has no error path for a malformed '## Interface:' line: it treats the addon as
+        // unsupported and says nothing.
+        AddOnSettings configured = DefaultSettings;
+        configured.Interfaces = [@interface];
+
+        Assert.Throws<InvalidOperationException>(
+            () => new AddOnBuilder(configured, DefaultTtsSettings).Build("/tmp/output"));
+    }
+
+    [Fact]
     public void Build_PrefersExplicitTitleAndDisplayTitle_OverSettings()
     {
         AddOn addOn = new AddOnBuilder(DefaultSettings, DefaultTtsSettings)
@@ -68,6 +110,20 @@ public class AddOnBuilderTests
             .Build("/tmp/output");
 
         Assert.Equal("Replacement", Assert.Single(addOn.SoundFiles).Text);
+    }
+
+    [Fact]
+    public void AddSoundFile_KeepsBoth_WhenTheyShareADisplayNameButNotAKey()
+    {
+        SoundFile first = new("111.ogg", text: "Shadow Bolt", displayName: "Shadow Bolt") { ExplicitKey = "111" };
+        SoundFile second = new("222.ogg", text: "Shadow Bolt", displayName: "Shadow Bolt") { ExplicitKey = "222" };
+
+        AddOn addOn = new AddOnBuilder(DefaultSettings, DefaultTtsSettings)
+            .AddSoundFile(first)
+            .AddSoundFile(second)
+            .Build("/tmp/output");
+
+        Assert.Equal(["111.ogg", "222.ogg"], addOn.SoundFiles.Select(f => f.FileName).Order());
     }
 
     [Fact]

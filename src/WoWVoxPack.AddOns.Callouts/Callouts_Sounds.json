@@ -1,0 +1,482 @@
+[
+  {
+    "FileName": "tranq.ogg",
+    "Text": "Tranq=træŋk",
+    "DisplayName": "Tranq"
+  },
+  {
+    "FileName": "convoke.ogg",
+    "Text": "Convoke",
+    "DisplayName": "Convoke"
+  },
+  {
+    "FileName": "roar.ogg",
+    "Text": "Roar",
+    "DisplayName": "Roar"
+  },
+  {
+    "FileName": "incarn.ogg",
+    "Text": "Incarn",
+    "DisplayName": "Incarn"
+  },
+  {
+    "FileName": "tree_of_life.ogg",
+    "Text": "Tree of Life",
+    "DisplayName": "Tree of Life"
+  },
+  {
+    "FileName": "restoral.ogg",
+    "Text": "Restoral",
+    "DisplayName": "Restoral"
+  },
+  {
+    "FileName": "yulon.ogg",
+    "Text": "Yu'lon=ˈjuːlɒn",
+    "DisplayName": "Yu'lon"
+  },
+  {
+    "FileName": "chiji.ogg",
+    "Text": "Chi-ji=tʃiːdʒiː",
+    "DisplayName": "Chi-ji"
+  },
+  {
+    "FileName": "conduit.ogg",
+    "Text": "Conduit",
+    "DisplayName": "Conduit"
+  },
+  {
+    "FileName": "cocoon.ogg",
+    "Text": "Cocoon",
+    "DisplayName": "Cocoon"
+  },
+  {
+    "FileName": "puzzle_box.ogg",
+    "Text": "Puzzle Box",
+    "DisplayName": "Puzzle Box"
+  },
+  {
+    "FileName": "ams.ogg",
+    "Text": "A M S",
+    "DisplayName": "AMS"
+  },
+  {
+    "FileName": "amz.ogg",
+    "Text": "A M Z",
+    "DisplayName": "AMZ"
+  },
+  {
+    "FileName": "cheetah.ogg",
+    "Text": "Cheetah",
+    "DisplayName": "Cheetah"
+  },
+  {
+    "FileName": "eagle.ogg",
+    "Text": "Eagle",
+    "DisplayName": "Eagle"
+  },
+  {
+    "FileName": "turtle.ogg",
+    "Text": "Turtle",
+    "DisplayName": "Turtle"
+  },
+  {
+    "FileName": "wings.ogg",
+    "Text": "Wings",
+    "DisplayName": "Wings"
+  },
+  {
+    "FileName": "bop.ogg",
+    "Text": "Bop",
+    "DisplayName": "BoP"
+  },
+  {
+    "FileName": "sac.ogg",
+    "Text": "Sac",
+    "DisplayName": "Sac"
+  },
+  {
+    "FileName": "spellwarding.ogg",
+    "Text": "Spellwarding",
+    "DisplayName": "Spellwarding"
+  },
+  {
+    "FileName": "lust.ogg",
+    "Text": "Lust",
+    "DisplayName": "Lust"
+  },
+  {
+    "FileName": "cloak.ogg",
+    "Text": "Cloak",
+    "DisplayName": "Cloak"
+  },
+  {
+    "FileName": "demo_shout.ogg",
+    "Text": "Demo Shout",
+    "DisplayName": "Demo Shout"
+  },
+  {
+    "FileName": "bubble.ogg",
+    "Text": "Bubble",
+    "DisplayName": "Bubble"
+  },
+  {
+    "FileName": "ebon_might.ogg",
+    "Text": "Ebon Might",
+    "DisplayName": "Ebon Might"
+  },
+  {
+    "FileName": "enraged_regen.ogg",
+    "Text": "Enraged Regen",
+    "DisplayName": "Enraged Regen"
+  },
+  {
+    "FileName": "fel_dev.ogg",
+    "Text": "Fel Dev",
+    "DisplayName": "Fel Dev"
+  },
+  {
+    "FileName": "trees.ogg",
+    "Text": "Trees",
+    "DisplayName": "Trees"
+  },
+  {
+    "FileName": "fort_brew.ogg",
+    "Text": "Fort Brew",
+    "DisplayName": "Fort Brew"
+  },
+  {
+    "FileName": "frostwyrm.ogg",
+    "Text": "Frostwyrm",
+    "DisplayName": "Frostwyrm"
+  },
+  {
+    "FileName": "fel_ravager.ogg",
+    "Text": "Fel Ravager",
+    "DisplayName": "Fel Ravager"
+  },
+  {
+    "FileName": "imp_lord.ogg",
+    "Text": "Imp Lord",
+    "DisplayName": "Imp Lord"
+  },
+  {
+    "FileName": "healing_tide.ogg",
+    "Text": "Healing Tide",
+    "DisplayName": "Healing Tide"
+  },
+  {
+    "FileName": "niuzao.ogg",
+    "Text": "Niuzao",
+    "DisplayName": "Niuzao"
+  },
+  {
+    "FileName": "xuen.ogg",
+    "Text": "Xuen",
+    "DisplayName": "Xuen"
+  },
+  {
+    "FileName": "pain_sup.ogg",
+    "Text": "Pain Sup",
+    "DisplayName": "Pain Sup"
+  },
+  {
+    "FileName": "pi.ogg",
+    "Text": "P I",
+    "DisplayName": "PI"
+  },
+  {
+    "FileName": "barrier.ogg",
+    "Text": "Barrier",
+    "DisplayName": "Barrier"
+  },
+  {
+    "FileName": "radiance.ogg",
+    "Text": "Radiance",
+    "DisplayName": "Radiance"
+  },
+  {
+    "FileName": "rally.ogg",
+    "Text": "Rally",
+    "DisplayName": "Rally"
+  },
+  {
+    "FileName": "ankh.ogg",
+    "Text": "Ankh",
+    "DisplayName": "Ankh"
+  },
+  {
+    "FileName": "spell_reflect.ogg",
+    "Text": "Spell Reflect",
+    "DisplayName": "Spell Reflect"
+  },
+  {
+    "FileName": "spirit_link.ogg",
+    "Text": "Spirit Link",
+    "DisplayName": "Spirit Link"
+  },
+  {
+    "FileName": "darkglare.ogg",
+    "Text": "Darkglare",
+    "DisplayName": "Darkglare"
+  },
+  {
+    "FileName": "tyrant.ogg",
+    "Text": "Tyrant",
+    "DisplayName": "Tyrant"
+  },
+  {
+    "FileName": "doomguard.ogg",
+    "Text": "Doomguard",
+    "DisplayName": "Doomguard"
+  },
+  {
+    "FileName": "infernal.ogg",
+    "Text": "Infernal",
+    "DisplayName": "Infernal"
+  },
+  {
+    "FileName": "tip.ogg",
+    "Text": "Tip",
+    "DisplayName": "Tip"
+  },
+  {
+    "FileName": "wind_rush.ogg",
+    "Text": "Wind Rush",
+    "DisplayName": "Wind Rush"
+  },
+  {
+    "FileName": "uppies.ogg",
+    "Text": "Uppies",
+    "DisplayName": "Uppies"
+  },
+  {
+    "FileName": "wall.ogg",
+    "Text": "Wall",
+    "DisplayName": "Wall"
+  },
+  {
+    "FileName": "meta.ogg",
+    "Text": "Meta",
+    "DisplayName": "Meta"
+  },
+  {
+    "FileName": "arrows.ogg",
+    "Text": "Arrows",
+    "DisplayName": "Arrows"
+  },
+  {
+    "FileName": "stop_cast.ogg",
+    "Text": "Stop Cast",
+    "DisplayName": "Stop Cast"
+  },
+  {
+    "FileName": "bait.ogg",
+    "Text": "Bait",
+    "DisplayName": "Bait"
+  },
+  {
+    "FileName": "explosion.ogg",
+    "Text": "Explosion",
+    "DisplayName": "Explosion"
+  },
+  {
+    "FileName": "big_boom.ogg",
+    "Text": "Big Boom",
+    "DisplayName": "Big Boom"
+  },
+  {
+    "FileName": "tether.ogg",
+    "Text": "Tether",
+    "DisplayName": "Tether"
+  },
+  {
+    "FileName": "miss.ogg",
+    "Text": "Miss",
+    "DisplayName": "Miss"
+  },
+  {
+    "FileName": "immune.ogg",
+    "Text": "Immune",
+    "DisplayName": "Immune"
+  },
+  {
+    "FileName": "hit_demiar.ogg",
+    "Text": "Hit Demiar",
+    "DisplayName": "Hit Demiar"
+  },
+  {
+    "FileName": "hit_morium.ogg",
+    "Text": "Hit Morium",
+    "DisplayName": "Hit Morium"
+  },
+  {
+    "FileName": "hit_vorelus.ogg",
+    "Text": "Hit Vorelus",
+    "DisplayName": "Hit Vorelus"
+  },
+  {
+    "FileName": "quills.ogg",
+    "Text": "Quills",
+    "DisplayName": "Quills"
+  },
+  {
+    "FileName": "soaks.ogg",
+    "Text": "Soaks",
+    "DisplayName": "Soaks"
+  },
+  {
+    "FileName": "external_void.ogg",
+    "Text": "External Void",
+    "DisplayName": "External Void"
+  },
+  {
+    "FileName": "external_light.ogg",
+    "Text": "External Light",
+    "DisplayName": "External Light"
+  },
+  {
+    "FileName": "interrupts.ogg",
+    "Text": "Interrupts",
+    "DisplayName": "Interrupts"
+  },
+  {
+    "FileName": "glaives.ogg",
+    "Text": "Glaives",
+    "DisplayName": "Glaives"
+  },
+  {
+    "FileName": "memory_game.ogg",
+    "Text": "Memory Game",
+    "DisplayName": "Memory Game"
+  },
+  {
+    "FileName": "beams.ogg",
+    "Text": "Beams",
+    "DisplayName": "Beams"
+  },
+  {
+    "FileName": "full_blaze.ogg",
+    "Text": "Full Blaze",
+    "DisplayName": "Full Blaze"
+  },
+  {
+    "FileName": "seed_drop.ogg",
+    "Text": "Seed Drop",
+    "DisplayName": "Seed Drop"
+  },
+  {
+    "FileName": "orbs.ogg",
+    "Text": "Orbs",
+    "DisplayName": "Orbs"
+  },
+  {
+    "FileName": "stars.ogg",
+    "Text": "Stars",
+    "DisplayName": "Stars"
+  },
+  {
+    "FileName": "move.ogg",
+    "Text": "Move",
+    "DisplayName": "Move"
+  },
+  {
+    "FileName": "blazes.ogg",
+    "Text": "Blazes",
+    "DisplayName": "Blazes"
+  },
+  {
+    "FileName": "spread.ogg",
+    "Text": "Spread",
+    "DisplayName": "Spread"
+  },
+  {
+    "FileName": "litany.ogg",
+    "Text": "Litany",
+    "DisplayName": "Litany"
+  },
+  {
+    "FileName": "ramp.ogg",
+    "Text": "Ramp",
+    "DisplayName": "Ramp"
+  },
+  {
+    "FileName": "soak_cross.ogg",
+    "Text": "Soak Cross",
+    "DisplayName": "Soak Cross"
+  },
+  {
+    "FileName": "soak_circle.ogg",
+    "Text": "Soak Circle",
+    "DisplayName": "Soak Circle"
+  },
+  {
+    "FileName": "soak_square.ogg",
+    "Text": "Soak Square",
+    "DisplayName": "Soak Square"
+  },
+  {
+    "FileName": "soak_triangle.ogg",
+    "Text": "Soak Triangle",
+    "DisplayName": "Soak Triangle"
+  },
+  {
+    "FileName": "soak_skull.ogg",
+    "Text": "Soak Skull",
+    "DisplayName": "Soak Skull"
+  },
+  {
+    "FileName": "spread_at_star.ogg",
+    "Text": "Spread at Star",
+    "DisplayName": "Spread at Star"
+  },
+  {
+    "FileName": "spread_at_moon.ogg",
+    "Text": "Spread at Moon",
+    "DisplayName": "Spread at Moon"
+  },
+  {
+    "FileName": "spread_at_sun.ogg",
+    "Text": "Spread at Sun",
+    "DisplayName": "Spread at Sun"
+  },
+  {
+    "FileName": "spread_at_skull.ogg",
+    "Text": "Spread at Skull",
+    "DisplayName": "Spread at Skull"
+  },
+  {
+    "FileName": "spread_at_cross.ogg",
+    "Text": "Spread at Cross",
+    "DisplayName": "Spread at Cross"
+  },
+  {
+    "FileName": "spread_at_square.ogg",
+    "Text": "Spread at Square",
+    "DisplayName": "Spread at Square"
+  },
+  {
+    "FileName": "spread_at_triangle.ogg",
+    "Text": "Spread at Triangle",
+    "DisplayName": "Spread at Triangle"
+  },
+  {
+    "FileName": "soulstone.ogg",
+    "Text": "Soulstone",
+    "DisplayName": "Soulstone"
+  },
+  {
+    "FileName": "source_of_magic.ogg",
+    "Text": "Source of Magic",
+    "DisplayName": "Source of Magic"
+  },
+  {
+    "FileName": "blistering_scales.ogg",
+    "Text": "Blistering Scales",
+    "DisplayName": "Blistering Scales"
+  },
+  {
+    "FileName": "symbiotic_relationship.ogg",
+    "Text": "Symbiotic Relationship",
+    "DisplayName": "Symbiotic Relationship"
+  }
+]

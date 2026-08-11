@@ -26,11 +26,44 @@ jobs:
       - name: Set release tag
         id: set-release-tag
         if: github.event_name != 'push'
-        run: echo "RELEASE_TAG=$(cat bigwigs-voice-version.txt)" >> $GITHUB_ENV
+        run: |
+          # update.yml resets release-revision.txt to 0 whenever BigWigs moves, which is
+          # exactly when the bare version tag is most likely to exist already. Handing
+          # action-gh-release a tag that exists makes it update that release in place, so
+          # the build is never delivered. Walk the revision forward to the first free tag.
+          #
+          # The -r{n} suffix shape matters: publish-to-curseforge.yml derives the game
+          # version as ${RELEASE_TAG#v} then %%-*, so anything after the first dash is
+          # discarded there.
+          #
+          # checkout runs with fetch-depth: 0 above, so every tag is local and no network
+          # call is needed to test one.
+          base=$(cat bigwigs-voice-version.txt)
+          revision=$(cat release-revision.txt 2>/dev/null || echo 0)
+
+          candidate_for() {
+            if [ "$1" -gt 0 ]; then echo "${base}-r$1"; else echo "${base}"; fi
+          }
+
+          candidate=$(candidate_for "$revision")
+          attempts=0
+          while git rev-parse -q --verify "refs/tags/${candidate}" >/dev/null; do
+            echo "Tag ${candidate} already exists"
+            attempts=$(( attempts + 1 ))
+            if [ "$attempts" -gt 100 ]; then
+              echo "No free release tag after 100 attempts (last tried: ${candidate})" >&2
+              exit 1
+            fi
+            revision=$(( revision + 1 ))
+            candidate=$(candidate_for "$revision")
+          done
+
+          echo "Release tag: ${candidate}"
+          echo "RELEASE_TAG=${candidate}" >> "$GITHUB_ENV"
       - name: Set release tag from push event
         id: set-release-tag-push
         if: github.event_name == 'push'
-        run: echo "RELEASE_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+        run: echo "RELEASE_TAG=${GITHUB_REF#refs/*/}" >> "$GITHUB_ENV"
       - name: Package artifacts
         run: ./scripts/package.sh
       - name: Create GitHub Release
@@ -50,5 +83,6 @@ jobs:
           files: |
             ./dist/*.zip
             ./bigwigs-voice-version.txt
+            ./release-revision.txt
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_RELEASE_PAT }}

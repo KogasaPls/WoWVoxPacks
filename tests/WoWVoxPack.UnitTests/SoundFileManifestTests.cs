@@ -62,6 +62,46 @@ public class SoundFileManifestTests : IDisposable
         Assert.Contains(changed, filesToCreate);
     }
 
+    [Fact]
+    public async Task FilesToCreate_ExcludesEntries_SharingADisplayNameUnderDifferentKeys()
+    {
+        SoundFile first = new("111.ogg", ssml: "<speak>Shadow Bolt</speak>", displayName: "Shadow Bolt")
+        {
+            ExplicitKey = "111"
+        };
+        SoundFile second = new("222.ogg", ssml: "<speak>Shadow Bolt</speak>", displayName: "Shadow Bolt")
+        {
+            ExplicitKey = "222"
+        };
+        SoundFileManifest savedManifest = await SoundFileManifest.LoadAsync(ManifestPath);
+        await savedManifest.SaveAsync(ManifestPath, [first, second]);
+        SoundFileManifest manifest = await SoundFileManifest.LoadAsync(ManifestPath);
+        await File.WriteAllTextAsync(Path.Combine(_tempDirectory, first.FileName), "fake audio");
+        await File.WriteAllTextAsync(Path.Combine(_tempDirectory, second.FileName), "fake audio");
+
+        Assert.Empty(manifest.FilesToCreate([first, second], _tempDirectory));
+    }
+
+    [Fact]
+    public async Task FilesToCreate_IncludesEntry_WhenItsDisplayNameChangedUnderTheSameKey()
+    {
+        SoundFile original = new("111.ogg", ssml: "<speak>Shadow Bolt</speak>", displayName: "Shadow Bolt")
+        {
+            ExplicitKey = "111"
+        };
+        SoundFileManifest savedManifest = await SoundFileManifest.LoadAsync(ManifestPath);
+        await savedManifest.SaveAsync(ManifestPath, [original]);
+        SoundFileManifest manifest = await SoundFileManifest.LoadAsync(ManifestPath);
+        await File.WriteAllTextAsync(Path.Combine(_tempDirectory, original.FileName), "fake audio");
+
+        SoundFile renamed = new("111.ogg", ssml: "<speak>Shadow Blast</speak>", displayName: "Shadow Blast")
+        {
+            ExplicitKey = "111"
+        };
+
+        Assert.Contains(renamed, manifest.FilesToCreate([renamed], _tempDirectory));
+    }
+
     public void Dispose()
     {
         Directory.Delete(_tempDirectory, true);

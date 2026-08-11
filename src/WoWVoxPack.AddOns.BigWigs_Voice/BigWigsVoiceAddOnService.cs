@@ -10,8 +10,7 @@ public sealed class BigWigsVoiceAddOnService(
     IBigWigsVoiceUpstreamClient upstreamClient)
     : IAddOnService
 {
-    private static readonly Lazy<List<SoundFile>> JsonSoundFiles = new(() =>
-        AddOnBuilder.LoadSoundFileJson(Path.Combine(AppContext.BaseDirectory, "BigWigsVoice_Sounds.json")));
+    private static readonly Lazy<List<SoundFile>> JsonSoundFiles = new(LoadCuratedSoundFiles);
 
     private BigWigsVoiceSoundFile[]? _soundFiles;
 
@@ -35,5 +34,23 @@ public sealed class BigWigsVoiceAddOnService(
         GetSoundFilesAsync(CancellationToken cancellationToken)
     {
         return _soundFiles ??= (await UpstreamClient.GetSoundFilesAsync(cancellationToken)).ToArray();
+    }
+
+    /// <summary>
+    /// The curated entries name their file after the spell they are overriding, so the ID in the
+    /// file name is their key. Keying them by name instead would miss the upstream entry whenever
+    /// the two disagree about the name, and both would then render the same file.
+    /// </summary>
+    private static List<SoundFile> LoadCuratedSoundFiles()
+    {
+        List<SoundFile> soundFiles =
+            AddOnBuilder.LoadSoundFileJson(Path.Combine(AppContext.BaseDirectory, "BigWigsVoice_Sounds.json"));
+
+        foreach (SoundFile soundFile in soundFiles)
+        {
+            soundFile.ExplicitKey = Path.GetFileNameWithoutExtension(soundFile.FileName);
+        }
+
+        return soundFiles;
     }
 }

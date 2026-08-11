@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>WoWVoxPack.LuaFixtures</RootNamespace>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\WoWVoxPack.AddOns.Callouts\WoWVoxPack.AddOns.Callouts.csproj"/>
+    <ProjectReference Include="..\..\..\src\WoWVoxPack.AddOns.ExBoss\WoWVoxPack.AddOns.ExBoss.csproj"/>
+    <ProjectReference Include="..\..\..\src\WoWVoxPack.AddOns.BigWigs_Countdown\WoWVoxPack.AddOns.BigWigs_Countdown.csproj"/>
+  </ItemGroup>
+</Project>

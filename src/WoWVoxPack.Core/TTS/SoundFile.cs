@@ -21,6 +21,23 @@ public class SoundFile
     [JsonPropertyOrder(-5)]
     public string FileName { get; set; }
 
+    /// <summary>
+    /// Set only when the display name is not what identifies the sound. BigWigs_Voice sets it to
+    /// the spell ID: several spells share a name, and the ID is what names the file and what the
+    /// game looks up.
+    /// </summary>
+    [JsonPropertyName("Key")]
+    [JsonPropertyOrder(-6)]
+    public string? ExplicitKey { get; set; }
+
+    /// <summary>
+    /// What makes two entries the same sound across builds: the dictionary key an addon is
+    /// assembled under, and the manifest key a rendered file is remembered under. Defaults to
+    /// the display name, which is also the LibSharedMedia key of the SharedMedia addons.
+    /// </summary>
+    [JsonIgnore]
+    public string Key => ExplicitKey ?? DisplayName;
+
 
     [JsonPropertyName("DisplayName")]
     [JsonPropertyOrder(-4)]

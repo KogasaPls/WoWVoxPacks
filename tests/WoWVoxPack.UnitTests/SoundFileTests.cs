@@ -24,6 +24,16 @@ public class SoundFileTests
     }
 
     [Fact]
+    public void Key_IsTheDisplayName_UnlessSetExplicitly()
+    {
+        SoundFile named = new("alert.ogg", displayName: "Alert");
+        SoundFile keyed = new("338353.ogg", displayName: "Goresplatter") { ExplicitKey = "338353" };
+
+        Assert.Equal("Alert", named.Key);
+        Assert.Equal("338353", keyed.Key);
+    }
+
+    [Fact]
     public void GetSsml_UsesPhonemeMarkupForWordsWithIpa()
     {
         string ssml = SoundFile.GetSsml("Taivan=ˈtaɪvɑːn incoming");

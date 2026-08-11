@@ -20,7 +20,7 @@ public sealed class ExBossAddOnService(IOptionsSnapshot<AddOnSettings> addOnOpti
             .WithTitle($"ExBoss WoWVoxPacks {ttsSettings.Voice}")
             .WithDisplayTitle($"ExBoss WoWVoxPacks ({ttsSettings.Voice})")
             .AddSoundFiles(JsonSoundFiles.Value, overwrite: true)
-            .AddFile("Core.lua", addon => new LabelsFile(addon).TransformText())
+            .AddFile("Core.lua", LabelsFile.Render)
             .Build(outputDirectoryBase);
 
         return Task.FromResult(addOn);

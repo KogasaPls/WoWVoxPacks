@@ -19,9 +19,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WoWVoxPack.Builder", "src\W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WoWVoxPack.AddOns.BigWigs_Countdown", "src\WoWVoxPack.AddOns.BigWigs_Countdown\WoWVoxPack.AddOns.BigWigs_Countdown.csproj", "{6CA2A72F-7A95-487A-869E-2FAD76789CD6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WoWVoxPack.AddOns.SharedMedia_Abilities", "src\WoWVoxPack.AddOns.SharedMedia_Abilities\WoWVoxPack.AddOns.SharedMedia_Abilities.csproj", "{B2803F10-D17E-426E-8F99-6302152390BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WoWVoxPack.AddOns.Callouts", "src\WoWVoxPack.AddOns.Callouts\WoWVoxPack.AddOns.Callouts.csproj", "{B2803F10-D17E-426E-8F99-6302152390BB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WoWVoxPack.AddOns.ExBoss", "src\WoWVoxPack.AddOns.ExBoss\WoWVoxPack.AddOns.ExBoss.csproj", "{BC97355F-7899-4271-B809-55B8BDAE04A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WoWVoxPack.LuaFixtures", "tests\lua\generator\WoWVoxPack.LuaFixtures.csproj", "{CC05B050-489F-4364-85CC-2ECCB77ECCEE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -129,6 +131,18 @@ Global
 		{BC97355F-7899-4271-B809-55B8BDAE04A0}.Release|x64.Build.0 = Release|Any CPU
 		{BC97355F-7899-4271-B809-55B8BDAE04A0}.Release|x86.ActiveCfg = Release|Any CPU
 		{BC97355F-7899-4271-B809-55B8BDAE04A0}.Release|x86.Build.0 = Release|Any CPU
+		{CC05B050-489F-4364-85CC-2ECCB77ECCEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC05B050-489F-4364-85CC-2ECCB77ECCEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC05B050-489F-4364-85CC-2ECCB77ECCEE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CC05B050-489F-4364-85CC-2ECCB77ECCEE}.Debug|x64.Build.0 = Debug|Any CPU
+		{CC05B050-489F-4364-85CC-2ECCB77ECCEE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CC05B050-489F-4364-85CC-2ECCB77ECCEE}.Debug|x86.Build.0 = Debug|Any CPU
+		{CC05B050-489F-4364-85CC-2ECCB77ECCEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC05B050-489F-4364-85CC-2ECCB77ECCEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC05B050-489F-4364-85CC-2ECCB77ECCEE}.Release|x64.ActiveCfg = Release|Any CPU
+		{CC05B050-489F-4364-85CC-2ECCB77ECCEE}.Release|x64.Build.0 = Release|Any CPU
+		{CC05B050-489F-4364-85CC-2ECCB77ECCEE}.Release|x86.ActiveCfg = Release|Any CPU
+		{CC05B050-489F-4364-85CC-2ECCB77ECCEE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -142,5 +156,6 @@ Global
 		{6CA2A72F-7A95-487A-869E-2FAD76789CD6} = {838BA0C0-56C4-4727-9F98-74C7A02540E0}
 		{B2803F10-D17E-426E-8F99-6302152390BB} = {838BA0C0-56C4-4727-9F98-74C7A02540E0}
 		{BC97355F-7899-4271-B809-55B8BDAE04A0} = {838BA0C0-56C4-4727-9F98-74C7A02540E0}
+		{CC05B050-489F-4364-85CC-2ECCB77ECCEE} = {BC165376-8404-4073-8551-C368A43D46C1}
 	EndGlobalSection
 EndGlobal

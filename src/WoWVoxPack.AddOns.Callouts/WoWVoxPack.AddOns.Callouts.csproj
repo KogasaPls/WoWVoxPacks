@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\WoWVoxPack.Core\WoWVoxPack.Core.csproj"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Callouts_Sounds.json"/>
+    <AdditionalFiles Include="Callouts_Sounds.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
+    <None Remove="CalloutPronunciations.json"/>
+    <AdditionalFiles Include="CalloutPronunciations.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
+    <None Remove="RetiredCallouts.json"/>
+    <AdditionalFiles Include="RetiredCallouts.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
+  </ItemGroup>
+
+</Project>

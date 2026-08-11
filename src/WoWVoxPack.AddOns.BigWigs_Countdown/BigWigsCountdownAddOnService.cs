@@ -19,7 +19,7 @@ public sealed class BigWigsCountdownAddOnService(IOptionsSnapshot<AddOnSettings>
             .WithTitle($"BigWigs Countdown WoWVoxPacks {ttsSettings.Voice}")
             .WithDisplayTitle($"BigWigs |cffff7f3f+|r|cffffffffCountdown: WoWVoxPacks ({ttsSettings.Voice})|r")
             .AddSoundFiles(CountdownSoundFiles.Value)
-            .AddFile("Countdown.lua", addon => new CountdownLuaFile(addon).TransformText())
+            .AddFile("Countdown.lua", CountdownLuaFile.Render)
             .Build(outputDirectoryBase);
 
         return Task.FromResult(addOn);

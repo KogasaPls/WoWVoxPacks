@@ -29,4 +29,13 @@ public class AddOnSettings
         get;
         set;
     } = new();
+
+    /// <summary>
+    /// WoW toc Interface numbers, root-only: every addon is bound to its own
+    /// <c>AddOn:{Name}</c> section and then to <c>AddOn</c>, and the configuration binder
+    /// APPENDS to a <see cref="List{T}"/> rather than replacing it, so a per-addon
+    /// <c>["110000"]</c> would come out as <c>["110000", "120007", "120100"]</c>.
+    /// <see cref="AddOn"/> deduplicates and validates what it is handed.
+    /// </summary>
+    public List<string>? Interfaces { get; set; }
 }

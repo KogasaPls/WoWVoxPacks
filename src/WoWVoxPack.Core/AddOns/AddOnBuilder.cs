@@ -27,9 +27,9 @@ public sealed class AddOnBuilder(AddOnSettings settings, TtsSettings ttsSettings
 
     public AddOnBuilder AddSoundFile(SoundFile soundFile, bool overwrite = false)
     {
-        if (overwrite || !_soundFiles.ContainsKey(soundFile.DisplayName))
+        if (overwrite || !_soundFiles.ContainsKey(soundFile.Key))
         {
-            _soundFiles[soundFile.DisplayName] = soundFile;
+            _soundFiles[soundFile.Key] = soundFile;
         }
 
         return this;
@@ -66,7 +66,7 @@ public sealed class AddOnBuilder(AddOnSettings settings, TtsSettings ttsSettings
     /// <summary>
     /// Like <see cref="LoadSoundFileJson"/>, but backfills SSML phoneme markup for entries
     /// whose <see cref="SoundFile.Text"/> contains an IPA escape ('=') and has no explicit
-    /// <see cref="SoundFile.Ssml"/> set. Shared by addons (SharedMedia_Abilities, ExBoss)
+    /// <see cref="SoundFile.Ssml"/> set. Shared by addons (Callouts, ExBoss)
     /// whose sound-file JSON manifests use this convention.
     /// </summary>
     public static List<SoundFile> LoadSoundFileJsonWithSsmlFallback(string filePath)
@@ -76,10 +76,16 @@ public sealed class AddOnBuilder(AddOnSettings settings, TtsSettings ttsSettings
 
     private static SoundFile RewriteSsmlFallback(SoundFile soundFile)
     {
-        return soundFile.Ssml is null && soundFile.Text?.Contains('=') == true
-            ? new SoundFile(soundFile.FileName, ssml: SoundFile.GetSsml(soundFile.Text),
-                displayName: soundFile.DisplayName, formattedDisplayName: soundFile.FormattedDisplayName)
-            : soundFile;
+        if (soundFile.Ssml is not null || soundFile.Text?.Contains('=') != true)
+        {
+            return soundFile;
+        }
+
+        return new SoundFile(soundFile.FileName, ssml: SoundFile.GetSsml(soundFile.Text),
+            displayName: soundFile.DisplayName, formattedDisplayName: soundFile.FormattedDisplayName)
+        {
+            ExplicitKey = soundFile.ExplicitKey
+        };
     }
 
     public AddOnBuilder AddFile(string fileName, Func<AddOn, string> contentFactory)
@@ -111,6 +117,7 @@ public sealed class AddOnBuilder(AddOnSettings settings, TtsSettings ttsSettings
             primaryNote,
             additionalNotes,
             additionalProperties,
+            settings.Interfaces,
             new Dictionary<string, SoundFile>(_soundFiles, StringComparer.OrdinalIgnoreCase),
             new Dictionary<string, Func<AddOn, string>>(_fileFactories, StringComparer.OrdinalIgnoreCase));
     }

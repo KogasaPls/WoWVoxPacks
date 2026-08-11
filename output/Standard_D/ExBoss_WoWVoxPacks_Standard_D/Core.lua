@@ -1,5 +1,8 @@
-local LSM = LibStub("LibSharedMedia-3.0")
-local path = "Interface\\AddOns\\" .. "ExBoss_WoWVoxPacks_Standard_D" .. "\\Sounds\\"
+-- LibStub(name, true) is the silent form: nil instead of an error.
+local LSM = LibStub and LibStub("LibSharedMedia-3.0", true)
+if not LSM then return end
+
+local path = "Interface\\AddOns\\ExBoss_WoWVoxPacks_Standard_D\\Sounds\\"
 LSM:Register("sound", "[ExBoss WoWVoxPacks Standard_D]准备AOE", path .. "aoe-inc.ogg")
 LSM:Register("sound", "[ExBoss WoWVoxPacks Standard_D]准备引线", path .. "bait.ogg")
 LSM:Register("sound", "[ExBoss WoWVoxPacks Standard_D]准备打断", path .. "interrupt.ogg")

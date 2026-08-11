@@ -1,0 +1,404 @@
+[
+  {
+    "FileName": "adds.ogg",
+    "DisplayName": "Adds",
+    "FormattedDisplayName": "Adds",
+    "Text": "Adds"
+  },
+  {
+    "FileName": "beam.ogg",
+    "DisplayName": "Beam",
+    "FormattedDisplayName": "Beam",
+    "Text": "Beam"
+  },
+  {
+    "FileName": "blue.ogg",
+    "DisplayName": "Blue",
+    "FormattedDisplayName": "Blue",
+    "Text": "Blue"
+  },
+  {
+    "FileName": "bomb.ogg",
+    "DisplayName": "Bomb",
+    "FormattedDisplayName": "Bomb",
+    "Text": "Bomb"
+  },
+  {
+    "FileName": "boss.ogg",
+    "DisplayName": "Boss",
+    "FormattedDisplayName": "Boss",
+    "Text": "Boss"
+  },
+  {
+    "FileName": "bouncer.ogg",
+    "DisplayName": "Bouncer",
+    "FormattedDisplayName": "Bouncer",
+    "Text": "Bouncer"
+  },
+  {
+    "FileName": "break.ogg",
+    "DisplayName": "Break",
+    "FormattedDisplayName": "Break",
+    "Text": "Break"
+  },
+  {
+    "FileName": "camp.ogg",
+    "DisplayName": "Camp",
+    "FormattedDisplayName": "Camp",
+    "Text": "Camp"
+  },
+  {
+    "FileName": "charge.ogg",
+    "DisplayName": "Charge",
+    "FormattedDisplayName": "Charge",
+    "Text": "Charge"
+  },
+  {
+    "FileName": "cleaner.ogg",
+    "DisplayName": "Cleaner",
+    "FormattedDisplayName": "Cleaner",
+    "Text": "Cleaner"
+  },
+  {
+    "FileName": "clear.ogg",
+    "DisplayName": "Clear",
+    "FormattedDisplayName": "Clear",
+    "Text": "Clear"
+  },
+  {
+    "FileName": "collect.ogg",
+    "DisplayName": "Collect",
+    "FormattedDisplayName": "Collect",
+    "Text": "Collect"
+  },
+  {
+    "FileName": "debuff.ogg",
+    "DisplayName": "Debuff",
+    "FormattedDisplayName": "Debuff",
+    "Text": "Debuff"
+  },
+  {
+    "FileName": "dispel.ogg",
+    "DisplayName": "Dispel",
+    "FormattedDisplayName": "Dispel",
+    "Text": "Dispel"
+  },
+  {
+    "FileName": "drop_pool.ogg",
+    "DisplayName": "Drop Pool",
+    "FormattedDisplayName": "Drop Pool",
+    "Text": "Drop Pool"
+  },
+  {
+    "FileName": "east.ogg",
+    "DisplayName": "East",
+    "FormattedDisplayName": "East",
+    "Text": "East"
+  },
+  {
+    "FileName": "eight.ogg",
+    "DisplayName": "Eight",
+    "FormattedDisplayName": "Eight",
+    "Text": "Eight"
+  },
+  {
+    "FileName": "entertainer.ogg",
+    "DisplayName": "Entertainer",
+    "FormattedDisplayName": "Entertainer",
+    "Text": "Entertainer"
+  },
+  {
+    "FileName": "feather.ogg",
+    "DisplayName": "Feather",
+    "FormattedDisplayName": "Feather",
+    "Text": "Feather"
+  },
+  {
+    "FileName": "fire.ogg",
+    "DisplayName": "Fire",
+    "FormattedDisplayName": "Fire",
+    "Text": "Fire"
+  },
+  {
+    "FileName": "five.ogg",
+    "DisplayName": "Five",
+    "FormattedDisplayName": "Five",
+    "Text": "Five"
+  },
+  {
+    "FileName": "fixate.ogg",
+    "DisplayName": "Fixate",
+    "FormattedDisplayName": "Fixate",
+    "Text": "Fixate"
+  },
+  {
+    "FileName": "four.ogg",
+    "DisplayName": "Four",
+    "FormattedDisplayName": "Four",
+    "Text": "Four"
+  },
+  {
+    "FileName": "frost.ogg",
+    "DisplayName": "Frost",
+    "FormattedDisplayName": "Frost",
+    "Text": "Frost"
+  },
+  {
+    "FileName": "fung.ogg",
+    "DisplayName": "Fung",
+    "FormattedDisplayName": "Fung",
+    "SSML": "\u003Cspeak\u003E\n  \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022f\u028C\u014B\u0022\u003EFung=f\u028C\u014B\u003C/phoneme\u003E\n\u003C/speak\u003E"
+  },
+  {
+    "FileName": "gate.ogg",
+    "DisplayName": "Gate",
+    "FormattedDisplayName": "Gate",
+    "Text": "Gate"
+  },
+  {
+    "FileName": "green.ogg",
+    "DisplayName": "Green",
+    "FormattedDisplayName": "Green",
+    "Text": "Green"
+  },
+  {
+    "FileName": "heal_absorb.ogg",
+    "DisplayName": "Heal Absorb",
+    "FormattedDisplayName": "Heal Absorb",
+    "Text": "Heal Absorb"
+  },
+  {
+    "FileName": "hide.ogg",
+    "DisplayName": "Hide",
+    "FormattedDisplayName": "Hide",
+    "Text": "Hide"
+  },
+  {
+    "FileName": "interrupt.ogg",
+    "DisplayName": "Interrupt",
+    "FormattedDisplayName": "Interrupt",
+    "Text": "Interrupt"
+  },
+  {
+    "FileName": "left.ogg",
+    "DisplayName": "Left",
+    "FormattedDisplayName": "Left",
+    "Text": "Left"
+  },
+  {
+    "FileName": "light.ogg",
+    "DisplayName": "Light",
+    "FormattedDisplayName": "Light",
+    "Text": "Light"
+  },
+  {
+    "FileName": "linked.ogg",
+    "DisplayName": "Linked",
+    "FormattedDisplayName": "Linked",
+    "Text": "Linked"
+  },
+  {
+    "FileName": "mind_control.ogg",
+    "DisplayName": "Mind Control",
+    "FormattedDisplayName": "Mind Control",
+    "Text": "Mind Control"
+  },
+  {
+    "FileName": "moon.ogg",
+    "DisplayName": "Moon",
+    "FormattedDisplayName": "Moon",
+    "Text": "Moon"
+  },
+  {
+    "FileName": "move.ogg",
+    "DisplayName": "Move",
+    "FormattedDisplayName": "Move",
+    "Text": "Move"
+  },
+  {
+    "FileName": "next.ogg",
+    "DisplayName": "Next",
+    "FormattedDisplayName": "Next",
+    "Text": "Next"
+  },
+  {
+    "FileName": "nine.ogg",
+    "DisplayName": "Nine",
+    "FormattedDisplayName": "Nine",
+    "Text": "Nine"
+  },
+  {
+    "FileName": "north.ogg",
+    "DisplayName": "North",
+    "FormattedDisplayName": "North",
+    "Text": "North"
+  },
+  {
+    "FileName": "obelisk.ogg",
+    "DisplayName": "Obelisk",
+    "FormattedDisplayName": "Obelisk",
+    "Text": "Obelisk"
+  },
+  {
+    "FileName": "one.ogg",
+    "DisplayName": "One",
+    "FormattedDisplayName": "One",
+    "Text": "One"
+  },
+  {
+    "FileName": "orange.ogg",
+    "DisplayName": "Orange",
+    "FormattedDisplayName": "Orange",
+    "Text": "Orange"
+  },
+  {
+    "FileName": "orb.ogg",
+    "DisplayName": "Orb",
+    "FormattedDisplayName": "Orb",
+    "Text": "Orb"
+  },
+  {
+    "FileName": "purple.ogg",
+    "DisplayName": "Purple",
+    "FormattedDisplayName": "Purple",
+    "Text": "Purple"
+  },
+  {
+    "FileName": "ranged.ogg",
+    "DisplayName": "Ranged",
+    "FormattedDisplayName": "Ranged",
+    "Text": "Ranged"
+  },
+  {
+    "FileName": "red.ogg",
+    "DisplayName": "Red",
+    "FormattedDisplayName": "Red",
+    "Text": "Red"
+  },
+  {
+    "FileName": "right.ogg",
+    "DisplayName": "Right",
+    "FormattedDisplayName": "Right",
+    "Text": "Right"
+  },
+  {
+    "FileName": "root.ogg",
+    "DisplayName": "Root",
+    "FormattedDisplayName": "Root",
+    "Text": "Root"
+  },
+  {
+    "FileName": "run_out.ogg",
+    "DisplayName": "Run Out",
+    "FormattedDisplayName": "Run Out",
+    "Text": "Run Out"
+  },
+  {
+    "FileName": "rune.ogg",
+    "DisplayName": "Rune",
+    "FormattedDisplayName": "Rune",
+    "Text": "Rune"
+  },
+  {
+    "FileName": "server.ogg",
+    "DisplayName": "Server",
+    "FormattedDisplayName": "Server",
+    "Text": "Server"
+  },
+  {
+    "FileName": "seven.ogg",
+    "DisplayName": "Seven",
+    "FormattedDisplayName": "Seven",
+    "Text": "Seven"
+  },
+  {
+    "FileName": "shroom.ogg",
+    "DisplayName": "Shroom",
+    "FormattedDisplayName": "Shroom",
+    "Text": "Shroom"
+  },
+  {
+    "FileName": "six.ogg",
+    "DisplayName": "Six",
+    "FormattedDisplayName": "Six",
+    "Text": "Six"
+  },
+  {
+    "FileName": "skull.ogg",
+    "DisplayName": "Skull",
+    "FormattedDisplayName": "Skull",
+    "Text": "Skull"
+  },
+  {
+    "FileName": "soak.ogg",
+    "DisplayName": "Soak",
+    "FormattedDisplayName": "Soak",
+    "Text": "Soak"
+  },
+  {
+    "FileName": "south.ogg",
+    "DisplayName": "South",
+    "FormattedDisplayName": "South",
+    "Text": "South"
+  },
+  {
+    "FileName": "spread.ogg",
+    "DisplayName": "Spread",
+    "FormattedDisplayName": "Spread",
+    "Text": "Spread"
+  },
+  {
+    "FileName": "stack.ogg",
+    "DisplayName": "Stack",
+    "FormattedDisplayName": "Stack",
+    "Text": "Stack"
+  },
+  {
+    "FileName": "suck.ogg",
+    "DisplayName": "Suck",
+    "FormattedDisplayName": "Suck",
+    "Text": "Suck"
+  },
+  {
+    "FileName": "targeted.ogg",
+    "DisplayName": "Targeted",
+    "FormattedDisplayName": "Targeted",
+    "Text": "Targeted"
+  },
+  {
+    "FileName": "ten.ogg",
+    "DisplayName": "Ten",
+    "FormattedDisplayName": "Ten",
+    "Text": "Ten"
+  },
+  {
+    "FileName": "three.ogg",
+    "DisplayName": "Three",
+    "FormattedDisplayName": "Three",
+    "Text": "Three"
+  },
+  {
+    "FileName": "two.ogg",
+    "DisplayName": "Two",
+    "FormattedDisplayName": "Two",
+    "Text": "Two"
+  },
+  {
+    "FileName": "void.ogg",
+    "DisplayName": "Void",
+    "FormattedDisplayName": "Void",
+    "Text": "Void"
+  },
+  {
+    "FileName": "west.ogg",
+    "DisplayName": "West",
+    "FormattedDisplayName": "West",
+    "Text": "West"
+  },
+  {
+    "FileName": "yellow.ogg",
+    "DisplayName": "Yellow",
+    "FormattedDisplayName": "Yellow",
+    "Text": "Yellow"
+  }
+]

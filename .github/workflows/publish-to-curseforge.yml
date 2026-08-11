@@ -2,12 +2,6 @@ name: Publish to CurseForge
 on:
   release:
     types: [ published ]
-  workflow_run:
-    # Releases created by the GITHUB_TOKEN / github-actions[bot] do not emit the
-    # `release` event, so also publish whenever the Create release workflow
-    # finishes successfully.
-    workflows: [ "Create release" ]
-    types: [ completed ]
   workflow_dispatch:
     inputs:
       voices:
@@ -15,20 +9,17 @@ on:
         default: '"Wavenet_E","Neural2_C","Studio_Q"'
         required: true
       addons:
-        description: 'Comma separated list of addons to publish e.g. "BigWigs_Voice","BigWigs_Countdown","ExBoss"'
-        default: '"BigWigs_Voice","BigWigs_Countdown","SharedMedia_Abilities","ExBoss"'
+        description: 'Comma separated list of addons to publish e.g. "BigWigs_Voice","BigWigs_Countdown","NorthernSkyRaidTools"'
+        default: '"BigWigs_Voice","BigWigs_Countdown","Callouts","ExBoss","NorthernSkyRaidTools"'
         required: true
 
-# The `release` and `workflow_run` triggers can both fire for the same release.
-# Serialize runs so concurrent publishes don't race on the same CurseForge project.
+# Serialize automatic and manual runs so they don't race on the same CurseForge project.
 concurrency:
   group: publish-to-curseforge
   cancel-in-progress: false
 
 jobs:
   wait-for-release-artifacts:
-    # Skip if triggered by a failed Create release run; release/dispatch always run.
-    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     name: Wait for release artifacts
     steps:
@@ -44,26 +35,29 @@ jobs:
       fail-fast: false
       matrix:
         voice: ${{ fromJSON(format('[{0}]', inputs.voices || '"Wavenet_E","Neural2_C","Studio_Q"')) }}
-        addon: ${{ fromJSON(format('[{0}]', inputs.addons || '"BigWigs_Voice","BigWigs_Countdown","SharedMedia_Abilities","ExBoss"')) }}
+        addon: ${{ fromJSON(format('[{0}]', inputs.addons || '"BigWigs_Voice","BigWigs_Countdown","Callouts","ExBoss","NorthernSkyRaidTools"')) }}
         voice-to-addon-to-project-id-json:
           - '{
             "Wavenet_E": {
               "BigWigs_Voice": 1215288,
               "BigWigs_Countdown": 1217577,
-              "SharedMedia_Abilities": 1520297,
-              "ExBoss": 1551653
+              "Callouts": 1520297,
+              "ExBoss": 1551653,
+              "NorthernSkyRaidTools": 1648855
             },
             "Neural2_C": {
               "BigWigs_Voice": 1217580,
               "BigWigs_Countdown": 1217583,
-              "SharedMedia_Abilities": 1520293,
-              "ExBoss": 1551645
+              "Callouts": 1520293,
+              "ExBoss": 1551645,
+              "NorthernSkyRaidTools": 1648938
             },
             "Studio_Q": {
               "BigWigs_Voice": 1218355,
               "BigWigs_Countdown": 1218357,
-              "SharedMedia_Abilities": 1520296,
-              "ExBoss": 1551655
+              "Callouts": 1520296,
+              "ExBoss": 1551655,
+              "NorthernSkyRaidTools": 1648940
             }
           }'
 
@@ -73,7 +67,7 @@ jobs:
       - name: Set release tag
         id: set-release-tag-push
         if: github.event_name == 'push' || github.event_name == 'release'
-        run: echo "RELEASE_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+        run: echo "RELEASE_TAG=${GITHUB_REF#refs/*/}" >> "$GITHUB_ENV"
       - name: Set release tag
         id: set-release-tag
         if: github.event_name != 'push' && github.event_name != 'release'
@@ -91,7 +85,7 @@ jobs:
         run: |
           RELEASE_GAME_VERSION="${RELEASE_TAG#v}"
           RELEASE_GAME_VERSION="${RELEASE_GAME_VERSION%%-*}"
-          echo "RELEASE_GAME_VERSION=${RELEASE_GAME_VERSION}" >> $GITHUB_ENV
+          echo "RELEASE_GAME_VERSION=${RELEASE_GAME_VERSION}" >> "$GITHUB_ENV"
       - name: Download release assets
         uses: robinraju/release-downloader@v1
         with:

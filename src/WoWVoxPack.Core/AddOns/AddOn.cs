@@ -1,10 +1,12 @@
+using System.Text.RegularExpressions;
+
 using Ardalis.GuardClauses;
 
 using WoWVoxPack.TTS;
 
 namespace WoWVoxPack.AddOns;
 
-public sealed class AddOn
+public sealed partial class AddOn
 {
     private readonly string _outputDirectoryBase;
     private readonly IReadOnlyDictionary<string, SoundFile> _soundFiles;
@@ -20,6 +22,7 @@ public sealed class AddOn
         Note? primaryNote,
         IReadOnlyCollection<Note> additionalNotes,
         IReadOnlyDictionary<string, string> additionalProperties,
+        IReadOnlyCollection<string>? interfaces,
         IReadOnlyDictionary<string, SoundFile> soundFiles,
         IReadOnlyDictionary<string, Func<AddOn, string>> fileFactories)
     {
@@ -32,7 +35,11 @@ public sealed class AddOn
         PrimaryNote = primaryNote;
         AdditionalNotes = additionalNotes;
         AdditionalProperties = additionalProperties;
-        Interfaces = [ToInterfaceNumber(Version)];
+        // Configured Interfaces list wins so a pack can ship two toc versions and survive a
+        // patch; the version-derived value is only a fallback for addons with none configured.
+        Interfaces = interfaces is { Count: > 0 }
+            ? NormalizeInterfaces(interfaces)
+            : [ToInterfaceNumber(Version)];
         _soundFiles = soundFiles;
         _fileFactories = fileFactories;
     }
@@ -61,6 +68,31 @@ public sealed class AddOn
     public string SoundFilesJsonPath => Path.Combine(AddOnDirectory, "SoundFiles.json");
 
     public record Note(string? LanguageCode, string Text);
+
+    /// <summary>
+    /// The configuration binder appends to a list rather than replacing it, so binding a
+    /// per-addon section and then the root can hand the same number over twice. WoW also has
+    /// no error path for a malformed <c>## Interface:</c> line: it treats the addon as
+    /// unsupported and says nothing, so a typo has to fail the build instead.
+    /// </summary>
+    private static IReadOnlyCollection<string> NormalizeInterfaces(IReadOnlyCollection<string> interfaces)
+    {
+        string[] distinct = interfaces.Distinct(StringComparer.Ordinal).ToArray();
+
+        foreach (string @interface in distinct)
+        {
+            if (!InterfaceNumber().IsMatch(@interface))
+            {
+                throw new InvalidOperationException(
+                    $"Interface '{@interface}' is not a 5- or 6-digit toc Interface number.");
+            }
+        }
+
+        return distinct;
+    }
+
+    [GeneratedRegex(@"^\d{5,6}$")]
+    private static partial Regex InterfaceNumber();
 
     /// <summary>
     /// Converts a dotted game version (e.g. "12.0.7") into the WoW toc Interface number

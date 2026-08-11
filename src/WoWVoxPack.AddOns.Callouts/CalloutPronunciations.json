@@ -1,0 +1,14 @@
+{
+  "Fung": { "Text": "Fung=fʌŋ" },
+  "DropPool": { "Text": "Drop Pool" },
+  "HealAbsorb": { "Text": "Heal Absorb" },
+  "Innervate": { "Text": "Innervate=ˈɪnɚveɪt" },
+  "Invoke Chi-Ji, the Red Crane": {
+    "FileName": "invoke_chiji_the_red_crane.ogg",
+    "Ssml": "<speak>Invoke <phoneme alphabet=\"IPA\" ph=\"tʃiːdʒiː\">Chi-Ji</phoneme>, the Red Crane</speak>"
+  },
+  "Invoke Yu'lon, the Jade Serpent": {
+    "FileName": "invoke_yulon_the_jade_serpent.ogg",
+    "Ssml": "<speak>Invoke <phoneme alphabet=\"IPA\" ph=\"ˈjuːlɒn\">Yu'lon</phoneme>, the Jade Serpent</speak>"
+  }
+}

@@ -145,7 +145,8 @@ public class AddOnBuildOrchestratorTests : IDisposable
         return new AddOnBuilder(DefaultSettings(title), ttsSettings).Build(outputDirectory);
     }
 
-    private sealed class FakeAddOnService(Func<string, TtsSettings, AddOn> buildAddOn) : IAddOnService
+    private sealed class FakeAddOnService(Func<string, TtsSettings, AddOn> buildAddOn)
+        : IAddOnService
     {
         public int CallCount { get; private set; }
 

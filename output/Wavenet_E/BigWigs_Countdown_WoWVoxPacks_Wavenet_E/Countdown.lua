@@ -1,6 +1,3 @@
-local L = BigWigsAPI:GetLocale("BigWigs")
-local LSM = LibStub("LibSharedMedia-3.0")
-
 local key = "WoWVoxPacks: Wavenet_E"
 local path = "Interface\\AddOns\\BigWigs_Countdown_WoWVoxPacks_Wavenet_E\\Sounds\\countdown_%d.ogg"
 --------------------------------------------------------------------------------

@@ -21,17 +21,23 @@ public class AddOnBuildOrchestrator(
     private ISoundFileService SoundFileService { get; } = soundFileService;
     private string OutputDirectoryBase { get; } = outputDirectoryBase;
 
-    private IEnumerable<(IAddOnService addOnService, TtsSettings ttsSettings)> Matrix =>
-        from addOnService in AddOnServices
-        from ttsSettings in BuildMatrix.TtsSettings
-        select (addOnService, ttsSettings);
+    private IEnumerable<(IAddOnService addOnService, TtsSettings ttsSettings, string outputDirectory)> Matrix()
+    {
+        foreach (IAddOnService addOnService in AddOnServices)
+        {
+            foreach (TtsSettings ttsSettings in BuildMatrix.TtsSettings)
+            {
+                string outputDirectory =
+                    Path.Combine(OutputDirectoryBase, Guard.Against.Null(ttsSettings.Voice).ToString());
+                yield return (addOnService, ttsSettings, outputDirectory);
+            }
+        }
+    }
 
     public async Task RunAsync(CancellationToken cancellationToken)
     {
-        foreach ((IAddOnService addOnService, TtsSettings ttsSettings) in Matrix)
+        foreach ((IAddOnService addOnService, TtsSettings ttsSettings, string outputDirectory) in Matrix())
         {
-            string outputDirectory =
-                Path.Combine(OutputDirectoryBase, Guard.Against.Null(ttsSettings.Voice).ToString());
             AddOn addOn = await addOnService.BuildAddOnAsync(outputDirectory, ttsSettings, cancellationToken);
 
             Logger.LogInformation("Building {AddOnName} addon in directory {OutputDirectory}", addOn.Title,

@@ -60,6 +60,18 @@ jobs:
               "NorthernSkyRaidTools": 1648940
             }
           }'
+        # Mirrors what the generated TOC declares in-game: ## Dependencies becomes a
+        # requiredDependency, ## OptionalDeps an optionalDependency. Keys are CurseForge
+        # URL slugs, not addon folder names. An addon absent here uploads with no
+        # relations, so a workflow_dispatch naming a new addon still publishes.
+        addon-to-relations-json:
+          - '{
+            "BigWigs_Voice": "big-wigs:requiredDependency",
+            "BigWigs_Countdown": "big-wigs:requiredDependency",
+            "Callouts": "libsharedmedia-3-0:optionalDependency",
+            "ExBoss": "exboss:requiredDependency,libsharedmedia-3-0:optionalDependency",
+            "NorthernSkyRaidTools": "northern-sky-raid-tools:optionalDependency,libsharedmedia-3-0:optionalDependency"
+          }'
 
     runs-on: ubuntu-latest
     name: Publish ${{ matrix.addon }} (${{ matrix.voice }}) (Project ID ${{ fromJSON(matrix.voice-to-addon-to-project-id-json)[matrix.voice][matrix.addon] }})
@@ -104,6 +116,7 @@ jobs:
           token: ${{ secrets.CURSEFORGE_API_TOKEN }}
           display_name: ${{ matrix.addon }} (${{ matrix.voice }}) ${{ env.RELEASE_TAG }}
           game_versions: ${{ env.RELEASE_GAME_VERSION }}
+          relations: ${{ fromJSON(matrix.addon-to-relations-json)[matrix.addon] }}
 
   rerun-failed-jobs:
       runs-on: ubuntu-latest

@@ -125,10 +125,10 @@ public sealed class AddOnBuilder(AddOnSettings settings, TtsSettings ttsSettings
     }
 
     /// <summary>
-    /// Several entries may share one recording — ExBoss points five labels at adds.ogg — but only
-    /// one of them can be rendered, and the renderer takes whichever it reaches first. Where they
-    /// disagree about what to say, that choice silently decides what players hear, so it has to
-    /// be a build error instead: ExBoss shipped "FRONTAL" for frontal.ogg for exactly this
+    /// Several entries may share one recording, the way ExBoss points five labels at adds.ogg, but
+    /// only one of them can be rendered and the renderer takes whichever it reaches first. Where
+    /// they disagree about what to say, that choice silently decides what players hear, so it has
+    /// to be a build error instead: ExBoss shipped "FRONTAL" for frontal.ogg for exactly this
     /// reason, while two other labels on the same file asked for "Frontal".
     /// </summary>
     private void GuardAgainstConflictingRecordings()

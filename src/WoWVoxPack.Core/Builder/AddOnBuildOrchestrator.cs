@@ -125,8 +125,9 @@ public class AddOnBuildOrchestrator(
                 return;
             }
             // A client-side deadline arrives as TaskCanceledException, and a timed-out render is
-            // the most ordinary thing there is to retry, so only the caller giving up ends the
-            // attempts.
+            // the most ordinary thing there is to retry. What ends the attempts is the token:
+            // the caller giving up, or a sibling exhausting its own, which cancels the loop and
+            // stops the rest paying into a build that is already lost.
             catch (Exception exception) when (attempt < RenderAttempts && !cancellationToken.IsCancellationRequested)
             {
                 TimeSpan delay = TimeSpan.FromSeconds(Math.Pow(2, attempt));

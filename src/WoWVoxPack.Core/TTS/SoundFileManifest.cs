@@ -85,11 +85,17 @@ public sealed class SoundFileManifest
     /// earlier than the workflow does would fail the sync it is supposed to be protecting. Small
     /// packs get a flat allowance so that retiring a handful of callouts still works.
     /// </summary>
+    /// <remarks>
+    /// Rounded up, because the workflow refuses a vocabulary that fell <em>below</em> half and so
+    /// accepts exactly half. An odd count is where that differs: NSRT's 67 recordings may come
+    /// back as 33, which is 34 removals, and a limit of 33 would fail the build the workflow just
+    /// waved through.
+    /// </remarks>
     private int RemovalLimit()
     {
         const int alwaysAllowed = 10;
 
-        return Math.Max(alwaysAllowed, _soundFilesByKey.Count / 2);
+        return Math.Max(alwaysAllowed, (_soundFilesByKey.Count + 1) / 2);
     }
 
     public Task SaveAsync(string path, IEnumerable<SoundFile> soundFiles, CancellationToken cancellationToken = default)

@@ -4,11 +4,11 @@ namespace WoWVoxPack.TTS;
 
 public sealed class SoundFileManifest
 {
-    private readonly IReadOnlyDictionary<string, SoundFile> _soundFilesByKey;
+    private readonly IReadOnlyDictionary<string, SoundFile> _recordingsByFileName;
 
-    private SoundFileManifest(IReadOnlyDictionary<string, SoundFile> soundFilesByKey)
+    private SoundFileManifest(IReadOnlyDictionary<string, SoundFile> recordingsByFileName)
     {
-        _soundFilesByKey = soundFilesByKey;
+        _recordingsByFileName = recordingsByFileName;
     }
 
     public static async Task<SoundFileManifest> LoadAsync(string path, CancellationToken cancellationToken = default)
@@ -23,8 +23,13 @@ public sealed class SoundFileManifest
             JsonSerializer.Deserialize<List<SoundFile>>(json, SoundFileJsonContext.Default.ListSoundFile) ??
             throw new Exception("Failed to deserialize sound files.");
 
+        // By file name, not by key: the file is what was rendered, and several registrations may
+        // point at one. AddOnBuilder rejects a build whose entries disagree about a file, so any
+        // of them describes it.
         return new SoundFileManifest(
-            soundFiles.ToDictionary(f => f.Key, StringComparer.OrdinalIgnoreCase));
+            soundFiles
+                .GroupBy(f => f.FileName, StringComparer.OrdinalIgnoreCase)
+                .ToDictionary(g => g.Key, g => g.First(), StringComparer.OrdinalIgnoreCase));
     }
 
     /// <summary>The entries whose recording this build has to render.</summary>
@@ -60,17 +65,15 @@ public sealed class SoundFileManifest
     {
         HashSet<string> keep = new(currentSoundFiles.Select(f => f.FileName), StringComparer.OrdinalIgnoreCase);
 
-        string[] removals = _soundFilesByKey.Values
-            .Select(f => f.FileName)
+        string[] removals = _recordingsByFileName.Keys
             .Where(fileName => !keep.Contains(fileName))
-            .Distinct(StringComparer.OrdinalIgnoreCase)
             .ToArray();
 
         if (removals.Length > RemovalLimit())
         {
             throw new InvalidOperationException(
                 $"The build registers {keep.Count} recordings where the last one had " +
-                $"{_soundFilesByKey.Count}, which would delete {removals.Length}. That is a " +
+                $"{_recordingsByFileName.Count}, which would delete {removals.Length}. That is a " +
                 "vocabulary that failed to load, not a pack that shrank.");
         }
 
@@ -95,7 +98,7 @@ public sealed class SoundFileManifest
     {
         const int alwaysAllowed = 10;
 
-        return Math.Max(alwaysAllowed, (_soundFilesByKey.Count + 1) / 2);
+        return Math.Max(alwaysAllowed, (_recordingsByFileName.Count + 1) / 2);
     }
 
     public Task SaveAsync(string path, IEnumerable<SoundFile> soundFiles, CancellationToken cancellationToken = default)
@@ -106,12 +109,14 @@ public sealed class SoundFileManifest
     }
 
     /// <summary>
-    /// A key the manifest has never seen counts as unchanged: with the file already on disk there
-    /// is nothing to render, and a re-key of an addon therefore costs nothing.
+    /// A file the manifest has never seen counts as unchanged: with it already on disk there is
+    /// nothing to render, and a re-key of an addon therefore costs nothing. Only the speech is
+    /// compared, because only the speech is in the recording. Comparing display names instead
+    /// would re-render adds.ogg on every build, since five ExBoss labels answer to it.
     /// </summary>
     private bool IsSameContentAsManifestEntry(SoundFile soundFile)
     {
-        if (!_soundFilesByKey.TryGetValue(soundFile.Key, out SoundFile? existing))
+        if (!_recordingsByFileName.TryGetValue(soundFile.FileName, out SoundFile? existing))
         {
             return true;
         }

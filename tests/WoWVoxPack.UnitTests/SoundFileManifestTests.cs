@@ -103,6 +103,43 @@ public class SoundFileManifestTests : IDisposable
     }
 
     [Fact]
+    public async Task FilesToCreate_IncludesEntry_WhenItsWordsChangedUnderANewKey()
+    {
+        // Callouts re-keys a name it retires while keeping its file, so a key is not what makes a
+        // recording current. Keyed lookup called this unchanged, skipped it, then saved the new
+        // words over the old audio, which no later build had any reason to re-render.
+        SoundFile original = new("chi_ji.ogg", ssml: "<speak>Chi-Ji</speak>", displayName: "Invoke Chi-Ji");
+        SoundFileManifest savedManifest = await SoundFileManifest.LoadAsync(ManifestPath);
+        await savedManifest.SaveAsync(ManifestPath, [original]);
+        SoundFileManifest manifest = await SoundFileManifest.LoadAsync(ManifestPath);
+        await File.WriteAllTextAsync(Path.Combine(_tempDirectory, original.FileName), "fake audio");
+
+        SoundFile reKeyed = new("chi_ji.ogg", ssml: "<speak>Chee Jee</speak>", displayName: "Invoke Chi-ji")
+        {
+            ExplicitKey = "retired:Invoke Chi-ji"
+        };
+
+        Assert.Contains(reKeyed, manifest.FilesToCreate([reKeyed], _tempDirectory));
+    }
+
+    [Fact]
+    public async Task FilesToCreate_ExcludesEntries_ThatOnlyRenamedTheirSharedRecording()
+    {
+        // ExBoss points several labels at one file. Their names are registrations, not speech, so
+        // renaming one must not re-render the recording they share on every build.
+        SoundFile first = new("adds.ogg", text: "Adds", displayName: "注意小怪");
+        SoundFile second = new("adds.ogg", text: "Adds", displayName: "点名小怪");
+        SoundFileManifest savedManifest = await SoundFileManifest.LoadAsync(ManifestPath);
+        await savedManifest.SaveAsync(ManifestPath, [first, second]);
+        SoundFileManifest manifest = await SoundFileManifest.LoadAsync(ManifestPath);
+        await File.WriteAllTextAsync(Path.Combine(_tempDirectory, "adds.ogg"), "fake audio");
+
+        SoundFile renamed = new("adds.ogg", text: "Adds", displayName: "躲开小怪");
+
+        Assert.Empty(manifest.FilesToCreate([first, renamed], _tempDirectory));
+    }
+
+    [Fact]
     public async Task FilesToCreate_IncludesEverySound_WhenTheRecipeChanged()
     {
         SoundFile first = new("alert.ogg", text: "Alert", displayName: "Alert");

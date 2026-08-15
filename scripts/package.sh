@@ -19,7 +19,7 @@ cd output || exit 1
 # SoundFiles.json is build metadata for the regular addons, so it does not ship in those
 # archives. Northern Sky Raid Tools loads its manifest at runtime to keep each voice pack
 # self-contained, so that addon is the intentional exception.
-base_excludes=(-x "*.wav")
+base_excludes=(-x "*.wav" -x "*/.wvp-*")
 
 # Zip $2.. into $1, additionally excluding any of the given directories'
 # Sounds/ folder if it's empty. Sounds/ folders that actually hold media are

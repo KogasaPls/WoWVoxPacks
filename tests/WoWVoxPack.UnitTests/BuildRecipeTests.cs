@@ -16,11 +16,13 @@ public class BuildRecipeTests : IDisposable
     }
 
     [Fact]
-    public async Task LoadAsync_ReturnsNull_WhenTheRecipeIsUnreadable()
+    public async Task LoadAsync_Throws_WhenTheRecipeIsUnreadable()
     {
+        // Absent means "built before recipes existed" and re-renders nothing. A recipe that is
+        // there but unreadable must not borrow that answer for audio nothing can vouch for.
         await File.WriteAllTextAsync(RecipePath, "{ this is not json");
 
-        Assert.Null(await BuildRecipe.LoadAsync(RecipePath));
+        await Assert.ThrowsAsync<InvalidOperationException>(() => BuildRecipe.LoadAsync(RecipePath));
     }
 
     [Fact]

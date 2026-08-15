@@ -41,6 +41,38 @@ class ReleaseWorkflowTests(unittest.TestCase):
             "GITHUB_TOKEN: ${{ secrets.WORKFLOW_RELEASE_PAT }}", release_creator
         )
 
+    def test_the_version_in_every_toc_is_the_version_the_tag_is_built_from(self):
+        """Two files decide one number, and only one of them names the release.
+
+        create-release builds the tag from bigwigs-voice-version.txt, while the generated TOCs
+        take theirs from appsettings.json. Bump one without the other and the addons players
+        install advertise a version that no release has.
+        """
+        settings = json.loads(
+            (REPOSITORY_ROOT / "appsettings.json").read_text(encoding="utf-8")
+        )
+        tracked = (
+            REPOSITORY_ROOT / "bigwigs-voice-version.txt"
+        ).read_text(encoding="utf-8").strip()
+
+        self.assertEqual(tracked, "v" + settings["AddOn"]["Version"])
+
+    def test_the_builder_and_the_updater_agree_on_how_far_a_pack_may_shrink(self):
+        """Both refuse a collapsed vocabulary, and the builder runs second.
+
+        If the builder draws its line ahead of the workflow's, an update the workflow accepts
+        fails the sync job instead, taking every other pack's update down with it.
+        """
+        updater = (
+            REPOSITORY_ROOT / ".github/workflows/update.yml"
+        ).read_text(encoding="utf-8")
+        manifest = (
+            REPOSITORY_ROOT / "src/WoWVoxPack.Core/TTS/SoundFileManifest.cs"
+        ).read_text(encoding="utf-8")
+
+        self.assertIn('"${new_count}" -lt $(( old_count / 2 ))', updater)
+        self.assertIn("(_recordingsByFileName.Count + 1) / 2", manifest)
+
     def test_release_creator_cannot_release_the_same_tag_twice(self):
         """The PAT that fixes the event also makes tag pushes re-enter this workflow.
 

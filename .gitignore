@@ -492,3 +492,6 @@ $RECYCLE.BIN/
 
 # Local git worktrees
 .worktrees/
+
+# Half-written renders, named by SoundFileService so a hard kill leaves nothing tracked.
+.wvp-*

@@ -42,13 +42,17 @@ public sealed record BuildRecipe(
 
         string json = await File.ReadAllTextAsync(path, cancellationToken);
 
+        // A recipe that is present but unreadable is not the same as one that was never written.
+        // Reading it as "no recipe" would answer "nothing to re-render" for a pack whose audio
+        // nothing can vouch for.
         try
         {
-            return JsonSerializer.Deserialize(json, BuildRecipeJsonContext.Default.BuildRecipe);
+            return JsonSerializer.Deserialize(json, BuildRecipeJsonContext.Default.BuildRecipe) ??
+                   throw new InvalidOperationException($"{path} holds no recipe.");
         }
-        catch (JsonException)
+        catch (JsonException exception)
         {
-            return null;
+            throw new InvalidOperationException($"{path} could not be read.", exception);
         }
     }
 

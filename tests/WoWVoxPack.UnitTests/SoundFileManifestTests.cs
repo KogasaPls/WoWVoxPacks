@@ -155,6 +155,35 @@ public class SoundFileManifestTests : IDisposable
     }
 
     [Fact]
+    public async Task FilesToRemove_Throws_WhenMostOfThePackWouldDisappear()
+    {
+        SoundFile[] shipped = Enumerable.Range(0, 100)
+            .Select(i => new SoundFile($"{i}.ogg", text: $"Spell {i}", displayName: $"Spell {i}"))
+            .ToArray();
+        SoundFileManifest savedManifest = await SoundFileManifest.LoadAsync(ManifestPath);
+        await savedManifest.SaveAsync(ManifestPath, shipped);
+        SoundFileManifest manifest = await SoundFileManifest.LoadAsync(ManifestPath);
+
+        InvalidOperationException exception =
+            Assert.Throws<InvalidOperationException>(() => manifest.FilesToRemove(shipped.Take(1)).ToArray());
+
+        Assert.Contains("99", exception.Message);
+    }
+
+    [Fact]
+    public async Task FilesToRemove_AllowsASmallPack_ToRetireSeveralRecordingsAtOnce()
+    {
+        SoundFile[] shipped = Enumerable.Range(0, 12)
+            .Select(i => new SoundFile($"{i}.ogg", text: $"Callout {i}", displayName: $"Callout {i}"))
+            .ToArray();
+        SoundFileManifest savedManifest = await SoundFileManifest.LoadAsync(ManifestPath);
+        await savedManifest.SaveAsync(ManifestPath, shipped);
+        SoundFileManifest manifest = await SoundFileManifest.LoadAsync(ManifestPath);
+
+        Assert.Equal(8, manifest.FilesToRemove(shipped.Take(4)).Count());
+    }
+
+    [Fact]
     public async Task FilesToRemove_IgnoresRecordings_TheManifestNeverKnewAbout()
     {
         SoundFile kept = new("alert.ogg", text: "Alert", displayName: "Alert");

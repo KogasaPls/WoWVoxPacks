@@ -44,8 +44,18 @@ public sealed class BigWigsVoiceUpstreamClient(
             throw new Exception("Failed to get directory content from GitHub.");
         }
 
-        IEnumerable<RepositoryContent> spellFiles = toolDirectoryContent.Where(content =>
-            content.Name.StartsWith("spells") && content.Name.EndsWith(".txt"));
+        RepositoryContent[] spellFiles = toolDirectoryContent.Where(content =>
+            content.Name.StartsWith("spells") && content.Name.EndsWith(".txt")).ToArray();
+
+        // The pack follows upstream's default branch on purpose, so a rename or a move there is
+        // expected to reach us. Reaching us as an empty spell list is not: it builds a pack with
+        // nothing in it and reads as an upstream that dropped every spell.
+        if (spellFiles.Length == 0)
+        {
+            throw new InvalidOperationException(
+                "BigWigs_Voice/Tools lists no spells*.txt. The upstream layout has changed.");
+        }
+
         foreach (RepositoryContent spellFile in spellFiles)
         {
             string content = await HttpClient.GetStringAsync(spellFile.DownloadUrl, cancellationToken);

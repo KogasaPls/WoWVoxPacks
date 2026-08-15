@@ -27,6 +27,7 @@ public sealed class SoundFileManifest
             soundFiles.ToDictionary(f => f.Key, StringComparer.OrdinalIgnoreCase));
     }
 
+    /// <summary>The entries whose recording this build has to render.</summary>
     /// <param name="recipeChanged">
     /// True when the audio on disk was rendered by a different voice, rate, pitch or sample rate
     /// than this build asks for. None of that reaches the per-entry comparison, so without this
@@ -59,10 +60,34 @@ public sealed class SoundFileManifest
     {
         HashSet<string> keep = new(currentSoundFiles.Select(f => f.FileName), StringComparer.OrdinalIgnoreCase);
 
-        return _soundFilesByKey.Values
+        string[] removals = _soundFilesByKey.Values
             .Select(f => f.FileName)
             .Where(fileName => !keep.Contains(fileName))
-            .Distinct(StringComparer.OrdinalIgnoreCase);
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+
+        if (removals.Length > RemovalLimit())
+        {
+            throw new InvalidOperationException(
+                $"The build registers {keep.Count} recordings where the last one had " +
+                $"{_soundFilesByKey.Count}, which would delete {removals.Length}. That is a " +
+                "vocabulary that failed to load, not a pack that shrank.");
+        }
+
+        return removals;
+    }
+
+    /// <summary>
+    /// How much of a pack may disappear in one build. The spell list comes from an unauthenticated
+    /// listing of an upstream directory, and a rename there yields no entries and no error, which
+    /// would otherwise delete a whole voice pack and commit it. Small packs get a flat allowance so
+    /// that retiring a handful of callouts still works.
+    /// </summary>
+    private int RemovalLimit()
+    {
+        const int alwaysAllowed = 10;
+
+        return Math.Max(alwaysAllowed, _soundFilesByKey.Count / 4);
     }
 
     public Task SaveAsync(string path, IEnumerable<SoundFile> soundFiles, CancellationToken cancellationToken = default)

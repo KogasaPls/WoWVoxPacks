@@ -1,6 +1,8 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
+using Ardalis.GuardClauses;
+
 namespace WoWVoxPack.TTS;
 
 /// <summary>
@@ -19,7 +21,7 @@ public sealed record BuildRecipe(
     public static BuildRecipe From(TtsSettings settings)
     {
         return new BuildRecipe(
-            settings.Voice?.ToString() ?? string.Empty,
+            Guard.Against.Null(settings.Voice).ToString(),
             settings.LanguageCode,
             settings.SpeakingRate,
             settings.Pitch,

@@ -69,9 +69,13 @@ public class AddOnBuildOrchestrator(
             SoundFile[] soundFilesToCreate =
                 manifest.FilesToCreate(addOn.SoundFiles, soundOutputDirectory, recipeChanged).ToArray();
 
+            // Asked before anything is rendered: a pack that lost most of its vocabulary is a
+            // failed build, and finding that out after paying for thousands of files is worse.
+            string[] soundFilesToRemove = manifest.FilesToRemove(addOn.SoundFiles).ToArray();
+
             await CreateSoundFilesAsync(soundFilesToCreate, soundOutputDirectory, ttsSettings, cancellationToken);
 
-            RemoveRetiredSoundFiles(manifest, addOn, soundOutputDirectory);
+            RemoveRetiredSoundFiles(soundFilesToRemove, addOn, soundOutputDirectory);
 
             await manifest.SaveAsync(addOn.SoundFilesJsonPath, addOn.SoundFiles, cancellationToken);
             await recipe.SaveAsync(addOn.BuildRecipePath, cancellationToken);
@@ -120,7 +124,10 @@ public class AddOnBuildOrchestrator(
                     cancellationToken);
                 return;
             }
-            catch (Exception exception) when (attempt < RenderAttempts && exception is not OperationCanceledException)
+            // A client-side deadline arrives as TaskCanceledException, and a timed-out render is
+            // the most ordinary thing there is to retry, so only the caller giving up ends the
+            // attempts.
+            catch (Exception exception) when (attempt < RenderAttempts && !cancellationToken.IsCancellationRequested)
             {
                 TimeSpan delay = TimeSpan.FromSeconds(Math.Pow(2, attempt));
                 Logger.LogWarning(exception, "Rendering {FileName} failed (attempt {Attempt}); retrying in {Delay}",
@@ -130,9 +137,9 @@ public class AddOnBuildOrchestrator(
         }
     }
 
-    private void RemoveRetiredSoundFiles(SoundFileManifest manifest, AddOn addOn, string soundOutputDirectory)
+    private void RemoveRetiredSoundFiles(IEnumerable<string> fileNames, AddOn addOn, string soundOutputDirectory)
     {
-        foreach (string fileName in manifest.FilesToRemove(addOn.SoundFiles))
+        foreach (string fileName in fileNames)
         {
             string path = Path.Combine(soundOutputDirectory, fileName);
             if (!File.Exists(path))

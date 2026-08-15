@@ -52,14 +52,7 @@ public class AddOnBuildOrchestratorTests : IDisposable
                 .AddFile("Core.lua", _ => "-- generated lua")
                 .Build(dir));
         FakeSoundFileService soundFileService = new();
-        BuildMatrix buildMatrix = new() { TtsSettings = [new TtsSettings { Voice = VoiceName.Neural2_C }] };
-
-        AddOnBuildOrchestrator orchestrator = new(
-            NullLogger<AddOnBuildOrchestrator>.Instance,
-            [service],
-            Options.Create(buildMatrix),
-            soundFileService,
-            _tempDirectory);
+        AddOnBuildOrchestrator orchestrator = Orchestrator(service, soundFileService);
 
         await orchestrator.RunAsync(CancellationToken.None);
 
@@ -79,14 +72,7 @@ public class AddOnBuildOrchestratorTests : IDisposable
         FakeAddOnService service = new((dir, tts) =>
             new AddOnBuilder(settings, tts).AddSoundFile(soundFile).Build(dir));
         FakeSoundFileService soundFileService = new();
-        BuildMatrix buildMatrix = new() { TtsSettings = [new TtsSettings { Voice = VoiceName.Neural2_C }] };
-
-        AddOnBuildOrchestrator orchestrator = new(
-            NullLogger<AddOnBuildOrchestrator>.Instance,
-            [service],
-            Options.Create(buildMatrix),
-            soundFileService,
-            _tempDirectory);
+        AddOnBuildOrchestrator orchestrator = Orchestrator(service, soundFileService);
 
         await orchestrator.RunAsync(CancellationToken.None);
         Assert.Single(soundFileService.CreatedSoundFiles);
@@ -100,7 +86,6 @@ public class AddOnBuildOrchestratorTests : IDisposable
     {
         AddOnSettings settings = DefaultSettings("Test_AddOn");
         FakeSoundFileService soundFileService = new();
-        BuildMatrix buildMatrix = new() { TtsSettings = [new TtsSettings { Voice = VoiceName.Neural2_C }] };
         string text = "Alert";
 
         FakeAddOnService service = new((dir, tts) =>
@@ -108,12 +93,7 @@ public class AddOnBuildOrchestratorTests : IDisposable
                 .AddSoundFile(new SoundFile("alert.ogg", text: text, displayName: "Alert"))
                 .Build(dir));
 
-        AddOnBuildOrchestrator orchestrator = new(
-            NullLogger<AddOnBuildOrchestrator>.Instance,
-            [service],
-            Options.Create(buildMatrix),
-            soundFileService,
-            _tempDirectory);
+        AddOnBuildOrchestrator orchestrator = Orchestrator(service, soundFileService);
 
         await orchestrator.RunAsync(CancellationToken.None);
         Assert.Single(soundFileService.CreatedSoundFiles);
@@ -137,21 +117,14 @@ public class AddOnBuildOrchestratorTests : IDisposable
                 .AddSoundFile(new SoundFile("adds.ogg", text: "Adds", displayName: "Adds"))
                 .Build(dir));
 
-        AddOnBuildOrchestrator Orchestrator() => new(
-            NullLogger<AddOnBuildOrchestrator>.Instance,
-            [service],
-            Options.Create(new BuildMatrix
-            {
-                TtsSettings = [new TtsSettings { Voice = VoiceName.Neural2_C, SpeakingRate = speakingRate }]
-            }),
-            soundFileService,
-            _tempDirectory);
+        AddOnBuildOrchestrator AtCurrentRate() => Orchestrator(service, soundFileService,
+            new TtsSettings { Voice = VoiceName.Neural2_C, SpeakingRate = speakingRate });
 
-        await Orchestrator().RunAsync(CancellationToken.None);
+        await AtCurrentRate().RunAsync(CancellationToken.None);
         Assert.Equal(2, soundFileService.CreatedSoundFiles.Count);
 
         speakingRate = 1.2f;
-        await Orchestrator().RunAsync(CancellationToken.None);
+        await AtCurrentRate().RunAsync(CancellationToken.None);
 
         Assert.Equal(4, soundFileService.CreatedSoundFiles.Count);
     }
@@ -162,12 +135,7 @@ public class AddOnBuildOrchestratorTests : IDisposable
         AddOnSettings settings = DefaultSettings("Test_AddOn");
         FakeAddOnService service = new((dir, tts) => new AddOnBuilder(settings, tts).Build(dir));
 
-        AddOnBuildOrchestrator orchestrator = new(
-            NullLogger<AddOnBuildOrchestrator>.Instance,
-            [service],
-            Options.Create(new BuildMatrix { TtsSettings = [new TtsSettings { Voice = VoiceName.Neural2_C }] }),
-            new FakeSoundFileService(),
-            _tempDirectory);
+        AddOnBuildOrchestrator orchestrator = Orchestrator(service, new FakeSoundFileService());
 
         await orchestrator.RunAsync(CancellationToken.None);
 
@@ -196,12 +164,7 @@ public class AddOnBuildOrchestratorTests : IDisposable
             return builder.Build(dir);
         });
 
-        AddOnBuildOrchestrator orchestrator = new(
-            NullLogger<AddOnBuildOrchestrator>.Instance,
-            [service],
-            Options.Create(new BuildMatrix { TtsSettings = [new TtsSettings { Voice = VoiceName.Neural2_C }] }),
-            soundFileService,
-            _tempDirectory);
+        AddOnBuildOrchestrator orchestrator = Orchestrator(service, soundFileService);
 
         await orchestrator.RunAsync(CancellationToken.None);
         string soundDirectory = Path.Combine(_tempDirectory, "Neural2_C", "Test_AddOn", "Sounds");
@@ -223,12 +186,7 @@ public class AddOnBuildOrchestratorTests : IDisposable
                 .AddSoundFile(new SoundFile("alert.ogg", text: "Alert", displayName: "Alert"))
                 .Build(dir));
 
-        AddOnBuildOrchestrator orchestrator = new(
-            NullLogger<AddOnBuildOrchestrator>.Instance,
-            [service],
-            Options.Create(new BuildMatrix { TtsSettings = [new TtsSettings { Voice = VoiceName.Neural2_C }] }),
-            new FakeSoundFileService(),
-            _tempDirectory);
+        AddOnBuildOrchestrator orchestrator = Orchestrator(service, new FakeSoundFileService());
 
         await orchestrator.RunAsync(CancellationToken.None);
 
@@ -242,6 +200,58 @@ public class AddOnBuildOrchestratorTests : IDisposable
     }
 
     [Fact]
+    public async Task RunAsync_RendersNothing_WhenAPackLosesMostOfItsVocabulary()
+    {
+        AddOnSettings settings = DefaultSettings("Test_AddOn");
+        FakeSoundFileService soundFileService = new();
+        int soundCount = 40;
+
+        FakeAddOnService service = new((dir, tts) =>
+        {
+            AddOnBuilder builder = new(settings, tts);
+            for (int i = 0; i < soundCount; i++)
+            {
+                builder.AddSoundFile(new SoundFile($"{i}.ogg", text: $"Spell {i}", displayName: $"Spell {i}"));
+            }
+
+            return builder.Build(dir);
+        });
+
+        AddOnBuildOrchestrator orchestrator = Orchestrator(service, soundFileService);
+
+        await orchestrator.RunAsync(CancellationToken.None);
+        Assert.Equal(40, soundFileService.CreatedSoundFiles.Count);
+
+        soundCount = 1;
+        await Assert.ThrowsAsync<InvalidOperationException>(() => orchestrator.RunAsync(CancellationToken.None));
+
+        // Nothing was rendered and nothing was deleted: the collapse is caught before either.
+        Assert.Equal(40, soundFileService.CreatedSoundFiles.Count);
+        Assert.Equal(40,
+            Directory.GetFiles(Path.Combine(_tempDirectory, "Neural2_C", "Test_AddOn", "Sounds")).Length);
+    }
+
+    [Fact]
+    public async Task RunAsync_RetriesARender_WhenTheProviderTimesOut()
+    {
+        AddOnSettings settings = DefaultSettings("Test_AddOn");
+        // A client-side deadline surfaces as TaskCanceledException, which is an
+        // OperationCanceledException and so is easily mistaken for the caller giving up.
+        FakeSoundFileService soundFileService = new(failuresPerFile: 1, failWith: () => new TaskCanceledException());
+
+        FakeAddOnService service = new((dir, tts) =>
+            new AddOnBuilder(settings, tts)
+                .AddSoundFile(new SoundFile("alert.ogg", text: "Alert", displayName: "Alert"))
+                .Build(dir));
+
+        AddOnBuildOrchestrator orchestrator = Orchestrator(service, soundFileService);
+
+        await orchestrator.RunAsync(CancellationToken.None);
+
+        Assert.Single(soundFileService.CreatedSoundFiles);
+    }
+
+    [Fact]
     public async Task RunAsync_RetriesARender_WhenTheProviderFailsOnce()
     {
         AddOnSettings settings = DefaultSettings("Test_AddOn");
@@ -252,12 +262,7 @@ public class AddOnBuildOrchestratorTests : IDisposable
                 .AddSoundFile(new SoundFile("alert.ogg", text: "Alert", displayName: "Alert"))
                 .Build(dir));
 
-        AddOnBuildOrchestrator orchestrator = new(
-            NullLogger<AddOnBuildOrchestrator>.Instance,
-            [service],
-            Options.Create(new BuildMatrix { TtsSettings = [new TtsSettings { Voice = VoiceName.Neural2_C }] }),
-            soundFileService,
-            _tempDirectory);
+        AddOnBuildOrchestrator orchestrator = Orchestrator(service, soundFileService);
 
         await orchestrator.RunAsync(CancellationToken.None);
 
@@ -276,12 +281,7 @@ public class AddOnBuildOrchestratorTests : IDisposable
                 .AddSoundFile(new SoundFile("alert.ogg", text: "Alert", displayName: "Alert"))
                 .Build(dir));
 
-        AddOnBuildOrchestrator orchestrator = new(
-            NullLogger<AddOnBuildOrchestrator>.Instance,
-            [service],
-            Options.Create(new BuildMatrix { TtsSettings = [new TtsSettings { Voice = VoiceName.Neural2_C }] }),
-            soundFileService,
-            _tempDirectory);
+        AddOnBuildOrchestrator orchestrator = Orchestrator(service, soundFileService);
 
         await Assert.ThrowsAsync<HttpRequestException>(() => orchestrator.RunAsync(CancellationToken.None));
 
@@ -293,6 +293,20 @@ public class AddOnBuildOrchestratorTests : IDisposable
     public void Dispose()
     {
         Directory.Delete(_tempDirectory, true);
+    }
+
+    private AddOnBuildOrchestrator Orchestrator(IAddOnService service, ISoundFileService soundFileService,
+        TtsSettings? ttsSettings = null)
+    {
+        return new AddOnBuildOrchestrator(
+            NullLogger<AddOnBuildOrchestrator>.Instance,
+            [service],
+            Options.Create(new BuildMatrix
+            {
+                TtsSettings = [ttsSettings ?? new TtsSettings { Voice = VoiceName.Neural2_C }]
+            }),
+            soundFileService,
+            _tempDirectory);
     }
 
     private static AddOnSettings DefaultSettings(string title)
@@ -325,7 +339,8 @@ public class AddOnBuildOrchestratorTests : IDisposable
     }
 
     /// <summary>Renders run in parallel, so the record of them has to survive that.</summary>
-    private sealed class FakeSoundFileService(int failuresPerFile = 0) : ISoundFileService
+    private sealed class FakeSoundFileService(int failuresPerFile = 0, Func<Exception>? failWith = null)
+        : ISoundFileService
     {
         private readonly Lock _gate = new();
         private readonly Dictionary<string, int> _failures = new(StringComparer.OrdinalIgnoreCase);
@@ -351,7 +366,7 @@ public class AddOnBuildOrchestratorTests : IDisposable
                 if (failed < failuresPerFile)
                 {
                     _failures[soundFile.FileName] = failed + 1;
-                    throw new HttpRequestException("the provider is having a moment");
+                    throw failWith?.Invoke() ?? new HttpRequestException("the provider is having a moment");
                 }
 
                 _createdSoundFiles.Add(soundFile);

@@ -18,6 +18,7 @@ jobs:
     permissions: write-all
     outputs:
       release_tag: ${{ steps.set-release-tag.outputs.release_tag || steps.set-release-tag-push.outputs.release_tag }}
+      released: ${{ steps.existing-release.outputs.skip != 'true' }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -69,10 +70,27 @@ jobs:
         run: |
           echo "RELEASE_TAG=${GITHUB_REF#refs/*/}" >> "$GITHUB_ENV"
           echo "release_tag=${GITHUB_REF#refs/*/}" >> "$GITHUB_OUTPUT"
+      - name: Skip a tag that has already been released
+        id: existing-release
+        # Creating a release creates its tag, and a tag created by the PAT can push this
+        # workflow again. That second run would repackage, update the release in place and
+        # publish every archive to CurseForge a second time. The dispatch path walks to a free
+        # tag, so a release that already exists means this run has nothing to do.
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            echo "${RELEASE_TAG} has already been released"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
       - name: Package artifacts
+        if: steps.existing-release.outputs.skip != 'true'
         run: ./scripts/package.sh
       - name: Create GitHub Release
         id: create-release
+        if: steps.existing-release.outputs.skip != 'true'
         uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ env.RELEASE_TAG }}
@@ -100,6 +118,12 @@ jobs:
   # dependency makes the release-to-CurseForge path the same one every time.
   publish-to-curseforge:
     needs: create-release
+    if: needs.create-release.outputs.released == 'true'
+    # A called workflow can only be granted less than the job that calls it, and this repository
+    # defaults its token to read. Without this the publisher runs with whatever the default is,
+    # which is how a permission it needs turns into a failed release rather than a failed upload.
+    permissions:
+      contents: read
     uses: ./.github/workflows/publish-to-curseforge.yml
     secrets: inherit
     with:

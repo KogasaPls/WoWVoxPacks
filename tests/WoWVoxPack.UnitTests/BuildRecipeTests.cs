@@ -24,7 +24,7 @@ public class BuildRecipeTests : IDisposable
     }
 
     [Fact]
-    public async Task SaveAsync_RoundTrips()
+    public async Task SaveAsync_WritesARecipe_LoadAsyncReadsBackUnchanged()
     {
         BuildRecipe recipe = BuildRecipe.From(new TtsSettings
         {

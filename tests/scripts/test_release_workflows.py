@@ -41,6 +41,50 @@ class ReleaseWorkflowTests(unittest.TestCase):
             "GITHUB_TOKEN: ${{ secrets.WORKFLOW_RELEASE_PAT }}", release_creator
         )
 
+    def test_release_creator_cannot_release_the_same_tag_twice(self):
+        """The PAT that fixes the event also makes tag pushes re-enter this workflow.
+
+        `create-release` still triggers on `push: tags: ['v*']`, and creating a release
+        creates its tag. Without the guard the second run repackages, updates the release
+        in place and uploads every archive to CurseForge again.
+        """
+        release_creator = (
+            REPOSITORY_ROOT / ".github/workflows/create-release.yml"
+        ).read_text(encoding="utf-8")
+
+        self.assertIn("gh release view \"$RELEASE_TAG\"", release_creator)
+        self.assertIn(
+            "released: ${{ steps.existing-release.outputs.skip != 'true' }}", release_creator
+        )
+        self.assertIn(
+            "if: needs.create-release.outputs.released == 'true'", release_creator
+        )
+        for guarded in ("- name: Package artifacts", "- name: Create GitHub Release"):
+            step = release_creator.index(guarded)
+            self.assertIn(
+                "if: steps.existing-release.outputs.skip != 'true'",
+                release_creator[step:step + 200],
+            )
+
+    def test_publisher_asks_for_no_permission_its_caller_lacks(self):
+        """A called workflow can only be granted less than the job that calls it.
+
+        The repository defaults its token to read, so a job in the publisher asking for
+        anything more fails the whole release run rather than that one job.
+        """
+        publisher = (
+            REPOSITORY_ROOT / ".github/workflows/publish-to-curseforge.yml"
+        ).read_text(encoding="utf-8")
+        release_creator = (
+            REPOSITORY_ROOT / ".github/workflows/create-release.yml"
+        ).read_text(encoding="utf-8")
+
+        self.assertNotIn("actions: write", publisher)
+        self.assertNotIn("rerun-failed-jobs", publisher)
+        call = release_creator.index("uses: ./.github/workflows/publish-to-curseforge.yml")
+        self.assertIn("permissions:", release_creator[call - 300:call])
+        self.assertIn("contents: read", release_creator[call - 300:call])
+
     def test_northern_sky_raid_tools_publish_contract_uses_per_voice_matrix(self):
         publisher = (
             REPOSITORY_ROOT / ".github/workflows/publish-to-curseforge.yml"
@@ -71,7 +115,6 @@ class ReleaseWorkflowTests(unittest.TestCase):
         self.assertNotIn("CF_" + "SPEECH_PROJECT_ID", publisher)
         self.assertNotIn("CF_NORTHERN_SKY_" + "RAID_TOOLS_PROJECT_ID", publisher)
         self.assertNotIn("WoWVoxPacks_NorthernSkyRaidTools_${{ env.RELEASE_TAG }}.zip", publisher)
-        self.assertIn("needs: [ publish-addon ]", publisher)
 
     def test_release_addon_fallback_includes_northern_sky_raid_tools(self):
         publisher = (

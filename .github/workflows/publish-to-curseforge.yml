@@ -1,7 +1,7 @@
 name: Publish to CurseForge
-# No release trigger: GitHub emits no workflow-triggering event for a release the workflow's own
-# GITHUB_TOKEN created, so that path published nothing while looking healthy. create-release.yml
-# calls this workflow instead, and passes the tag it just cut.
+# create-release.yml calls this workflow and hands it the tag it just cut. Keep that the only
+# automatic path: a release event reaches a workflow or not depending on which identity created
+# the release, and a second trigger alongside the call publishes the same tag twice.
 on:
   workflow_call:
     inputs:
@@ -9,12 +9,6 @@ on:
         description: 'Tag to publish. Empty resolves the latest release.'
         type: string
         default: ''
-      voices:
-        type: string
-        default: '"Wavenet_E","Neural2_C","Studio_Q"'
-      addons:
-        type: string
-        default: '"BigWigs_Voice","BigWigs_Countdown","Callouts","ExBoss","NorthernSkyRaidTools"'
   workflow_dispatch:
     inputs:
       release_tag:
@@ -36,15 +30,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  wait-for-release-artifacts:
-    runs-on: ubuntu-latest
-    name: Wait for release artifacts
-    steps:
-      - name: Wait a minute
-        run: sleep 60s
-        shell: bash
   publish-addon:
-    needs: wait-for-release-artifacts
     strategy:
       # Each voice×addon publish is independent; don't cancel the rest when one
       # fails so a single bad upload can't block every other package.
@@ -91,8 +77,8 @@ jobs:
           }'
 
     runs-on: ubuntu-latest
-    # Called workflows do not inherit the caller's job permissions, so the token that downloads
-    # the release assets needs its own grant.
+    # Downloading the release assets is all this needs; the CurseForge upload authenticates
+    # with its own token.
     permissions:
       contents: read
     name: Publish ${{ matrix.addon }} (${{ matrix.voice }}) (Project ID ${{ fromJSON(matrix.voice-to-addon-to-project-id-json)[matrix.voice][matrix.addon] }})
@@ -141,17 +127,3 @@ jobs:
           display_name: ${{ matrix.addon }} (${{ matrix.voice }}) ${{ env.RELEASE_TAG }}
           game_versions: ${{ env.RELEASE_GAME_VERSION }}
           relations: ${{ fromJSON(matrix.addon-to-relations-json)[matrix.addon] }}
-
-  rerun-failed-jobs:
-      runs-on: ubuntu-latest
-      needs: [ publish-addon ]
-      permissions:
-        actions: write
-      # Cap automatic retries so a permanently-failing publish can't loop forever.
-      if: failure() && github.run_attempt < 3
-      steps:
-        - name: Rerun failed jobs in the current workflow
-          env:
-            GH_TOKEN: ${{ github.token }}
-          run: sleep 30s && gh run rerun ${{ github.run_id }} --failed
-          shell: bash

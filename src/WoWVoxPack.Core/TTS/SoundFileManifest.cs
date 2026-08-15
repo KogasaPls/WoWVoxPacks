@@ -105,7 +105,7 @@ public sealed class SoundFileManifest
     {
         string json = JsonSerializer.Serialize(soundFiles.OrderBy(s => s.FileName).ToList(),
             SoundFileJsonContext.Default.ListSoundFile);
-        return File.WriteAllTextAsync(path, json, cancellationToken);
+        return AtomicFile.WriteAllTextAsync(path, json, cancellationToken);
     }
 
     /// <summary>

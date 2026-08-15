@@ -59,7 +59,7 @@ public sealed record BuildRecipe(
     public Task SaveAsync(string path, CancellationToken cancellationToken = default)
     {
         string json = JsonSerializer.Serialize(this, BuildRecipeJsonContext.Default.BuildRecipe);
-        return File.WriteAllTextAsync(path, json, cancellationToken);
+        return AtomicFile.WriteAllTextAsync(path, json, cancellationToken);
     }
 }
 

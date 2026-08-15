@@ -42,6 +42,11 @@ public class SoundFileService(ITtsProvider ttsProvider, ILogger<SoundFileService
                     })
                 .CancellableThrough(cancellationToken)
                 .ProcessAsynchronously();
+
+            // Google answers in LINEAR16, so every rendered sound leaves a wav behind. They are
+            // gitignored and excluded from the archives, which is why 2.7 GB of them had piled
+            // up in a working tree unnoticed.
+            File.Delete(filePathWithCorrectExtension);
         }
     }
 }

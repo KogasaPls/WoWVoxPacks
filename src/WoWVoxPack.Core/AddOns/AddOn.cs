@@ -67,6 +67,12 @@ public sealed partial class AddOn
     public string TocFileName => $"{AddOnDirectoryName}.toc";
     public string SoundFilesJsonPath => Path.Combine(AddOnDirectory, "SoundFiles.json");
 
+    /// <summary>
+    /// Beside the addon directory, not inside it: package.sh archives directories, so a build
+    /// record kept here cannot end up shipped to players.
+    /// </summary>
+    public string BuildRecipePath => Path.Combine(_outputDirectoryBase, $"{AddOnDirectoryName}.recipe.json");
+
     public record Note(string? LanguageCode, string Text);
 
     /// <summary>

@@ -27,15 +27,42 @@ public sealed class SoundFileManifest
             soundFiles.ToDictionary(f => f.Key, StringComparer.OrdinalIgnoreCase));
     }
 
-    public IEnumerable<SoundFile> FilesToCreate(IEnumerable<SoundFile> currentSoundFiles, string soundDirectory)
+    /// <param name="recipeChanged">
+    /// True when the audio on disk was rendered by a different voice, rate, pitch or sample rate
+    /// than this build asks for. None of that reaches the per-entry comparison, so without this
+    /// the whole pack counts as up to date and keeps the old recipe's audio forever.
+    /// </param>
+    public IEnumerable<SoundFile> FilesToCreate(IEnumerable<SoundFile> currentSoundFiles, string soundDirectory,
+        bool recipeChanged = false)
     {
         List<SoundFile> current = currentSoundFiles.ToList();
+
+        if (recipeChanged)
+        {
+            return current.DistinctBy(f => f.FileName, StringComparer.OrdinalIgnoreCase);
+        }
 
         IEnumerable<SoundFile> missing =
             current.Where(f => !File.Exists(Path.Combine(soundDirectory, f.FileName)));
         IEnumerable<SoundFile> changed = current.Where(f => !IsSameContentAsManifestEntry(f));
 
         return missing.UnionBy(changed, f => f.FileName);
+    }
+
+    /// <summary>
+    /// Files this build no longer names but the last one did. An upstream that drops a spell
+    /// leaves its recording behind otherwise, and it keeps shipping in every archive: 365 per
+    /// BigWigs voice had accumulated by the 12.1.0 sync. Only files the previous manifest knew
+    /// about are returned, so anything placed in the folder by hand is left alone.
+    /// </summary>
+    public IEnumerable<string> FilesToRemove(IEnumerable<SoundFile> currentSoundFiles)
+    {
+        HashSet<string> keep = new(currentSoundFiles.Select(f => f.FileName), StringComparer.OrdinalIgnoreCase);
+
+        return _soundFilesByKey.Values
+            .Select(f => f.FileName)
+            .Where(fileName => !keep.Contains(fileName))
+            .Distinct(StringComparer.OrdinalIgnoreCase);
     }
 
     public Task SaveAsync(string path, IEnumerable<SoundFile> soundFiles, CancellationToken cancellationToken = default)

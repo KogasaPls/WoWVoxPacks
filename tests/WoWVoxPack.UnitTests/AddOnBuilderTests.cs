@@ -184,6 +184,31 @@ public class AddOnBuilderTests
         }
     }
 
+    [Fact]
+    public void Build_AllowsSeveralEntries_ToShareOneRecordingTheyAgreeOn()
+    {
+        AddOn addOn = new AddOnBuilder(DefaultSettings, DefaultTtsSettings)
+            .AddSoundFile(new SoundFile("adds.ogg", text: "Adds", displayName: "注意小怪"))
+            .AddSoundFile(new SoundFile("adds.ogg", text: "Adds", displayName: "点名小怪"))
+            .Build("/tmp/output");
+
+        Assert.Equal(2, addOn.SoundFiles.Count());
+    }
+
+    [Fact]
+    public void Build_Throws_WhenEntriesSharingARecordingDisagreeOnWhatItSays()
+    {
+        AddOnBuilder builder = new AddOnBuilder(DefaultSettings, DefaultTtsSettings)
+            .AddSoundFile(new SoundFile("frontal.ogg", text: "FRONTAL", displayName: "注意头前"))
+            .AddSoundFile(new SoundFile("frontal.ogg", text: "Frontal", displayName: "点名头前"));
+
+        InvalidOperationException exception =
+            Assert.Throws<InvalidOperationException>(() => builder.Build("/tmp/output"));
+
+        Assert.Contains("frontal.ogg", exception.Message);
+        Assert.Contains("注意头前", exception.Message);
+    }
+
     private static string WriteTempJson(string json)
     {
         string path = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.json");

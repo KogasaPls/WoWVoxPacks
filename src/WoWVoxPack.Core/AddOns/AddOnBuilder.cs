@@ -94,8 +94,37 @@ public sealed class AddOnBuilder(AddOnSettings settings, TtsSettings ttsSettings
         return this;
     }
 
+    /// <summary>
+    /// Several entries may share one recording — ExBoss points five labels at adds.ogg — but only
+    /// one of them can be rendered, and the renderer takes whichever it reaches first. Where they
+    /// disagree about what to say, that choice silently decides what players hear, so it has to
+    /// be a build error instead: ExBoss shipped "FRONTAL" for frontal.ogg for exactly this
+    /// reason, while two other labels on the same file asked for "Frontal".
+    /// </summary>
+    private void GuardAgainstConflictingRecordings()
+    {
+        IEnumerable<IGrouping<string, SoundFile>> perFile =
+            _soundFiles.Values.GroupBy(f => f.FileName, StringComparer.OrdinalIgnoreCase);
+
+        foreach (IGrouping<string, SoundFile> group in perFile)
+        {
+            SoundFile[] distinct = group
+                .DistinctBy(f => (f.Text, f.Ssml, f.CopyFromPath))
+                .ToArray();
+
+            if (distinct.Length > 1)
+            {
+                string keys = string.Join(", ", group.Select(f => $"'{f.Key}'"));
+                throw new InvalidOperationException(
+                    $"{group.Key} is claimed by entries that do not agree on what it says ({keys}).");
+            }
+        }
+    }
+
     public AddOn Build(string outputDirectoryBase)
     {
+        GuardAgainstConflictingRecordings();
+
         string title = Guard.Against.NullOrWhiteSpace(_title ?? settings.Title);
         string displayTitle = _displayTitle ?? settings.DisplayTitle ?? title;
         string version = Guard.Against.NullOrWhiteSpace(settings.Version);

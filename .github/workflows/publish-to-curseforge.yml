@@ -67,10 +67,13 @@ jobs:
         # requiredDependency, ## OptionalDeps an optionalDependency. Keys are CurseForge
         # URL slugs, not addon folder names. An addon absent here uploads with no
         # relations, so a workflow_dispatch naming a new addon still publishes.
+        # The slug is the one the project page resolves to today, not the one older file and
+        # download URLs still carry: CurseForge answers 1018 "does not exist, is not accessible,
+        # or belongs to an unrelated root category" for big-wigs, and rejects the whole upload.
         addon-to-relations-json:
           - '{
-            "BigWigs_Voice": "big-wigs:requiredDependency",
-            "BigWigs_Countdown": "big-wigs:requiredDependency",
+            "BigWigs_Voice": "bigwigs:requiredDependency",
+            "BigWigs_Countdown": "bigwigs:requiredDependency",
             "Callouts": "libsharedmedia-3-0:optionalDependency",
             "ExBoss": "exboss:requiredDependency,libsharedmedia-3-0:optionalDependency",
             "NorthernSkyRaidTools": "northern-sky-raid-tools:optionalDependency,libsharedmedia-3-0:optionalDependency"

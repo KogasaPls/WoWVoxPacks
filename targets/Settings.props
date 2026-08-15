@@ -9,6 +9,26 @@
     <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
 
+  <!--
+    CI builds with -warnaserror against an SDK that rolls forward on its own, so the diagnostic
+    surface is pinned to the framework rather than left at whatever the newest SDK enables.
+    Without this, AnalysisLevel is "latest": an SDK released tomorrow can add a rule and fail a
+    pull request that changed nothing. Raising either number is a deliberate edit.
+  -->
+  <PropertyGroup>
+    <AnalysisLevel>10.0</AnalysisLevel>
+    <WarningLevel>10</WarningLevel>
+  </PropertyGroup>
+
+  <!--
+    NuGet audits every package, direct and transitive, against advisories published after the
+    build was written. Those have to stay warnings: a CVE disclosed overnight would otherwise
+    fail every build until someone ships a fix, including the one that ships it.
+  -->
+  <PropertyGroup>
+    <WarningsNotAsErrors>$(WarningsNotAsErrors);NU1901;NU1902;NU1903;NU1904</WarningsNotAsErrors>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
   </PropertyGroup>

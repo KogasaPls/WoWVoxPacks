@@ -9,6 +9,13 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 
 class ReleaseWorkflowTests(unittest.TestCase):
     def test_curseforge_publish_has_one_automatic_release_path(self):
+        """create-release calls the publisher; no event may reach it a second way.
+
+        A release the workflow's own GITHUB_TOKEN creates emits no `release` event, so both
+        v12.1.0-r1 and -r2 published to GitHub and never reached CurseForge while every job
+        reported success. The call is the path; an event trigger alongside it would publish
+        the same tag twice.
+        """
         publisher = (
             REPOSITORY_ROOT / ".github/workflows/publish-to-curseforge.yml"
         ).read_text(encoding="utf-8")
@@ -16,9 +23,21 @@ class ReleaseWorkflowTests(unittest.TestCase):
             REPOSITORY_ROOT / ".github/workflows/create-release.yml"
         ).read_text(encoding="utf-8")
 
-        self.assertIn("  release:\n    types: [ published ]", publisher)
+        self.assertIn("\n  workflow_call:", publisher)
+        self.assertNotIn("\n  release:", publisher)
         self.assertNotIn("\n  workflow_run:", publisher)
         self.assertIn(
+            "uses: ./.github/workflows/publish-to-curseforge.yml", release_creator
+        )
+        self.assertIn("needs: create-release", release_creator)
+        self.assertIn("secrets: inherit", release_creator)
+        self.assertIn(
+            "release_tag: ${{ needs.create-release.outputs.release_tag }}",
+            release_creator,
+        )
+        # The action takes a token input; env.GITHUB_TOKEN leaves it on the default one.
+        self.assertIn("token: ${{ secrets.WORKFLOW_RELEASE_PAT }}", release_creator)
+        self.assertNotIn(
             "GITHUB_TOKEN: ${{ secrets.WORKFLOW_RELEASE_PAT }}", release_creator
         )
 

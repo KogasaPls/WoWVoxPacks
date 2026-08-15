@@ -16,6 +16,8 @@ jobs:
     if: github.event.pull_request.merged == true || github.event_name  != 'pull_request'
     runs-on: ubuntu-latest
     permissions: write-all
+    outputs:
+      release_tag: ${{ steps.set-release-tag.outputs.release_tag || steps.set-release-tag-push.outputs.release_tag }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -60,10 +62,13 @@ jobs:
 
           echo "Release tag: ${candidate}"
           echo "RELEASE_TAG=${candidate}" >> "$GITHUB_ENV"
+          echo "release_tag=${candidate}" >> "$GITHUB_OUTPUT"
       - name: Set release tag from push event
         id: set-release-tag-push
         if: github.event_name == 'push'
-        run: echo "RELEASE_TAG=${GITHUB_REF#refs/*/}" >> "$GITHUB_ENV"
+        run: |
+          echo "RELEASE_TAG=${GITHUB_REF#refs/*/}" >> "$GITHUB_ENV"
+          echo "release_tag=${GITHUB_REF#refs/*/}" >> "$GITHUB_OUTPUT"
       - name: Package artifacts
         run: ./scripts/package.sh
       - name: Create GitHub Release
@@ -84,5 +89,18 @@ jobs:
             ./dist/*.zip
             ./bigwigs-voice-version.txt
             ./release-revision.txt
-        env:
-          GITHUB_TOKEN: ${{ secrets.WORKFLOW_RELEASE_PAT }}
+          # The action reads its token input, not env.GITHUB_TOKEN, and that input defaults to
+          # the workflow's own GITHUB_TOKEN. Passing the PAT here is what keeps the release
+          # from being authored by github-actions[bot].
+          token: ${{ secrets.WORKFLOW_RELEASE_PAT }}
+
+  # Called, not triggered: whether a release event reaches another workflow depends on which
+  # identity created the release, and that has silently swallowed the CurseForge upload twice
+  # (v12.1.0-r1 and -r2 both shipped to GitHub and never reached CurseForge). Naming the
+  # dependency makes the release-to-CurseForge path the same one every time.
+  publish-to-curseforge:
+    needs: create-release
+    uses: ./.github/workflows/publish-to-curseforge.yml
+    secrets: inherit
+    with:
+      release_tag: ${{ needs.create-release.outputs.release_tag }}

@@ -25,7 +25,7 @@ namespace WoWVoxPack.AddOns.BigWigs_Voice
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("\nlocal name, addon = ...\n\n--------------------------------------------------------------------------------\n-- Locals\n--\n\nlocal tostring = tostring\nlocal format = format\naddon.SendMessage = BigWigsLoader.SendMessage\n\n--------------------------------------------------------------------------------\n-- Event Handlers\n--\nlocal path = \"");
+            this.Write("\nlocal _, addon = ...\n\n--------------------------------------------------------------------------------\n-- Locals\n--\n\nlocal tostring = tostring\nlocal format = format\naddon.SendMessage = BigWigsLoader.SendMessage\n\n--------------------------------------------------------------------------------\n-- Event Handlers\n--\nlocal path = \"");
             
             #line 16 "/home/kogasa/git/WoWVoxPack/src/WoWVoxPack.AddOns.BigWigs_Voice/CoreLuaFile.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(AddOnDirectoryPath));
@@ -39,7 +39,7 @@ namespace WoWVoxPack.AddOns.BigWigs_Voice
             
             #line default
             #line hidden
-            this.Write("\\\\Sounds\\\\%sy.ogg\"\nlocal function handler(event, module, key, sound, isOnMe)\n\tlocal success = PlaySoundFile(format(isOnMe and pathYou or path, tostring(key)), \"Master\")\n\tif not success then\n\t\taddon:SendMessage(\"BigWigs_Sound\", module, key, sound)\n\tend\nend\n\nBigWigsLoader.RegisterMessage(addon, \"BigWigs_Voice\", handler)\nBigWigsAPI.RegisterVoicePack(\"temp\")");
+            this.Write("\\\\Sounds\\\\%sy.ogg\"\n-- Nothing renders the y variants yet, so an on-me callout that goes straight to\n-- BigWigs\' own sound would lose the spell name on the alerts that matter most.\nlocal function handler(_, module, key, sound, isOnMe)\n\tlocal success = isOnMe and PlaySoundFile(format(pathYou, tostring(key)), \"Master\")\n\tif not success then\n\t\tsuccess = PlaySoundFile(format(path, tostring(key)), \"Master\")\n\tend\n\tif not success then\n\t\taddon:SendMessage(\"BigWigs_Sound\", module, key, sound)\n\tend\nend\n\nBigWigsLoader.RegisterMessage(addon, \"BigWigs_Voice\", handler)\nBigWigsAPI.RegisterVoicePack(\"temp\")");
             return this.GenerationEnvironment.ToString();
         }
     }

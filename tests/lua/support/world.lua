@@ -13,13 +13,13 @@ local SUPPORT = WVP_HARNESS_DIR .. "/support"
 -- Everything the addons, the libraries or the NSRT excerpt leave lying around in _G.
 local GLOBALS = {
     "LibStub", "NSAPI", "NSRT", "WoWVoxPacksNorthernSkyRaidToolsVoice",
-    "BigWigsAPI"
+    "BigWigsAPI", "BigWigsLoader"
 }
 
-local function Load(path)
+local function Load(path, ...)
     local chunk, err = loadfile(path)
     if not chunk then error(err, 0) end
-    return chunk()
+    return chunk(...)
 end
 
 --- @param options table
@@ -41,10 +41,14 @@ function World.new(options)
     return self
 end
 
---- Loads one generated addon folder exactly as the game would: mark it enabled, run its Lua.
+--- Loads one generated addon folder exactly as the game would: mark it enabled, run its Lua
+--- with the addon name and its private table, which is what `...` yields in a WoW addon file.
 function World:LoadAddOn(folder, file)
     self.recorder.loadedAddOns[folder] = true
-    Load(WVP_GENERATED_DIR .. "/" .. folder .. "/" .. (file or "Core.lua"))
+    self.addOnTables = self.addOnTables or {}
+    self.addOnTables[folder] = {}
+    Load(WVP_GENERATED_DIR .. "/" .. folder .. "/" .. (file or "Core.lua"), folder,
+        self.addOnTables[folder])
     self:RefreshFiles()
     return self
 end

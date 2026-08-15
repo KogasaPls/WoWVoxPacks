@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 using WoWVoxPack.AddOns;
 using WoWVoxPack.AddOns.BigWigs_Countdown;
+using WoWVoxPack.AddOns.BigWigs_Voice;
 using WoWVoxPack.AddOns.Callouts;
 using WoWVoxPack.AddOns.ExBoss;
 using WoWVoxPack.TTS;
@@ -37,7 +38,7 @@ services.AddOptions();
 
 // Same two-step binding the Builder uses: the per-addon section, then the AddOn root.
 foreach (string name in (string[])
-         ["Callouts", "NorthernSkyRaidTools", "ExBoss", "BigWigs_Countdown"])
+         ["Callouts", "NorthernSkyRaidTools", "ExBoss", "BigWigs_Countdown", "BigWigs_Voice"])
 {
     services.AddOptions<AddOnSettings>(name)
         .BindConfiguration($"AddOn:{name}")
@@ -53,6 +54,10 @@ services.AddSingleton(_ => new NorthernSkyRaidToolsVocabularyProvider(
     Path.Combine(repoRoot, "nsrt-vocabulary.txt"),
     Path.Combine(AppContext.BaseDirectory, "CalloutPronunciations.json")));
 
+// The BigWigs pack's Lua is the same whatever the spell list holds, and fetching the real one
+// would put GitHub between the harness and a run.
+services.AddSingleton<IBigWigsVoiceUpstreamClient, NoSpellsUpstreamClient>();
+services.AddScoped<BigWigsVoiceAddOnService>();
 services.AddScoped<CalloutsMediaAddOnService>();
 services.AddScoped<NorthernSkyRaidToolsAddOnService>();
 services.AddScoped<ExBossAddOnService>();
@@ -67,6 +72,7 @@ if (Directory.Exists(outputRoot))
     Directory.Delete(outputRoot, recursive: true);
 }
 
+await Emit(sp.GetRequiredService<BigWigsVoiceAddOnService>(), VoiceName.Neural2_C);
 await Emit(sp.GetRequiredService<NorthernSkyRaidToolsAddOnService>(), VoiceName.Neural2_C);
 await Emit(sp.GetRequiredService<NorthernSkyRaidToolsAddOnService>(), VoiceName.Studio_O);
 await Emit(sp.GetRequiredService<CalloutsMediaAddOnService>(), VoiceName.Neural2_C);
@@ -86,5 +92,14 @@ async Task Emit(IAddOnService service, VoiceName voice)
         string path = Path.Combine(addOn.AddOnDirectory, file);
         await File.WriteAllTextAsync(path, addOn.GetFileContent(file));
         Console.WriteLine(Path.GetRelativePath(outputRoot, path));
+    }
+}
+
+internal sealed class NoSpellsUpstreamClient : IBigWigsVoiceUpstreamClient
+{
+    public Task<IEnumerable<BigWigsVoiceSoundFile>> GetSoundFilesAsync(
+        CancellationToken cancellationToken = default)
+    {
+        return Task.FromResult<IEnumerable<BigWigsVoiceSoundFile>>([]);
     }
 }

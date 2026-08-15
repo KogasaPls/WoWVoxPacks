@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\src\WoWVoxPack.AddOns.BigWigs_Voice\WoWVoxPack.AddOns.BigWigs_Voice.csproj"/>
     <ProjectReference Include="..\..\..\src\WoWVoxPack.AddOns.Callouts\WoWVoxPack.AddOns.Callouts.csproj"/>
     <ProjectReference Include="..\..\..\src\WoWVoxPack.AddOns.ExBoss\WoWVoxPack.AddOns.ExBoss.csproj"/>
     <ProjectReference Include="..\..\..\src\WoWVoxPack.AddOns.BigWigs_Countdown\WoWVoxPack.AddOns.BigWigs_Countdown.csproj"/>

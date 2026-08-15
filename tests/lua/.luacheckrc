@@ -21,11 +21,15 @@ globals = {
     "_G",
     "WVP_HARNESS_DIR",
     "WVP_GENERATED_DIR",
-    "BigWigsAPI"
+    "BigWigsAPI",
+    "BigWigsLoader"
 }
 
 read_globals = {
     "C_AddOns",
     "CreateFrame",
-    "LibStub"
+    "LibStub",
+    "PlaySoundFile",
+    -- WoW's global alias for string.format, which the BigWigs pack localises.
+    "format"
 }

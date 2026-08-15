@@ -1,5 +1,6 @@
--- The two packs that are not part of the Callouts work but ship in the same release:
--- ExBoss_WoWVoxPacks_{Voice}/Core.lua and BigWigs_Countdown_WoWVoxPacks_{Voice}/Countdown.lua.
+-- The packs that are not part of the Callouts work but ship in the same release:
+-- BigWigs_Voice_WoWVoxPacks/Core.lua, ExBoss_WoWVoxPacks_{Voice}/Core.lua and
+-- BigWigs_Countdown_WoWVoxPacks_{Voice}/Countdown.lua.
 
 local harness = require("support.harness")
 local World = require("support.world")
@@ -15,6 +16,80 @@ local function StubBigWigs()
     }
     return registered
 end
+
+local VOICE_SOUNDS = "Interface\\AddOns\\BigWigs_Voice_WoWVoxPacks\\Sounds\\"
+
+--- Stands in for BigWigs itself: keeps the handler the pack registers, and records anything
+--- the pack hands back for BigWigs to sound instead.
+local function StubBigWigs_Voice()
+    local bigwigs = { handedBack = {} }
+    _G.BigWigsAPI = { RegisterVoicePack = function(pack) bigwigs.pack = pack end }
+    _G.BigWigsLoader = {
+        -- Both are called with a dot, so the addon table arrives as the first argument.
+        RegisterMessage = function(_, message, handler)
+            if message == "BigWigs_Voice" then bigwigs.handler = handler end
+        end,
+        SendMessage = function(_, message, _, key, sound)
+            bigwigs.handedBack[#bigwigs.handedBack + 1] = { message = message, key = key, sound = sound }
+        end
+    }
+    return bigwigs
+end
+
+local function LoadBigWigs_Voice(world)
+    local bigwigs = StubBigWigs_Voice()
+    world:LoadAddOn("BigWigs_Voice_WoWVoxPacks")
+    truthy(bigwigs.handler, "the pack no longer registers a BigWigs_Voice handler")
+    return bigwigs
+end
+
+test("bigwigs voice: plays the recording named after the spell", function()
+    local world = World.new()
+    local bigwigs = LoadBigWigs_Voice(world)
+    world.recorder.files[VOICE_SOUNDS .. "381862.ogg"] = true
+
+    bigwigs.handler("BigWigs_Voice", {}, 381862, "Alarm")
+
+    equal(world:LastPlayed(), VOICE_SOUNDS .. "381862.ogg")
+    equal(#bigwigs.handedBack, 0, "the pack handed a spell it can voice back to BigWigs")
+end)
+
+-- No y variant is rendered for any spell, so before the fallback existed every on-me callout
+-- lost the spell name and came out as whatever generic sound BigWigs had for it.
+test("bigwigs voice: an on-me callout falls back to the spell recording", function()
+    local world = World.new()
+    local bigwigs = LoadBigWigs_Voice(world)
+    world.recorder.files[VOICE_SOUNDS .. "381862.ogg"] = true
+
+    bigwigs.handler("BigWigs_Voice", {}, 381862, "Alarm", true)
+
+    equal(world.recorder.played[1], VOICE_SOUNDS .. "381862y.ogg")
+    equal(world:LastPlayed(), VOICE_SOUNDS .. "381862.ogg")
+    equal(#bigwigs.handedBack, 0, "an on-me callout was handed back with the recording present")
+end)
+
+test("bigwigs voice: an on-me callout prefers the y recording when one exists", function()
+    local world = World.new()
+    local bigwigs = LoadBigWigs_Voice(world)
+    world.recorder.files[VOICE_SOUNDS .. "381862.ogg"] = true
+    world.recorder.files[VOICE_SOUNDS .. "381862y.ogg"] = true
+
+    bigwigs.handler("BigWigs_Voice", {}, 381862, "Alarm", true)
+
+    equal(world:LastPlayed(), VOICE_SOUNDS .. "381862y.ogg")
+    equal(#world.recorder.played, 1, "the y recording played and the pack kept going")
+end)
+
+test("bigwigs voice: hands a spell it has no recording for back to BigWigs", function()
+    local world = World.new()
+    local bigwigs = LoadBigWigs_Voice(world)
+
+    bigwigs.handler("BigWigs_Voice", {}, 999999, "Alarm", true)
+
+    equal(#bigwigs.handedBack, 1, "BigWigs was not asked to sound the callout itself")
+    equal(bigwigs.handedBack[1].message, "BigWigs_Sound")
+    equal(bigwigs.handedBack[1].sound, "Alarm")
+end)
 
 test("exboss: registers its labels with LibSharedMedia", function()
     local world = World.new():LoadAddOn("ExBoss_WoWVoxPacks_Neural2_C")

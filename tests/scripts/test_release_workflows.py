@@ -52,7 +52,9 @@ class ReleaseWorkflowTests(unittest.TestCase):
             REPOSITORY_ROOT / ".github/workflows/create-release.yml"
         ).read_text(encoding="utf-8")
 
-        self.assertIn("gh release view \"$RELEASE_TAG\"", release_creator)
+        self.assertIn("releases/tags/${RELEASE_TAG}", release_creator)
+        # 200 skips, 404 releases, and anything else stops rather than guessing "not released".
+        self.assertIn("Could not tell whether ${RELEASE_TAG} is already released", release_creator)
         self.assertIn(
             "released: ${{ steps.existing-release.outputs.skip != 'true' }}", release_creator
         )
@@ -61,9 +63,14 @@ class ReleaseWorkflowTests(unittest.TestCase):
         )
         for guarded in ("- name: Package artifacts", "- name: Create GitHub Release"):
             step = release_creator.index(guarded)
+            # Only this step's own lines: a window that runs on reaches the next step's `if:`
+            # and passes for a step that lost its guard.
+            end = release_creator.find("\n      - name: ", step + len(guarded))
+            if end == -1:
+                end = len(release_creator)
             self.assertIn(
                 "if: steps.existing-release.outputs.skip != 'true'",
-                release_creator[step:step + 200],
+                release_creator[step:end],
             )
 
     def test_publisher_asks_for_no_permission_its_caller_lacks(self):

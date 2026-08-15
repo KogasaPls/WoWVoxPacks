@@ -79,12 +79,25 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
-            echo "${RELEASE_TAG} has already been released"
-            echo "skip=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "skip=false" >> "$GITHUB_OUTPUT"
-          fi
+          # An error is not an answer: anything but a definite yes or no stops the run, because
+          # guessing "no" here re-releases the tag and uploads every archive to CurseForge again.
+          code=$(curl -sS -o /dev/null -w '%{http_code}' \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/tags/${RELEASE_TAG}")
+          case "${code}" in
+            200)
+              echo "${RELEASE_TAG} has already been released"
+              echo "skip=true" >> "$GITHUB_OUTPUT"
+              ;;
+            404)
+              echo "skip=false" >> "$GITHUB_OUTPUT"
+              ;;
+            *)
+              echo "Could not tell whether ${RELEASE_TAG} is already released (HTTP ${code})" >&2
+              exit 1
+              ;;
+          esac
       - name: Package artifacts
         if: steps.existing-release.outputs.skip != 'true'
         run: ./scripts/package.sh

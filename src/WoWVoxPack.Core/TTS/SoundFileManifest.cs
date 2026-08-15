@@ -80,14 +80,16 @@ public sealed class SoundFileManifest
     /// <summary>
     /// How much of a pack may disappear in one build. The spell list comes from an unauthenticated
     /// listing of an upstream directory, and a rename there yields no entries and no error, which
-    /// would otherwise delete a whole voice pack and commit it. Small packs get a flat allowance so
-    /// that retiring a handful of callouts still works.
+    /// would otherwise delete a whole voice pack and commit it. Half, because that is the same line
+    /// the update workflow draws on a vocabulary that suddenly shrank, and a builder that refuses
+    /// earlier than the workflow does would fail the sync it is supposed to be protecting. Small
+    /// packs get a flat allowance so that retiring a handful of callouts still works.
     /// </summary>
     private int RemovalLimit()
     {
         const int alwaysAllowed = 10;
 
-        return Math.Max(alwaysAllowed, _soundFilesByKey.Count / 4);
+        return Math.Max(alwaysAllowed, _soundFilesByKey.Count / 2);
     }
 
     public Task SaveAsync(string path, IEnumerable<SoundFile> soundFiles, CancellationToken cancellationToken = default)

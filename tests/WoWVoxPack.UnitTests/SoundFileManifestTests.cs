@@ -171,6 +171,22 @@ public class SoundFileManifestTests : IDisposable
     }
 
     [Fact]
+    public async Task FilesToRemove_AllowsTheBiggestShrink_TheUpdateWorkflowLetsThrough()
+    {
+        // update.yml refuses an NSRT vocabulary that fell below half and has no removal cap of
+        // its own, so a 67-callout pack losing 33 names reaches the builder as a real build.
+        // Refusing it here would fail the sync job and take the BigWigs update down with it.
+        SoundFile[] shipped = Enumerable.Range(0, 67)
+            .Select(i => new SoundFile($"{i}.ogg", text: $"Callout {i}", displayName: $"Callout {i}"))
+            .ToArray();
+        SoundFileManifest savedManifest = await SoundFileManifest.LoadAsync(ManifestPath);
+        await savedManifest.SaveAsync(ManifestPath, shipped);
+        SoundFileManifest manifest = await SoundFileManifest.LoadAsync(ManifestPath);
+
+        Assert.Equal(33, manifest.FilesToRemove(shipped.Take(34)).Count());
+    }
+
+    [Fact]
     public async Task FilesToRemove_AllowsASmallPack_ToRetireSeveralRecordingsAtOnce()
     {
         SoundFile[] shipped = Enumerable.Range(0, 12)

@@ -205,11 +205,14 @@ public class AddOnBuildOrchestratorTests : IDisposable
         AddOnSettings settings = DefaultSettings("Test_AddOn");
         FakeSoundFileService soundFileService = new();
         int soundCount = 40;
+        // The survivor changes too, so a build that renders before it checks would bill for it.
+        string survivorText = "Spell 0";
 
         FakeAddOnService service = new((dir, tts) =>
         {
             AddOnBuilder builder = new(settings, tts);
-            for (int i = 0; i < soundCount; i++)
+            builder.AddSoundFile(new SoundFile("0.ogg", text: survivorText, displayName: "Spell 0"));
+            for (int i = 1; i < soundCount; i++)
             {
                 builder.AddSoundFile(new SoundFile($"{i}.ogg", text: $"Spell {i}", displayName: $"Spell {i}"));
             }
@@ -223,6 +226,7 @@ public class AddOnBuildOrchestratorTests : IDisposable
         Assert.Equal(40, soundFileService.CreatedSoundFiles.Count);
 
         soundCount = 1;
+        survivorText = "Spell 0, rewritten";
         await Assert.ThrowsAsync<InvalidOperationException>(() => orchestrator.RunAsync(CancellationToken.None));
 
         // Nothing was rendered and nothing was deleted: the collapse is caught before either.

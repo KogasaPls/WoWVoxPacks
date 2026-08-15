@@ -28,7 +28,7 @@
       ]
     },
     "namingRules": {
-      "includeInferredTupleElementNames": true,
+      "includeInferredTupleElementNames": false,
       "tupleElementNameCasing": "PascalCase"
     },
     "orderingRules": {

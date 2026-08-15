@@ -1,6 +1,11 @@
 name: Check for updates
 on:
   workflow_dispatch:
+    inputs:
+      force:
+        description: Rebuild even when the BigWigs_Voice release tag has not moved
+        type: boolean
+        default: false
   schedule:
     - cron: "0 14 * * 2-4"
 
@@ -14,6 +19,7 @@ jobs:
     outputs:
       bigwigs_version: ${{ steps.compare-versions.outputs.bigwigs_version }}
       needs_update: ${{ steps.compare-versions.outputs.needs_update }}
+      version_changed: ${{ steps.compare-versions.outputs.version_changed }}
     steps:
       - name: Get latest BigWigsVoice release
         id: get-bigwigsvoice-release
@@ -35,21 +41,35 @@ jobs:
             -o previous-version.txt || true
       - name: Compare versions
         id: compare-versions
+        # The version file is the only thing standing between upstream and a rebuild, so
+        # anything that writes it without building blinds this check: a release-prep commit
+        # that set it to v12.1.0 a day before BigWigs published v12.1.0 hid that release's
+        # entire spell sync (151 new spells, plus Infernocore -> Inferno Spit) until the
+        # next upstream tag. Dispatch with force to rebuild against the current lists.
+        env:
+          FORCE: ${{ inputs.force }}
         run: |
           new_version=$(cat version.txt)
           echo "bigwigs_version=${new_version}" >> "$GITHUB_OUTPUT"
 
           if [ ! -s previous-version.txt ]; then
             echo "No previous version detected"
+            echo "version_changed=true" >> "$GITHUB_OUTPUT"
             echo "needs_update=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
           if [ "${new_version}" != "$(cat previous-version.txt)" ]; then
             echo "New version detected (old: $(cat previous-version.txt), new: ${new_version})"
+            echo "version_changed=true" >> "$GITHUB_OUTPUT"
+            echo "needs_update=true" >> "$GITHUB_OUTPUT"
+          elif [ "${FORCE}" = "true" ]; then
+            echo "No new version detected, rebuilding anyway (force)"
+            echo "version_changed=false" >> "$GITHUB_OUTPUT"
             echo "needs_update=true" >> "$GITHUB_OUTPUT"
           else
             echo "No new version detected"
+            echo "version_changed=false" >> "$GITHUB_OUTPUT"
             echo "needs_update=false" >> "$GITHUB_OUTPUT"
           fi
   check-nsrt-vocabulary:
@@ -259,11 +279,13 @@ jobs:
       - name: Apply the new lorrgs vocabulary
         if: ${{ needs.check-lorrgs-vocabulary.outputs.needs_update == 'true' }}
         run: mv lorrgs-vocabulary.new lorrgs-vocabulary.txt
-      - name: Bump the release revision for a vocabulary-only update
-        if: ${{ needs.check-bigwigs-voice-version.outputs.needs_update != 'true' }}
+      - name: Bump the release revision when the version tag stayed put
+        # Vocabulary-only updates and forced rebuilds both ship under a version tag that is
+        # already released, so the revision has to move for the release to be a new one.
+        if: ${{ needs.check-bigwigs-voice-version.outputs.version_changed != 'true' }}
         run: echo $(( $(cat release-revision.txt) + 1 )) > release-revision.txt
       - name: Reset the release revision when BigWigs moved
-        if: ${{ needs.check-bigwigs-voice-version.outputs.needs_update == 'true' }}
+        if: ${{ needs.check-bigwigs-voice-version.outputs.version_changed == 'true' }}
         run: echo 0 > release-revision.txt
       - id: 'auth'
         name: 'Authenticate to Google Cloud'

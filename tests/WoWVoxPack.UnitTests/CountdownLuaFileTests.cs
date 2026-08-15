@@ -14,11 +14,6 @@ public class CountdownLuaFileTests
         Notes = "Test."
     };
 
-    private static AddOn BuildAddOn() =>
-        new AddOnBuilder(Settings, new TtsSettings { Voice = VoiceName.Neural2_C })
-            .WithTitle("BigWigs Countdown WoWVoxPacks Neural2_C")
-            .Build("/tmp/output");
-
     [Fact]
     public void Render_MatchesTheEstablishedFormatByteForByte()
     {
@@ -78,4 +73,9 @@ public class CountdownLuaFileTests
         // BigWigs stores this string in the user's profile as the chosen countdown.
         Assert.Equal("WoWVoxPacks: Neural2_C", CountdownLuaFile.GetVoicePackName(BuildAddOn()));
     }
+
+    private static AddOn BuildAddOn() =>
+        new AddOnBuilder(Settings, new TtsSettings { Voice = VoiceName.Neural2_C })
+            .WithTitle("BigWigs Countdown WoWVoxPacks Neural2_C")
+            .Build("/tmp/output");
 }

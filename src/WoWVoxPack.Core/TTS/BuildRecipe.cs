@@ -62,7 +62,3 @@ public sealed record BuildRecipe(
         return AtomicFile.WriteAllTextAsync(path, json, cancellationToken);
     }
 }
-
-[JsonSerializable(typeof(BuildRecipe))]
-[JsonSourceGenerationOptions(WriteIndented = true)]
-internal partial class BuildRecipeJsonContext : JsonSerializerContext;

@@ -63,8 +63,8 @@
         <Rule Id="SA1113" Action="Warning"/>          <!-- Comma should be on the same line as previous parameter -->
         <Rule Id="SA1114" Action="Warning"/>          <!-- Parameter list should follow declaration -->
         <Rule Id="SA1115" Action="Warning"/>          <!-- Parameter should follow comma -->
-        <Rule Id="SA1116" Action="Warning"/>          <!-- Split parameters should start on line after declaration -->
-        <Rule Id="SA1117" Action="Warning"/>          <!-- Parameters should be on same line or separate lines -->
+        <Rule Id="SA1116" Action="None"/>             <!-- Split parameters should start on line after declaration -->
+        <Rule Id="SA1117" Action="None"/>             <!-- Parameters should be on same line or separate lines -->
         <Rule Id="SA1118" Action="Warning"/>          <!-- Parameter should not span multiple lines -->
         <Rule Id="SA1120" Action="Warning"/>          <!-- Comments should contain text -->
         <Rule Id="SA1121" Action="Warning"/>          <!-- Use built-in type alias -->
@@ -131,6 +131,7 @@
         <Rule Id="SA1312" Action="Warning"/>          <!-- Variable names should begin with lower-case letter -->
         <Rule Id="SA1313" Action="Warning"/>          <!-- Parameter names should begin with lower-case letter -->
         <Rule Id="SA1314" Action="Warning"/>          <!-- Type parameter names should begin with T -->
+        <Rule Id="SA1316" Action="None"/>             <!-- Tuple element names should use correct casing -->
         <Rule Id="SX1309" Action="None"/>             <!-- Field names should begin with underscore -->
         <Rule Id="SX1309S" Action="None"/>             <!-- Static field names should begin with underscore -->
     </Rules>
@@ -211,7 +212,7 @@
         <Rule Id="SA1621"
               Action="Warning"/>          <!-- Generic type parameter documentation should declare parameter name -->
         <Rule Id="SA1622" Action="Warning"/>          <!-- Generic type parameter documentation should have text -->
-        <Rule Id="SA1623" Action="Warning"/>          <!-- Property summary documentation should match accessors -->
+        <Rule Id="SA1623" Action="None"/>             <!-- Property summary documentation should match accessors -->
         <Rule Id="SA1624"
               Action="Warning"/>          <!-- Property summary documentation should omit accessor with restricted access -->
         <Rule Id="SA1625" Action="Warning"/>          <!-- Element documentation should not be copied and pasted -->

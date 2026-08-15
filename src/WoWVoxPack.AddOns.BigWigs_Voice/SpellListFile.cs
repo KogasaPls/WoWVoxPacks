@@ -38,7 +38,6 @@ internal class SpellListFile
                 continue;
             }
 
-
             string spellId = parts[0];
             string spellName = parts[1];
 

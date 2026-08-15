@@ -22,13 +22,17 @@ public class AddOnSettings
     {
         get;
         set;
-    } = new();
+    }
+
+    = new();
 
     public Dictionary<string, string>? AdditionalProperties
     {
         get;
         set;
-    } = new();
+    }
+
+    = new();
 
     /// <summary>
     /// WoW toc Interface numbers, root-only: every addon is bound to its own

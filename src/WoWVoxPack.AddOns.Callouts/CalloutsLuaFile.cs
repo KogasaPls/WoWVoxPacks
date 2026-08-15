@@ -92,5 +92,4 @@ public static class CalloutsLuaFile
         string voice = addOn.TtsSettings.Voice?.ToString() ?? string.Empty;
         return $"SharedMedia_Abilities_WoWVoxPacks_{voice}";
     }
-
 }

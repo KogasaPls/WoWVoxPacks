@@ -1,4 +1,6 @@
 <Project>
+  <Import Project="StyleCop.props"/>
+
   <PropertyGroup>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>

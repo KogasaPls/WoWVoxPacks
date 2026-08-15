@@ -30,12 +30,6 @@ public sealed class BigWigsVoiceAddOnService(
             .Build(outputDirectoryBase);
     }
 
-    private async ValueTask<IEnumerable<BigWigsVoiceSoundFile>>
-        GetSoundFilesAsync(CancellationToken cancellationToken)
-    {
-        return _soundFiles ??= (await UpstreamClient.GetSoundFilesAsync(cancellationToken)).ToArray();
-    }
-
     /// <summary>
     /// The curated entries name their file after the spell they are overriding, so the ID in the
     /// file name is their key. Keying them by name instead would miss the upstream entry whenever
@@ -52,5 +46,11 @@ public sealed class BigWigsVoiceAddOnService(
         }
 
         return soundFiles;
+    }
+
+    private async ValueTask<IEnumerable<BigWigsVoiceSoundFile>>
+        GetSoundFilesAsync(CancellationToken cancellationToken)
+    {
+        return _soundFiles ??= (await UpstreamClient.GetSoundFilesAsync(cancellationToken)).ToArray();
     }
 }

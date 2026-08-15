@@ -35,6 +35,7 @@ public sealed partial class AddOn
         PrimaryNote = primaryNote;
         AdditionalNotes = additionalNotes;
         AdditionalProperties = additionalProperties;
+
         // Configured Interfaces list wins so a pack can ship two toc versions and survive a
         // patch; the version-derived value is only a fallback for addons with none configured.
         Interfaces = interfaces is { Count: > 0 }
@@ -58,8 +59,6 @@ public sealed partial class AddOn
 
     public IEnumerable<string> Files => _fileFactories.Keys;
 
-    public string GetFileContent(string fileName) => _fileFactories[fileName](this);
-
     public string AddOnDirectory => Path.Combine(_outputDirectoryBase, AddOnDirectoryName);
     public string AddOnDirectoryName => Title.Replace(' ', '_');
     public string SoundDirectory => Path.Combine(AddOnDirectory, SoundDirectoryName);
@@ -73,7 +72,27 @@ public sealed partial class AddOn
     /// </summary>
     public string BuildRecipePath => Path.Combine(_outputDirectoryBase, $"{AddOnDirectoryName}.recipe.json");
 
-    public record Note(string? LanguageCode, string Text);
+    public string GetFileContent(string fileName) => _fileFactories[fileName](this);
+
+    /// <summary>
+    /// Converts a dotted game version (e.g. "12.0.7") into the WoW toc Interface number
+    /// (e.g. "120007"): the major version followed by two-digit minor and patch components.
+    /// </summary>
+    internal static string ToInterfaceNumber(string version)
+    {
+        Guard.Against.NullOrWhiteSpace(version);
+
+        int[] parts = version
+            .Split('.', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Select(int.Parse)
+            .ToArray();
+
+        int major = parts.Length > 0 ? parts[0] : 0;
+        int minor = parts.Length > 1 ? parts[1] : 0;
+        int patch = parts.Length > 2 ? parts[2] : 0;
+
+        return $"{major}{minor:D2}{patch:D2}";
+    }
 
     /// <summary>
     /// The configuration binder appends to a list rather than replacing it, so binding a
@@ -100,23 +119,5 @@ public sealed partial class AddOn
     [GeneratedRegex(@"^\d{5,6}$")]
     private static partial Regex InterfaceNumber();
 
-    /// <summary>
-    /// Converts a dotted game version (e.g. "12.0.7") into the WoW toc Interface number
-    /// (e.g. "120007"): the major version followed by two-digit minor and patch components.
-    /// </summary>
-    internal static string ToInterfaceNumber(string version)
-    {
-        Guard.Against.NullOrWhiteSpace(version);
-
-        int[] parts = version
-            .Split('.', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-            .Select(int.Parse)
-            .ToArray();
-
-        int major = parts.Length > 0 ? parts[0] : 0;
-        int minor = parts.Length > 1 ? parts[1] : 0;
-        int patch = parts.Length > 2 ? parts[2] : 0;
-
-        return $"{major}{minor:D2}{patch:D2}";
-    }
+    public record Note(string? LanguageCode, string Text);
 }

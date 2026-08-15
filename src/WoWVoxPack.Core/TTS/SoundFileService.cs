@@ -32,6 +32,7 @@ public class SoundFileService(ITtsProvider ttsProvider, ILogger<SoundFileService
         // not a copy. The name is the one package.sh excludes, in case a hard kill leaves one.
         string stem = Path.Combine(outputDirectory,
             $".wvp-{Path.GetFileNameWithoutExtension(soundFile.FileName)}-{Guid.NewGuid():N}");
+
         // Appended, not ChangeExtension: the stem is a hidden file, so its leading dot is the only
         // one in the name and ChangeExtension reads the whole thing as the extension. It replaced
         // the name and left every render in the fleet sharing one temp path.

@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)../StyleCop.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)StyleCop.ruleset</CodeAnalysisRuleSet>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
@@ -10,7 +10,7 @@
       <Link>stylecop.json</Link>
     </AdditionalFiles>
 
-    <AdditionalFiles Include="$(MSBuildThisFileDirectory)../StyleCop.ruleset">
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)StyleCop.ruleset">
       <Link>StyleCop.ruleset</Link>
     </AdditionalFiles>
   </ItemGroup>

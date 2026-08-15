@@ -14,12 +14,6 @@ public class CalloutsLuaFileTests
         Notes = "Test."
     };
 
-    private static AddOn BuildAddOn(params SoundFile[] soundFiles) =>
-        new AddOnBuilder(Settings, new TtsSettings { Voice = VoiceName.Neural2_C })
-            .WithTitle("WoWVoxPacks Callouts Neural2_C")
-            .AddSoundFiles(soundFiles)
-            .Build("/tmp/output");
-
     [Fact]
     public void Render_MatchesTheEstablishedFormatByteForByte()
     {
@@ -120,4 +114,9 @@ public class CalloutsLuaFileTests
         Assert.DoesNotContain("\"Soak\"", lua);
     }
 
+    private static AddOn BuildAddOn(params SoundFile[] soundFiles) =>
+        new AddOnBuilder(Settings, new TtsSettings { Voice = VoiceName.Neural2_C })
+            .WithTitle("WoWVoxPacks Callouts Neural2_C")
+            .AddSoundFiles(soundFiles)
+            .Build("/tmp/output");
 }

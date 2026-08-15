@@ -1,18 +1,16 @@
 using System.Reflection;
-
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-
 using WoWVoxPack;
 using WoWVoxPack.AddOns;
 using WoWVoxPack.AddOns.BigWigs_Countdown;
 using WoWVoxPack.AddOns.BigWigs_Voice;
-using WoWVoxPack.AddOns.ExBoss;
 using WoWVoxPack.AddOns.Callouts;
+using WoWVoxPack.AddOns.ExBoss;
 using WoWVoxPack.Builder;
 using WoWVoxPack.Core.Builder;
 using WoWVoxPack.TTS;
@@ -55,6 +53,7 @@ IHostBuilder hostBuilder = Host.CreateDefaultBuilder(args)
             ServiceDescriptor.Singleton<IAddOnService, NorthernSkyRaidToolsAddOnService>());
         services.TryAddEnumerable(ServiceDescriptor.Singleton<IAddOnService, ExBossAddOnService>());
         services.AddOptionsWithValidateOnStart<BuildMatrix>().BindConfiguration("Matrix");
+
         // Each addon binds its own AddOn:{Name} section and then the AddOn root. The binder
         // appends to a List<T>, so Interfaces is root-only: a per-addon list would be
         // concatenated with the root's, not replace it.
@@ -92,7 +91,6 @@ IHostBuilder hostBuilder = Host.CreateDefaultBuilder(args)
 
         config.AddCommandLine(args);
     });
-
 
 using IHost host = hostBuilder.Build();
 await host.RunAsync();

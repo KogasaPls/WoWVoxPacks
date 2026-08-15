@@ -3,13 +3,6 @@ using System.Text.RegularExpressions;
 
 namespace WoWVoxPack.AddOns.Callouts;
 
-/// <summary>A hand-authored pronunciation exception for one upstream sound name.</summary>
-public sealed record PronunciationOverride(
-    string? Text = null,
-    string? Ssml = null,
-    bool Exclude = false,
-    string? FileName = null);
-
 /// <summary>
 /// Turns an upstream sound name into spoken text and a file name. Some names are PascalCase file
 /// stems (<c>MindControl</c>) or bare digits, and neither reads well synthesised verbatim.

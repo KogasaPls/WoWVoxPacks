@@ -13,6 +13,30 @@ public sealed class AddOnBuilder(AddOnSettings settings, TtsSettings ttsSettings
     private string? _title;
     private string? _displayTitle;
 
+    /// <summary>
+    /// Deserializes a list of <see cref="SoundFile"/> from a JSON manifest file. Exposed
+    /// statically so callers can cache the result across repeated builds of the same addon
+    /// (e.g. once per voice in the build matrix) instead of re-reading the file from disk
+    /// every time.
+    /// </summary>
+    public static List<SoundFile> LoadSoundFileJson(string filePath)
+    {
+        return Guard.Against.Null(
+            JsonSerializer.Deserialize<List<SoundFile>>(File.ReadAllText(filePath),
+                SoundFileJsonContext.Default.ListSoundFile));
+    }
+
+    /// <summary>
+    /// Like <see cref="LoadSoundFileJson"/>, but backfills SSML phoneme markup for entries
+    /// whose <see cref="SoundFile.Text"/> contains an IPA escape ('=') and has no explicit
+    /// <see cref="SoundFile.Ssml"/> set. Shared by addons (Callouts, ExBoss)
+    /// whose sound-file JSON manifests use this convention.
+    /// </summary>
+    public static List<SoundFile> LoadSoundFileJsonWithSsmlFallback(string filePath)
+    {
+        return LoadSoundFileJson(filePath).Select(RewriteSsmlFallback).ToList();
+    }
+
     public AddOnBuilder WithTitle(string title)
     {
         _title = title;
@@ -50,44 +74,6 @@ public sealed class AddOnBuilder(AddOnSettings settings, TtsSettings ttsSettings
         return AddSoundFiles(LoadSoundFileJson(filePath), overwrite);
     }
 
-    /// <summary>
-    /// Deserializes a list of <see cref="SoundFile"/> from a JSON manifest file. Exposed
-    /// statically so callers can cache the result across repeated builds of the same addon
-    /// (e.g. once per voice in the build matrix) instead of re-reading the file from disk
-    /// every time.
-    /// </summary>
-    public static List<SoundFile> LoadSoundFileJson(string filePath)
-    {
-        return Guard.Against.Null(
-            JsonSerializer.Deserialize<List<SoundFile>>(File.ReadAllText(filePath),
-                SoundFileJsonContext.Default.ListSoundFile));
-    }
-
-    /// <summary>
-    /// Like <see cref="LoadSoundFileJson"/>, but backfills SSML phoneme markup for entries
-    /// whose <see cref="SoundFile.Text"/> contains an IPA escape ('=') and has no explicit
-    /// <see cref="SoundFile.Ssml"/> set. Shared by addons (Callouts, ExBoss)
-    /// whose sound-file JSON manifests use this convention.
-    /// </summary>
-    public static List<SoundFile> LoadSoundFileJsonWithSsmlFallback(string filePath)
-    {
-        return LoadSoundFileJson(filePath).Select(RewriteSsmlFallback).ToList();
-    }
-
-    private static SoundFile RewriteSsmlFallback(SoundFile soundFile)
-    {
-        if (soundFile.Ssml is not null || soundFile.Text?.Contains('=') != true)
-        {
-            return soundFile;
-        }
-
-        return new SoundFile(soundFile.FileName, ssml: SoundFile.GetSsml(soundFile.Text),
-            displayName: soundFile.DisplayName, formattedDisplayName: soundFile.FormattedDisplayName)
-        {
-            ExplicitKey = soundFile.ExplicitKey
-        };
-    }
-
     public AddOnBuilder AddFile(string fileName, Func<AddOn, string> contentFactory)
     {
         _fileFactories.Add(fileName, contentFactory);
@@ -122,6 +108,20 @@ public sealed class AddOnBuilder(AddOnSettings settings, TtsSettings ttsSettings
             settings.Interfaces,
             new Dictionary<string, SoundFile>(_soundFiles, StringComparer.OrdinalIgnoreCase),
             new Dictionary<string, Func<AddOn, string>>(_fileFactories, StringComparer.OrdinalIgnoreCase));
+    }
+
+    private static SoundFile RewriteSsmlFallback(SoundFile soundFile)
+    {
+        if (soundFile.Ssml is not null || soundFile.Text?.Contains('=') != true)
+        {
+            return soundFile;
+        }
+
+        return new SoundFile(soundFile.FileName, ssml: SoundFile.GetSsml(soundFile.Text),
+            displayName: soundFile.DisplayName, formattedDisplayName: soundFile.FormattedDisplayName)
+        {
+            ExplicitKey = soundFile.ExplicitKey
+        };
     }
 
     /// <summary>

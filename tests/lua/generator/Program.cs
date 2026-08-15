@@ -37,8 +37,7 @@ services.AddSingleton<IConfiguration>(configuration);
 services.AddOptions();
 
 // Same two-step binding the Builder uses: the per-addon section, then the AddOn root.
-foreach (string name in (string[])
-         ["Callouts", "NorthernSkyRaidTools", "ExBoss", "BigWigs_Countdown", "BigWigs_Voice"])
+foreach (string name in (string[])["Callouts", "NorthernSkyRaidTools", "ExBoss", "BigWigs_Countdown", "BigWigs_Voice"])
 {
     services.AddOptions<AddOnSettings>(name)
         .BindConfiguration($"AddOn:{name}")
@@ -92,14 +91,5 @@ async Task Emit(IAddOnService service, VoiceName voice)
         string path = Path.Combine(addOn.AddOnDirectory, file);
         await File.WriteAllTextAsync(path, addOn.GetFileContent(file));
         Console.WriteLine(Path.GetRelativePath(outputRoot, path));
-    }
-}
-
-internal sealed class NoSpellsUpstreamClient : IBigWigsVoiceUpstreamClient
-{
-    public Task<IEnumerable<BigWigsVoiceSoundFile>> GetSoundFilesAsync(
-        CancellationToken cancellationToken = default)
-    {
-        return Task.FromResult<IEnumerable<BigWigsVoiceSoundFile>>([]);
     }
 }

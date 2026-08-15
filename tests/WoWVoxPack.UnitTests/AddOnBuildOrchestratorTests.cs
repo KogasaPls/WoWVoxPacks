@@ -205,6 +205,7 @@ public class AddOnBuildOrchestratorTests : IDisposable
         AddOnSettings settings = DefaultSettings("Test_AddOn");
         FakeSoundFileService soundFileService = new();
         int soundCount = 40;
+
         // The survivor changes too, so a build that renders before it checks would bill for it.
         string survivorText = "Spell 0";
 
@@ -239,6 +240,7 @@ public class AddOnBuildOrchestratorTests : IDisposable
     public async Task RunAsync_RetriesARender_WhenTheProviderTimesOut()
     {
         AddOnSettings settings = DefaultSettings("Test_AddOn");
+
         // A client-side deadline surfaces as TaskCanceledException, which is an
         // OperationCanceledException and so is easily mistaken for the caller giving up.
         FakeSoundFileService soundFileService = new(failuresPerFile: 1, failWith: () => new TaskCanceledException());
@@ -299,20 +301,6 @@ public class AddOnBuildOrchestratorTests : IDisposable
         Directory.Delete(_tempDirectory, true);
     }
 
-    private AddOnBuildOrchestrator Orchestrator(IAddOnService service, ISoundFileService soundFileService,
-        TtsSettings? ttsSettings = null)
-    {
-        return new AddOnBuildOrchestrator(
-            NullLogger<AddOnBuildOrchestrator>.Instance,
-            [service],
-            Options.Create(new BuildMatrix
-            {
-                TtsSettings = [ttsSettings ?? new TtsSettings { Voice = VoiceName.Neural2_C }]
-            }),
-            soundFileService,
-            _tempDirectory);
-    }
-
     private static AddOnSettings DefaultSettings(string title)
     {
         return new AddOnSettings
@@ -327,6 +315,20 @@ public class AddOnBuildOrchestratorTests : IDisposable
     private static AddOn BuildSimpleAddOn(string outputDirectory, TtsSettings ttsSettings, string title)
     {
         return new AddOnBuilder(DefaultSettings(title), ttsSettings).Build(outputDirectory);
+    }
+
+    private AddOnBuildOrchestrator Orchestrator(IAddOnService service, ISoundFileService soundFileService,
+        TtsSettings? ttsSettings = null)
+    {
+        return new AddOnBuildOrchestrator(
+            NullLogger<AddOnBuildOrchestrator>.Instance,
+            [service],
+            Options.Create(new BuildMatrix
+            {
+                TtsSettings = [ttsSettings ?? new TtsSettings { Voice = VoiceName.Neural2_C }]
+            }),
+            soundFileService,
+            _tempDirectory);
     }
 
     private sealed class FakeAddOnService(Func<string, TtsSettings, AddOn> buildAddOn)

@@ -33,11 +33,7 @@ public sealed class SoundFileManifest
     }
 
     /// <summary>The entries whose recording this build has to render.</summary>
-    /// <param name="recipeChanged">
-    /// True when the audio on disk was rendered by a different voice, rate, pitch or sample rate
-    /// than this build asks for. None of that reaches the per-entry comparison, so without this
-    /// the whole pack counts as up to date and keeps the old recipe's audio forever.
-    /// </param>
+    /// <remarks>Voice, rate, pitch and sample rate are not part of the per-entry comparison.</remarks>
     public IEnumerable<SoundFile> FilesToCreate(IEnumerable<SoundFile> currentSoundFiles, string soundDirectory,
         bool recipeChanged = false)
     {
@@ -80,6 +76,13 @@ public sealed class SoundFileManifest
         return removals;
     }
 
+    public Task SaveAsync(string path, IEnumerable<SoundFile> soundFiles, CancellationToken cancellationToken = default)
+    {
+        string json = JsonSerializer.Serialize(soundFiles.OrderBy(s => s.FileName).ToList(),
+            SoundFileJsonContext.Default.ListSoundFile);
+        return AtomicFile.WriteAllTextAsync(path, json, cancellationToken);
+    }
+
     /// <summary>
     /// How much of a pack may disappear in one build. The spell list comes from an unauthenticated
     /// listing of an upstream directory, and a rename there yields no entries and no error, which
@@ -99,13 +102,6 @@ public sealed class SoundFileManifest
         const int alwaysAllowed = 10;
 
         return Math.Max(alwaysAllowed, (_recordingsByFileName.Count + 1) / 2);
-    }
-
-    public Task SaveAsync(string path, IEnumerable<SoundFile> soundFiles, CancellationToken cancellationToken = default)
-    {
-        string json = JsonSerializer.Serialize(soundFiles.OrderBy(s => s.FileName).ToList(),
-            SoundFileJsonContext.Default.ListSoundFile);
-        return AtomicFile.WriteAllTextAsync(path, json, cancellationToken);
     }
 
     /// <summary>

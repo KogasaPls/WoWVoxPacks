@@ -72,7 +72,7 @@ public class CalloutVocabularyProviderTests
         string directory = Directory.CreateTempSubdirectory().FullName;
         File.WriteAllText(Path.Combine(directory, "Callouts_Sounds.json"), "[]");
         File.WriteAllText(Path.Combine(directory, "CalloutPronunciations.json"), "{}");
-        File.WriteAllText(Path.Combine(directory, "lorrgs-vocabulary.txt"), "");
+        File.WriteAllText(Path.Combine(directory, "lorrgs-vocabulary.txt"), string.Empty);
 
         CalloutsVocabularyProvider provider = new(
             Path.Combine(directory, "Callouts_Sounds.json"),

@@ -26,19 +26,6 @@ public class AddOnBuildOrchestrator(
     private ISoundFileService SoundFileService { get; } = soundFileService;
     private string OutputDirectoryBase { get; } = outputDirectoryBase;
 
-    private IEnumerable<(IAddOnService addOnService, TtsSettings ttsSettings, string outputDirectory)> Matrix()
-    {
-        foreach (IAddOnService addOnService in AddOnServices)
-        {
-            foreach (TtsSettings ttsSettings in BuildMatrix.TtsSettings)
-            {
-                string outputDirectory =
-                    Path.Combine(OutputDirectoryBase, Guard.Against.Null(ttsSettings.Voice).ToString());
-                yield return (addOnService, ttsSettings, outputDirectory);
-            }
-        }
-    }
-
     public async Task RunAsync(CancellationToken cancellationToken)
     {
         foreach ((IAddOnService addOnService, TtsSettings ttsSettings, string outputDirectory) in Matrix())
@@ -86,6 +73,19 @@ public class AddOnBuildOrchestrator(
         Logger.LogInformation("Finished building add-ons");
     }
 
+    private IEnumerable<(IAddOnService AddOnService, TtsSettings TtsSettings, string OutputDirectory)> Matrix()
+    {
+        foreach (IAddOnService addOnService in AddOnServices)
+        {
+            foreach (TtsSettings ttsSettings in BuildMatrix.TtsSettings)
+            {
+                string outputDirectory =
+                    Path.Combine(OutputDirectoryBase, Guard.Against.Null(ttsSettings.Voice).ToString());
+                yield return (addOnService, ttsSettings, outputDirectory);
+            }
+        }
+    }
+
     /// <summary>
     /// A run renders thousands of files against a paid API. Handing every one of them to the
     /// thread pool at once only queues them behind the client's rate limiter, and the first
@@ -124,6 +124,7 @@ public class AddOnBuildOrchestrator(
                     cancellationToken);
                 return;
             }
+
             // A client-side deadline arrives as TaskCanceledException, and a timed-out render is
             // the most ordinary thing there is to retry. What ends the attempts is the token:
             // the caller giving up, or a sibling exhausting its own, which cancels the loop and

@@ -38,7 +38,6 @@ public class SoundFile
     [JsonIgnore]
     public string Key => ExplicitKey ?? DisplayName;
 
-
     [JsonPropertyName("DisplayName")]
     [JsonPropertyOrder(-4)]
     public string DisplayName { get; set; }
@@ -55,7 +54,6 @@ public class SoundFile
     [JsonPropertyOrder(-1)]
     public string? Ssml { get; set; }
 
-
     [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
     public string? CopyFromPath { get; set; }
 
@@ -64,7 +62,7 @@ public class SoundFile
         string[] words = text.Split([' '], StringSplitOptions.RemoveEmptyEntries);
         IEnumerable<XNode> content = words.Select((word, index) => new
             {
-                Word = word + (index == words.Length - 1 ? "" : " "),
+                Word = word + (index == words.Length - 1 ? string.Empty : " "),
                 WordIpa = word.Split('=').ElementAtOrDefault(1)
             })
             .Select(x => x.WordIpa is null

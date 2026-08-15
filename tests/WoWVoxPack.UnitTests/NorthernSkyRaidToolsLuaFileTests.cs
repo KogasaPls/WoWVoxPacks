@@ -13,21 +13,6 @@ public class NorthernSkyRaidToolsLuaFileTests
         new(new SoundFile("quoted.ogg", text: "Quoted", displayName: "Quoted"), ["Say \"Now\""])
     ];
 
-    private static string Render(
-        VoiceName voice = VoiceName.Neural2_C,
-        IEnumerable<CalloutRegistration>? registrations = null)
-    {
-        registrations ??= Registrations;
-        AddOn addOn = new AddOnBuilder(
-                new AddOnSettings { Title = "unused", Version = "12.0.7", Author = "Tester" },
-                new TtsSettings { Voice = voice })
-            .WithTitle($"WoWVoxPacks_NorthernSkyRaidTools_{voice}")
-            .AddSoundFiles(registrations.Select(registration => registration.SoundFile))
-            .Build("output");
-
-        return NorthernSkyRaidToolsLuaFile.Render(addOn, registrations);
-    }
-
     [Fact]
     public void Render_RegistersLiteralKeysAtThePerVoicePath()
     {
@@ -94,5 +79,20 @@ public class NorthernSkyRaidToolsLuaFileTests
         {
             Assert.DoesNotContain(value, lua, StringComparison.Ordinal);
         }
+    }
+
+    private static string Render(
+        VoiceName voice = VoiceName.Neural2_C,
+        IEnumerable<CalloutRegistration>? registrations = null)
+    {
+        registrations ??= Registrations;
+        AddOn addOn = new AddOnBuilder(
+                new AddOnSettings { Title = "unused", Version = "12.0.7", Author = "Tester" },
+                new TtsSettings { Voice = voice })
+            .WithTitle($"WoWVoxPacks_NorthernSkyRaidTools_{voice}")
+            .AddSoundFiles(registrations.Select(registration => registration.SoundFile))
+            .Build("output");
+
+        return NorthernSkyRaidToolsLuaFile.Render(addOn, registrations);
     }
 }

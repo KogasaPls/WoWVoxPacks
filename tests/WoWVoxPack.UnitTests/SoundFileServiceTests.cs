@@ -1,6 +1,6 @@
-using Microsoft.Extensions.Logging.Abstractions;
-
 using System.Text;
+
+using Microsoft.Extensions.Logging.Abstractions;
 
 using WoWVoxPack.TTS;
 
@@ -10,6 +10,8 @@ public class SoundFileServiceTests : IDisposable
 {
     private readonly string _tempDirectory =
         Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString())).FullName;
+
+    private static TtsSettings Settings => new() { Voice = VoiceName.Neural2_C };
 
     [Fact]
     public async Task CreateSoundFileAsync_WritesTheAudioItWasGiven()
@@ -49,8 +51,6 @@ public class SoundFileServiceTests : IDisposable
 
         Assert.Empty(Directory.GetFiles(_tempDirectory, ".wvp-*"));
     }
-
-    private static TtsSettings Settings => new() { Voice = VoiceName.Neural2_C };
 
     public void Dispose()
     {

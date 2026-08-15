@@ -14,12 +14,6 @@ public class LabelsFileTests
         Notes = "Test."
     };
 
-    private static AddOn BuildAddOn(params SoundFile[] soundFiles) =>
-        new AddOnBuilder(Settings, new TtsSettings { Voice = VoiceName.Neural2_C })
-            .WithTitle("ExBoss WoWVoxPacks Neural2_C")
-            .AddSoundFiles(soundFiles)
-            .Build("/tmp/output");
-
     [Fact]
     public void Render_MatchesTheEstablishedFormatByteForByte()
     {
@@ -75,4 +69,10 @@ public class LabelsFileTests
         Assert.DoesNotContain("DisableAddOn", lua);
         Assert.DoesNotContain("IsAddOnLoaded", lua);
     }
+
+    private static AddOn BuildAddOn(params SoundFile[] soundFiles) =>
+        new AddOnBuilder(Settings, new TtsSettings { Voice = VoiceName.Neural2_C })
+            .WithTitle("ExBoss WoWVoxPacks Neural2_C")
+            .AddSoundFiles(soundFiles)
+            .Build("/tmp/output");
 }

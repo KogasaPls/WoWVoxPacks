@@ -70,6 +70,16 @@ public sealed class GoogleTtsClient(ILogger<GoogleTtsClient> logger, TextToSpeec
             cancellationToken);
     }
 
+    public void Dispose()
+    {
+        _rateLimiter.Dispose();
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        await _rateLimiter.DisposeAsync();
+    }
+
     private async Task<ByteString> SynthesizeTextCore(
         string text,
         VoiceName voice,
@@ -136,15 +146,5 @@ public sealed class GoogleTtsClient(ILogger<GoogleTtsClient> logger, TextToSpeec
         }
 
         return result.AudioContent;
-    }
-
-    public void Dispose()
-    {
-        _rateLimiter.Dispose();
-    }
-
-    public async ValueTask DisposeAsync()
-    {
-        await _rateLimiter.DisposeAsync();
     }
 }

@@ -24,7 +24,7 @@ public sealed class BigWigsVoiceAddOnService(
 
         return new AddOnBuilder(AddOnSettings, ttsSettings)
             .WithDisplayTitle($"BigWigs |cffff7f3f+|r|cffffffffVoice: WoWVoxPacks ({ttsSettings.Voice})|r")
-            .AddFile("Core.lua", addon => new CoreLuaFile(addon).TransformText())
+            .AddFile("Core.lua", CoreLuaFile.Render)
             .AddSoundFiles(JsonSoundFiles.Value, overwrite: true)
             .AddSoundFiles(soundFiles)
             .Build(outputDirectoryBase);

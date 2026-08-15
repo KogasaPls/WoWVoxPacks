@@ -12,17 +12,4 @@
     <PackageReference Include="Octokit"/>
     <PackageReference Include="System.Threading.RateLimiting"/>
   </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="AddOns\AddOnTocFile.cs">
-      <DependentUpon>AddOnTocFile.tt</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="AddOns\AddOnTocFile.tt">
-      <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>AddOnTocFile.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
 </Project>

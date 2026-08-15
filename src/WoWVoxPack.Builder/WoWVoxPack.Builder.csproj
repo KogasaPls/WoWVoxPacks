@@ -30,19 +30,4 @@
     </AdditionalFiles>
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="CoreLuaFile.tt">
-      <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>CoreLuaFile.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="CoreLuaFile.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CoreLuaFile.tt</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
 </Project>

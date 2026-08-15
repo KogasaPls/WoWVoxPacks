@@ -18,9 +18,4 @@
   <PropertyGroup>
     <MSBuildSolutionDirectory>$(MSBuildThisFileDirectory)../</MSBuildSolutionDirectory>
   </PropertyGroup>
-
-
-  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <TransformOnBuild>false</TransformOnBuild>
-  </PropertyGroup>
 </Project>

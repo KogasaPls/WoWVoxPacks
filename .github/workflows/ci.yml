@@ -28,13 +28,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-dotnet@v5
+      - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: '10.0.x'
       - name: Python tests
         run: python -m unittest discover -s tests/scripts -p 'test_*.py' -v
       - name: Build
-        run: dotnet build -v q --nologo
+        run: dotnet build -v q --nologo -warnaserror
       - name: Unit tests
         run: dotnet test tests/WoWVoxPack.UnitTests -v q --nologo
 
@@ -43,7 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-dotnet@v5
+      - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: '10.0.x'
       - name: Install LuaJIT and luacheck

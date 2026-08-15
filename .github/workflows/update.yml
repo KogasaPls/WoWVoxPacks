@@ -151,7 +151,7 @@ jobs:
           fi
       - name: Upload the new vocabulary
         if: steps.compare-vocabulary.outputs.needs_update == 'true'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: nsrt-vocabulary
           path: nsrt-vocabulary.new
@@ -166,7 +166,7 @@ jobs:
       removed: ${{ steps.compare-vocabulary.outputs.removed }}
     steps:
       - uses: actions/checkout@v7
-      - uses: astral-sh/setup-uv@v7
+      - uses: astral-sh/setup-uv@v10
       - name: Download the lorrgs default branch
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -225,7 +225,7 @@ jobs:
           fi
       - name: Upload the new vocabulary
         if: steps.compare-vocabulary.outputs.needs_update == 'true'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: lorrgs-vocabulary
           path: lorrgs-vocabulary.new
@@ -257,12 +257,12 @@ jobs:
           BIGWIGS_VERSION: ${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version }}
       - name: Download the new vocabulary
         if: ${{ needs.check-nsrt-vocabulary.outputs.needs_update == 'true' }}
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: nsrt-vocabulary
       - name: Download the new lorrgs vocabulary
         if: ${{ needs.check-lorrgs-vocabulary.outputs.needs_update == 'true' }}
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: lorrgs-vocabulary
       - name: Retire removed callouts
@@ -295,7 +295,7 @@ jobs:
       - uses: FedericoCarboni/setup-ffmpeg@v3
         with:
           ffmpeg-version: release
-      - uses: actions/setup-dotnet@v5
+      - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: '10.0.x'
       - name: Build new version

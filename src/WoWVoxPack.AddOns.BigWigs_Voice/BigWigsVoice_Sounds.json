@@ -93,5 +93,20 @@
     "DisplayName": "Lightsower Dash",
     "FileName": "1234850.ogg",
     "SSML": "<speak><phoneme alphabet=\"ipa\"  ph=\"ˈlaɪtˌsoʊ.ɚ\">Lightsower</phoneme> Dash</speak>"
+  },
+  {
+    "DisplayName": "Fingers of Gul'dan",
+    "FileName": "1218203.ogg",
+    "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"ˈfɪŋɡɚz əv ɡʊlˈdɑn\">Fingers of Gul'dan</phoneme></speak>"
+  },
+  {
+    "DisplayName": "Ssscavenging",
+    "FileName": "1296216.ogg",
+    "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"ssˈskævəndʒɪŋ\">Ssscavenging</phoneme></speak>"
+  },
+  {
+    "DisplayName": "Axegrinder",
+    "FileName": "1301111.ogg",
+    "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"ˈæksˌɡraɪndɚ\">Axegrinder</phoneme></speak>"
   }
 ]

@@ -83,5 +83,10 @@
     "DisplayName": "Lumbering Mindgorger",
     "FileName": "-13460.ogg",
     "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"ˈlʌm.bɚ.ɪŋ\">Lumbering</phoneme><phoneme alphabet=\"ipa\" ph=\"ˈmaɪndˌɡɔɹ.d͡ʒɚ\">Mindgorger</phoneme></speak>"
+  },
+  {
+    "DisplayName": "Malefic Wave",
+    "FileName": "1224478.ogg",
+    "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"məˈlɛfɪk\">Malefic</phoneme> Wave</speak>"
   }
 ]

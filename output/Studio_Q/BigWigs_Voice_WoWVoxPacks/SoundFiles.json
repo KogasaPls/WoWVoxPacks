@@ -1950,7 +1950,7 @@
     "FileName": "1224478.ogg",
     "DisplayName": "Malefic Wave",
     "FormattedDisplayName": "Malefic Wave",
-    "SSML": "\u003Cspeak\u003EMalefic Wave\u003C/speak\u003E"
+    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022m\u0259\u02C8l\u025Bf\u026Ak\u0022\u003EMalefic\u003C/phoneme\u003E Wave\u003C/speak\u003E"
   },
   {
     "Key": "1224737",

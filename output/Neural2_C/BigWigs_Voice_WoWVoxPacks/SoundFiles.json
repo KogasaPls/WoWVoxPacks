@@ -2797,7 +2797,7 @@
     "FileName": "1234850.ogg",
     "DisplayName": "Lightsower Dash",
     "FormattedDisplayName": "Lightsower Dash",
-    "SSML": "\u003Cspeak\u003ELightsower Dash\u003C/speak\u003E"
+    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022  ph=\u0022\u02C8la\u026At\u02CCso\u028A.\u025A\u0022\u003ELightsower\u003C/phoneme\u003E Dash\u003C/speak\u003E"
   },
   {
     "Key": "1235045",

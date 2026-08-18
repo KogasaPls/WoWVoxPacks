@@ -88,5 +88,10 @@
     "DisplayName": "Malefic Wave",
     "FileName": "1224478.ogg",
     "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"məˈlɛfɪk\">Malefic</phoneme> Wave</speak>"
+  },
+  {
+    "DisplayName": "Lightsower Dash",
+    "FileName": "1234850.ogg",
+    "SSML": "<speak><phoneme alphabet=\"ipa\"  ph=\"ˈlaɪtˌsoʊ.ɚ\">Lightsower</phoneme> Dash</speak>"
   }
 ]

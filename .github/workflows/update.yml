@@ -149,6 +149,20 @@ jobs:
               echo "VOCAB_EOF"
             } >> "$GITHUB_OUTPUT"
           fi
+      - name: Report alert strings with no recording
+        # Reported, never enforced. The vocabulary comes from Media/Sounds file names while
+        # the alerts speak their own text field, so the two drift apart on their own, and a
+        # new alert must not fail the sync that would have brought its callouts in.
+        run: |
+          {
+            echo "### NSRT alert strings with no recording"
+            echo '```'
+            python3 scripts/check_nsrt_tts_coverage.py \
+              --source nsrt-src \
+              --vocabulary nsrt-vocabulary.txt \
+              --exit-zero
+            echo '```'
+          } | tee -a "$GITHUB_STEP_SUMMARY"
       - name: Upload the new vocabulary
         if: steps.compare-vocabulary.outputs.needs_update == 'true'
         uses: actions/upload-artifact@v7

@@ -27,6 +27,20 @@ NSI.InitializeAlerts[1] = function(self)
 
     local data = {internalID = "Overridden", text = "Stack Up", TTS = "Stack", dur = 6}
     self:AddEncounterAlert(data)
+
+    local data = {internalID = "Unset", text = "Displayed Only", TTS = nil, dur = 4}
+    self:AddEncounterAlert(data)
+
+    local markers = {"Star", "Cross"}
+    for i = 1, 2 do
+        local data = {internalID = "Mark", text = "Soak {rt1}", TTS = "Soak "..markers[i]}
+        self:AddEncounterAlert(data)
+    end
+
+    Soak.TTS = subgroup <= 2 and NSI:EncounterAlertLoc("Soak") or NSI:EncounterAlertLoc("Don't soak")
+
+    local TTS = NSI:EncounterAlertLoc("Go to ")..NSI:EncounterAlertLoc(pos)
+    Alert.TTS, Alert.text = TTS, text
 end
 '''
 
@@ -86,16 +100,39 @@ class CollectSpokenTests(unittest.TestCase):
         self.assertNotIn("Bait Frontal", spoken)
 
     def test_a_concatenated_call_is_reported_as_unmatchable(self):
-        _, concatenated = self.collect()
-        self.assertEqual({"Rebuff "}, concatenated)
+        _, composed = self.collect()
+        self.assertIn("Rebuff ", [f for site in composed for f in site.fragments])
+
+    def test_a_late_tts_assignment_on_any_receiver_is_read(self):
+        """Five encounters swap speech through a local that is not named data."""
+        spoken, _ = self.collect()
+        self.assertEqual(1, spoken["Don't soak"])
+        self.assertEqual(1, spoken["Soak"])
+
+    def test_a_concatenated_tts_field_is_reported_not_counted_as_its_prefix(self):
+        """Recording the prefix would report a string as covered that never plays."""
+        spoken, composed = self.collect()
+        self.assertNotIn("Soak Star", spoken)
+        self.assertTrue(any("Soak " in site.fragments for site in composed))
+
+    def test_a_concatenated_local_is_reported_rather_than_read_as_its_prefix(self):
+        spoken, composed = self.collect()
+        self.assertNotIn("Go to ", spoken)
+        self.assertTrue(any("Go to " in site.fragments for site in composed))
+
+    def test_tts_nil_speaks_nothing(self):
+        """PlayReminderSound gates on `if info.TTS`, so nil is silent like false."""
+        spoken, _ = self.collect()
+        self.assertNotIn("Displayed Only", spoken)
+
+    def test_an_unreadable_tts_expression_refuses_to_guess(self):
+        with self.assertRaises(checker.UpstreamShapeError):
+            self.collect(alerts=ALERTS + "\n    Alert.TTS = SomeTable[index]\n")
 
     def test_an_unparsed_source_is_an_error_rather_than_full_coverage(self):
         with self.assertRaises(checker.UpstreamShapeError):
             self.collect(alerts="-- nothing here\n")
 
-    def test_a_tts_assigned_after_the_table_refuses_to_guess(self):
-        with self.assertRaises(checker.UpstreamShapeError):
-            self.collect(alerts=ALERTS + '\ndata.TTS = false\n')
 
 
 class MainTests(unittest.TestCase):
@@ -111,7 +148,8 @@ class MainTests(unittest.TestCase):
         self.assertEqual(1, self.run_main("# comment\nStack\n"))
 
     def test_full_coverage_passes(self):
-        self.assertEqual(0, self.run_main("Taunt\nBreath\nStack\nSoulstone\n"))
+        self.assertEqual(0, self.run_main(
+            "Taunt\nBreath\nStack\nSoulstone\nSoak\nDon't soak\n"))
 
     def test_exit_zero_reports_without_failing(self):
         self.assertEqual(0, self.run_main("Stack\n", "--exit-zero"))

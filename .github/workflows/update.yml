@@ -150,20 +150,25 @@ jobs:
             } >> "$GITHUB_OUTPUT"
           fi
       - name: Report alert strings with no recording
-        # Reported, never enforced. The vocabulary comes from Media/Sounds file names while
-        # the alerts speak their own text field, so the two drift apart on their own, and a
-        # new alert must not fail the sync that would have brought its callouts in.
+        # The vocabulary comes from Media/Sounds file names while the alerts speak their own
+        # text field, so the two drift apart on their own and a new alert must not fail the
+        # sync that would have brought its callouts in. continue-on-error keeps that true for
+        # the script's shape guards too, which exit 2 and are not covered by --exit-zero.
+        continue-on-error: true
         run: |
+          # Against the vocabulary this run just extracted, not the tracked one: a string
+          # upstream added a file for in the same commit is recorded, not missing.
+          python3 scripts/check_nsrt_tts_coverage.py \
+            --source nsrt-src \
+            --vocabulary nsrt-vocabulary.new \
+            --vocabulary nsrt-extra-vocabulary.txt \
+            --exit-zero > coverage.txt
           {
             echo "### NSRT alert strings with no recording"
             echo '```'
-            python3 scripts/check_nsrt_tts_coverage.py \
-              --source nsrt-src \
-              --vocabulary nsrt-vocabulary.txt \
-              --vocabulary nsrt-extra-vocabulary.txt \
-              --exit-zero
+            cat coverage.txt
             echo '```'
-          } | tee -a "$GITHUB_STEP_SUMMARY"
+          } >> "$GITHUB_STEP_SUMMARY"
       - name: Upload the new vocabulary
         if: steps.compare-vocabulary.outputs.needs_update == 'true'
         uses: actions/upload-artifact@v7

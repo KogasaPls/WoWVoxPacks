@@ -132,6 +132,12 @@
     "Text": "Dodge"
   },
   {
+    "FileName": "don_t_soak.ogg",
+    "DisplayName": "Don\u0027t soak",
+    "FormattedDisplayName": "Don\u0027t soak",
+    "Text": "Don\u0027t soak"
+  },
+  {
     "FileName": "drop_pool.ogg",
     "DisplayName": "Drop Pool",
     "FormattedDisplayName": "Drop Pool",
@@ -226,6 +232,36 @@
     "DisplayName": "Glaives",
     "FormattedDisplayName": "Glaives",
     "Text": "Glaives"
+  },
+  {
+    "FileName": "go_to_back_left.ogg",
+    "DisplayName": "Go to Back Left",
+    "FormattedDisplayName": "Go to Back Left",
+    "Text": "Go to Back Left"
+  },
+  {
+    "FileName": "go_to_back_right.ogg",
+    "DisplayName": "Go to Back Right",
+    "FormattedDisplayName": "Go to Back Right",
+    "Text": "Go to Back Right"
+  },
+  {
+    "FileName": "go_to_flex_spot.ogg",
+    "DisplayName": "Go to Flex Spot",
+    "FormattedDisplayName": "Go to Flex Spot",
+    "Text": "Go to Flex Spot"
+  },
+  {
+    "FileName": "go_to_front_left.ogg",
+    "DisplayName": "Go to Front Left",
+    "FormattedDisplayName": "Go to Front Left",
+    "Text": "Go to Front Left"
+  },
+  {
+    "FileName": "go_to_front_right.ogg",
+    "DisplayName": "Go to Front Right",
+    "FormattedDisplayName": "Go to Front Right",
+    "Text": "Go to Front Right"
   },
   {
     "FileName": "green.ogg",
@@ -436,6 +472,72 @@
     "DisplayName": "Skull",
     "FormattedDisplayName": "Skull",
     "Text": "Skull"
+  },
+  {
+    "FileName": "soak_back_left.ogg",
+    "DisplayName": "Soak Back Left",
+    "FormattedDisplayName": "Soak Back Left",
+    "Text": "Soak Back Left"
+  },
+  {
+    "FileName": "soak_back_right.ogg",
+    "DisplayName": "Soak Back Right",
+    "FormattedDisplayName": "Soak Back Right",
+    "Text": "Soak Back Right"
+  },
+  {
+    "FileName": "soak_cross.ogg",
+    "DisplayName": "Soak Cross",
+    "FormattedDisplayName": "Soak Cross",
+    "Text": "Soak Cross"
+  },
+  {
+    "FileName": "soak_flex_spot.ogg",
+    "DisplayName": "Soak Flex Spot",
+    "FormattedDisplayName": "Soak Flex Spot",
+    "Text": "Soak Flex Spot"
+  },
+  {
+    "FileName": "soak_front_left.ogg",
+    "DisplayName": "Soak Front Left",
+    "FormattedDisplayName": "Soak Front Left",
+    "Text": "Soak Front Left"
+  },
+  {
+    "FileName": "soak_front_right.ogg",
+    "DisplayName": "Soak Front Right",
+    "FormattedDisplayName": "Soak Front Right",
+    "Text": "Soak Front Right"
+  },
+  {
+    "FileName": "soak_left.ogg",
+    "DisplayName": "Soak Left",
+    "FormattedDisplayName": "Soak Left",
+    "Text": "Soak Left"
+  },
+  {
+    "FileName": "soak_orange.ogg",
+    "DisplayName": "Soak Orange",
+    "FormattedDisplayName": "Soak Orange",
+    "Text": "Soak Orange"
+  },
+  {
+    "FileName": "soak_right.ogg",
+    "DisplayName": "Soak Right",
+    "FormattedDisplayName": "Soak Right",
+    "Text": "Soak Right"
+  },
+  {
+    "FileName": "soak_skull.ogg",
+    "DisplayName": "Soak Skull",
+    "FormattedDisplayName": "Soak Skull",
+    "Text": "Soak Skull"
+  },
+  {
+    "FileName": "soak_star.ogg",
+    "DisplayName": "Soak Star",
+    "FormattedDisplayName": "Soak Star",
+    "Text": "Soak Star"
   },
   {
     "FileName": "soak.ogg",

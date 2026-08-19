@@ -7,6 +7,11 @@ from pathlib import Path
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 
 
+def committed_paths(workflow: str) -> list[str]:
+    block = re.search(r"\n( +)add-paths: \|\n((?:\1 +\S+\n)+)", workflow)
+    return block.group(2).split() if block else []
+
+
 class ReleaseWorkflowTests(unittest.TestCase):
     def test_curseforge_publish_has_one_automatic_release_path(self):
         """create-release calls the publisher; no event may reach it a second way.
@@ -56,6 +61,22 @@ class ReleaseWorkflowTests(unittest.TestCase):
         ).read_text(encoding="utf-8").strip()
 
         self.assertEqual(tracked, "v" + settings["AddOn"]["Version"])
+
+    def test_the_updater_moves_both_files_that_decide_the_version(self):
+        """Upstream moves on a schedule, with no human to bump the second file.
+
+        The check above only reports the mismatch, and it reports it as a red update PR.
+        The updater has to write appsettings.json and commit it for that PR to be green.
+        """
+        updater = (
+            REPOSITORY_ROOT / ".github/workflows/update.yml"
+        ).read_text(encoding="utf-8")
+
+        self.assertIn(
+            "python scripts/set_addon_version.py", updater
+        )
+        self.assertIn("--settings appsettings.json --version", updater)
+        self.assertIn("appsettings.json", committed_paths(updater))
 
     def test_the_builder_and_the_updater_agree_on_how_far_a_pack_may_shrink(self):
         """Both refuse a collapsed vocabulary, and the builder runs second.

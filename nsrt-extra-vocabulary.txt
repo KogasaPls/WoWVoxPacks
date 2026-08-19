@@ -1,0 +1,29 @@
+# Northern Sky Raid Tools alert strings that its Media/Sounds has no file for.
+# Hand-maintained. scripts/check_nsrt_tts_coverage.py lists what is still missing.
+Bait
+Beams
+Blazes
+Blistering Scales
+Breath
+CC Adds
+Debuffs
+Dodge
+Explosion
+Frontal
+Gateway
+Glaives
+Interrupts
+Knock
+Memory Game
+Orbs
+Sacred Toll
+Shrooms
+Soaks
+Soulstone
+Source of Magic
+Stop Cast
+Symbiotic Relationship
+Taunt
+Tether
+Watch Side
+Watch Spawns

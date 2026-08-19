@@ -160,6 +160,7 @@ jobs:
             python3 scripts/check_nsrt_tts_coverage.py \
               --source nsrt-src \
               --vocabulary nsrt-vocabulary.txt \
+              --vocabulary nsrt-extra-vocabulary.txt \
               --exit-zero
             echo '```'
           } | tee -a "$GITHUB_STEP_SUMMARY"

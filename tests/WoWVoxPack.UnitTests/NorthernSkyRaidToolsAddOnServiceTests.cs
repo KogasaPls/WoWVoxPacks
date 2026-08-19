@@ -25,7 +25,7 @@ public sealed class NorthernSkyRaidToolsAddOnServiceTests : IDisposable
                 Author = "Tester",
                 Notes = "Test."
             }),
-            new NorthernSkyRaidToolsVocabularyProvider(vocabularyPath, overridesPath));
+            new NorthernSkyRaidToolsVocabularyProvider([vocabularyPath], overridesPath));
 
         AddOn addOn = await service.BuildAddOnAsync(
             _temporaryDirectory,
@@ -55,7 +55,7 @@ public sealed class NorthernSkyRaidToolsAddOnServiceTests : IDisposable
                 Version = "12.0.7",
                 Author = "Tester"
             }),
-            new NorthernSkyRaidToolsVocabularyProvider(vocabularyPath, overridesPath));
+            new NorthernSkyRaidToolsVocabularyProvider([vocabularyPath], overridesPath));
 
         AddOn addOn = await service.BuildAddOnAsync(
             _temporaryDirectory,

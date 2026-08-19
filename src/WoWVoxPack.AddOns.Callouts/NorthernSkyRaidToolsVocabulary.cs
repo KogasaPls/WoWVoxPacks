@@ -5,10 +5,16 @@ namespace WoWVoxPack.AddOns.Callouts;
 /// <summary>Builds Northern Sky Raid Tools registrations from its literal source-key file.</summary>
 public static class NorthernSkyRaidToolsVocabulary
 {
+    /// <summary>
+    /// Reads every vocabulary in order. NSRT's generated file covers what its Media/Sounds
+    /// ships; the alerts speak strings it has no file for, and those come from a second,
+    /// hand-maintained one.
+    /// </summary>
     public static IReadOnlyList<CalloutRegistration> Load(
-        string vocabularyPath,
+        IEnumerable<string> vocabularyPaths,
         IReadOnlyDictionary<string, PronunciationOverride> overrides) =>
-        CreateRegistrations(Parse(File.ReadLines(vocabularyPath)), overrides);
+        CreateRegistrations(
+            vocabularyPaths.SelectMany(path => Parse(File.ReadLines(path))), overrides);
 
     /// <summary>
     /// Keeps each source key exactly as written. Whitespace is inspected only to recognize a

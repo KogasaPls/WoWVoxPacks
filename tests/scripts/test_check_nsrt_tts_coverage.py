@@ -120,5 +120,25 @@ class MainTests(unittest.TestCase):
         self.assertEqual(2, self.run_main("# only a comment\n"))
 
 
+class TrackedVocabularyTests(unittest.TestCase):
+    """The supplement holds what NSRT has no file for, so overlap means it went stale."""
+
+    def read(self, name):
+        return {
+            line.strip()
+            for line in (REPOSITORY_ROOT / name).read_text(encoding="utf-8").splitlines()
+            if line.strip() and not line.startswith("#")
+        }
+
+    def test_the_supplement_adds_nothing_the_generated_vocabulary_already_has(self):
+        generated = {entry.casefold() for entry in self.read("nsrt-vocabulary.txt")}
+        supplement = {entry.casefold() for entry in self.read("nsrt-extra-vocabulary.txt")}
+
+        self.assertEqual(set(), generated & supplement)
+
+    def test_the_supplement_is_not_empty(self):
+        self.assertTrue(self.read("nsrt-extra-vocabulary.txt"))
+
+
 if __name__ == "__main__":
     unittest.main()

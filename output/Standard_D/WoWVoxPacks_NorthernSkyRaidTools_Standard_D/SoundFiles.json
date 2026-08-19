@@ -6,10 +6,34 @@
     "Text": "Adds"
   },
   {
+    "FileName": "bait.ogg",
+    "DisplayName": "Bait",
+    "FormattedDisplayName": "Bait",
+    "Text": "Bait"
+  },
+  {
     "FileName": "beam.ogg",
     "DisplayName": "Beam",
     "FormattedDisplayName": "Beam",
     "Text": "Beam"
+  },
+  {
+    "FileName": "beams.ogg",
+    "DisplayName": "Beams",
+    "FormattedDisplayName": "Beams",
+    "Text": "Beams"
+  },
+  {
+    "FileName": "blazes.ogg",
+    "DisplayName": "Blazes",
+    "FormattedDisplayName": "Blazes",
+    "Text": "Blazes"
+  },
+  {
+    "FileName": "blistering_scales.ogg",
+    "DisplayName": "Blistering Scales",
+    "FormattedDisplayName": "Blistering Scales",
+    "Text": "Blistering Scales"
   },
   {
     "FileName": "blue.ogg",
@@ -42,10 +66,22 @@
     "Text": "Break"
   },
   {
+    "FileName": "breath.ogg",
+    "DisplayName": "Breath",
+    "FormattedDisplayName": "Breath",
+    "Text": "Breath"
+  },
+  {
     "FileName": "camp.ogg",
     "DisplayName": "Camp",
     "FormattedDisplayName": "Camp",
     "Text": "Camp"
+  },
+  {
+    "FileName": "cc_adds.ogg",
+    "DisplayName": "CC Adds",
+    "FormattedDisplayName": "CC Adds",
+    "Text": "CC Adds"
   },
   {
     "FileName": "charge.ogg",
@@ -78,10 +114,22 @@
     "Text": "Debuff"
   },
   {
+    "FileName": "debuffs.ogg",
+    "DisplayName": "Debuffs",
+    "FormattedDisplayName": "Debuffs",
+    "Text": "Debuffs"
+  },
+  {
     "FileName": "dispel.ogg",
     "DisplayName": "Dispel",
     "FormattedDisplayName": "Dispel",
     "Text": "Dispel"
+  },
+  {
+    "FileName": "dodge.ogg",
+    "DisplayName": "Dodge",
+    "FormattedDisplayName": "Dodge",
+    "Text": "Dodge"
   },
   {
     "FileName": "drop_pool.ogg",
@@ -106,6 +154,12 @@
     "DisplayName": "Entertainer",
     "FormattedDisplayName": "Entertainer",
     "Text": "Entertainer"
+  },
+  {
+    "FileName": "explosion.ogg",
+    "DisplayName": "Explosion",
+    "FormattedDisplayName": "Explosion",
+    "Text": "Explosion"
   },
   {
     "FileName": "feather.ogg",
@@ -138,6 +192,12 @@
     "Text": "Four"
   },
   {
+    "FileName": "frontal.ogg",
+    "DisplayName": "Frontal",
+    "FormattedDisplayName": "Frontal",
+    "Text": "Frontal"
+  },
+  {
     "FileName": "frost.ogg",
     "DisplayName": "Frost",
     "FormattedDisplayName": "Frost",
@@ -154,6 +214,18 @@
     "DisplayName": "Gate",
     "FormattedDisplayName": "Gate",
     "Text": "Gate"
+  },
+  {
+    "FileName": "gateway.ogg",
+    "DisplayName": "Gateway",
+    "FormattedDisplayName": "Gateway",
+    "Text": "Gateway"
+  },
+  {
+    "FileName": "glaives.ogg",
+    "DisplayName": "Glaives",
+    "FormattedDisplayName": "Glaives",
+    "Text": "Glaives"
   },
   {
     "FileName": "green.ogg",
@@ -180,6 +252,18 @@
     "Text": "Interrupt"
   },
   {
+    "FileName": "interrupts.ogg",
+    "DisplayName": "Interrupts",
+    "FormattedDisplayName": "Interrupts",
+    "Text": "Interrupts"
+  },
+  {
+    "FileName": "knock.ogg",
+    "DisplayName": "Knock",
+    "FormattedDisplayName": "Knock",
+    "Text": "Knock"
+  },
+  {
     "FileName": "left.ogg",
     "DisplayName": "Left",
     "FormattedDisplayName": "Left",
@@ -196,6 +280,12 @@
     "DisplayName": "Linked",
     "FormattedDisplayName": "Linked",
     "Text": "Linked"
+  },
+  {
+    "FileName": "memory_game.ogg",
+    "DisplayName": "Memory Game",
+    "FormattedDisplayName": "Memory Game",
+    "Text": "Memory Game"
   },
   {
     "FileName": "mind_control.ogg",
@@ -258,6 +348,12 @@
     "Text": "Orb"
   },
   {
+    "FileName": "orbs.ogg",
+    "DisplayName": "Orbs",
+    "FormattedDisplayName": "Orbs",
+    "Text": "Orbs"
+  },
+  {
     "FileName": "purple.ogg",
     "DisplayName": "Purple",
     "FormattedDisplayName": "Purple",
@@ -300,6 +396,12 @@
     "Text": "Rune"
   },
   {
+    "FileName": "sacred_toll.ogg",
+    "DisplayName": "Sacred Toll",
+    "FormattedDisplayName": "Sacred Toll",
+    "Text": "Sacred Toll"
+  },
+  {
     "FileName": "server.ogg",
     "DisplayName": "Server",
     "FormattedDisplayName": "Server",
@@ -316,6 +418,12 @@
     "DisplayName": "Shroom",
     "FormattedDisplayName": "Shroom",
     "Text": "Shroom"
+  },
+  {
+    "FileName": "shrooms.ogg",
+    "DisplayName": "Shrooms",
+    "FormattedDisplayName": "Shrooms",
+    "Text": "Shrooms"
   },
   {
     "FileName": "six.ogg",
@@ -336,6 +444,24 @@
     "Text": "Soak"
   },
   {
+    "FileName": "soaks.ogg",
+    "DisplayName": "Soaks",
+    "FormattedDisplayName": "Soaks",
+    "Text": "Soaks"
+  },
+  {
+    "FileName": "soulstone.ogg",
+    "DisplayName": "Soulstone",
+    "FormattedDisplayName": "Soulstone",
+    "Text": "Soulstone"
+  },
+  {
+    "FileName": "source_of_magic.ogg",
+    "DisplayName": "Source of Magic",
+    "FormattedDisplayName": "Source of Magic",
+    "Text": "Source of Magic"
+  },
+  {
     "FileName": "south.ogg",
     "DisplayName": "South",
     "FormattedDisplayName": "South",
@@ -354,10 +480,22 @@
     "Text": "Stack"
   },
   {
+    "FileName": "stop_cast.ogg",
+    "DisplayName": "Stop Cast",
+    "FormattedDisplayName": "Stop Cast",
+    "Text": "Stop Cast"
+  },
+  {
     "FileName": "suck.ogg",
     "DisplayName": "Suck",
     "FormattedDisplayName": "Suck",
     "Text": "Suck"
+  },
+  {
+    "FileName": "symbiotic_relationship.ogg",
+    "DisplayName": "Symbiotic Relationship",
+    "FormattedDisplayName": "Symbiotic Relationship",
+    "Text": "Symbiotic Relationship"
   },
   {
     "FileName": "targeted.ogg",
@@ -366,10 +504,22 @@
     "Text": "Targeted"
   },
   {
+    "FileName": "taunt.ogg",
+    "DisplayName": "Taunt",
+    "FormattedDisplayName": "Taunt",
+    "Text": "Taunt"
+  },
+  {
     "FileName": "ten.ogg",
     "DisplayName": "Ten",
     "FormattedDisplayName": "Ten",
     "Text": "Ten"
+  },
+  {
+    "FileName": "tether.ogg",
+    "DisplayName": "Tether",
+    "FormattedDisplayName": "Tether",
+    "Text": "Tether"
   },
   {
     "FileName": "three.ogg",
@@ -388,6 +538,18 @@
     "DisplayName": "Void",
     "FormattedDisplayName": "Void",
     "Text": "Void"
+  },
+  {
+    "FileName": "watch_side.ogg",
+    "DisplayName": "Watch Side",
+    "FormattedDisplayName": "Watch Side",
+    "Text": "Watch Side"
+  },
+  {
+    "FileName": "watch_spawns.ogg",
+    "DisplayName": "Watch Spawns",
+    "FormattedDisplayName": "Watch Spawns",
+    "Text": "Watch Spawns"
   },
   {
     "FileName": "west.ogg",

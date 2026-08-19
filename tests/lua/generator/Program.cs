@@ -50,7 +50,7 @@ services.AddSingleton(_ => new CalloutsVocabularyProvider(
     Path.Combine(repoRoot, "lorrgs-vocabulary.txt"),
     Path.Combine(AppContext.BaseDirectory, "RetiredCallouts.json")));
 services.AddSingleton(_ => new NorthernSkyRaidToolsVocabularyProvider(
-    Path.Combine(repoRoot, "nsrt-vocabulary.txt"),
+    [Path.Combine(repoRoot, "nsrt-vocabulary.txt"), Path.Combine(repoRoot, "nsrt-extra-vocabulary.txt")],
     Path.Combine(AppContext.BaseDirectory, "CalloutPronunciations.json")));
 
 // The BigWigs pack's Lua is the same whatever the spell list holds, and fetching the real one

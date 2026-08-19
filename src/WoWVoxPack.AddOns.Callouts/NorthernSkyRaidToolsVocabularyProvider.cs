@@ -10,11 +10,12 @@ public sealed class NorthernSkyRaidToolsVocabularyProvider
 {
     private readonly Lazy<IReadOnlyList<CalloutRegistration>> _registrations;
 
-    public NorthernSkyRaidToolsVocabularyProvider(string vocabularyPath, string overridesPath)
+    public NorthernSkyRaidToolsVocabularyProvider(IReadOnlyList<string> vocabularyPaths,
+        string overridesPath)
     {
         _registrations = new Lazy<IReadOnlyList<CalloutRegistration>>(() =>
             NorthernSkyRaidToolsVocabulary.Load(
-                vocabularyPath,
+                vocabularyPaths,
                 CalloutPronunciation.LoadOverrides(overridesPath)));
     }
 

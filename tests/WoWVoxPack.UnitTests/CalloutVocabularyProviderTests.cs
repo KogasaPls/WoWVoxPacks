@@ -44,7 +44,7 @@ public class CalloutVocabularyProviderTests
         File.WriteAllText(Path.Combine(directory, "RetiredCallouts.json"), "[\"OldCallout\"]");
 
         NorthernSkyRaidToolsVocabularyProvider provider = new(
-            Path.Combine(directory, "nsrt-vocabulary.txt"),
+            [Path.Combine(directory, "nsrt-vocabulary.txt")],
             Path.Combine(directory, "CalloutPronunciations.json"));
 
         IReadOnlyList<CalloutRegistration> registrations = provider.Registrations;
@@ -64,6 +64,30 @@ public class CalloutVocabularyProviderTests
             registrations.Single(registration => registration.MediaKeys.SequenceEqual(["droppool"])).SoundFile);
         Assert.DoesNotContain(registrations,
             r => r.SoundFile.DisplayName is "Anti-Magic Shell" or "Old Callout");
+    }
+
+    [Fact]
+    public void NorthernSkyRaidTools_MergesTheSupplementaryVocabulary()
+    {
+        string directory = Directory.CreateTempSubdirectory().FullName;
+        File.WriteAllText(Path.Combine(directory, "CalloutPronunciations.json"), "{}");
+        File.WriteAllText(Path.Combine(directory, "nsrt-vocabulary.txt"), "DropPool\n");
+        File.WriteAllText(Path.Combine(directory, "nsrt-extra-vocabulary.txt"),
+            "# alerts with no upstream file\nTaunt\nMemory Game\n");
+
+        NorthernSkyRaidToolsVocabularyProvider provider = new(
+            [
+                Path.Combine(directory, "nsrt-vocabulary.txt"),
+                Path.Combine(directory, "nsrt-extra-vocabulary.txt")
+            ],
+            Path.Combine(directory, "CalloutPronunciations.json"));
+
+        IReadOnlyList<CalloutRegistration> registrations = provider.Registrations;
+
+        Assert.Equal(["DropPool", "Taunt", "Memory Game"],
+            registrations.SelectMany(registration => registration.MediaKeys));
+        Assert.Equal("memory_game.ogg",
+            registrations.Single(r => r.MediaKeys.Contains("Memory Game")).SoundFile.FileName);
     }
 
     [Fact]

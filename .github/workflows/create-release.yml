@@ -30,19 +30,29 @@ jobs:
         id: set-release-tag
         if: github.event_name != 'push'
         run: |
-          # update.yml resets release-revision.txt to 0 whenever BigWigs moves, which is
-          # exactly when the bare version tag is most likely to exist already. Handing
-          # action-gh-release a tag that exists makes it update that release in place, so
-          # the build is never delivered. Walk the revision forward to the first free tag.
+          # The base is the game version, not the BigWigs_Voice tag: upstream adds a fourth
+          # component for its own re-releases within a patch (v12.1.0.1), and no such WoW
+          # version exists for players or CurseForge to match against.
           #
-          # The -r{n} suffix shape matters: publish-to-curseforge.yml derives the game
-          # version as ${RELEASE_TAG#v} then %%-*, so anything after the first dash is
-          # discarded there.
+          # The tags are the record of what has shipped, so the next revision comes from
+          # them. A counter in a file cannot say it: nothing resets it when the game version
+          # moves, and the first free revision is not the next one once a release has been
+          # deleted. Handing action-gh-release a tag that exists makes it update that release
+          # in place, so the build is never delivered; the walk below is the backstop.
           #
           # checkout runs with fetch-depth: 0 above, so every tag is local and no network
           # call is needed to test one.
-          base=$(cat bigwigs-voice-version.txt)
-          revision=$(cat release-revision.txt 2>/dev/null || echo 0)
+          base="v$(python scripts/game_versions.py --settings appsettings.json --highest)"
+
+          revision=0
+          for tag in $(git tag -l "${base}-r*"); do
+            shipped=${tag##*-r}
+            case "$shipped" in ''|*[!0-9]*) continue ;; esac
+            if [ "$shipped" -ge "$revision" ]; then revision=$(( shipped + 1 )); fi
+          done
+          if [ "$revision" -eq 0 ] && git rev-parse -q --verify "refs/tags/${base}" >/dev/null; then
+            revision=1
+          fi
 
           candidate_for() {
             if [ "$1" -gt 0 ]; then echo "${base}-r$1"; else echo "${base}"; fi
@@ -119,7 +129,6 @@ jobs:
           files: |
             ./dist/*.zip
             ./bigwigs-voice-version.txt
-            ./release-revision.txt
           # The action reads its token input, not env.GITHUB_TOKEN, and that input defaults to
           # the workflow's own GITHUB_TOKEN. Passing the PAT here is what keeps the release
           # from being authored by github-actions[bot].

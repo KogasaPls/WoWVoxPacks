@@ -182,7 +182,7 @@ jobs:
       removed: ${{ steps.compare-vocabulary.outputs.removed }}
     steps:
       - uses: actions/checkout@v7
-      - uses: astral-sh/setup-uv@v10
+      - uses: astral-sh/setup-uv@v10.0.1
       - name: Download the lorrgs default branch
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -295,14 +295,6 @@ jobs:
       - name: Apply the new lorrgs vocabulary
         if: ${{ needs.check-lorrgs-vocabulary.outputs.needs_update == 'true' }}
         run: mv lorrgs-vocabulary.new lorrgs-vocabulary.txt
-      - name: Bump the release revision when the version tag stayed put
-        # Vocabulary-only updates and forced rebuilds both ship under a version tag that is
-        # already released, so the revision has to move for the release to be a new one.
-        if: ${{ needs.check-bigwigs-voice-version.outputs.version_changed != 'true' }}
-        run: echo $(( $(cat release-revision.txt) + 1 )) > release-revision.txt
-      - name: Reset the release revision when BigWigs moved
-        if: ${{ needs.check-bigwigs-voice-version.outputs.version_changed == 'true' }}
-        run: echo 0 > release-revision.txt
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v3'
@@ -315,13 +307,9 @@ jobs:
         with:
           dotnet-version: '10.0.x'
       - name: Build new version
-        run: |
-          VERSION=${TAG#"v"} dotnet build
+        run: dotnet build
       - name: Run addon builder
-        run: |
-          VERSION=${TAG#"v"} dotnet run --project src/WoWVoxPack.Builder/WoWVoxPack.Builder.csproj
-        env:
-          TAG: ${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version }}
+        run: dotnet run --project src/WoWVoxPack.Builder/WoWVoxPack.Builder.csproj
       - name: Create a pull request
         uses: peter-evans/create-pull-request@v8
         id: create-pull-request
@@ -361,7 +349,6 @@ jobs:
             bigwigs-voice-version.txt
             nsrt-vocabulary.txt
             lorrgs-vocabulary.txt
-            release-revision.txt
             src/WoWVoxPack.AddOns.Callouts/RetiredCallouts.json
           sign-commits: true
       - name: Enable Pull Request Automerge

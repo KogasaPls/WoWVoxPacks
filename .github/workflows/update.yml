@@ -182,7 +182,7 @@ jobs:
       removed: ${{ steps.compare-vocabulary.outputs.removed }}
     steps:
       - uses: actions/checkout@v7
-      - uses: astral-sh/setup-uv@v10
+      - uses: astral-sh/setup-uv@v10.0.1
       - name: Download the lorrgs default branch
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

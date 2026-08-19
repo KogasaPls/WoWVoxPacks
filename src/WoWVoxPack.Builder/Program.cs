@@ -41,16 +41,17 @@ IHostBuilder hostBuilder = Host.CreateDefaultBuilder(args)
                 Assembly.GetExecutingAssembly().GetCustomAttribute<SolutionFileAttribute>()!.SolutionFile)!,
                 "lorrgs-vocabulary.txt"),
             Path.Combine(AppContext.BaseDirectory, "RetiredCallouts.json")));
-        services.AddSingleton(_ => new NorthernSkyRaidToolsVocabularyProvider(
-            [
-                Path.Combine(Path.GetDirectoryName(
-                    Assembly.GetExecutingAssembly().GetCustomAttribute<SolutionFileAttribute>()!.SolutionFile)!,
-                    "nsrt-vocabulary.txt"),
-                Path.Combine(Path.GetDirectoryName(
-                    Assembly.GetExecutingAssembly().GetCustomAttribute<SolutionFileAttribute>()!.SolutionFile)!,
-                    "nsrt-extra-vocabulary.txt")
-            ],
-            Path.Combine(AppContext.BaseDirectory, "CalloutPronunciations.json")));
+        services.AddSingleton(_ =>
+        {
+            string solutionDirectory = Path.GetDirectoryName(
+                Assembly.GetExecutingAssembly().GetCustomAttribute<SolutionFileAttribute>()!.SolutionFile)!;
+
+            return new NorthernSkyRaidToolsVocabularyProvider(
+                NorthernSkyRaidToolsVocabulary.VocabularyFileNames
+                    .Select(fileName => Path.Combine(solutionDirectory, fileName))
+                    .ToArray(),
+                Path.Combine(AppContext.BaseDirectory, "CalloutPronunciations.json"));
+        });
         services.TryAddEnumerable(ServiceDescriptor.Singleton<IAddOnService, BigWigsVoiceAddOnService>());
         services.TryAddEnumerable(ServiceDescriptor.Singleton<IAddOnService, BigWigsCountdownAddOnService>());
         services.TryAddEnumerable(ServiceDescriptor.Singleton<IAddOnService, CalloutsMediaAddOnService>());

@@ -151,13 +151,9 @@ jobs:
           fi
       - name: Report alert strings with no recording
         # The vocabulary comes from Media/Sounds file names while the alerts speak their own
-        # text field, so the two drift apart on their own and a new alert must not fail the
-        # sync that would have brought its callouts in. continue-on-error keeps that true for
-        # the script's shape guards too, which exit 2 and are not covered by --exit-zero.
+        # text field, so the two drift apart on their own.
         continue-on-error: true
         run: |
-          # Against the vocabulary this run just extracted, not the tracked one: a string
-          # upstream added a file for in the same commit is recorded, not missing.
           python3 scripts/check_nsrt_tts_coverage.py \
             --source nsrt-src \
             --vocabulary nsrt-vocabulary.new \

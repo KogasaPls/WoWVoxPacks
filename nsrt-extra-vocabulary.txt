@@ -28,7 +28,6 @@ Shrooms
 Soak Back Left
 Soak Back Right
 Soak Cross
-Soak Flex Spot
 Soak Front Left
 Soak Front Right
 Soak Left

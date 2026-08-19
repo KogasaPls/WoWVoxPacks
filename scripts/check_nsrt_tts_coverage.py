@@ -16,6 +16,7 @@ from pathlib import Path
 ALERT_TABLE = re.compile(r"\blocal\s+data\s*=\s*\{")
 TEXT_FIELD = re.compile(r"\btext\s*=\s*\"([^\"]*)\"")
 TTS_FIELD = re.compile(r"\bTTS\s*=\s*(?:\"([^\"]*)\"|(true|false|nil))")
+TTS_FIELD_CONTINUES = re.compile(r"^\s*\.\.")
 TEXT_REASSIGNMENT = re.compile(r"\bdata\.text\s*=\s*\"([^\"]+)\"")
 LATE_TTS_ASSIGNMENT = re.compile(r"^\s*(?:local\s+)?([\w.]*\bTTS)\s*=\s*(.+)$")
 LOCAL_BINDING = re.compile(r"^\s*local\s+(\w+)\s*=")
@@ -40,7 +41,7 @@ class Composed:
         self.location = location
         self.fragments = fragments
 
-    def __repr__(self) -> str:
+    def __str__(self) -> str:
         return f"{self.location}  " + " .. ".join(
             f'"{fragment}"' for fragment in self.fragments) + " .. <runtime>"
 
@@ -68,6 +69,14 @@ def strip_lua_comments(text: str) -> str:
     return "\n".join(stripped)
 
 
+def composed_sites(text: str, pattern: re.Pattern[str], location: str) -> list[Composed]:
+    return [
+        Composed(f"{location}:{number}", [match.group(1)])
+        for number, line in enumerate(text.splitlines(), start=1)
+        if (match := pattern.search(line))
+    ]
+
+
 def iter_alert_files(source: Path) -> list[Path]:
     alerts = source / "NorthernSkyRaidTools" / "EncounterAlerts"
     if not alerts.is_dir():
@@ -84,7 +93,11 @@ def iter_alert_files(source: Path) -> list[Path]:
 
 
 def literals_in(expression: str) -> list[str]:
-    """Every string an expression can evaluate to, keys of EncounterAlertLoc included."""
+    """The strings an expression can evaluate to.
+
+    EncounterAlertLoc returns its key verbatim on enUS, so where an expression localises, its
+    keys are the whole answer and the bare literals around them are arguments to it.
+    """
     localised = LOCALISED.findall(expression)
     if localised:
         return localised
@@ -92,26 +105,29 @@ def literals_in(expression: str) -> list[str]:
     return STRING_LITERAL.findall(expression)
 
 
-def spoken_in_alerts(text: str) -> Counter[str]:
+def spoken_in_alerts(text: str, path: str) -> tuple[Counter[str], list[Composed]]:
     """Count the strings each alert table in one file can speak.
 
     An alert speaks its `TTS` field when that is a string, nothing at all when it is false or
-    absent, and its `text` otherwise. A table reused for a second alert with `data.text`
-    reassigned speaks the new value under the same TTS setting.
+    nil, and its `text` otherwise. A table reused for a second alert with `data.text`
+    reassigned speaks the new value under the same TTS setting. A `TTS` field concatenated
+    with something the game supplies is a site to enumerate, not a string.
     """
     spoken: Counter[str] = Counter()
     for chunk in ALERT_TABLE.split(text)[1:]:
         table = chunk.split("AddEncounterAlert")[0]
         match = TTS_FIELD.search(table)
         if not match:
-            continue
+            raise UpstreamShapeError(
+                "an alert declares no TTS field, so whether it speaks is the user's setting "
+                "and this script cannot tell; teach it that shape before trusting the result")
 
         literal, keyword = match.group(1), match.group(2)
         if keyword in ("false", "nil"):
             continue
 
         if literal is not None:
-            if CONCATENATION.search(table[match.end():match.end() + 2]):
+            if TTS_FIELD_CONTINUES.match(table[match.end():]):
                 continue
             spoken[literal.strip()] += 1
         else:
@@ -122,16 +138,14 @@ def spoken_in_alerts(text: str) -> Counter[str]:
         for reassigned in TEXT_REASSIGNMENT.finditer(chunk):
             spoken[reassigned.group(1).strip()] += 1
 
-    return spoken
+    return spoken, composed_sites(text, CONCATENATED_TTS_FIELD, path)
 
 
 def spoken_in_late_assignments(text: str, path: str) -> tuple[Counter[str], list[Composed]]:
     """Read every `TTS = <expression>` written outside an alert's table literal.
 
-    Five encounters swap an alert's speech at runtime through a local other than `data`, so
-    watching one receiver name reads the wrong value for them and finds nothing for the rest.
-    An assignment whose value this cannot read at all is drift, not an absence: raise, because
-    reporting one fewer uncovered string reads exactly like having recorded it.
+    Encounters swap an alert's speech at runtime through locals of their own naming, not only
+    through `data`.
     """
     spoken: Counter[str] = Counter()
     composed: list[Composed] = []
@@ -148,7 +162,7 @@ def spoken_in_late_assignments(text: str, path: str) -> tuple[Counter[str], list
             # A pass-through of a local this file already spelled out is not a second value.
             if any(re.search(rf"\b{re.escape(name)}\b", expression) for name in readable):
                 continue
-            if TTS_FIELD.match(f"TTS = {expression}"):
+            if expression.strip().rstrip(",").split()[0] in ("false", "nil"):
                 continue
             raise UpstreamShapeError(
                 f"{path}:{line_number} sets {target} from an expression holding no string "
@@ -182,11 +196,8 @@ def spoken_in_direct_calls(source: Path) -> tuple[Counter[str], list[Composed]]:
         text = strip_lua_comments(path.read_text(encoding="utf-8", errors="replace"))
         for call in LITERAL_CALL.finditer(text):
             spoken[call.group(1).strip()] += 1
-        for line_number, line in enumerate(text.splitlines(), start=1):
-            call = CONCATENATED_CALL.search(line)
-            if call:
-                composed.append(
-                    Composed(f"{path.relative_to(source)}:{line_number}", [call.group(1)]))
+        composed.extend(
+            composed_sites(text, CONCATENATED_CALL, str(path.relative_to(source))))
 
     return spoken, composed
 
@@ -196,17 +207,13 @@ def collect_spoken(source: Path) -> tuple[Counter[str], list[Composed]]:
     composed: list[Composed] = []
     for path in iter_alert_files(source):
         text = strip_lua_comments(path.read_text(encoding="utf-8", errors="replace"))
-        spoken.update(spoken_in_alerts(text))
+        declared, declared_composed = spoken_in_alerts(text, path.name)
+        spoken.update(declared)
+        composed.extend(declared_composed)
+
         late, late_composed = spoken_in_late_assignments(text, path.name)
         spoken.update(late)
         composed.extend(late_composed)
-
-        # A table literal may concatenate onto its TTS too, and spoken_in_alerts drops those
-        # rather than record the prefix as if it were the whole string.
-        for line_number, line in enumerate(text.splitlines(), start=1):
-            field = CONCATENATED_TTS_FIELD.search(line)
-            if field:
-                composed.append(Composed(f"{path.name}:{line_number}", [field.group(1)]))
 
     if not spoken:
         raise UpstreamShapeError(
@@ -268,7 +275,7 @@ def main(argv: list[str] | None = None) -> int:
         print(f"{len(composed)} built at runtime, so no recording matches them whole. "
               "Enumerate what the game can append and add the results by hand:")
         for site in composed:
-            print(f"  {site!r}")
+            print(f"  {site}")
 
     if args.output:
         args.output.write_text(

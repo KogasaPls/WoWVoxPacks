@@ -6,10 +6,12 @@ namespace WoWVoxPack.AddOns.Callouts;
 public static class NorthernSkyRaidToolsVocabulary
 {
     /// <summary>
-    /// Reads every vocabulary in order. NSRT's generated file covers what its Media/Sounds
-    /// ships; the alerts speak strings it has no file for, and those come from a second,
-    /// hand-maintained one.
+    /// The generated file covers what NSRT's Media/Sounds ships. Its alerts also speak strings
+    /// it has no file for, and those are hand-maintained in the second.
     /// </summary>
+    public static readonly IReadOnlyList<string> VocabularyFileNames =
+        ["nsrt-vocabulary.txt", "nsrt-extra-vocabulary.txt"];
+
     public static IReadOnlyList<CalloutRegistration> Load(
         IEnumerable<string> vocabularyPaths,
         IReadOnlyDictionary<string, PronunciationOverride> overrides) =>

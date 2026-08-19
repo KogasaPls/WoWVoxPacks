@@ -41,17 +41,21 @@ jobs:
   lua:
     name: Generated Lua
     runs-on: ubuntu-latest
+    # The job runs in about a minute. A stall is the package mirror, not the harness, and
+    # this is a required check: without a bound it holds a merge for hours.
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: '10.0.x'
       - name: Install LuaJIT and luacheck
+        # Both from apt: building luacheck through luarocks compiles luafilesystem on every
+        # run, which has taken anywhere from 13 seconds to over 20 minutes.
         run: |
           sudo apt-get update
           # CallbackHandler-1.0 needs loadstring, so the interpreter has to be 5.1-compatible.
-          sudo apt-get install -y luajit luarocks
-          sudo luarocks install luacheck
+          sudo apt-get install -y luajit lua-check
           luajit -v
           luacheck --version
       # Regenerates the addon Lua from the C# and runs it. A failure here is a failure users

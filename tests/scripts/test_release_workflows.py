@@ -1,3 +1,4 @@
+import importlib.util
 import json
 import re
 import unittest
@@ -6,10 +7,11 @@ from pathlib import Path
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 
-
-def committed_paths(workflow: str) -> list[str]:
-    block = re.search(r"\n( +)add-paths: \|\n((?:\1 +\S+\n)+)", workflow)
-    return block.group(2).split() if block else []
+spec = importlib.util.spec_from_file_location(
+    "game_versions", REPOSITORY_ROOT / "scripts" / "game_versions.py"
+)
+game_versions = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(game_versions)
 
 
 class ReleaseWorkflowTests(unittest.TestCase):
@@ -47,36 +49,43 @@ class ReleaseWorkflowTests(unittest.TestCase):
         )
 
     def test_the_version_in_every_toc_is_the_version_the_tag_is_built_from(self):
-        """Two files decide one number, and only one of them names the release.
+        """The toc names a patch, and create-release names the tag after the same one.
 
-        create-release builds the tag from bigwigs-voice-version.txt, while the generated TOCs
-        take theirs from appsettings.json. Bump one without the other and the addons players
-        install advertise a version that no release has.
+        BigWigs_Voice numbers its own re-releases inside a patch (v12.1.0, then v12.1.0.1),
+        so the version it tracks is not one of ours to advertise. Interfaces is what the
+        addons say they support, and the tag is built from the highest of them.
         """
-        settings = json.loads(
-            (REPOSITORY_ROOT / "appsettings.json").read_text(encoding="utf-8")
-        )
-        tracked = (
-            REPOSITORY_ROOT / "bigwigs-voice-version.txt"
-        ).read_text(encoding="utf-8").strip()
+        settings = REPOSITORY_ROOT / "appsettings.json"
+        declared = json.loads(settings.read_text(encoding="utf-8"))["AddOn"]["Version"]
 
-        self.assertEqual(tracked, "v" + settings["AddOn"]["Version"])
+        self.assertEqual(declared, game_versions.game_versions(settings)[-1])
 
-    def test_the_updater_moves_both_files_that_decide_the_version(self):
-        """Upstream moves on a schedule, with no human to bump the second file.
+    def test_neither_the_tag_nor_the_upload_carries_an_upstream_release_number(self):
+        """BigWigs_Voice numbers its own re-releases inside a patch: v12.1.0, then v12.1.0.1.
 
-        The check above only reports the mismatch, and it reports it as a red update PR.
-        The updater has to write appsettings.json and commit it for that PR to be green.
+        WoW never shipped a 12.1.0.1, so CurseForge cannot resolve it and players cannot
+        match it. Both the tag and the upload have to name a patch the addons declare.
         """
-        updater = (
-            REPOSITORY_ROOT / ".github/workflows/update.yml"
+        release_creator = (
+            REPOSITORY_ROOT / ".github/workflows/create-release.yml"
+        ).read_text(encoding="utf-8")
+        publisher = (
+            REPOSITORY_ROOT / ".github/workflows/publish-to-curseforge.yml"
         ).read_text(encoding="utf-8")
 
         self.assertIn(
-            "python scripts/set_addon_version.py", updater
+            'base="v$(python scripts/game_versions.py --settings appsettings.json --highest)"',
+            release_creator,
         )
-        self.assertIn("--settings appsettings.json --version", updater)
-        self.assertIn("appsettings.json", committed_paths(updater))
+        self.assertNotIn("base=$(cat bigwigs-voice-version.txt)", release_creator)
+        # The revision comes from what has shipped. A counter file has nothing to reset it
+        # when the game version moves, and it refills holes left by a deleted release.
+        self.assertIn('for tag in $(git tag -l "${base}-r*")', release_creator)
+        self.assertNotIn("release-revision.txt", release_creator)
+        self.assertIn(
+            "python scripts/game_versions.py --settings appsettings.json", publisher
+        )
+        self.assertIn("game_versions: ${{ env.RELEASE_GAME_VERSIONS }}", publisher)
 
     def test_the_builder_and_the_updater_agree_on_how_far_a_pack_may_shrink(self):
         """Both refuse a collapsed vocabulary, and the builder runs second.

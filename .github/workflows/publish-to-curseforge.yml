@@ -105,12 +105,27 @@ jobs:
           fi
           echo "Publishing ${RELEASE_TAG}"
           echo "RELEASE_TAG=${RELEASE_TAG}" >> "$GITHUB_ENV"
+      - name: Check out the release
+        # Before the assets are downloaded: checkout cleans the workspace. The tag's own
+        # settings are what that build declared, which a manual run of an older tag needs.
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ env.RELEASE_TAG }}
       - name: Set release game_versions
         id: set-release-game-versions
+        # Not from the tag: the addons support every patch they list an Interface for, and
+        # BigWigs_Voice numbers its own re-releases within a patch (v12.1.0.1), which is a
+        # version no game ever shipped. Tags cut before this workflow learned that have no
+        # script to run, and their names were already game versions.
         run: |
-          RELEASE_GAME_VERSION="${RELEASE_TAG#v}"
-          RELEASE_GAME_VERSION="${RELEASE_GAME_VERSION%%-*}"
-          echo "RELEASE_GAME_VERSION=${RELEASE_GAME_VERSION}" >> "$GITHUB_ENV"
+          if [ -f scripts/game_versions.py ]; then
+            RELEASE_GAME_VERSIONS=$(python scripts/game_versions.py --settings appsettings.json)
+          else
+            RELEASE_GAME_VERSIONS="${RELEASE_TAG#v}"
+            RELEASE_GAME_VERSIONS="${RELEASE_GAME_VERSIONS%%-*}"
+          fi
+          echo "Publishing for game versions: ${RELEASE_GAME_VERSIONS}"
+          echo "RELEASE_GAME_VERSIONS=${RELEASE_GAME_VERSIONS}" >> "$GITHUB_ENV"
       - name: Download release assets
         uses: robinraju/release-downloader@v1
         with:
@@ -128,5 +143,5 @@ jobs:
           project_id: ${{ env.CF_PROJECT_ID }}
           token: ${{ secrets.CURSEFORGE_API_TOKEN }}
           display_name: ${{ matrix.addon }} (${{ matrix.voice }}) ${{ env.RELEASE_TAG }}
-          game_versions: ${{ env.RELEASE_GAME_VERSION }}
+          game_versions: ${{ env.RELEASE_GAME_VERSIONS }}
           relations: ${{ fromJSON(matrix.addon-to-relations-json)[matrix.addon] }}

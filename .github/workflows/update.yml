@@ -269,8 +269,6 @@ jobs:
         id: read-version
         run: |
           echo "$BIGWIGS_VERSION" > bigwigs-voice-version.txt
-          python scripts/set_addon_version.py \
-            --settings appsettings.json --version "$BIGWIGS_VERSION"
         env:
           BIGWIGS_VERSION: ${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version }}
       - name: Download the new vocabulary
@@ -297,14 +295,6 @@ jobs:
       - name: Apply the new lorrgs vocabulary
         if: ${{ needs.check-lorrgs-vocabulary.outputs.needs_update == 'true' }}
         run: mv lorrgs-vocabulary.new lorrgs-vocabulary.txt
-      - name: Bump the release revision when the version tag stayed put
-        # Vocabulary-only updates and forced rebuilds both ship under a version tag that is
-        # already released, so the revision has to move for the release to be a new one.
-        if: ${{ needs.check-bigwigs-voice-version.outputs.version_changed != 'true' }}
-        run: echo $(( $(cat release-revision.txt) + 1 )) > release-revision.txt
-      - name: Reset the release revision when BigWigs moved
-        if: ${{ needs.check-bigwigs-voice-version.outputs.version_changed == 'true' }}
-        run: echo 0 > release-revision.txt
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v3'
@@ -356,11 +346,9 @@ jobs:
           base: main
           add-paths: |
             output/
-            appsettings.json
             bigwigs-voice-version.txt
             nsrt-vocabulary.txt
             lorrgs-vocabulary.txt
-            release-revision.txt
             src/WoWVoxPack.AddOns.Callouts/RetiredCallouts.json
           sign-commits: true
       - name: Enable Pull Request Automerge

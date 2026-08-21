@@ -158,15 +158,88 @@ class MainTests(unittest.TestCase):
         self.assertEqual(2, self.run_main("# only a comment\n"))
 
 
+DIRECT_CALLS_WITH_BUFFS = DIRECT_CALLS + '''
+local buffs = {
+    [1] = 6673, -- Battle Shout
+    [13] = {381741, 381757},
+}
+'''
+
+
+class ComposedSnapshotTests(unittest.TestCase):
+    def run_main(self, direct, *extra):
+        with tempfile.TemporaryDirectory() as directory:
+            root = write_source(directory, direct=direct)
+            vocabulary_path = root / "vocabulary.txt"
+            vocabulary_path.write_text(
+                "Taunt\nBreath\nStack\nSoulstone\nSoak\nDon't soak\n", encoding="utf-8")
+            snapshot_path = root / "composed.txt"
+            return checker.main(
+                ["--source", str(root), "--vocabulary", str(vocabulary_path),
+                 *(argument.replace("SNAPSHOT", str(snapshot_path)) for argument in extra)])
+
+    def test_a_written_snapshot_round_trips(self):
+        self.assertEqual(0, self.run_main(
+            DIRECT_CALLS_WITH_BUFFS,
+            "--write-composed", "SNAPSHOT", "--composed", "SNAPSHOT"))
+
+    def test_a_new_composed_site_fails_the_check(self):
+        with tempfile.TemporaryDirectory() as directory:
+            snapshot = Path(directory) / "composed.txt"
+            self.assertEqual(0, self.run_main(
+                DIRECT_CALLS_WITH_BUFFS, "--write-composed", str(snapshot)))
+            self.assertEqual(1, self.run_main(
+                DIRECT_CALLS_WITH_BUFFS + '\nNSAPI:TTS("Stack "..count)\n',
+                "--composed", str(snapshot)))
+
+    def test_a_changed_buff_table_fails_the_check(self):
+        """The Rebuff site speaks buff names, so a new class buff is a new string."""
+        with tempfile.TemporaryDirectory() as directory:
+            snapshot = Path(directory) / "composed.txt"
+            self.assertEqual(0, self.run_main(
+                DIRECT_CALLS_WITH_BUFFS, "--write-composed", str(snapshot)))
+            self.assertEqual(1, self.run_main(
+                DIRECT_CALLS_WITH_BUFFS.replace("[1] = 6673,", "[1] = 6673,\n    [7] = 462854,"),
+                "--composed", str(snapshot)))
+
+    def test_every_buff_table_in_a_file_is_read(self):
+        """Only reading the first table would pass the snapshot while a second one drifts."""
+        with tempfile.TemporaryDirectory() as directory:
+            snapshot = Path(directory) / "composed.txt"
+            doubled = DIRECT_CALLS_WITH_BUFFS + "\nlocal buffs = {\n    [2] = 17,\n}\n"
+            self.assertEqual(0, self.run_main(doubled, "--write-composed", str(snapshot)))
+            self.assertIn("17", snapshot.read_text(encoding="utf-8"))
+
+    def test_a_rebuff_site_with_no_buff_table_refuses_to_snapshot(self):
+        with tempfile.TemporaryDirectory() as directory:
+            self.assertEqual(2, self.run_main(
+                DIRECT_CALLS, "--write-composed", str(Path(directory) / "composed.txt")))
+
+    def test_the_exit_zero_report_still_fails_on_snapshot_drift(self):
+        """--exit-zero forgives uncovered strings, not an unenumerated composed site."""
+        with tempfile.TemporaryDirectory() as directory:
+            snapshot = Path(directory) / "composed.txt"
+            self.assertEqual(0, self.run_main(
+                DIRECT_CALLS_WITH_BUFFS, "--write-composed", str(snapshot)))
+            self.assertEqual(1, self.run_main(
+                DIRECT_CALLS_WITH_BUFFS + '\nNSAPI:TTS("Stack "..count)\n',
+                "--composed", str(snapshot), "--exit-zero"))
+
+
 class TrackedVocabularyTests(unittest.TestCase):
-    """The supplement holds what NSRT has no file for, so overlap means it went stale."""
+    """Each string lives in exactly one vocabulary, so overlap means one went stale."""
 
     def read(self, name):
         return checker.load_vocabulary([REPOSITORY_ROOT / name])
 
-    def test_the_supplement_adds_nothing_the_generated_vocabulary_already_has(self):
-        self.assertEqual(
-            set(), self.read("nsrt-vocabulary.txt") & self.read("nsrt-extra-vocabulary.txt"))
+    def test_no_string_lives_in_two_vocabularies(self):
+        names = ["nsrt-vocabulary.txt", "nsrt-alert-vocabulary.txt",
+                 "nsrt-extra-vocabulary.txt"]
+        for first in names:
+            for second in names:
+                if first < second:
+                    self.assertEqual(set(), self.read(first) & self.read(second),
+                                     f"{first} overlaps {second}")
 
     def test_the_supplement_is_not_empty(self):
         self.assertTrue(self.read("nsrt-extra-vocabulary.txt"))

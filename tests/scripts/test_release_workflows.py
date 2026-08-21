@@ -124,6 +124,7 @@ class ReleaseWorkflowTests(unittest.TestCase):
         updater = (
             REPOSITORY_ROOT / ".github/workflows/update.yml"
         ).read_text(encoding="utf-8")
+        self.assertIn("add-paths: |", updater)
         add_paths = updater.split("add-paths: |", 1)[1].split("sign-commits:", 1)[0]
         for name in names:
             self.assertTrue((REPOSITORY_ROOT / name).is_file(), name)
@@ -132,6 +133,19 @@ class ReleaseWorkflowTests(unittest.TestCase):
             self.assertIn(f"mv {new_name} {generated}", updater)
             self.assertIn(generated, add_paths)
         self.assertNotIn(names[-1], add_paths)
+
+    def test_a_changed_composed_site_fails_the_update_run(self):
+        """Hand-enumerated strings cannot regenerate, so drift must fail, not print.
+
+        The composed sites are the one class the alert-vocabulary generation cannot cover:
+        a new site's strings exist only at runtime. The verify step diffs the sites against
+        the tracked snapshot, and a mismatch fails the job, which files the issue.
+        """
+        updater = (
+            REPOSITORY_ROOT / ".github/workflows/update.yml"
+        ).read_text(encoding="utf-8")
+        self.assertIn("--composed nsrt-composed-sites.txt", updater)
+        self.assertTrue((REPOSITORY_ROOT / "nsrt-composed-sites.txt").is_file())
 
     def test_release_creator_cannot_release_the_same_tag_twice(self):
         """The PAT that fixes the event also makes tag pushes re-enter this workflow.

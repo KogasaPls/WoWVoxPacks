@@ -1,7 +1,8 @@
 # Strings Northern Sky Raid Tools composes at runtime, enumerated by hand.
 # scripts/check_nsrt_tts_coverage.py names the sites ("Soak " .. <runtime>); list here every
-# string a site can produce. Literal alert strings are generated into nsrt-alert-vocabulary.txt
-# by .github/workflows/update.yml and do not belong in this file.
+# string a site can produce, then regenerate nsrt-composed-sites.txt so the update workflow
+# stops failing on the changed site. Literal alert strings are generated into
+# nsrt-alert-vocabulary.txt by .github/workflows/update.yml and do not belong in this file.
 Go to Back Left
 Go to Back Right
 Go to Flex Spot

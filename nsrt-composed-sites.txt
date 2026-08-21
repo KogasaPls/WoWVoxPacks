@@ -1,0 +1,8 @@
+# Runtime-composed TTS sites in Northern Sky Raid Tools, and the buff table the
+# Rebuff site reads. On a mismatch: enumerate what the new or changed site can
+# speak into nsrt-extra-vocabulary.txt, then regenerate this file by rerunning
+# scripts/check_nsrt_tts_coverage.py with --write-composed nsrt-composed-sites.txt.
+LightblindedVanguard.lua  "Go to " .. "Soak "
+MidnightFalls.lua  "Soak "
+NorthernSkyRaidTools/ReadyCheck.lua  "Rebuff "
+buffs  1126 1459 6673 20707 21562 381732 381741 381746 381748 381749 381750 381751 381752 381753 381754 381756 381757 381758 462854

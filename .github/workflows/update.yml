@@ -131,9 +131,8 @@ jobs:
         # The alerts speak their own text field, so a string with no Media/Sounds file never
         # enters the vocabulary above. This regenerates the rest of what the alerts can speak
         # from the same checkout; when upstream later records a string, it moves files on its
-        # own. The checker exits nonzero on any source shape it cannot read, failing this job
-        # rather than silently dropping alerts. No shrink guard here: seasonal alert churn
-        # legitimately halves a list this small, and unreadable shapes already fail hard.
+        # own. The checker exits nonzero on any source shape it cannot read, and seasonal
+        # churn legitimately halves a list this small, so it carries no shrink guard.
         run: |
           python3 scripts/check_nsrt_tts_coverage.py \
             --source nsrt-src \
@@ -153,14 +152,17 @@ jobs:
             LC_ALL=C sort -f alert-strings.txt
           } > nsrt-alert-vocabulary.new
       - name: Verify the vocabularies cover every alert
-        # Guards this pipeline, not upstream: everything uncovered went into the alert file,
-        # so anything still uncovered here means the generation above is broken.
+        # The uncovered check guards this pipeline (everything uncovered went into the alert
+        # file, so a miss here means the generation above is broken). The composed check
+        # guards upstream: hand-enumerated strings cannot regenerate, so a new or changed
+        # composed site must fail this job until someone enumerates it.
         run: |
           python3 scripts/check_nsrt_tts_coverage.py \
             --source nsrt-src \
             --vocabulary nsrt-vocabulary.new \
             --vocabulary nsrt-alert-vocabulary.new \
-            --vocabulary nsrt-extra-vocabulary.txt
+            --vocabulary nsrt-extra-vocabulary.txt \
+            --composed nsrt-composed-sites.txt
       - name: Compare against the tracked vocabulary
         id: compare-vocabulary
         # comm collates with the ambient locale, so it has to agree with the C ordering the
@@ -170,12 +172,19 @@ jobs:
         env:
           LC_ALL: C
         run: |
-          cat nsrt-vocabulary.txt nsrt-alert-vocabulary.txt 2>/dev/null | grep -v '^#' | sort > old.txt || true
-          cat nsrt-vocabulary.new nsrt-alert-vocabulary.new | grep -v '^#' | sort > new.txt
-          if cmp -s old.txt new.txt; then
+          # Compared per file, not as a union: a string upstream records moves from the
+          # alert file to the sounds file, which a union comparison reads as no change.
+          needs_update=false
+          for name in nsrt-vocabulary nsrt-alert-vocabulary; do
+            cmp -s <(grep -v '^#' "${name}.txt" | sort) <(grep -v '^#' "${name}.new" | sort) \
+              || needs_update=true
+          done
+          if [ "${needs_update}" = "false" ]; then
             echo "Vocabulary unchanged"
             echo "needs_update=false" >> "$GITHUB_OUTPUT"
           else
+            cat nsrt-vocabulary.txt nsrt-alert-vocabulary.txt | grep -v '^#' | sort > old.txt
+            cat nsrt-vocabulary.new nsrt-alert-vocabulary.new | grep -v '^#' | sort > new.txt
             echo "needs_update=true" >> "$GITHUB_OUTPUT"
             {
               echo "added<<VOCAB_EOF"
@@ -195,13 +204,13 @@ jobs:
             nsrt-vocabulary.new
             nsrt-alert-vocabulary.new
       - name: File an issue when this check fails
-        # The job carries continue-on-error so an NSRT outage cannot block the BigWigs half,
-        # which also leaves the whole run green when this check breaks. The "Waves" alert
-        # shipped unspoken for two weeks that way. An issue is the failure's only visible
-        # trace, so file one.
+        # continue-on-error keeps the run green when this job breaks, so an issue is the
+        # failure's only visible trace. GH_REPO is set because a checkout failure lands here
+        # too, leaving gh without a local repository to infer it from.
         if: failure()
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
         run: |
           title="The NSRT vocabulary check is failing"
           run_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
@@ -289,11 +298,13 @@ jobs:
           name: lorrgs-vocabulary
           path: lorrgs-vocabulary.new
       - name: File an issue when this check fails
-        # Same silent-failure trap as the NSRT job: continue-on-error keeps the run green,
-        # so an issue is the failure's only visible trace.
+        # continue-on-error keeps the run green when this job breaks, so an issue is the
+        # failure's only visible trace. GH_REPO covers the checkout-failure case, as in the
+        # NSRT job.
         if: failure()
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
         run: |
           title="The lorrgs vocabulary check is failing"
           run_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"

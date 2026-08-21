@@ -29,6 +29,9 @@ CONCATENATION = re.compile(r"\.\.")
 # EncounterAlertLoc returns its key verbatim on enUS, so the key is what is spoken.
 LOCALISED = re.compile(r"EncounterAlertLoc\(\s*\"([^\"]*)\"\s*\)")
 
+BUFF_TABLE = re.compile(r"\blocal\s+buffs\s*=\s*\{")
+BUFF_TABLE_ENTRY = re.compile(r"\[\s*\d+\s*\]\s*=\s*(\{[^}]*\}|\d+)")
+
 
 class UpstreamShapeError(RuntimeError):
     """The source no longer looks like what the parser was written against."""
@@ -225,6 +228,49 @@ def collect_spoken(source: Path) -> tuple[Counter[str], list[Composed]]:
     return spoken, composed
 
 
+def buff_table_ids(source: Path) -> list[int]:
+    ids: set[int] = set()
+    for path in sorted(source.glob("**/*.lua")):
+        if "Libs" in path.parts:
+            continue
+        text = strip_lua_comments(path.read_text(encoding="utf-8", errors="replace"))
+        for match in BUFF_TABLE.finditer(text):
+            depth = 1
+            end = match.end()
+            while end < len(text) and depth > 0:
+                if text[end] == "{":
+                    depth += 1
+                elif text[end] == "}":
+                    depth -= 1
+                end += 1
+            for entry in BUFF_TABLE_ENTRY.finditer(text[match.end():end]):
+                ids.update(int(number) for number in re.findall(r"\d+", entry.group(1)))
+
+    return sorted(ids)
+
+
+def composed_signatures(source: Path, composed: list[Composed]) -> list[str]:
+    """Stable identities for the composed sites: file and fragments, no line numbers.
+
+    The Rebuff site speaks GetSpellInfo(buffs[class]).name, so the strings it can produce
+    change exactly when that table does; its signature pins the table's spell IDs.
+    """
+    signatures = {
+        site.location.rsplit(":", 1)[0] + "  "
+        + " .. ".join(f'"{fragment}"' for fragment in site.fragments)
+        for site in composed
+    }
+    if any("Rebuff " in site.fragments for site in composed):
+        ids = buff_table_ids(source)
+        if not ids:
+            raise UpstreamShapeError(
+                "a Rebuff site composes from a buffs table this script cannot find; teach it "
+                "the new shape before trusting the snapshot")
+        signatures.add("buffs  " + " ".join(str(identifier) for identifier in ids))
+
+    return sorted(signatures)
+
+
 def load_vocabulary(paths: Iterable[Path]) -> set[str]:
     covered: set[str] = set()
     for path in paths:
@@ -251,6 +297,10 @@ def main(argv: list[str] | None = None) -> int:
                         help="a tracked callout vocabulary; repeat to merge several")
     parser.add_argument("--output", type=Path,
                         help="write the uncovered strings here, one per line")
+    parser.add_argument("--composed", type=Path,
+                        help="fail unless the composed-site snapshot in this file still holds")
+    parser.add_argument("--write-composed", type=Path,
+                        help="write the current composed-site snapshot here")
     parser.add_argument("--exit-zero", action="store_true",
                         help="report uncovered strings without failing")
     args = parser.parse_args(argv)
@@ -258,9 +308,37 @@ def main(argv: list[str] | None = None) -> int:
     try:
         spoken, composed = collect_spoken(args.source)
         covered = load_vocabulary(args.vocabulary)
+        signatures = (
+            composed_signatures(args.source, composed)
+            if args.composed or args.write_composed else [])
     except UpstreamShapeError as error:
         print(f"error: {error}", file=sys.stderr)
         return 2
+
+    if args.write_composed:
+        args.write_composed.write_text(
+            "# Runtime-composed TTS sites in Northern Sky Raid Tools, and the buff table the\n"
+            "# Rebuff site reads. On a mismatch: enumerate what the new or changed site can\n"
+            "# speak into nsrt-extra-vocabulary.txt, then regenerate this file by rerunning\n"
+            "# scripts/check_nsrt_tts_coverage.py with --write-composed nsrt-composed-sites.txt.\n"
+            + "".join(f"{signature}\n" for signature in signatures),
+            encoding="utf-8")
+
+    if args.composed:
+        expected = {
+            line.strip()
+            for line in args.composed.read_text(encoding="utf-8").splitlines()
+            if line.strip() and not line.startswith("#")
+        }
+        if expected != set(signatures):
+            print("error: the composed-site snapshot no longer holds; enumerate what each "
+                  "new or changed site can speak into nsrt-extra-vocabulary.txt, then "
+                  "regenerate it with --write-composed", file=sys.stderr)
+            for signature in sorted(set(signatures) - expected):
+                print(f"  new:  {signature}", file=sys.stderr)
+            for signature in sorted(expected - set(signatures)):
+                print(f"  gone: {signature}", file=sys.stderr)
+            return 1
 
     uncovered = sorted(
         ((count, string) for string, count in spoken.items()

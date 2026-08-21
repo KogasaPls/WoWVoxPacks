@@ -1,5 +1,11 @@
 [
   {
+    "FileName": "adds.ogg",
+    "DisplayName": "Adds",
+    "FormattedDisplayName": "Adds",
+    "Text": "Adds"
+  },
+  {
     "FileName": "adrenaline_rush.ogg",
     "DisplayName": "Adrenaline Rush",
     "FormattedDisplayName": "Adrenaline Rush",
@@ -156,6 +162,12 @@
     "Text": "Beacon of Virtue"
   },
   {
+    "FileName": "beam.ogg",
+    "DisplayName": "Beam",
+    "FormattedDisplayName": "Beam",
+    "Text": "Beam"
+  },
+  {
     "FileName": "beams.ogg",
     "DisplayName": "Beams",
     "FormattedDisplayName": "Beams",
@@ -258,10 +270,22 @@
     "Text": "Bloodlust"
   },
   {
+    "FileName": "blue.ogg",
+    "DisplayName": "Blue",
+    "FormattedDisplayName": "Blue",
+    "Text": "Blue"
+  },
+  {
     "FileName": "blur.ogg",
     "DisplayName": "Blur",
     "FormattedDisplayName": "Blur",
     "Text": "Blur"
+  },
+  {
+    "FileName": "bomb.ogg",
+    "DisplayName": "Bomb",
+    "FormattedDisplayName": "Bomb",
+    "Text": "Bomb"
   },
   {
     "FileName": "boomstick.ogg",
@@ -276,6 +300,18 @@
     "Text": "Bop"
   },
   {
+    "FileName": "boss.ogg",
+    "DisplayName": "Boss",
+    "FormattedDisplayName": "Boss",
+    "Text": "Boss"
+  },
+  {
+    "FileName": "break.ogg",
+    "DisplayName": "Break",
+    "FormattedDisplayName": "Break",
+    "Text": "Break"
+  },
+  {
     "FileName": "breath_of_eons.ogg",
     "DisplayName": "Breath of Eons",
     "FormattedDisplayName": "Breath of Eons",
@@ -288,6 +324,12 @@
     "Text": "Breath of Sindragosa"
   },
   {
+    "FileName": "breath.ogg",
+    "DisplayName": "Breath",
+    "FormattedDisplayName": "Breath",
+    "Text": "Breath"
+  },
+  {
     "FileName": "bubble.ogg",
     "DisplayName": "Bubble",
     "FormattedDisplayName": "Bubble",
@@ -298,6 +340,12 @@
     "DisplayName": "Cauterize",
     "FormattedDisplayName": "Cauterize",
     "Text": "Cauterize"
+  },
+  {
+    "FileName": "cc_adds.ogg",
+    "DisplayName": "CC Adds",
+    "FormattedDisplayName": "CC Adds",
+    "Text": "CC Adds"
   },
   {
     "FileName": "celestial_alignment.ogg",
@@ -324,6 +372,12 @@
     "Text": "Celestial Infusion"
   },
   {
+    "FileName": "charge.ogg",
+    "DisplayName": "Charge",
+    "FormattedDisplayName": "Charge",
+    "Text": "Charge"
+  },
+  {
     "FileName": "cheating_death.ogg",
     "DisplayName": "Cheating Death",
     "FormattedDisplayName": "Cheating Death",
@@ -340,6 +394,12 @@
     "DisplayName": "Chi-ji",
     "FormattedDisplayName": "Chi-ji",
     "SSML": "\u003Cspeak\u003E\n  \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022t\u0283i\u02D0d\u0292i\u02D0\u0022\u003EChi-ji=t\u0283i\u02D0d\u0292i\u02D0\u003C/phoneme\u003E\n\u003C/speak\u003E"
+  },
+  {
+    "FileName": "clear.ogg",
+    "DisplayName": "Clear",
+    "FormattedDisplayName": "Clear",
+    "Text": "Clear"
   },
   {
     "FileName": "cloak_of_shadows.ogg",
@@ -364,6 +424,12 @@
     "DisplayName": "Collapsing Star",
     "FormattedDisplayName": "Collapsing Star",
     "Text": "Collapsing Star"
+  },
+  {
+    "FileName": "collect.ogg",
+    "DisplayName": "Collect",
+    "FormattedDisplayName": "Collect",
+    "Text": "Collect"
   },
   {
     "FileName": "colossus_smash.ogg",
@@ -450,6 +516,18 @@
     "Text": "Deathmark"
   },
   {
+    "FileName": "debuff.ogg",
+    "DisplayName": "Debuff",
+    "FormattedDisplayName": "Debuff",
+    "Text": "Debuff"
+  },
+  {
+    "FileName": "debuffs.ogg",
+    "DisplayName": "Debuffs",
+    "FormattedDisplayName": "Debuffs",
+    "Text": "Debuffs"
+  },
+  {
     "FileName": "deep_breath.ogg",
     "DisplayName": "Deep Breath",
     "FormattedDisplayName": "Deep Breath",
@@ -498,6 +576,12 @@
     "Text": "Die by the Sword"
   },
   {
+    "FileName": "dispel.ogg",
+    "DisplayName": "Dispel",
+    "FormattedDisplayName": "Dispel",
+    "Text": "Dispel"
+  },
+  {
     "FileName": "dispersion.ogg",
     "DisplayName": "Dispersion",
     "FormattedDisplayName": "Dispersion",
@@ -526,6 +610,18 @@
     "DisplayName": "Divine Toll",
     "FormattedDisplayName": "Divine Toll",
     "Text": "Divine Toll"
+  },
+  {
+    "FileName": "dodge.ogg",
+    "DisplayName": "Dodge",
+    "FormattedDisplayName": "Dodge",
+    "Text": "Dodge"
+  },
+  {
+    "FileName": "don_t_soak.ogg",
+    "DisplayName": "Don\u0027t soak",
+    "FormattedDisplayName": "Don\u0027t soak",
+    "Text": "Don\u0027t soak"
   },
   {
     "FileName": "doom_winds.ogg",
@@ -558,6 +654,12 @@
     "Text": "Dreamflight"
   },
   {
+    "FileName": "drop_pool.ogg",
+    "DisplayName": "Drop Pool",
+    "FormattedDisplayName": "Drop Pool",
+    "Text": "Drop Pool"
+  },
+  {
     "FileName": "eagle.ogg",
     "DisplayName": "Eagle",
     "FormattedDisplayName": "Eagle",
@@ -570,6 +672,12 @@
     "Text": "Earth Elemental"
   },
   {
+    "FileName": "east.ogg",
+    "DisplayName": "East",
+    "FormattedDisplayName": "East",
+    "Text": "East"
+  },
+  {
     "FileName": "ebon_might_buff.ogg",
     "DisplayName": "Ebon Might Buff",
     "FormattedDisplayName": "Ebon Might Buff",
@@ -580,6 +688,12 @@
     "DisplayName": "Ebon Might",
     "FormattedDisplayName": "Ebon Might",
     "Text": "Ebon Might"
+  },
+  {
+    "FileName": "eight.ogg",
+    "DisplayName": "Eight",
+    "FormattedDisplayName": "Eight",
+    "Text": "Eight"
   },
   {
     "FileName": "emerald_communion.ogg",
@@ -678,6 +792,12 @@
     "Text": "Fade"
   },
   {
+    "FileName": "feather.ogg",
+    "DisplayName": "Feather",
+    "FormattedDisplayName": "Feather",
+    "Text": "Feather"
+  },
+  {
     "FileName": "feint.ogg",
     "DisplayName": "Feint",
     "FormattedDisplayName": "Feint",
@@ -720,6 +840,12 @@
     "Text": "Fire Breath"
   },
   {
+    "FileName": "fire.ogg",
+    "DisplayName": "Fire",
+    "FormattedDisplayName": "Fire",
+    "Text": "Fire"
+  },
+  {
     "FileName": "fireblood.ogg",
     "DisplayName": "Fireblood",
     "FormattedDisplayName": "Fireblood",
@@ -730,6 +856,18 @@
     "DisplayName": "Firestorm",
     "FormattedDisplayName": "Firestorm",
     "Text": "Firestorm"
+  },
+  {
+    "FileName": "five.ogg",
+    "DisplayName": "Five",
+    "FormattedDisplayName": "Five",
+    "Text": "Five"
+  },
+  {
+    "FileName": "fixate.ogg",
+    "DisplayName": "Fixate",
+    "FormattedDisplayName": "Fixate",
+    "Text": "Fixate"
   },
   {
     "FileName": "force_of_nature.ogg",
@@ -750,10 +888,28 @@
     "Text": "Fortifying Brew"
   },
   {
+    "FileName": "four.ogg",
+    "DisplayName": "Four",
+    "FormattedDisplayName": "Four",
+    "Text": "Four"
+  },
+  {
     "FileName": "frenzied_regeneration.ogg",
     "DisplayName": "Frenzied Regeneration",
     "FormattedDisplayName": "Frenzied Regeneration",
     "Text": "Frenzied Regeneration"
+  },
+  {
+    "FileName": "frontal.ogg",
+    "DisplayName": "Frontal",
+    "FormattedDisplayName": "Frontal",
+    "Text": "Frontal"
+  },
+  {
+    "FileName": "frost.ogg",
+    "DisplayName": "Frost",
+    "FormattedDisplayName": "Frost",
+    "Text": "Frost"
   },
   {
     "FileName": "frostwyrm_s_fury.ogg",
@@ -786,6 +942,18 @@
     "Text": "Fury of Elune"
   },
   {
+    "FileName": "gate.ogg",
+    "DisplayName": "Gate",
+    "FormattedDisplayName": "Gate",
+    "Text": "Gate"
+  },
+  {
+    "FileName": "gateway.ogg",
+    "DisplayName": "Gateway",
+    "FormattedDisplayName": "Gateway",
+    "Text": "Gateway"
+  },
+  {
     "FileName": "glaives.ogg",
     "DisplayName": "Glaives",
     "FormattedDisplayName": "Glaives",
@@ -796,6 +964,42 @@
     "DisplayName": "Gloom-Spattered Dreadscale",
     "FormattedDisplayName": "Gloom-Spattered Dreadscale",
     "Text": "Gloom-Spattered Dreadscale"
+  },
+  {
+    "FileName": "go_to_back_left.ogg",
+    "DisplayName": "Go to Back Left",
+    "FormattedDisplayName": "Go to Back Left",
+    "Text": "Go to Back Left"
+  },
+  {
+    "FileName": "go_to_back_right.ogg",
+    "DisplayName": "Go to Back Right",
+    "FormattedDisplayName": "Go to Back Right",
+    "Text": "Go to Back Right"
+  },
+  {
+    "FileName": "go_to_flex_spot.ogg",
+    "DisplayName": "Go to Flex Spot",
+    "FormattedDisplayName": "Go to Flex Spot",
+    "Text": "Go to Flex Spot"
+  },
+  {
+    "FileName": "go_to_front_left.ogg",
+    "DisplayName": "Go to Front Left",
+    "FormattedDisplayName": "Go to Front Left",
+    "Text": "Go to Front Left"
+  },
+  {
+    "FileName": "go_to_front_right.ogg",
+    "DisplayName": "Go to Front Right",
+    "FormattedDisplayName": "Go to Front Right",
+    "Text": "Go to Front Right"
+  },
+  {
+    "FileName": "green.ogg",
+    "DisplayName": "Green",
+    "FormattedDisplayName": "Green",
+    "Text": "Green"
   },
   {
     "FileName": "grimoire_fel_ravager.ogg",
@@ -834,6 +1038,12 @@
     "Text": "Havoc"
   },
   {
+    "FileName": "heal_absorb.ogg",
+    "DisplayName": "Heal Absorb",
+    "FormattedDisplayName": "Heal Absorb",
+    "Text": "Heal Absorb"
+  },
+  {
     "FileName": "healing_tide_totem.ogg",
     "DisplayName": "Healing Tide Totem",
     "FormattedDisplayName": "Healing Tide Totem",
@@ -850,6 +1060,12 @@
     "DisplayName": "Healthstone",
     "FormattedDisplayName": "Healthstone",
     "Text": "Healthstone"
+  },
+  {
+    "FileName": "hide.ogg",
+    "DisplayName": "Hide",
+    "FormattedDisplayName": "Hide",
+    "Text": "Hide"
   },
   {
     "FileName": "hit_demiar.ogg",
@@ -942,6 +1158,12 @@
     "SSML": "\u003Cspeak\u003E\n  \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022\u02C8\u026An\u025Ave\u026At\u0022\u003EInnervate=\u02C8\u026An\u025Ave\u026At\u003C/phoneme\u003E\n\u003C/speak\u003E"
   },
   {
+    "FileName": "interrupt.ogg",
+    "DisplayName": "Interrupt",
+    "FormattedDisplayName": "Interrupt",
+    "Text": "Interrupt"
+  },
+  {
     "FileName": "interrupts.ogg",
     "DisplayName": "Interrupts",
     "FormattedDisplayName": "Interrupts",
@@ -1003,6 +1225,12 @@
     "Text": "Kingsbane"
   },
   {
+    "FileName": "knock.ogg",
+    "DisplayName": "Knock",
+    "FormattedDisplayName": "Knock",
+    "Text": "Knock"
+  },
+  {
     "FileName": "last_resort.ogg",
     "DisplayName": "Last Resort",
     "FormattedDisplayName": "Last Resort",
@@ -1013,6 +1241,12 @@
     "DisplayName": "Leap of Faith",
     "FormattedDisplayName": "Leap of Faith",
     "Text": "Leap of Faith"
+  },
+  {
+    "FileName": "left.ogg",
+    "DisplayName": "Left",
+    "FormattedDisplayName": "Left",
+    "Text": "Left"
   },
   {
     "FileName": "lichborne.ogg",
@@ -1037,6 +1271,12 @@
     "DisplayName": "Lightfused Mana Potion",
     "FormattedDisplayName": "Lightfused Mana Potion",
     "Text": "Lightfused Mana Potion"
+  },
+  {
+    "FileName": "linked.ogg",
+    "DisplayName": "Linked",
+    "FormattedDisplayName": "Linked",
+    "Text": "Linked"
   },
   {
     "FileName": "litany.ogg",
@@ -1099,6 +1339,12 @@
     "Text": "Meteor"
   },
   {
+    "FileName": "mind_control.ogg",
+    "DisplayName": "Mind Control",
+    "FormattedDisplayName": "Mind Control",
+    "Text": "Mind Control"
+  },
+  {
     "FileName": "mirror_image.ogg",
     "DisplayName": "Mirror Image",
     "FormattedDisplayName": "Mirror Image",
@@ -1111,16 +1357,40 @@
     "Text": "Miss"
   },
   {
+    "FileName": "moon.ogg",
+    "DisplayName": "Moon",
+    "FormattedDisplayName": "Moon",
+    "Text": "Moon"
+  },
+  {
     "FileName": "move.ogg",
     "DisplayName": "Move",
     "FormattedDisplayName": "Move",
     "Text": "Move"
   },
   {
+    "FileName": "next.ogg",
+    "DisplayName": "Next",
+    "FormattedDisplayName": "Next",
+    "Text": "Next"
+  },
+  {
+    "FileName": "nine.ogg",
+    "DisplayName": "Nine",
+    "FormattedDisplayName": "Nine",
+    "Text": "Nine"
+  },
+  {
     "FileName": "niuzao.ogg",
     "DisplayName": "Niuzao",
     "FormattedDisplayName": "Niuzao",
     "Text": "Niuzao"
+  },
+  {
+    "FileName": "north.ogg",
+    "DisplayName": "North",
+    "FormattedDisplayName": "North",
+    "Text": "North"
   },
   {
     "FileName": "obsidian_scales.ogg",
@@ -1133,6 +1403,24 @@
     "DisplayName": "Odyn\u0027s Fury",
     "FormattedDisplayName": "Odyn\u0027s Fury",
     "Text": "Odyn\u0027s Fury"
+  },
+  {
+    "FileName": "one.ogg",
+    "DisplayName": "One",
+    "FormattedDisplayName": "One",
+    "Text": "One"
+  },
+  {
+    "FileName": "orange.ogg",
+    "DisplayName": "Orange",
+    "FormattedDisplayName": "Orange",
+    "Text": "Orange"
+  },
+  {
+    "FileName": "orb.ogg",
+    "DisplayName": "Orb",
+    "FormattedDisplayName": "Orb",
+    "Text": "Orb"
   },
   {
     "FileName": "orbs.ogg",
@@ -1207,6 +1495,12 @@
     "Text": "Purgatory"
   },
   {
+    "FileName": "purple.ogg",
+    "DisplayName": "Purple",
+    "FormattedDisplayName": "Purple",
+    "Text": "Purple"
+  },
+  {
     "FileName": "puzzle_box.ogg",
     "DisplayName": "Puzzle Box",
     "FormattedDisplayName": "Puzzle Box",
@@ -1249,6 +1543,12 @@
     "Text": "Ramp"
   },
   {
+    "FileName": "ranged.ogg",
+    "DisplayName": "Ranged",
+    "FormattedDisplayName": "Ranged",
+    "Text": "Ranged"
+  },
+  {
     "FileName": "ray_of_frost.ogg",
     "DisplayName": "Ray of Frost",
     "FormattedDisplayName": "Ray of Frost",
@@ -1265,6 +1565,12 @@
     "DisplayName": "Recklessness",
     "FormattedDisplayName": "Recklessness",
     "Text": "Recklessness"
+  },
+  {
+    "FileName": "red.ogg",
+    "DisplayName": "Red",
+    "FormattedDisplayName": "Red",
+    "Text": "Red"
   },
   {
     "FileName": "reforestation.ogg",
@@ -1303,10 +1609,28 @@
     "Text": "Rewind"
   },
   {
+    "FileName": "right.ogg",
+    "DisplayName": "Right",
+    "FormattedDisplayName": "Right",
+    "Text": "Right"
+  },
+  {
     "FileName": "roar.ogg",
     "DisplayName": "Roar",
     "FormattedDisplayName": "Roar",
     "Text": "Roar"
+  },
+  {
+    "FileName": "root.ogg",
+    "DisplayName": "Root",
+    "FormattedDisplayName": "Root",
+    "Text": "Root"
+  },
+  {
+    "FileName": "run_out.ogg",
+    "DisplayName": "Run Out",
+    "FormattedDisplayName": "Run Out",
+    "Text": "Run Out"
   },
   {
     "FileName": "sac.ogg",
@@ -1319,6 +1643,12 @@
     "DisplayName": "Seed Drop",
     "FormattedDisplayName": "Seed Drop",
     "Text": "Seed Drop"
+  },
+  {
+    "FileName": "seven.ogg",
+    "DisplayName": "Seven",
+    "FormattedDisplayName": "Seven",
+    "Text": "Seven"
   },
   {
     "FileName": "shadow_blades.ogg",
@@ -1369,6 +1699,30 @@
     "Text": "Silvermoon Health Potion"
   },
   {
+    "FileName": "six.ogg",
+    "DisplayName": "Six",
+    "FormattedDisplayName": "Six",
+    "Text": "Six"
+  },
+  {
+    "FileName": "skull.ogg",
+    "DisplayName": "Skull",
+    "FormattedDisplayName": "Skull",
+    "Text": "Skull"
+  },
+  {
+    "FileName": "soak_back_left.ogg",
+    "DisplayName": "Soak Back Left",
+    "FormattedDisplayName": "Soak Back Left",
+    "Text": "Soak Back Left"
+  },
+  {
+    "FileName": "soak_back_right.ogg",
+    "DisplayName": "Soak Back Right",
+    "FormattedDisplayName": "Soak Back Right",
+    "Text": "Soak Back Right"
+  },
+  {
     "FileName": "soak_circle.ogg",
     "DisplayName": "Soak Circle",
     "FormattedDisplayName": "Soak Circle",
@@ -1379,6 +1733,36 @@
     "DisplayName": "Soak Cross",
     "FormattedDisplayName": "Soak Cross",
     "Text": "Soak Cross"
+  },
+  {
+    "FileName": "soak_front_left.ogg",
+    "DisplayName": "Soak Front Left",
+    "FormattedDisplayName": "Soak Front Left",
+    "Text": "Soak Front Left"
+  },
+  {
+    "FileName": "soak_front_right.ogg",
+    "DisplayName": "Soak Front Right",
+    "FormattedDisplayName": "Soak Front Right",
+    "Text": "Soak Front Right"
+  },
+  {
+    "FileName": "soak_left.ogg",
+    "DisplayName": "Soak Left",
+    "FormattedDisplayName": "Soak Left",
+    "Text": "Soak Left"
+  },
+  {
+    "FileName": "soak_orange.ogg",
+    "DisplayName": "Soak Orange",
+    "FormattedDisplayName": "Soak Orange",
+    "Text": "Soak Orange"
+  },
+  {
+    "FileName": "soak_right.ogg",
+    "DisplayName": "Soak Right",
+    "FormattedDisplayName": "Soak Right",
+    "Text": "Soak Right"
   },
   {
     "FileName": "soak_skull.ogg",
@@ -1393,10 +1777,22 @@
     "Text": "Soak Square"
   },
   {
+    "FileName": "soak_star.ogg",
+    "DisplayName": "Soak Star",
+    "FormattedDisplayName": "Soak Star",
+    "Text": "Soak Star"
+  },
+  {
     "FileName": "soak_triangle.ogg",
     "DisplayName": "Soak Triangle",
     "FormattedDisplayName": "Soak Triangle",
     "Text": "Soak Triangle"
+  },
+  {
+    "FileName": "soak.ogg",
+    "DisplayName": "Soak",
+    "FormattedDisplayName": "Soak",
+    "Text": "Soak"
   },
   {
     "FileName": "soaks.ogg",
@@ -1421,6 +1817,12 @@
     "DisplayName": "Source of Magic",
     "FormattedDisplayName": "Source of Magic",
     "Text": "Source of Magic"
+  },
+  {
+    "FileName": "south.ogg",
+    "DisplayName": "South",
+    "FormattedDisplayName": "South",
+    "Text": "South"
   },
   {
     "FileName": "spatial_paradox.ogg",
@@ -1519,6 +1921,12 @@
     "Text": "Spread"
   },
   {
+    "FileName": "stack.ogg",
+    "DisplayName": "Stack",
+    "FormattedDisplayName": "Stack",
+    "Text": "Stack"
+  },
+  {
     "FileName": "stampeding_roar.ogg",
     "DisplayName": "Stampeding Roar",
     "FormattedDisplayName": "Stampeding Roar",
@@ -1565,6 +1973,12 @@
     "DisplayName": "Strike of the Windlord",
     "FormattedDisplayName": "Strike of the Windlord",
     "Text": "Strike of the Windlord"
+  },
+  {
+    "FileName": "suck.ogg",
+    "DisplayName": "Suck",
+    "FormattedDisplayName": "Suck",
+    "Text": "Suck"
   },
   {
     "FileName": "summon_darkglare.ogg",
@@ -1627,6 +2041,24 @@
     "Text": "Takedown"
   },
   {
+    "FileName": "targeted.ogg",
+    "DisplayName": "Targeted",
+    "FormattedDisplayName": "Targeted",
+    "Text": "Targeted"
+  },
+  {
+    "FileName": "taunt.ogg",
+    "DisplayName": "Taunt",
+    "FormattedDisplayName": "Taunt",
+    "Text": "Taunt"
+  },
+  {
+    "FileName": "ten.ogg",
+    "DisplayName": "Ten",
+    "FormattedDisplayName": "Ten",
+    "Text": "Ten"
+  },
+  {
     "FileName": "tether.ogg",
     "DisplayName": "Tether",
     "FormattedDisplayName": "Tether",
@@ -1637,6 +2069,12 @@
     "DisplayName": "The Hunt",
     "FormattedDisplayName": "The Hunt",
     "Text": "The Hunt"
+  },
+  {
+    "FileName": "three.ogg",
+    "DisplayName": "Three",
+    "FormattedDisplayName": "Three",
+    "Text": "Three"
   },
   {
     "FileName": "thunder_focus_tea.ogg",
@@ -1735,6 +2173,12 @@
     "Text": "Turtle"
   },
   {
+    "FileName": "two.ogg",
+    "DisplayName": "Two",
+    "FormattedDisplayName": "Two",
+    "Text": "Two"
+  },
+  {
     "FileName": "tyrant.ogg",
     "DisplayName": "Tyrant",
     "FormattedDisplayName": "Tyrant",
@@ -1825,6 +2269,18 @@
     "Text": "Wall"
   },
   {
+    "FileName": "waves.ogg",
+    "DisplayName": "Waves",
+    "FormattedDisplayName": "Waves",
+    "Text": "Waves"
+  },
+  {
+    "FileName": "west.ogg",
+    "DisplayName": "West",
+    "FormattedDisplayName": "West",
+    "Text": "West"
+  },
+  {
     "FileName": "wind_rush.ogg",
     "DisplayName": "Wind Rush",
     "FormattedDisplayName": "Wind Rush",
@@ -1847,6 +2303,12 @@
     "DisplayName": "Xuen",
     "FormattedDisplayName": "Xuen",
     "Text": "Xuen"
+  },
+  {
+    "FileName": "yellow.ogg",
+    "DisplayName": "Yellow",
+    "FormattedDisplayName": "Yellow",
+    "Text": "Yellow"
   },
   {
     "FileName": "yulon.ogg",

@@ -3,6 +3,12 @@ on:
   pull_request:
     types: [ closed ]
     branches: [ main ]
+    # A release is the packaged contents of output/, so a merge that leaves it alone has nothing
+    # to ship. Without this every docs or tooling PR re-uploads identical archives to all
+    # fifteen CurseForge projects. workflow_dispatch still releases whatever is on main.
+    paths:
+      - 'output/**'
+      - 'bigwigs-voice-version.txt'
   workflow_dispatch:
   push:
     tags: [ 'v*' ]

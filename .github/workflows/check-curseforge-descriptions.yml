@@ -1,0 +1,55 @@
+name: Check CurseForge descriptions
+# CurseForge has no API for editing a project description, so the pages are pasted by hand from
+# docs/curseforge and nothing keeps them in step. This reports which ones have fallen out.
+on:
+  workflow_dispatch:
+    inputs:
+      fail_on_drift:
+        description: Fail the run when a page differs, rather than only reporting it
+        type: boolean
+        default: false
+  schedule:
+    - cron: "0 15 * * 1"
+
+concurrency:
+  group: check-curseforge-descriptions
+  cancel-in-progress: true
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: Compare every project page with docs/curseforge
+        env:
+          CURSEFORGE_CORE_API_KEY: ${{ secrets.CURSEFORGE_CORE_API_KEY }}
+        run: |
+          if [ -z "$CURSEFORGE_CORE_API_KEY" ]; then
+            echo "CURSEFORGE_CORE_API_KEY is not set; add the console.curseforge.com key" >&2
+            exit 1
+          fi
+          # Passed as a file so the key never appears in a process listing or an argv.
+          key_file=$(mktemp)
+          trap 'rm -f "$key_file"' EXIT
+          printf '%s' "$CURSEFORGE_CORE_API_KEY" > "$key_file"
+
+          report=$(mktemp)
+          set +e
+          python scripts/curseforge_drift.py --api-key-file "$key_file" --show-diff \
+            ${{ inputs.fail_on_drift && '--fail-on-drift' || '' }} | tee "$report"
+          status=${PIPESTATUS[0]}
+          set -e
+
+          {
+            echo '## CurseForge description drift'
+            echo
+            echo '```'
+            cat "$report"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit "$status"

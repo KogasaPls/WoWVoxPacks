@@ -69,6 +69,45 @@ public sealed class NorthernSkyRaidToolsAddOnServiceTests : IDisposable
             addOn.GetFileContent("Core.lua"), StringComparison.Ordinal);
     }
 
+    [Fact]
+    public async Task BuildAddOnAsync_RegistersARetiredCalloutKeyOnlyWhileItsRecordingShips()
+    {
+        string vocabularyPath = Path.Combine(_temporaryDirectory, "nsrt-vocabulary.txt");
+        string overridesPath = Path.Combine(_temporaryDirectory, "CalloutPronunciations.json");
+        File.WriteAllText(vocabularyPath, "DropPool\n");
+        File.WriteAllText(overridesPath, "{}");
+        File.WriteAllText(Path.Combine(_temporaryDirectory, "Callouts_Sounds.json"), "[]");
+        File.WriteAllText(Path.Combine(_temporaryDirectory, "lorrgs-vocabulary.txt"), string.Empty);
+        File.WriteAllText(Path.Combine(_temporaryDirectory, "RetiredCallouts.json"), "[\"OldCallout\"]");
+        NorthernSkyRaidToolsAddOnService service = new(
+            new StubOptions(new AddOnSettings
+            {
+                Title = "unused",
+                Version = "12.0.7",
+                Author = "Tester"
+            }),
+            new NorthernSkyRaidToolsVocabularyProvider([vocabularyPath], overridesPath,
+                new CalloutsVocabularyProvider(
+                    Path.Combine(_temporaryDirectory, "Callouts_Sounds.json"),
+                    overridesPath,
+                    Path.Combine(_temporaryDirectory, "lorrgs-vocabulary.txt"),
+                    Path.Combine(_temporaryDirectory, "RetiredCallouts.json"))));
+        TtsSettings ttsSettings = new() { Voice = VoiceName.Studio_O };
+
+        AddOn withoutRecording = await service.BuildAddOnAsync(_temporaryDirectory, ttsSettings);
+
+        Assert.DoesNotContain("OldCallout", withoutRecording.GetFileContent("Core.lua"),
+            StringComparison.Ordinal);
+
+        Directory.CreateDirectory(withoutRecording.SoundDirectory);
+        File.WriteAllBytes(Path.Combine(withoutRecording.SoundDirectory, "old_callout.ogg"), [1]);
+        AddOn withRecording = await service.BuildAddOnAsync(_temporaryDirectory, ttsSettings);
+
+        Assert.Contains("LSM:Register(\"sound\", \"OldCallout\", path .. \"old_callout.ogg\")",
+            withRecording.GetFileContent("Core.lua"), StringComparison.Ordinal);
+        Assert.Contains(withRecording.SoundFiles, f => f.FileName == "old_callout.ogg");
+    }
+
     public void Dispose() => Directory.Delete(_temporaryDirectory, recursive: true);
 
     private sealed class StubOptions(AddOnSettings settings) : IOptionsSnapshot<AddOnSettings>

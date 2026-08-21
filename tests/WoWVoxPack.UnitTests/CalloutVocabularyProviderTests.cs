@@ -120,9 +120,62 @@ public class CalloutVocabularyProviderTests
             folded.SoundFile);
         Assert.Contains(registrations, r => r.MediaKeys.SequenceEqual(["Tranquility"]));
         Assert.Contains(registrations, r => r.MediaKeys.SequenceEqual(["darkness"]));
-        Assert.DoesNotContain(registrations,
-            r => r.MediaKeys.Contains("Darkness") || r.SoundFile.DisplayName == "Old Callout");
-        Assert.DoesNotContain(provider.SoundFiles, f => f.DisplayName == "Darkness");
+        Assert.DoesNotContain(registrations, r => r.MediaKeys.Contains("Darkness"));
+        Assert.DoesNotContain(provider.SoundFilesFor(directory), f => f.DisplayName == "Darkness");
+    }
+
+    [Fact]
+    public void NorthernSkyRaidTools_KeepsARetiredCalloutOnlyWhileItsRecordingExists()
+    {
+        string directory = Directory.CreateTempSubdirectory().FullName;
+        File.WriteAllText(Path.Combine(directory, "Callouts_Sounds.json"), "[]");
+        File.WriteAllText(Path.Combine(directory, "CalloutPronunciations.json"), "{}");
+        File.WriteAllText(Path.Combine(directory, "lorrgs-vocabulary.txt"), string.Empty);
+        File.WriteAllText(Path.Combine(directory, "RetiredCallouts.json"), "[\"OldCallout\"]");
+        File.WriteAllText(Path.Combine(directory, "nsrt-vocabulary.txt"), "DropPool\n");
+
+        CalloutsVocabularyProvider callouts = new(
+            Path.Combine(directory, "Callouts_Sounds.json"),
+            Path.Combine(directory, "CalloutPronunciations.json"),
+            Path.Combine(directory, "lorrgs-vocabulary.txt"),
+            Path.Combine(directory, "RetiredCallouts.json"));
+        NorthernSkyRaidToolsVocabularyProvider provider = new(
+            [Path.Combine(directory, "nsrt-vocabulary.txt")],
+            Path.Combine(directory, "CalloutPronunciations.json"),
+            callouts);
+
+        CalloutRegistration retired = provider.Registrations
+            .Single(r => r.MediaKeys.Contains("OldCallout"));
+        Assert.True(retired.ReuseExistingAudioOnly);
+        Assert.DoesNotContain(provider.SoundFilesFor(directory), f => f.DisplayName == "Old Callout");
+
+        File.WriteAllBytes(Path.Combine(directory, "old_callout.ogg"), [1]);
+
+        Assert.Contains(provider.SoundFilesFor(directory), f => f.DisplayName == "Old Callout");
+    }
+
+    [Fact]
+    public void NorthernSkyRaidTools_RejectsACalloutThatContestsANativeRecording()
+    {
+        string directory = Directory.CreateTempSubdirectory().FullName;
+        File.WriteAllText(Path.Combine(directory, "Callouts_Sounds.json"), "[]");
+        File.WriteAllText(Path.Combine(directory, "CalloutPronunciations.json"), "{}");
+        File.WriteAllText(Path.Combine(directory, "lorrgs-vocabulary.txt"), "Anti-Magic Shell\n");
+        File.WriteAllText(Path.Combine(directory, "nsrt-vocabulary.txt"), "AntiMagicShell\n");
+
+        CalloutsVocabularyProvider callouts = new(
+            Path.Combine(directory, "Callouts_Sounds.json"),
+            Path.Combine(directory, "CalloutPronunciations.json"),
+            Path.Combine(directory, "lorrgs-vocabulary.txt"),
+            Path.Combine(directory, "RetiredCallouts.json"));
+        NorthernSkyRaidToolsVocabularyProvider provider = new(
+            [Path.Combine(directory, "nsrt-vocabulary.txt")],
+            Path.Combine(directory, "CalloutPronunciations.json"),
+            callouts);
+
+        InvalidOperationException error =
+            Assert.Throws<InvalidOperationException>(() => provider.Registrations);
+        Assert.Contains("anti_magic_shell.ogg", error.Message, StringComparison.Ordinal);
     }
 
     [Fact]

@@ -28,8 +28,20 @@ public static class NorthernSkyRaidToolsLuaFile
             .Append(EscapeLua(addOn.AddOnDirectoryName))
             .Append("\\\\Sounds\\\\\"\n");
 
+        HashSet<string> renderedKeys = new(
+            addOn.SoundFiles.Select(soundFile => soundFile.Key),
+            StringComparer.OrdinalIgnoreCase);
+
         foreach (CalloutRegistration registration in registrations)
         {
+            // A reuse-only registration whose recording is gone from this pack has no file to
+            // point at; registering it would hand LibSharedMedia a dead path.
+            if (registration.ReuseExistingAudioOnly
+                && !renderedKeys.Contains(registration.SoundFile.Key))
+            {
+                continue;
+            }
+
             foreach (string mediaKey in registration.MediaKeys)
             {
                 lua.Append("LSM:Register(\"sound\", \"")

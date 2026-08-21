@@ -37,33 +37,45 @@ public static class NorthernSkyRaidToolsVocabulary
 
     /// <summary>
     /// Key dedup is case-insensitive because NSRT's sound lookup is (its cache lowercases every
-    /// key). Retirement-only registrations stay out: retirement preserves keys that shipped, and
-    /// this pack never shipped them.
+    /// key). Reuse-only registrations fold in with their flag intact: whether their recording is
+    /// still present in this pack's sound directory is decided at build time, exactly as the
+    /// Callouts pack decides it.
     /// </summary>
     private static IEnumerable<CalloutRegistration> FoldInCallouts(
-        IEnumerable<CalloutRegistration> registrations,
+        IReadOnlyList<CalloutRegistration> registrations,
         IEnumerable<CalloutRegistration> calloutRegistrations)
     {
         HashSet<string> registered = new(
             registrations.SelectMany(registration => registration.MediaKeys),
             StringComparer.OrdinalIgnoreCase);
+        Dictionary<string, SoundFile> nativeByFileName = new(StringComparer.OrdinalIgnoreCase);
+        foreach (CalloutRegistration registration in registrations)
+        {
+            nativeByFileName.TryAdd(registration.SoundFile.FileName, registration.SoundFile);
+        }
 
         foreach (CalloutRegistration callout in calloutRegistrations)
         {
-            if (callout.ReuseExistingAudioOnly)
-            {
-                continue;
-            }
-
             List<string> mediaKeys = callout.MediaKeys
                 .Union([callout.SoundFile.DisplayName], StringComparer.OrdinalIgnoreCase)
                 .Where(registered.Add)
                 .ToList();
 
-            if (mediaKeys.Count > 0)
+            if (mediaKeys.Count == 0)
             {
-                yield return new CalloutRegistration(callout.SoundFile, mediaKeys);
+                continue;
             }
+
+            if (nativeByFileName.TryGetValue(callout.SoundFile.FileName, out SoundFile? native)
+                && (native.Text != callout.SoundFile.Text || native.Ssml != callout.SoundFile.Ssml))
+            {
+                throw new InvalidOperationException(
+                    $"'{callout.SoundFile.Key}' from Callouts and '{native.Key}' from the Northern "
+                    + $"Sky Raid Tools vocabulary both render {callout.SoundFile.FileName} with "
+                    + "different content; add a pronunciation override or file name to separate them.");
+            }
+
+            yield return callout with { MediaKeys = mediaKeys };
         }
     }
 

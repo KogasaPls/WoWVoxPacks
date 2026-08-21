@@ -17,10 +17,15 @@ public sealed class NorthernSkyRaidToolsAddOnService(
         CancellationToken cancellationToken = default)
     {
         string voice = ttsSettings.Voice?.ToString() ?? string.Empty;
-        AddOn addOn = new AddOnBuilder(AddOnSettings, ttsSettings)
+        AddOnBuilder builder = new AddOnBuilder(AddOnSettings, ttsSettings)
             .WithTitle($"WoWVoxPacks_NorthernSkyRaidTools_{voice}")
-            .WithDisplayTitle($"WoWVoxPacks |cffff7f3fNorthern Sky Raid Tools|r|cffffffff ({voice})|r")
-            .AddSoundFiles(vocabulary.SoundFiles)
+            .WithDisplayTitle($"WoWVoxPacks |cffff7f3fNorthern Sky Raid Tools|r|cffffffff ({voice})|r");
+
+        // A reuse-only retired key is meaningful only for a recording already present in this
+        // exact voice pack. Build once without files to derive the canonical sound directory.
+        AddOn pathModel = builder.Build(outputDirectoryBase);
+        AddOn addOn = builder
+            .AddSoundFiles(vocabulary.SoundFilesFor(pathModel.SoundDirectory))
             .AddFile("Core.lua", generatedAddOn =>
                 NorthernSkyRaidToolsLuaFile.Render(generatedAddOn, vocabulary.Registrations))
             .Build(outputDirectoryBase);

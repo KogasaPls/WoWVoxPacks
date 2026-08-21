@@ -24,9 +24,14 @@ public sealed class NorthernSkyRaidToolsVocabularyProvider
 
     /// <summary>
     /// One output file is rendered per file name even when multiple literal media keys use it.
+    /// A reuse-only registration is included only while its recording is still in this pack's
+    /// sound directory; it must never trigger a new render.
     /// </summary>
-    public IEnumerable<SoundFile> SoundFiles =>
+    public IEnumerable<SoundFile> SoundFilesFor(string soundDirectory) =>
         Registrations
+            .Where(registration =>
+                !registration.ReuseExistingAudioOnly
+                || File.Exists(Path.Combine(soundDirectory, registration.SoundFile.FileName)))
             .Select(registration => registration.SoundFile)
             .DistinctBy(soundFile => soundFile.FileName, StringComparer.OrdinalIgnoreCase);
 }

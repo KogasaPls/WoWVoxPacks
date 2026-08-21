@@ -14,6 +14,7 @@ from pathlib import Path
 REPOSITORY_ROOT = Path(__file__).resolve().parent.parent
 WORKFLOW = REPOSITORY_ROOT / ".github" / "workflows" / "publish-to-curseforge.yml"
 API = "https://api.curseforge.com/v1/mods"
+USER_AGENT = "WoWVoxPacks-description-drift"
 
 spec = importlib.util.spec_from_file_location(
     "curseforge_description", Path(__file__).resolve().parent / "curseforge_description.py"
@@ -80,7 +81,12 @@ def unwrap_link(href: str) -> str:
 def normalize(text: str) -> str:
     text = text.replace("\xa0", " ")
     text = re.sub(r"\s*\|\s*", " | ", text)
-    return re.sub(r"\s+", " ", text).strip().strip("|").strip()
+    text = re.sub(r"\s+", " ", text)
+    # An inline element and the punctuation after it are separate nodes in the stored HTML, so
+    # joining them reintroduces a space the reader never sees.
+    text = re.sub(r" +([,.;:!?)\]])", r"\1", text)
+    text = re.sub(r"([(\[]) +", r"\1", text)
+    return text.strip().strip("|").strip()
 
 
 def html_to_lines(html: str) -> list[str]:
@@ -122,8 +128,10 @@ def diff(live_html: str, rendered_markdown: str, label: str) -> list[str]:
 
 
 def fetch(path: str, key: str):
-    request = urllib.request.Request(
-        f"{API}/{path}", headers={"x-api-key": key, "Accept": "application/json"})
+    # The API varies its cache on User-Agent, and the urllib default is pinned to a copy of the
+    # description from before it was last edited. Any explicit agent gets the current one.
+    request = urllib.request.Request(f"{API}/{path}", headers={
+        "x-api-key": key, "Accept": "application/json", "User-Agent": USER_AGENT})
     with urllib.request.urlopen(request, timeout=30) as response:
         return json.load(response)["data"]
 

@@ -179,6 +179,31 @@ public class CalloutVocabularyProviderTests
     }
 
     [Fact]
+    public void NorthernSkyRaidTools_RejectsACalloutWhoseKeyRendersADifferentFile()
+    {
+        string directory = Directory.CreateTempSubdirectory().FullName;
+        File.WriteAllText(Path.Combine(directory, "Callouts_Sounds.json"), "[]");
+        File.WriteAllText(Path.Combine(directory, "CalloutPronunciations.json"),
+            """{"Old Callout":{"FileName":"special.ogg"}}""");
+        File.WriteAllText(Path.Combine(directory, "lorrgs-vocabulary.txt"), "OldCallout\n");
+        File.WriteAllText(Path.Combine(directory, "nsrt-vocabulary.txt"), "Old Callout\n");
+
+        CalloutsVocabularyProvider callouts = new(
+            Path.Combine(directory, "Callouts_Sounds.json"),
+            Path.Combine(directory, "CalloutPronunciations.json"),
+            Path.Combine(directory, "lorrgs-vocabulary.txt"),
+            Path.Combine(directory, "RetiredCallouts.json"));
+        NorthernSkyRaidToolsVocabularyProvider provider = new(
+            [Path.Combine(directory, "nsrt-vocabulary.txt")],
+            Path.Combine(directory, "CalloutPronunciations.json"),
+            callouts);
+
+        InvalidOperationException error =
+            Assert.Throws<InvalidOperationException>(() => provider.Registrations);
+        Assert.Contains("shares its key", error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void Callouts_ToleratesAMissingRetiredCalloutsFile()
     {
         string directory = Directory.CreateTempSubdirectory().FullName;

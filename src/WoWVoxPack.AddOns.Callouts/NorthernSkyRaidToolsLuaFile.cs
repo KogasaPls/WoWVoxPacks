@@ -28,16 +28,17 @@ public static class NorthernSkyRaidToolsLuaFile
             .Append(EscapeLua(addOn.AddOnDirectoryName))
             .Append("\\\\Sounds\\\\\"\n");
 
-        HashSet<string> renderedKeys = new(
-            addOn.SoundFiles.Select(soundFile => soundFile.Key),
+        HashSet<string> renderedFiles = new(
+            addOn.SoundFiles.Select(soundFile => soundFile.FileName),
             StringComparer.OrdinalIgnoreCase);
 
         foreach (CalloutRegistration registration in registrations)
         {
             // A reuse-only registration whose recording is gone from this pack has no file to
-            // point at; registering it would hand LibSharedMedia a dead path.
+            // point at; registering it would hand LibSharedMedia a dead path. Membership is by
+            // file name, not Key: the file may ship under another registration's Key.
             if (registration.ReuseExistingAudioOnly
-                && !renderedKeys.Contains(registration.SoundFile.Key))
+                && !renderedFiles.Contains(registration.SoundFile.FileName))
             {
                 continue;
             }

@@ -108,6 +108,44 @@ public sealed class NorthernSkyRaidToolsAddOnServiceTests : IDisposable
         Assert.Contains(withRecording.SoundFiles, f => f.FileName == "old_callout.ogg");
     }
 
+    [Fact]
+    public async Task BuildAddOnAsync_KeepsARetiredKeyWhoseFileShipsUnderANativeKey()
+    {
+        string vocabularyPath = Path.Combine(_temporaryDirectory, "nsrt-vocabulary.txt");
+        string overridesPath = Path.Combine(_temporaryDirectory, "CalloutPronunciations.json");
+        File.WriteAllText(vocabularyPath, "AntiMagicShell\n");
+        File.WriteAllText(overridesPath,
+            """
+            {"AntiMagicShell":{"Ssml":"<speak>Anti-Magic Shell</speak>"},
+             "Anti-Magic Shell":{"Ssml":"<speak>Anti-Magic Shell</speak>"}}
+            """);
+        File.WriteAllText(Path.Combine(_temporaryDirectory, "Callouts_Sounds.json"), "[]");
+        File.WriteAllText(Path.Combine(_temporaryDirectory, "lorrgs-vocabulary.txt"), string.Empty);
+        File.WriteAllText(Path.Combine(_temporaryDirectory, "RetiredCallouts.json"),
+            "[\"Anti-Magic Shell\"]");
+        NorthernSkyRaidToolsAddOnService service = new(
+            new StubOptions(new AddOnSettings
+            {
+                Title = "unused",
+                Version = "12.0.7",
+                Author = "Tester"
+            }),
+            new NorthernSkyRaidToolsVocabularyProvider([vocabularyPath], overridesPath,
+                new CalloutsVocabularyProvider(
+                    Path.Combine(_temporaryDirectory, "Callouts_Sounds.json"),
+                    overridesPath,
+                    Path.Combine(_temporaryDirectory, "lorrgs-vocabulary.txt"),
+                    Path.Combine(_temporaryDirectory, "RetiredCallouts.json"))));
+
+        AddOn addOn = await service.BuildAddOnAsync(
+            _temporaryDirectory, new TtsSettings { Voice = VoiceName.Studio_O });
+
+        Assert.Equal("anti_magic_shell.ogg", Assert.Single(addOn.SoundFiles).FileName);
+        Assert.Contains(
+            "LSM:Register(\"sound\", \"Anti-Magic Shell\", path .. \"anti_magic_shell.ogg\")",
+            addOn.GetFileContent("Core.lua"), StringComparison.Ordinal);
+    }
+
     public void Dispose() => Directory.Delete(_temporaryDirectory, recursive: true);
 
     private sealed class StubOptions(AddOnSettings settings) : IOptionsSnapshot<AddOnSettings>

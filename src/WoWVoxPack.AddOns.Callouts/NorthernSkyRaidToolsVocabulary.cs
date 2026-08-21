@@ -49,9 +49,11 @@ public static class NorthernSkyRaidToolsVocabulary
             registrations.SelectMany(registration => registration.MediaKeys),
             StringComparer.OrdinalIgnoreCase);
         Dictionary<string, SoundFile> nativeByFileName = new(StringComparer.OrdinalIgnoreCase);
+        Dictionary<string, SoundFile> nativeByKey = new(StringComparer.OrdinalIgnoreCase);
         foreach (CalloutRegistration registration in registrations)
         {
             nativeByFileName.TryAdd(registration.SoundFile.FileName, registration.SoundFile);
+            nativeByKey.TryAdd(registration.SoundFile.Key, registration.SoundFile);
         }
 
         foreach (CalloutRegistration callout in calloutRegistrations)
@@ -73,6 +75,19 @@ public static class NorthernSkyRaidToolsVocabulary
                     $"'{callout.SoundFile.Key}' from Callouts and '{native.Key}' from the Northern "
                     + $"Sky Raid Tools vocabulary both render {callout.SoundFile.FileName} with "
                     + "different content; add a pronunciation override or file name to separate them.");
+            }
+
+            // AddOnBuilder dedupes sound files by Key, so a folded Key an NSRT entry already owns
+            // would ship the native recording while this registration's own file is never
+            // rendered, leaving its Lua keys pointing at a path that does not exist.
+            if (nativeByKey.TryGetValue(callout.SoundFile.Key, out SoundFile? sameKey)
+                && !string.Equals(sameKey.FileName, callout.SoundFile.FileName,
+                    StringComparison.OrdinalIgnoreCase))
+            {
+                throw new InvalidOperationException(
+                    $"'{callout.SoundFile.Key}' from Callouts shares its key with a Northern Sky "
+                    + $"Raid Tools entry but renders {callout.SoundFile.FileName} instead of "
+                    + $"{sameKey.FileName}; align the file names or rename one side.");
             }
 
             yield return callout with { MediaKeys = mediaKeys };

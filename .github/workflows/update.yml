@@ -220,106 +220,14 @@ jobs:
           else
             gh issue create --title "$title" --body "$run_url"
           fi
-  check-lorrgs-vocabulary:
-    runs-on: ubuntu-latest
-    # Lorrgs is an independent upstream. If it is temporarily unavailable, keep allowing
-    # BigWigs and NSRT updates to proceed without replacing the tracked vocabulary.
-    continue-on-error: true
-    permissions:
-      contents: read
-      issues: write
-    outputs:
-      needs_update: ${{ steps.compare-vocabulary.outputs.needs_update }}
-      added: ${{ steps.compare-vocabulary.outputs.added }}
-      removed: ${{ steps.compare-vocabulary.outputs.removed }}
-    steps:
-      - uses: actions/checkout@v7
-      - uses: astral-sh/setup-uv@v10.0.1
-      - name: Download the lorrgs default branch
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          branch=$(gh api repos/gitarrg/lorrgs --jq .default_branch)
-          commit=$(gh api "repos/gitarrg/lorrgs/commits/${branch}" --jq .sha)
-          echo "Lorrgs default branch: ${branch} (${commit})"
-          echo "LORRGS_COMMIT=${commit}" >> "$GITHUB_ENV"
-          mkdir -p lorrgs-src
-          curl -sfL "https://github.com/gitarrg/lorrgs/archive/${commit}.tar.gz" \
-            | tar -xz -C lorrgs-src --strip-components=1
-      - name: Extract the player-reminder vocabulary
-        run: |
-          cd lorrgs-src
-          uv run --frozen python "$GITHUB_WORKSPACE/scripts/extract_lorrgs_vocabulary.py" \
-            --source . \
-            --source-commit "$LORRGS_COMMIT" \
-            --output "$GITHUB_WORKSPACE/lorrgs-vocabulary.new"
-
-          new_count=$(grep -vc '^#' "$GITHUB_WORKSPACE/lorrgs-vocabulary.new" || true)
-          old_count=$(grep -vc '^#' "$GITHUB_WORKSPACE/lorrgs-vocabulary.txt" || true)
-          echo "Extracted ${new_count} callouts (tracked: ${old_count})"
-          if [ "${new_count}" -eq 0 ]; then
-            echo "Lorrgs produced an empty vocabulary; refusing to publish it" >&2
-            exit 1
-          fi
-          if [ "${old_count}" -gt 0 ] && [ "${new_count}" -lt $(( old_count / 2 )) ]; then
-            echo "Vocabulary shrank from ${old_count} to ${new_count}; refusing as a likely upstream layout change" >&2
-            exit 1
-          fi
-      - name: Compare against the tracked vocabulary
-        id: compare-vocabulary
-        env:
-          LC_ALL: C
-        run: |
-          grep -v '^#' lorrgs-vocabulary.txt | sort > old.txt || true
-          grep -v '^#' lorrgs-vocabulary.new | sort > new.txt
-          if cmp -s old.txt new.txt; then
-            echo "Vocabulary unchanged"
-            echo "needs_update=false" >> "$GITHUB_OUTPUT"
-          else
-            removed_count=$(comm -23 old.txt new.txt | grep -c '[^[:space:]]' || true)
-            if [ "${removed_count}" -gt 5 ]; then
-              echo "Lorrgs removed ${removed_count} callouts at once; refusing as a likely upstream rename" >&2
-              exit 1
-            fi
-            echo "needs_update=true" >> "$GITHUB_OUTPUT"
-            {
-              echo "added<<VOCAB_EOF"
-              comm -13 old.txt new.txt
-              echo "VOCAB_EOF"
-              echo "removed<<VOCAB_EOF"
-              comm -23 old.txt new.txt
-              echo "VOCAB_EOF"
-            } >> "$GITHUB_OUTPUT"
-          fi
-      - name: Upload the new vocabulary
-        if: steps.compare-vocabulary.outputs.needs_update == 'true'
-        uses: actions/upload-artifact@v7
-        with:
-          name: lorrgs-vocabulary
-          path: lorrgs-vocabulary.new
-      - name: File an issue when this check fails
-        # continue-on-error keeps the run green when this job breaks, so an issue is the
-        # failure's only visible trace. GH_REPO covers the checkout-failure case, as in the
-        # NSRT job.
-        if: failure()
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_REPO: ${{ github.repository }}
-        run: |
-          title="The lorrgs vocabulary check is failing"
-          run_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          number=$(gh issue list --state open --search "in:title \"$title\"" --json number --jq '.[0].number')
-          if [ -n "$number" ]; then
-            gh issue comment "$number" --body "Still failing: $run_url"
-          else
-            gh issue create --title "$title" --body "$run_url"
-          fi
   create-pull-request:
-    needs: [ check-bigwigs-voice-version, check-nsrt-vocabulary, check-lorrgs-vocabulary ]
-    # The vocabulary jobs carry continue-on-error, so either upstream may be temporarily
-    # unavailable without blocking an update from the others. A failed BigWigs check must
-    # still block this job: its version output would otherwise be committed as an empty file.
-    if: ${{ needs.check-bigwigs-voice-version.outputs.needs_update == 'true' || needs.check-nsrt-vocabulary.outputs.needs_update == 'true' || needs.check-lorrgs-vocabulary.outputs.needs_update == 'true' }}
+    needs: [ check-bigwigs-voice-version, check-nsrt-vocabulary ]
+    # The NSRT job carries continue-on-error, so its upstream may be temporarily unavailable
+    # without blocking a BigWigs update. A failed BigWigs check must still block this job:
+    # its version output would otherwise be committed as an empty file. The lorrgs
+    # vocabulary is imported by hand (see scripts/extract_lorrgs_vocabulary.py); this
+    # workflow only rebuilds from whatever is tracked.
+    if: ${{ needs.check-bigwigs-voice-version.outputs.needs_update == 'true' || needs.check-nsrt-vocabulary.outputs.needs_update == 'true' }}
     runs-on: ubuntu-latest
     permissions: write-all
     env:
@@ -345,27 +253,11 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           name: nsrt-vocabulary
-      - name: Download the new lorrgs vocabulary
-        if: ${{ needs.check-lorrgs-vocabulary.outputs.needs_update == 'true' }}
-        uses: actions/download-artifact@v8
-        with:
-          name: lorrgs-vocabulary
-      - name: Retire removed callouts
-        # RetiredCallouts.json is owned by the Callouts player-reminder vocabulary only.
-        # NSRT has a separate addon and must not populate this shared Callouts store.
-        if: ${{ needs.check-lorrgs-vocabulary.outputs.needs_update == 'true' }}
-        run: |
-          python scripts/retire_removed_callouts.py \
-            --retired src/WoWVoxPack.AddOns.Callouts/RetiredCallouts.json \
-            --vocabulary lorrgs-vocabulary.txt lorrgs-vocabulary.new
       - name: Apply the new vocabulary
         if: ${{ needs.check-nsrt-vocabulary.outputs.needs_update == 'true' }}
         run: |
           mv nsrt-vocabulary.new nsrt-vocabulary.txt
           mv nsrt-alert-vocabulary.new nsrt-alert-vocabulary.txt
-      - name: Apply the new lorrgs vocabulary
-        if: ${{ needs.check-lorrgs-vocabulary.outputs.needs_update == 'true' }}
-        run: mv lorrgs-vocabulary.new lorrgs-vocabulary.txt
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v3'
@@ -402,16 +294,6 @@ jobs:
             ```
             ${{ needs.check-nsrt-vocabulary.outputs.removed }}
             ```
-
-            New lorrgs player callouts:
-            ```
-            ${{ needs.check-lorrgs-vocabulary.outputs.added }}
-            ```
-
-            Removed lorrgs player callouts:
-            ```
-            ${{ needs.check-lorrgs-vocabulary.outputs.removed }}
-            ```
           branch: ci/update-${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version }}-${{ github.run_id }}
           delete-branch: true
           base: main
@@ -420,8 +302,6 @@ jobs:
             bigwigs-voice-version.txt
             nsrt-vocabulary.txt
             nsrt-alert-vocabulary.txt
-            lorrgs-vocabulary.txt
-            src/WoWVoxPack.AddOns.Callouts/RetiredCallouts.json
           sign-commits: true
       - name: Enable Pull Request Automerge
         run: |

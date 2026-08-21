@@ -115,13 +115,41 @@ class ExtractLorrgsVocabularyTests(unittest.TestCase):
             rendered,
         )
 
-    def test_write_vocabulary_creates_the_requested_output(self):
+    def test_replace_vocabulary_creates_the_requested_output(self):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / "nested" / "vocabulary.txt"
+            retired = Path(directory) / "retired.json"
 
-            self.extractor.write_vocabulary(output, "content\n")
+            self.extractor.replace_vocabulary(output, "content\n", retired)
 
             self.assertEqual("content\n", output.read_text(encoding="utf-8"))
+            self.assertFalse(retired.exists())
+
+    def test_replacing_a_vocabulary_retires_the_names_it_removes(self):
+        """A removed callout keeps its shipped recording only through the retired store."""
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "vocabulary.txt"
+            output.write_text("# header\nHealthstone\nOld Trinket\n", encoding="utf-8")
+            retired = Path(directory) / "retired.json"
+
+            self.extractor.replace_vocabulary(output, "# header\nHealthstone\n", retired)
+
+            self.assertEqual("# header\nHealthstone\n", output.read_text(encoding="utf-8"))
+            self.assertIn('"Old Trinket"', retired.read_text(encoding="utf-8"))
+            self.assertEqual([output], list(Path(directory).glob("vocabulary*")))
+
+    def test_a_mass_removal_refuses_and_leaves_the_vocabulary_alone(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "vocabulary.txt"
+            names = "".join(f"Name {number}\n" for number in range(8))
+            output.write_text(names, encoding="utf-8")
+            retired = Path(directory) / "retired.json"
+
+            with self.assertRaisesRegex(ValueError, "removed 8 callouts"):
+                self.extractor.replace_vocabulary(output, "# header\n", retired)
+
+            self.assertEqual(names, output.read_text(encoding="utf-8"))
+            self.assertFalse(retired.exists())
 
 
 if __name__ == "__main__":

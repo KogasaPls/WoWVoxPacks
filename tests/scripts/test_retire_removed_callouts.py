@@ -84,20 +84,21 @@ class RetireRemovedCalloutsTests(unittest.TestCase):
 
         self.assertEqual('["Existing"]\n', self.retired_path.read_text(encoding="utf-8"))
 
-    def test_update_workflow_retires_only_callouts_snapshot_before_replacing_it(self):
+    def test_the_updater_neither_replaces_the_lorrgs_vocabulary_nor_retires(self):
+        """The lorrgs vocabulary is imported by hand, so the updater must not half-track it.
+
+        Retirement rides the manual import (extract_lorrgs_vocabulary.replace_vocabulary,
+        covered in its own tests); the update workflow only rebuilds from what is tracked.
+        A stray lorrgs-vocabulary.new or RetiredCallouts.json write reintroduces the split
+        ownership this replaced.
+        """
         workflow = (REPOSITORY_ROOT / ".github" / "workflows" / "update.yml").read_text(
             encoding="utf-8"
         )
 
-        helper = "python scripts/retire_removed_callouts.py"
-        retirement_step = workflow[
-            workflow.index("- name: Retire removed callouts") :
-            workflow.index("- name: Apply the new vocabulary")
-        ]
-        self.assertIn(helper, workflow)
-        self.assertIn("--vocabulary lorrgs-vocabulary.txt lorrgs-vocabulary.new", retirement_step)
-        self.assertNotIn("nsrt-vocabulary.txt", retirement_step)
-        self.assertLess(workflow.index(helper), workflow.index("mv lorrgs-vocabulary.new"))
+        self.assertNotIn("lorrgs-vocabulary.new", workflow)
+        self.assertNotIn("RetiredCallouts.json", workflow)
+        self.assertNotIn("retire_removed_callouts", workflow)
 
 
 if __name__ == "__main__":

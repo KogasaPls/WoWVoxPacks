@@ -1,10 +1,26 @@
 #!/usr/bin/env python3
-"""Extract player-reminder names from a lorrgs source checkout."""
+"""Extract player-reminder names from a lorrgs source checkout.
+
+The lorrgs vocabulary is imported by hand, roughly once per season:
+
+    mkdir lorrgs-src && curl -sfL \\
+        https://github.com/gitarrg/lorrgs/archive/refs/heads/<default-branch>.tar.gz \\
+        | tar -xz -C lorrgs-src --strip-components=1
+    cd lorrgs-src && AWS_DEFAULT_REGION=us-east-1 uv run --frozen \\
+        python <repo>/scripts/extract_lorrgs_vocabulary.py \\
+        --source . --source-commit <commit> --output <repo>/lorrgs-vocabulary.txt
+
+lorgs constructs an AWS client while importing and botocore refuses to without a region;
+any region satisfies it, nothing is contacted. Overwriting an existing vocabulary first
+retires the callouts it removes into RetiredCallouts.json, so commit both, then dispatch
+"Check for updates" with force=true so the builder renders the new recordings.
+"""
 
 from __future__ import annotations
 
 import argparse
 import importlib
+import importlib.util
 import subprocess
 import sys
 from collections.abc import Iterable
@@ -75,7 +91,33 @@ def render_vocabulary(
     return "\n".join([*header, *sort_unique_names(names)]) + "\n"
 
 
-def write_vocabulary(output: Path, content: str) -> None:
+def load_retirement_module() -> Any:
+    specification = importlib.util.spec_from_file_location(
+        "retire_removed_callouts",
+        Path(__file__).resolve().parent / "retire_removed_callouts.py")
+    module = importlib.util.module_from_spec(specification)
+    specification.loader.exec_module(module)
+    return module
+
+
+def replace_vocabulary(output: Path, content: str, retired_path: Path) -> None:
+    """Retire the callouts the new content removes, then overwrite.
+
+    Removed callouts keep their shipped recordings only through RetiredCallouts.json, so
+    replacement without retirement silently drops them from the Callouts pack.
+    """
+    if output.exists():
+        replacement = output.with_name(output.name + ".pending")
+        replacement.write_text(content, encoding="utf-8")
+        try:
+            retirement = load_retirement_module()
+            before = retirement.load_retired(retired_path)
+            for name in retirement.retire_removed([(output, replacement)], retired_path):
+                if name not in before:
+                    print(f"Retiring removed callout: {name}")
+        finally:
+            replacement.unlink()
+
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(content, encoding="utf-8")
 
@@ -89,10 +131,17 @@ def resolve_commit(source: Path, supplied_commit: str | None) -> str:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--source", required=True, type=Path, help="lorrgs checkout")
     parser.add_argument("--source-commit", help="commit recorded in the output header")
     parser.add_argument("--output", required=True, type=Path, help="output vocabulary path")
+    parser.add_argument(
+        "--retired",
+        type=Path,
+        default=Path(__file__).resolve().parents[1]
+        / "src/WoWVoxPack.AddOns.Callouts/RetiredCallouts.json",
+        help="retired-callout store updated when the replaced vocabulary loses names")
     return parser.parse_args()
 
 
@@ -123,7 +172,7 @@ def main() -> int:
         commit=resolve_commit(source, args.source_commit),
         season=CURRENT_SEASON.slug,
     )
-    write_vocabulary(args.output, content)
+    replace_vocabulary(args.output, content, args.retired)
     print(f"Wrote {len(names)} names to {args.output}")
     return 0
 

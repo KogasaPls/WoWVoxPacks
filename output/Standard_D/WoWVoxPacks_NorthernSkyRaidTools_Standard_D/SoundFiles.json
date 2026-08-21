@@ -6,10 +6,160 @@
     "Text": "Adds"
   },
   {
+    "FileName": "adrenaline_rush.ogg",
+    "DisplayName": "Adrenaline Rush",
+    "FormattedDisplayName": "Adrenaline Rush",
+    "Text": "Adrenaline Rush"
+  },
+  {
+    "FileName": "algeth_ar_puzzle_box.ogg",
+    "DisplayName": "Algeth\u0027ar Puzzle Box",
+    "FormattedDisplayName": "Algeth\u0027ar Puzzle Box",
+    "Text": "Algeth\u0027ar Puzzle Box"
+  },
+  {
+    "FileName": "alter_time.ogg",
+    "DisplayName": "Alter Time",
+    "FormattedDisplayName": "Alter Time",
+    "Text": "Alter Time"
+  },
+  {
+    "FileName": "ams.ogg",
+    "DisplayName": "AMS",
+    "FormattedDisplayName": "AMS",
+    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022e\u026A.\u025Bm.\u025Bs\u0022\u003EAMS\u003C/phoneme\u003E\u003C/speak\u003E"
+  },
+  {
+    "FileName": "amz.ogg",
+    "DisplayName": "AMZ",
+    "FormattedDisplayName": "AMZ",
+    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022e\u026A.\u025Bm.zi\u0022\u003EAMZ\u003C/phoneme\u003E\u003C/speak\u003E"
+  },
+  {
+    "FileName": "ankh.ogg",
+    "DisplayName": "Ankh",
+    "FormattedDisplayName": "Ankh",
+    "Text": "Ankh"
+  },
+  {
+    "FileName": "anti_magic_shell.ogg",
+    "DisplayName": "Anti-Magic Shell",
+    "FormattedDisplayName": "Anti-Magic Shell",
+    "Text": "Anti-Magic Shell"
+  },
+  {
+    "FileName": "anti_magic_zone.ogg",
+    "DisplayName": "Anti-Magic Zone",
+    "FormattedDisplayName": "Anti-Magic Zone",
+    "Text": "Anti-Magic Zone"
+  },
+  {
+    "FileName": "apotheosis.ogg",
+    "DisplayName": "Apotheosis",
+    "FormattedDisplayName": "Apotheosis",
+    "Text": "Apotheosis"
+  },
+  {
+    "FileName": "arcane_surge.ogg",
+    "DisplayName": "Arcane Surge",
+    "FormattedDisplayName": "Arcane Surge",
+    "Text": "Arcane Surge"
+  },
+  {
+    "FileName": "ardent_defender.ogg",
+    "DisplayName": "Ardent Defender",
+    "FormattedDisplayName": "Ardent Defender",
+    "Text": "Ardent Defender"
+  },
+  {
+    "FileName": "army_of_the_dead.ogg",
+    "DisplayName": "Army of the Dead",
+    "FormattedDisplayName": "Army of the Dead",
+    "Text": "Army of the Dead"
+  },
+  {
+    "FileName": "arrows.ogg",
+    "DisplayName": "Arrows",
+    "FormattedDisplayName": "Arrows",
+    "Text": "Arrows"
+  },
+  {
+    "FileName": "ascendance.ogg",
+    "DisplayName": "Ascendance",
+    "FormattedDisplayName": "Ascendance",
+    "Text": "Ascendance"
+  },
+  {
+    "FileName": "aspect_of_the_cheetah.ogg",
+    "DisplayName": "Aspect of the Cheetah",
+    "FormattedDisplayName": "Aspect of the Cheetah",
+    "Text": "Aspect of the Cheetah"
+  },
+  {
+    "FileName": "aspect_of_the_eagle.ogg",
+    "DisplayName": "Aspect of the Eagle",
+    "FormattedDisplayName": "Aspect of the Eagle",
+    "Text": "Aspect of the Eagle"
+  },
+  {
+    "FileName": "aspect_of_the_turtle.ogg",
+    "DisplayName": "Aspect of the Turtle",
+    "FormattedDisplayName": "Aspect of the Turtle",
+    "Text": "Aspect of the Turtle"
+  },
+  {
+    "FileName": "astral_shift.ogg",
+    "DisplayName": "Astral Shift",
+    "FormattedDisplayName": "Astral Shift",
+    "Text": "Astral Shift"
+  },
+  {
+    "FileName": "aura_mastery.ogg",
+    "DisplayName": "Aura Mastery",
+    "FormattedDisplayName": "Aura Mastery",
+    "Text": "Aura Mastery"
+  },
+  {
+    "FileName": "avatar.ogg",
+    "DisplayName": "Avatar",
+    "FormattedDisplayName": "Avatar",
+    "Text": "Avatar"
+  },
+  {
+    "FileName": "avenging_crusader.ogg",
+    "DisplayName": "Avenging Crusader",
+    "FormattedDisplayName": "Avenging Crusader",
+    "Text": "Avenging Crusader"
+  },
+  {
+    "FileName": "avenging_wrath.ogg",
+    "DisplayName": "Avenging Wrath",
+    "FormattedDisplayName": "Avenging Wrath",
+    "Text": "Avenging Wrath"
+  },
+  {
     "FileName": "bait.ogg",
     "DisplayName": "Bait",
     "FormattedDisplayName": "Bait",
     "Text": "Bait"
+  },
+  {
+    "FileName": "barkskin.ogg",
+    "DisplayName": "Barkskin",
+    "FormattedDisplayName": "Barkskin",
+    "Text": "Barkskin"
+  },
+  {
+    "FileName": "barrier.ogg",
+    "DisplayName": "Barrier",
+    "FormattedDisplayName": "Barrier",
+    "Text": "Barrier"
+  },
+  {
+    "FileName": "beacon_of_virtue.ogg",
+    "DisplayName": "Beacon of Virtue",
+    "FormattedDisplayName": "Beacon of Virtue",
+    "Text": "Beacon of Virtue"
   },
   {
     "FileName": "beam.ogg",
@@ -24,10 +174,82 @@
     "Text": "Beams"
   },
   {
+    "FileName": "bear_form.ogg",
+    "DisplayName": "Bear Form",
+    "FormattedDisplayName": "Bear Form",
+    "Text": "Bear Form"
+  },
+  {
+    "FileName": "berserk.ogg",
+    "DisplayName": "Berserk",
+    "FormattedDisplayName": "Berserk",
+    "Text": "Berserk"
+  },
+  {
+    "FileName": "berserking.ogg",
+    "DisplayName": "Berserking",
+    "FormattedDisplayName": "Berserking",
+    "Text": "Berserking"
+  },
+  {
+    "FileName": "bestial_wrath.ogg",
+    "DisplayName": "Bestial Wrath",
+    "FormattedDisplayName": "Bestial Wrath",
+    "Text": "Bestial Wrath"
+  },
+  {
+    "FileName": "big_boom.ogg",
+    "DisplayName": "Big Boom",
+    "FormattedDisplayName": "Big Boom",
+    "Text": "Big Boom"
+  },
+  {
+    "FileName": "bladestorm.ogg",
+    "DisplayName": "Bladestorm",
+    "FormattedDisplayName": "Bladestorm",
+    "Text": "Bladestorm"
+  },
+  {
     "FileName": "blazes.ogg",
     "DisplayName": "Blazes",
     "FormattedDisplayName": "Blazes",
     "Text": "Blazes"
+  },
+  {
+    "FileName": "blazing_barrier.ogg",
+    "DisplayName": "Blazing Barrier",
+    "FormattedDisplayName": "Blazing Barrier",
+    "Text": "Blazing Barrier"
+  },
+  {
+    "FileName": "blessing_of_autumn.ogg",
+    "DisplayName": "Blessing of Autumn",
+    "FormattedDisplayName": "Blessing of Autumn",
+    "Text": "Blessing of Autumn"
+  },
+  {
+    "FileName": "blessing_of_protection.ogg",
+    "DisplayName": "Blessing of Protection",
+    "FormattedDisplayName": "Blessing of Protection",
+    "Text": "Blessing of Protection"
+  },
+  {
+    "FileName": "blessing_of_sacrifice.ogg",
+    "DisplayName": "Blessing of Sacrifice",
+    "FormattedDisplayName": "Blessing of Sacrifice",
+    "Text": "Blessing of Sacrifice"
+  },
+  {
+    "FileName": "blessing_of_spellwarding.ogg",
+    "DisplayName": "Blessing of Spellwarding",
+    "FormattedDisplayName": "Blessing of Spellwarding",
+    "Text": "Blessing of Spellwarding"
+  },
+  {
+    "FileName": "blessing_of_summer.ogg",
+    "DisplayName": "Blessing of Summer",
+    "FormattedDisplayName": "Blessing of Summer",
+    "Text": "Blessing of Summer"
   },
   {
     "FileName": "blistering_scales.ogg",
@@ -36,16 +258,46 @@
     "Text": "Blistering Scales"
   },
   {
+    "FileName": "blood_fury.ogg",
+    "DisplayName": "Blood Fury",
+    "FormattedDisplayName": "Blood Fury",
+    "Text": "Blood Fury"
+  },
+  {
+    "FileName": "bloodlust.ogg",
+    "DisplayName": "Bloodlust",
+    "FormattedDisplayName": "Bloodlust",
+    "Text": "Bloodlust"
+  },
+  {
     "FileName": "blue.ogg",
     "DisplayName": "Blue",
     "FormattedDisplayName": "Blue",
     "Text": "Blue"
   },
   {
+    "FileName": "blur.ogg",
+    "DisplayName": "Blur",
+    "FormattedDisplayName": "Blur",
+    "Text": "Blur"
+  },
+  {
     "FileName": "bomb.ogg",
     "DisplayName": "Bomb",
     "FormattedDisplayName": "Bomb",
     "Text": "Bomb"
+  },
+  {
+    "FileName": "boomstick.ogg",
+    "DisplayName": "Boomstick",
+    "FormattedDisplayName": "Boomstick",
+    "Text": "Boomstick"
+  },
+  {
+    "FileName": "bop.ogg",
+    "DisplayName": "BoP",
+    "FormattedDisplayName": "BoP",
+    "Text": "Bop"
   },
   {
     "FileName": "boss.ogg",
@@ -66,10 +318,28 @@
     "Text": "Break"
   },
   {
+    "FileName": "breath_of_eons.ogg",
+    "DisplayName": "Breath of Eons",
+    "FormattedDisplayName": "Breath of Eons",
+    "Text": "Breath of Eons"
+  },
+  {
+    "FileName": "breath_of_sindragosa.ogg",
+    "DisplayName": "Breath of Sindragosa",
+    "FormattedDisplayName": "Breath of Sindragosa",
+    "Text": "Breath of Sindragosa"
+  },
+  {
     "FileName": "breath.ogg",
     "DisplayName": "Breath",
     "FormattedDisplayName": "Breath",
     "Text": "Breath"
+  },
+  {
+    "FileName": "bubble.ogg",
+    "DisplayName": "Bubble",
+    "FormattedDisplayName": "Bubble",
+    "Text": "Bubble"
   },
   {
     "FileName": "camp.ogg",
@@ -78,16 +348,64 @@
     "Text": "Camp"
   },
   {
+    "FileName": "cauterize.ogg",
+    "DisplayName": "Cauterize",
+    "FormattedDisplayName": "Cauterize",
+    "Text": "Cauterize"
+  },
+  {
     "FileName": "cc_adds.ogg",
     "DisplayName": "CC Adds",
     "FormattedDisplayName": "CC Adds",
     "Text": "CC Adds"
   },
   {
+    "FileName": "celestial_alignment.ogg",
+    "DisplayName": "Celestial Alignment",
+    "FormattedDisplayName": "Celestial Alignment",
+    "Text": "Celestial Alignment"
+  },
+  {
+    "FileName": "celestial_brew.ogg",
+    "DisplayName": "Celestial Brew",
+    "FormattedDisplayName": "Celestial Brew",
+    "Text": "Celestial Brew"
+  },
+  {
+    "FileName": "celestial_conduit.ogg",
+    "DisplayName": "Celestial Conduit",
+    "FormattedDisplayName": "Celestial Conduit",
+    "Text": "Celestial Conduit"
+  },
+  {
+    "FileName": "celestial_infusion.ogg",
+    "DisplayName": "Celestial Infusion",
+    "FormattedDisplayName": "Celestial Infusion",
+    "Text": "Celestial Infusion"
+  },
+  {
     "FileName": "charge.ogg",
     "DisplayName": "Charge",
     "FormattedDisplayName": "Charge",
     "Text": "Charge"
+  },
+  {
+    "FileName": "cheating_death.ogg",
+    "DisplayName": "Cheating Death",
+    "FormattedDisplayName": "Cheating Death",
+    "Text": "Cheating Death"
+  },
+  {
+    "FileName": "cheetah.ogg",
+    "DisplayName": "Cheetah",
+    "FormattedDisplayName": "Cheetah",
+    "Text": "Cheetah"
+  },
+  {
+    "FileName": "chiji.ogg",
+    "DisplayName": "Chi-ji",
+    "FormattedDisplayName": "Chi-ji",
+    "SSML": "\u003Cspeak\u003E\n  \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022t\u0283i\u02D0d\u0292i\u02D0\u0022\u003EChi-ji=t\u0283i\u02D0d\u0292i\u02D0\u003C/phoneme\u003E\n\u003C/speak\u003E"
   },
   {
     "FileName": "cleaner.ogg",
@@ -102,10 +420,118 @@
     "Text": "Clear"
   },
   {
+    "FileName": "cloak_of_shadows.ogg",
+    "DisplayName": "Cloak of Shadows",
+    "FormattedDisplayName": "Cloak of Shadows",
+    "Text": "Cloak of Shadows"
+  },
+  {
+    "FileName": "cloak.ogg",
+    "DisplayName": "Cloak",
+    "FormattedDisplayName": "Cloak",
+    "Text": "Cloak"
+  },
+  {
+    "FileName": "cocoon.ogg",
+    "DisplayName": "Cocoon",
+    "FormattedDisplayName": "Cocoon",
+    "Text": "Cocoon"
+  },
+  {
+    "FileName": "collapsing_star.ogg",
+    "DisplayName": "Collapsing Star",
+    "FormattedDisplayName": "Collapsing Star",
+    "Text": "Collapsing Star"
+  },
+  {
     "FileName": "collect.ogg",
     "DisplayName": "Collect",
     "FormattedDisplayName": "Collect",
     "Text": "Collect"
+  },
+  {
+    "FileName": "colossus_smash.ogg",
+    "DisplayName": "Colossus Smash",
+    "FormattedDisplayName": "Colossus Smash",
+    "Text": "Colossus Smash"
+  },
+  {
+    "FileName": "combustion.ogg",
+    "DisplayName": "Combustion",
+    "FormattedDisplayName": "Combustion",
+    "Text": "Combustion"
+  },
+  {
+    "FileName": "conduit.ogg",
+    "DisplayName": "Conduit",
+    "FormattedDisplayName": "Conduit",
+    "Text": "Conduit"
+  },
+  {
+    "FileName": "convoke_the_spirits.ogg",
+    "DisplayName": "Convoke the Spirits",
+    "FormattedDisplayName": "Convoke the Spirits",
+    "Text": "Convoke the Spirits"
+  },
+  {
+    "FileName": "convoke.ogg",
+    "DisplayName": "Convoke",
+    "FormattedDisplayName": "Convoke",
+    "Text": "Convoke"
+  },
+  {
+    "FileName": "crimson_vial.ogg",
+    "DisplayName": "Crimson Vial",
+    "FormattedDisplayName": "Crimson Vial",
+    "Text": "Crimson Vial"
+  },
+  {
+    "FileName": "dancing_rune_weapon.ogg",
+    "DisplayName": "Dancing Rune Weapon",
+    "FormattedDisplayName": "Dancing Rune Weapon",
+    "Text": "Dancing Rune Weapon"
+  },
+  {
+    "FileName": "dark_harvest.ogg",
+    "DisplayName": "Dark Harvest",
+    "FormattedDisplayName": "Dark Harvest",
+    "Text": "Dark Harvest"
+  },
+  {
+    "FileName": "dark_pact.ogg",
+    "DisplayName": "Dark Pact",
+    "FormattedDisplayName": "Dark Pact",
+    "Text": "Dark Pact"
+  },
+  {
+    "FileName": "dark_transformation.ogg",
+    "DisplayName": "Dark Transformation",
+    "FormattedDisplayName": "Dark Transformation",
+    "Text": "Dark Transformation"
+  },
+  {
+    "FileName": "darkglare.ogg",
+    "DisplayName": "Darkglare",
+    "FormattedDisplayName": "Darkglare",
+    "Text": "Darkglare"
+  },
+  {
+    "FileName": "darkness.ogg",
+    "DisplayName": "Darkness",
+    "FormattedDisplayName": "Darkness",
+    "Text": "Darkness"
+  },
+  {
+    "FileName": "death_s_advance.ogg",
+    "DisplayName": "Death\u0027s Advance",
+    "FormattedDisplayName": "Death\u0027s Advance",
+    "Text": "Death\u0027s Advance"
+  },
+  {
+    "FileName": "deathmark.ogg",
+    "DisplayName": "Deathmark",
+    "FormattedDisplayName": "Deathmark",
+    "Text": "Deathmark"
   },
   {
     "FileName": "debuff.ogg",
@@ -120,10 +546,88 @@
     "Text": "Debuffs"
   },
   {
+    "FileName": "deep_breath.ogg",
+    "DisplayName": "Deep Breath",
+    "FormattedDisplayName": "Deep Breath",
+    "Text": "Deep Breath"
+  },
+  {
+    "FileName": "deeply_rooted_elements.ogg",
+    "DisplayName": "Deeply Rooted Elements",
+    "FormattedDisplayName": "Deeply Rooted Elements",
+    "Text": "Deeply Rooted Elements"
+  },
+  {
+    "FileName": "demo_shout.ogg",
+    "DisplayName": "Demo Shout",
+    "FormattedDisplayName": "Demo Shout",
+    "Text": "Demo Shout"
+  },
+  {
+    "FileName": "demolish.ogg",
+    "DisplayName": "Demolish",
+    "FormattedDisplayName": "Demolish",
+    "Text": "Demolish"
+  },
+  {
+    "FileName": "demonic_healthstone.ogg",
+    "DisplayName": "Demonic Healthstone",
+    "FormattedDisplayName": "Demonic Healthstone",
+    "Text": "Demonic Healthstone"
+  },
+  {
+    "FileName": "demoralizing_shout.ogg",
+    "DisplayName": "Demoralizing Shout",
+    "FormattedDisplayName": "Demoralizing Shout",
+    "Text": "Demoralizing Shout"
+  },
+  {
+    "FileName": "desperate_prayer.ogg",
+    "DisplayName": "Desperate Prayer",
+    "FormattedDisplayName": "Desperate Prayer",
+    "Text": "Desperate Prayer"
+  },
+  {
+    "FileName": "die_by_the_sword.ogg",
+    "DisplayName": "Die by the Sword",
+    "FormattedDisplayName": "Die by the Sword",
+    "Text": "Die by the Sword"
+  },
+  {
     "FileName": "dispel.ogg",
     "DisplayName": "Dispel",
     "FormattedDisplayName": "Dispel",
     "Text": "Dispel"
+  },
+  {
+    "FileName": "dispersion.ogg",
+    "DisplayName": "Dispersion",
+    "FormattedDisplayName": "Dispersion",
+    "Text": "Dispersion"
+  },
+  {
+    "FileName": "divine_hymn.ogg",
+    "DisplayName": "Divine Hymn",
+    "FormattedDisplayName": "Divine Hymn",
+    "Text": "Divine Hymn"
+  },
+  {
+    "FileName": "divine_protection.ogg",
+    "DisplayName": "Divine Protection",
+    "FormattedDisplayName": "Divine Protection",
+    "Text": "Divine Protection"
+  },
+  {
+    "FileName": "divine_shield.ogg",
+    "DisplayName": "Divine Shield",
+    "FormattedDisplayName": "Divine Shield",
+    "Text": "Divine Shield"
+  },
+  {
+    "FileName": "divine_toll.ogg",
+    "DisplayName": "Divine Toll",
+    "FormattedDisplayName": "Divine Toll",
+    "Text": "Divine Toll"
   },
   {
     "FileName": "dodge.ogg",
@@ -138,10 +642,52 @@
     "Text": "Don\u0027t soak"
   },
   {
+    "FileName": "doom_winds.ogg",
+    "DisplayName": "Doom Winds",
+    "FormattedDisplayName": "Doom Winds",
+    "Text": "Doom Winds"
+  },
+  {
+    "FileName": "doomguard.ogg",
+    "DisplayName": "Doomguard",
+    "FormattedDisplayName": "Doomguard",
+    "Text": "Doomguard"
+  },
+  {
+    "FileName": "dragonrage.ogg",
+    "DisplayName": "Dragonrage",
+    "FormattedDisplayName": "Dragonrage",
+    "Text": "Dragonrage"
+  },
+  {
+    "FileName": "dream_breath.ogg",
+    "DisplayName": "Dream Breath",
+    "FormattedDisplayName": "Dream Breath",
+    "Text": "Dream Breath"
+  },
+  {
+    "FileName": "dreamflight.ogg",
+    "DisplayName": "Dreamflight",
+    "FormattedDisplayName": "Dreamflight",
+    "Text": "Dreamflight"
+  },
+  {
     "FileName": "drop_pool.ogg",
     "DisplayName": "Drop Pool",
     "FormattedDisplayName": "Drop Pool",
     "Text": "Drop Pool"
+  },
+  {
+    "FileName": "eagle.ogg",
+    "DisplayName": "Eagle",
+    "FormattedDisplayName": "Eagle",
+    "Text": "Eagle"
+  },
+  {
+    "FileName": "earth_elemental.ogg",
+    "DisplayName": "Earth Elemental",
+    "FormattedDisplayName": "Earth Elemental",
+    "Text": "Earth Elemental"
   },
   {
     "FileName": "east.ogg",
@@ -150,10 +696,40 @@
     "Text": "East"
   },
   {
+    "FileName": "ebon_might_buff.ogg",
+    "DisplayName": "Ebon Might Buff",
+    "FormattedDisplayName": "Ebon Might Buff",
+    "Text": "Ebon Might Buff"
+  },
+  {
+    "FileName": "ebon_might.ogg",
+    "DisplayName": "Ebon Might",
+    "FormattedDisplayName": "Ebon Might",
+    "Text": "Ebon Might"
+  },
+  {
     "FileName": "eight.ogg",
     "DisplayName": "Eight",
     "FormattedDisplayName": "Eight",
     "Text": "Eight"
+  },
+  {
+    "FileName": "emerald_communion.ogg",
+    "DisplayName": "Emerald Communion",
+    "FormattedDisplayName": "Emerald Communion",
+    "Text": "Emerald Communion"
+  },
+  {
+    "FileName": "enraged_regen.ogg",
+    "DisplayName": "Enraged Regen",
+    "FormattedDisplayName": "Enraged Regen",
+    "Text": "Enraged Regen"
+  },
+  {
+    "FileName": "enraged_regeneration.ogg",
+    "DisplayName": "Enraged Regeneration",
+    "FormattedDisplayName": "Enraged Regeneration",
+    "Text": "Enraged Regeneration"
   },
   {
     "FileName": "entertainer.ogg",
@@ -162,10 +738,82 @@
     "Text": "Entertainer"
   },
   {
+    "FileName": "essence_break.ogg",
+    "DisplayName": "Essence Break",
+    "FormattedDisplayName": "Essence Break",
+    "Text": "Essence Break"
+  },
+  {
+    "FileName": "eternity_surge.ogg",
+    "DisplayName": "Eternity Surge",
+    "FormattedDisplayName": "Eternity Surge",
+    "Text": "Eternity Surge"
+  },
+  {
+    "FileName": "evangelism.ogg",
+    "DisplayName": "Evangelism",
+    "FormattedDisplayName": "Evangelism",
+    "Text": "Evangelism"
+  },
+  {
+    "FileName": "evasion.ogg",
+    "DisplayName": "Evasion",
+    "FormattedDisplayName": "Evasion",
+    "Text": "Evasion"
+  },
+  {
+    "FileName": "evocation.ogg",
+    "DisplayName": "Evocation",
+    "FormattedDisplayName": "Evocation",
+    "Text": "Evocation"
+  },
+  {
+    "FileName": "execution_sentence.ogg",
+    "DisplayName": "Execution Sentence",
+    "FormattedDisplayName": "Execution Sentence",
+    "Text": "Execution Sentence"
+  },
+  {
+    "FileName": "exhilaration.ogg",
+    "DisplayName": "Exhilaration",
+    "FormattedDisplayName": "Exhilaration",
+    "Text": "Exhilaration"
+  },
+  {
+    "FileName": "exploding_keg.ogg",
+    "DisplayName": "Exploding Keg",
+    "FormattedDisplayName": "Exploding Keg",
+    "Text": "Exploding Keg"
+  },
+  {
     "FileName": "explosion.ogg",
     "DisplayName": "Explosion",
     "FormattedDisplayName": "Explosion",
     "Text": "Explosion"
+  },
+  {
+    "FileName": "external_light.ogg",
+    "DisplayName": "External Light",
+    "FormattedDisplayName": "External Light",
+    "Text": "External Light"
+  },
+  {
+    "FileName": "external_void.ogg",
+    "DisplayName": "External Void",
+    "FormattedDisplayName": "External Void",
+    "Text": "External Void"
+  },
+  {
+    "FileName": "eye_beam.ogg",
+    "DisplayName": "Eye Beam",
+    "FormattedDisplayName": "Eye Beam",
+    "Text": "Eye Beam"
+  },
+  {
+    "FileName": "fade.ogg",
+    "DisplayName": "Fade",
+    "FormattedDisplayName": "Fade",
+    "Text": "Fade"
   },
   {
     "FileName": "feather.ogg",
@@ -174,10 +822,64 @@
     "Text": "Feather"
   },
   {
+    "FileName": "feint.ogg",
+    "DisplayName": "Feint",
+    "FormattedDisplayName": "Feint",
+    "Text": "Feint"
+  },
+  {
+    "FileName": "fel_dev.ogg",
+    "DisplayName": "Fel Dev",
+    "FormattedDisplayName": "Fel Dev",
+    "Text": "Fel Dev"
+  },
+  {
+    "FileName": "fel_devastation.ogg",
+    "DisplayName": "Fel Devastation",
+    "FormattedDisplayName": "Fel Devastation",
+    "Text": "Fel Devastation"
+  },
+  {
+    "FileName": "fel_ravager.ogg",
+    "DisplayName": "Fel Ravager",
+    "FormattedDisplayName": "Fel Ravager",
+    "Text": "Fel Ravager"
+  },
+  {
+    "FileName": "feral_frenzy.ogg",
+    "DisplayName": "Feral Frenzy",
+    "FormattedDisplayName": "Feral Frenzy",
+    "Text": "Feral Frenzy"
+  },
+  {
+    "FileName": "fiery_brand.ogg",
+    "DisplayName": "Fiery Brand",
+    "FormattedDisplayName": "Fiery Brand",
+    "Text": "Fiery Brand"
+  },
+  {
+    "FileName": "fire_breath.ogg",
+    "DisplayName": "Fire Breath",
+    "FormattedDisplayName": "Fire Breath",
+    "Text": "Fire Breath"
+  },
+  {
     "FileName": "fire.ogg",
     "DisplayName": "Fire",
     "FormattedDisplayName": "Fire",
     "Text": "Fire"
+  },
+  {
+    "FileName": "fireblood.ogg",
+    "DisplayName": "Fireblood",
+    "FormattedDisplayName": "Fireblood",
+    "Text": "Fireblood"
+  },
+  {
+    "FileName": "firestorm.ogg",
+    "DisplayName": "Firestorm",
+    "FormattedDisplayName": "Firestorm",
+    "Text": "Firestorm"
   },
   {
     "FileName": "five.ogg",
@@ -192,10 +894,34 @@
     "Text": "Fixate"
   },
   {
+    "FileName": "force_of_nature.ogg",
+    "DisplayName": "Force of Nature",
+    "FormattedDisplayName": "Force of Nature",
+    "Text": "Force of Nature"
+  },
+  {
+    "FileName": "fort_brew.ogg",
+    "DisplayName": "Fort Brew",
+    "FormattedDisplayName": "Fort Brew",
+    "Text": "Fort Brew"
+  },
+  {
+    "FileName": "fortifying_brew.ogg",
+    "DisplayName": "Fortifying Brew",
+    "FormattedDisplayName": "Fortifying Brew",
+    "Text": "Fortifying Brew"
+  },
+  {
     "FileName": "four.ogg",
     "DisplayName": "Four",
     "FormattedDisplayName": "Four",
     "Text": "Four"
+  },
+  {
+    "FileName": "frenzied_regeneration.ogg",
+    "DisplayName": "Frenzied Regeneration",
+    "FormattedDisplayName": "Frenzied Regeneration",
+    "Text": "Frenzied Regeneration"
   },
   {
     "FileName": "frontal.ogg",
@@ -210,10 +936,40 @@
     "Text": "Frost"
   },
   {
+    "FileName": "frostwyrm_s_fury.ogg",
+    "DisplayName": "Frostwyrm\u0027s Fury",
+    "FormattedDisplayName": "Frostwyrm\u0027s Fury",
+    "Text": "Frostwyrm\u0027s Fury"
+  },
+  {
+    "FileName": "frostwyrm.ogg",
+    "DisplayName": "Frostwyrm",
+    "FormattedDisplayName": "Frostwyrm",
+    "Text": "Frostwyrm"
+  },
+  {
+    "FileName": "frozen_orb.ogg",
+    "DisplayName": "Frozen Orb",
+    "FormattedDisplayName": "Frozen Orb",
+    "Text": "Frozen Orb"
+  },
+  {
+    "FileName": "full_blaze.ogg",
+    "DisplayName": "Full Blaze",
+    "FormattedDisplayName": "Full Blaze",
+    "Text": "Full Blaze"
+  },
+  {
     "FileName": "fung.ogg",
     "DisplayName": "Fung",
     "FormattedDisplayName": "Fung",
     "SSML": "\u003Cspeak\u003E\n  \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022f\u028C\u014B\u0022\u003EFung=f\u028C\u014B\u003C/phoneme\u003E\n\u003C/speak\u003E"
+  },
+  {
+    "FileName": "fury_of_elune.ogg",
+    "DisplayName": "Fury of Elune",
+    "FormattedDisplayName": "Fury of Elune",
+    "Text": "Fury of Elune"
   },
   {
     "FileName": "gate.ogg",
@@ -232,6 +988,12 @@
     "DisplayName": "Glaives",
     "FormattedDisplayName": "Glaives",
     "Text": "Glaives"
+  },
+  {
+    "FileName": "gloom_spattered_dreadscale.ogg",
+    "DisplayName": "Gloom-Spattered Dreadscale",
+    "FormattedDisplayName": "Gloom-Spattered Dreadscale",
+    "Text": "Gloom-Spattered Dreadscale"
   },
   {
     "FileName": "go_to_back_left.ogg",
@@ -270,16 +1032,160 @@
     "Text": "Green"
   },
   {
+    "FileName": "grimoire_fel_ravager.ogg",
+    "DisplayName": "Grimoire: Fel Ravager",
+    "FormattedDisplayName": "Grimoire: Fel Ravager",
+    "Text": "Grimoire: Fel Ravager"
+  },
+  {
+    "FileName": "grimoire_imp_lord.ogg",
+    "DisplayName": "Grimoire: Imp Lord",
+    "FormattedDisplayName": "Grimoire: Imp Lord",
+    "Text": "Grimoire: Imp Lord"
+  },
+  {
+    "FileName": "guardian_of_ancient_kings.ogg",
+    "DisplayName": "Guardian of Ancient Kings",
+    "FormattedDisplayName": "Guardian of Ancient Kings",
+    "Text": "Guardian of Ancient Kings"
+  },
+  {
+    "FileName": "guardian_spirit.ogg",
+    "DisplayName": "Guardian Spirit",
+    "FormattedDisplayName": "Guardian Spirit",
+    "Text": "Guardian Spirit"
+  },
+  {
+    "FileName": "halo.ogg",
+    "DisplayName": "Halo",
+    "FormattedDisplayName": "Halo",
+    "Text": "Halo"
+  },
+  {
+    "FileName": "havoc.ogg",
+    "DisplayName": "Havoc",
+    "FormattedDisplayName": "Havoc",
+    "Text": "Havoc"
+  },
+  {
     "FileName": "heal_absorb.ogg",
     "DisplayName": "Heal Absorb",
     "FormattedDisplayName": "Heal Absorb",
     "Text": "Heal Absorb"
   },
   {
+    "FileName": "healing_tide_totem.ogg",
+    "DisplayName": "Healing Tide Totem",
+    "FormattedDisplayName": "Healing Tide Totem",
+    "Text": "Healing Tide Totem"
+  },
+  {
+    "FileName": "healing_tide.ogg",
+    "DisplayName": "Healing Tide",
+    "FormattedDisplayName": "Healing Tide",
+    "Text": "Healing Tide"
+  },
+  {
+    "FileName": "healthstone.ogg",
+    "DisplayName": "Healthstone",
+    "FormattedDisplayName": "Healthstone",
+    "Text": "Healthstone"
+  },
+  {
     "FileName": "hide.ogg",
     "DisplayName": "Hide",
     "FormattedDisplayName": "Hide",
     "Text": "Hide"
+  },
+  {
+    "FileName": "hit_demiar.ogg",
+    "DisplayName": "Hit Demiar",
+    "FormattedDisplayName": "Hit Demiar",
+    "Text": "Hit Demiar"
+  },
+  {
+    "FileName": "hit_morium.ogg",
+    "DisplayName": "Hit Morium",
+    "FormattedDisplayName": "Hit Morium",
+    "Text": "Hit Morium"
+  },
+  {
+    "FileName": "hit_vorelus.ogg",
+    "DisplayName": "Hit Vorelus",
+    "FormattedDisplayName": "Hit Vorelus",
+    "Text": "Hit Vorelus"
+  },
+  {
+    "FileName": "holy_prism.ogg",
+    "DisplayName": "Holy Prism",
+    "FormattedDisplayName": "Holy Prism",
+    "Text": "Holy Prism"
+  },
+  {
+    "FileName": "ice_barrier.ogg",
+    "DisplayName": "Ice Barrier",
+    "FormattedDisplayName": "Ice Barrier",
+    "Text": "Ice Barrier"
+  },
+  {
+    "FileName": "ice_block.ogg",
+    "DisplayName": "Ice Block",
+    "FormattedDisplayName": "Ice Block",
+    "Text": "Ice Block"
+  },
+  {
+    "FileName": "ice_cold.ogg",
+    "DisplayName": "Ice Cold",
+    "FormattedDisplayName": "Ice Cold",
+    "Text": "Ice Cold"
+  },
+  {
+    "FileName": "icebound_fortitude.ogg",
+    "DisplayName": "Icebound Fortitude",
+    "FormattedDisplayName": "Icebound Fortitude",
+    "Text": "Icebound Fortitude"
+  },
+  {
+    "FileName": "immune.ogg",
+    "DisplayName": "Immune",
+    "FormattedDisplayName": "Immune",
+    "Text": "Immune"
+  },
+  {
+    "FileName": "imp_lord.ogg",
+    "DisplayName": "Imp Lord",
+    "FormattedDisplayName": "Imp Lord",
+    "Text": "Imp Lord"
+  },
+  {
+    "FileName": "incarn.ogg",
+    "DisplayName": "Incarn",
+    "FormattedDisplayName": "Incarn",
+    "Text": "Incarn"
+  },
+  {
+    "FileName": "incarnation_guardian_of_ursoc.ogg",
+    "DisplayName": "Incarnation: Guardian of Ursoc",
+    "FormattedDisplayName": "Incarnation: Guardian of Ursoc",
+    "Text": "Incarnation: Guardian of Ursoc"
+  },
+  {
+    "FileName": "incarnation_tree_of_life.ogg",
+    "DisplayName": "Incarnation: Tree of Life",
+    "FormattedDisplayName": "Incarnation: Tree of Life",
+    "Text": "Incarnation: Tree of Life"
+  },
+  {
+    "FileName": "infernal.ogg",
+    "DisplayName": "Infernal",
+    "FormattedDisplayName": "Infernal",
+    "Text": "Infernal"
+  },
+  {
+    "FileName": "innervate.ogg",
+    "DisplayName": "Innervate",
+    "FormattedDisplayName": "Innervate",
+    "SSML": "\u003Cspeak\u003E\n  \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022\u02C8\u026An\u025Ave\u026At\u0022\u003EInnervate=\u02C8\u026An\u025Ave\u026At\u003C/phoneme\u003E\n\u003C/speak\u003E"
   },
   {
     "FileName": "interrupt.ogg",
@@ -294,10 +1200,70 @@
     "Text": "Interrupts"
   },
   {
+    "FileName": "invoke_chiji_the_red_crane.ogg",
+    "DisplayName": "Invoke Chi-Ji, the Red Crane",
+    "FormattedDisplayName": "Invoke Chi-Ji, the Red Crane",
+    "SSML": "\u003Cspeak\u003EInvoke \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022t\u0283i\u02D0d\u0292i\u02D0\u0022\u003EChi-Ji\u003C/phoneme\u003E, the Red Crane\u003C/speak\u003E"
+  },
+  {
+    "FileName": "invoke_niuzao_the_black_ox.ogg",
+    "DisplayName": "Invoke Niuzao the Black Ox",
+    "FormattedDisplayName": "Invoke Niuzao the Black Ox",
+    "Text": "Invoke Niuzao the Black Ox"
+  },
+  {
+    "FileName": "invoke_xuen_the_white_tiger.ogg",
+    "DisplayName": "Invoke Xuen, the White Tiger",
+    "FormattedDisplayName": "Invoke Xuen, the White Tiger",
+    "Text": "Invoke Xuen, the White Tiger"
+  },
+  {
+    "FileName": "invoke_yulon_the_jade_serpent.ogg",
+    "DisplayName": "Invoke Yu\u0027lon, the Jade Serpent",
+    "FormattedDisplayName": "Invoke Yu\u0027lon, the Jade Serpent",
+    "SSML": "\u003Cspeak\u003EInvoke \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022\u02C8ju\u02D0l\u0252n\u0022\u003EYu\u0027lon\u003C/phoneme\u003E, the Jade Serpent\u003C/speak\u003E"
+  },
+  {
+    "FileName": "ironbark.ogg",
+    "DisplayName": "Ironbark",
+    "FormattedDisplayName": "Ironbark",
+    "Text": "Ironbark"
+  },
+  {
+    "FileName": "keep_it_rolling.ogg",
+    "DisplayName": "Keep It Rolling",
+    "FormattedDisplayName": "Keep It Rolling",
+    "Text": "Keep It Rolling"
+  },
+  {
+    "FileName": "killing_spree.ogg",
+    "DisplayName": "Killing Spree",
+    "FormattedDisplayName": "Killing Spree",
+    "Text": "Killing Spree"
+  },
+  {
+    "FileName": "kingsbane.ogg",
+    "DisplayName": "Kingsbane",
+    "FormattedDisplayName": "Kingsbane",
+    "Text": "Kingsbane"
+  },
+  {
     "FileName": "knock.ogg",
     "DisplayName": "Knock",
     "FormattedDisplayName": "Knock",
     "Text": "Knock"
+  },
+  {
+    "FileName": "last_resort.ogg",
+    "DisplayName": "Last Resort",
+    "FormattedDisplayName": "Last Resort",
+    "Text": "Last Resort"
+  },
+  {
+    "FileName": "leap_of_faith.ogg",
+    "DisplayName": "Leap of Faith",
+    "FormattedDisplayName": "Leap of Faith",
+    "Text": "Leap of Faith"
   },
   {
     "FileName": "left.ogg",
@@ -306,10 +1272,34 @@
     "Text": "Left"
   },
   {
+    "FileName": "lichborne.ogg",
+    "DisplayName": "Lichborne",
+    "FormattedDisplayName": "Lichborne",
+    "Text": "Lichborne"
+  },
+  {
+    "FileName": "life_cocoon.ogg",
+    "DisplayName": "Life Cocoon",
+    "FormattedDisplayName": "Life Cocoon",
+    "Text": "Life Cocoon"
+  },
+  {
+    "FileName": "light_s_potential.ogg",
+    "DisplayName": "Light\u0027s Potential",
+    "FormattedDisplayName": "Light\u0027s Potential",
+    "Text": "Light\u0027s Potential"
+  },
+  {
     "FileName": "light.ogg",
     "DisplayName": "Light",
     "FormattedDisplayName": "Light",
     "Text": "Light"
+  },
+  {
+    "FileName": "lightfused_mana_potion.ogg",
+    "DisplayName": "Lightfused Mana Potion",
+    "FormattedDisplayName": "Lightfused Mana Potion",
+    "Text": "Lightfused Mana Potion"
   },
   {
     "FileName": "linked.ogg",
@@ -318,16 +1308,82 @@
     "Text": "Linked"
   },
   {
+    "FileName": "litany.ogg",
+    "DisplayName": "Litany",
+    "FormattedDisplayName": "Litany",
+    "Text": "Litany"
+  },
+  {
+    "FileName": "lunar_beam.ogg",
+    "DisplayName": "Lunar Beam",
+    "FormattedDisplayName": "Lunar Beam",
+    "Text": "Lunar Beam"
+  },
+  {
+    "FileName": "lunar_eclipse.ogg",
+    "DisplayName": "Lunar Eclipse",
+    "FormattedDisplayName": "Lunar Eclipse",
+    "Text": "Lunar Eclipse"
+  },
+  {
+    "FileName": "lust.ogg",
+    "DisplayName": "Lust",
+    "FormattedDisplayName": "Lust",
+    "Text": "Lust"
+  },
+  {
+    "FileName": "malevolence.ogg",
+    "DisplayName": "Malevolence",
+    "FormattedDisplayName": "Malevolence",
+    "Text": "Malevolence"
+  },
+  {
+    "FileName": "mass_dispel.ogg",
+    "DisplayName": "Mass Dispel",
+    "FormattedDisplayName": "Mass Dispel",
+    "Text": "Mass Dispel"
+  },
+  {
     "FileName": "memory_game.ogg",
     "DisplayName": "Memory Game",
     "FormattedDisplayName": "Memory Game",
     "Text": "Memory Game"
   },
   {
+    "FileName": "meta.ogg",
+    "DisplayName": "Meta",
+    "FormattedDisplayName": "Meta",
+    "Text": "Meta"
+  },
+  {
+    "FileName": "metamorphosis.ogg",
+    "DisplayName": "Metamorphosis",
+    "FormattedDisplayName": "Metamorphosis",
+    "Text": "Metamorphosis"
+  },
+  {
+    "FileName": "meteor.ogg",
+    "DisplayName": "Meteor",
+    "FormattedDisplayName": "Meteor",
+    "Text": "Meteor"
+  },
+  {
     "FileName": "mind_control.ogg",
     "DisplayName": "Mind Control",
     "FormattedDisplayName": "Mind Control",
     "Text": "Mind Control"
+  },
+  {
+    "FileName": "mirror_image.ogg",
+    "DisplayName": "Mirror Image",
+    "FormattedDisplayName": "Mirror Image",
+    "Text": "Mirror Image"
+  },
+  {
+    "FileName": "miss.ogg",
+    "DisplayName": "Miss",
+    "FormattedDisplayName": "Miss",
+    "Text": "Miss"
   },
   {
     "FileName": "moon.ogg",
@@ -354,6 +1410,12 @@
     "Text": "Nine"
   },
   {
+    "FileName": "niuzao.ogg",
+    "DisplayName": "Niuzao",
+    "FormattedDisplayName": "Niuzao",
+    "Text": "Niuzao"
+  },
+  {
     "FileName": "north.ogg",
     "DisplayName": "North",
     "FormattedDisplayName": "North",
@@ -364,6 +1426,18 @@
     "DisplayName": "Obelisk",
     "FormattedDisplayName": "Obelisk",
     "Text": "Obelisk"
+  },
+  {
+    "FileName": "obsidian_scales.ogg",
+    "DisplayName": "Obsidian Scales",
+    "FormattedDisplayName": "Obsidian Scales",
+    "Text": "Obsidian Scales"
+  },
+  {
+    "FileName": "odyn_s_fury.ogg",
+    "DisplayName": "Odyn\u0027s Fury",
+    "FormattedDisplayName": "Odyn\u0027s Fury",
+    "Text": "Odyn\u0027s Fury"
   },
   {
     "FileName": "one.ogg",
@@ -390,16 +1464,136 @@
     "Text": "Orbs"
   },
   {
+    "FileName": "pain_sup.ogg",
+    "DisplayName": "Pain Sup",
+    "FormattedDisplayName": "Pain Sup",
+    "Text": "Pain Sup"
+  },
+  {
+    "FileName": "pain_suppression.ogg",
+    "DisplayName": "Pain Suppression",
+    "FormattedDisplayName": "Pain Suppression",
+    "Text": "Pain Suppression"
+  },
+  {
+    "FileName": "pi.ogg",
+    "DisplayName": "PI",
+    "FormattedDisplayName": "PI",
+    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022pi.a\u026A\u0022\u003EPI\u003C/phoneme\u003E\u003C/speak\u003E"
+  },
+  {
+    "FileName": "pillar_of_frost.ogg",
+    "DisplayName": "Pillar of Frost",
+    "FormattedDisplayName": "Pillar of Frost",
+    "Text": "Pillar of Frost"
+  },
+  {
+    "FileName": "potion_of_recklessness.ogg",
+    "DisplayName": "Potion of Recklessness",
+    "FormattedDisplayName": "Potion of Recklessness",
+    "Text": "Potion of Recklessness"
+  },
+  {
+    "FileName": "power_infusion.ogg",
+    "DisplayName": "Power Infusion",
+    "FormattedDisplayName": "Power Infusion",
+    "Text": "Power Infusion"
+  },
+  {
+    "FileName": "power_word_barrier.ogg",
+    "DisplayName": "Power Word: Barrier",
+    "FormattedDisplayName": "Power Word: Barrier",
+    "Text": "Power Word: Barrier"
+  },
+  {
+    "FileName": "power_word_radiance.ogg",
+    "DisplayName": "Power Word: Radiance",
+    "FormattedDisplayName": "Power Word: Radiance",
+    "Text": "Power Word: Radiance"
+  },
+  {
+    "FileName": "primordial_storm.ogg",
+    "DisplayName": "Primordial Storm",
+    "FormattedDisplayName": "Primordial Storm",
+    "Text": "Primordial Storm"
+  },
+  {
+    "FileName": "prismatic_barrier.ogg",
+    "DisplayName": "Prismatic Barrier",
+    "FormattedDisplayName": "Prismatic Barrier",
+    "Text": "Prismatic Barrier"
+  },
+  {
+    "FileName": "purgatory.ogg",
+    "DisplayName": "Purgatory",
+    "FormattedDisplayName": "Purgatory",
+    "Text": "Purgatory"
+  },
+  {
     "FileName": "purple.ogg",
     "DisplayName": "Purple",
     "FormattedDisplayName": "Purple",
     "Text": "Purple"
   },
   {
+    "FileName": "puzzle_box.ogg",
+    "DisplayName": "Puzzle Box",
+    "FormattedDisplayName": "Puzzle Box",
+    "Text": "Puzzle Box"
+  },
+  {
+    "FileName": "quills.ogg",
+    "DisplayName": "Quills",
+    "FormattedDisplayName": "Quills",
+    "Text": "Quills"
+  },
+  {
+    "FileName": "radiance.ogg",
+    "DisplayName": "Radiance",
+    "FormattedDisplayName": "Radiance",
+    "Text": "Radiance"
+  },
+  {
+    "FileName": "raise_dead.ogg",
+    "DisplayName": "Raise Dead",
+    "FormattedDisplayName": "Raise Dead",
+    "Text": "Raise Dead"
+  },
+  {
+    "FileName": "rally.ogg",
+    "DisplayName": "Rally",
+    "FormattedDisplayName": "Rally",
+    "Text": "Rally"
+  },
+  {
+    "FileName": "rallying_cry.ogg",
+    "DisplayName": "Rallying Cry",
+    "FormattedDisplayName": "Rallying Cry",
+    "Text": "Rallying Cry"
+  },
+  {
+    "FileName": "ramp.ogg",
+    "DisplayName": "Ramp",
+    "FormattedDisplayName": "Ramp",
+    "Text": "Ramp"
+  },
+  {
     "FileName": "ranged.ogg",
     "DisplayName": "Ranged",
     "FormattedDisplayName": "Ranged",
     "Text": "Ranged"
+  },
+  {
+    "FileName": "ray_of_frost.ogg",
+    "DisplayName": "Ray of Frost",
+    "FormattedDisplayName": "Ray of Frost",
+    "Text": "Ray of Frost"
+  },
+  {
+    "FileName": "reaper_s_mark.ogg",
+    "DisplayName": "Reaper\u0027s Mark",
+    "FormattedDisplayName": "Reaper\u0027s Mark",
+    "Text": "Reaper\u0027s Mark"
   },
   {
     "FileName": "rebuff_arcane_intellect.ogg",
@@ -444,16 +1638,64 @@
     "Text": "Rebuff Soulstone"
   },
   {
+    "FileName": "recklessness.ogg",
+    "DisplayName": "Recklessness",
+    "FormattedDisplayName": "Recklessness",
+    "Text": "Recklessness"
+  },
+  {
     "FileName": "red.ogg",
     "DisplayName": "Red",
     "FormattedDisplayName": "Red",
     "Text": "Red"
   },
   {
+    "FileName": "reforestation.ogg",
+    "DisplayName": "Reforestation",
+    "FormattedDisplayName": "Reforestation",
+    "Text": "Reforestation"
+  },
+  {
+    "FileName": "reincarnation.ogg",
+    "DisplayName": "Reincarnation",
+    "FormattedDisplayName": "Reincarnation",
+    "Text": "Reincarnation"
+  },
+  {
+    "FileName": "rescue.ogg",
+    "DisplayName": "Rescue",
+    "FormattedDisplayName": "Rescue",
+    "Text": "Rescue"
+  },
+  {
+    "FileName": "restoral.ogg",
+    "DisplayName": "Restoral",
+    "FormattedDisplayName": "Restoral",
+    "Text": "Restoral"
+  },
+  {
+    "FileName": "revival.ogg",
+    "DisplayName": "Revival",
+    "FormattedDisplayName": "Revival",
+    "Text": "Revival"
+  },
+  {
+    "FileName": "rewind.ogg",
+    "DisplayName": "Rewind",
+    "FormattedDisplayName": "Rewind",
+    "Text": "Rewind"
+  },
+  {
     "FileName": "right.ogg",
     "DisplayName": "Right",
     "FormattedDisplayName": "Right",
     "Text": "Right"
+  },
+  {
+    "FileName": "roar.ogg",
+    "DisplayName": "Roar",
+    "FormattedDisplayName": "Roar",
+    "Text": "Roar"
   },
   {
     "FileName": "root.ogg",
@@ -474,10 +1716,22 @@
     "Text": "Rune"
   },
   {
+    "FileName": "sac.ogg",
+    "DisplayName": "Sac",
+    "FormattedDisplayName": "Sac",
+    "Text": "Sac"
+  },
+  {
     "FileName": "sacred_toll.ogg",
     "DisplayName": "Sacred Toll",
     "FormattedDisplayName": "Sacred Toll",
     "Text": "Sacred Toll"
+  },
+  {
+    "FileName": "seed_drop.ogg",
+    "DisplayName": "Seed Drop",
+    "FormattedDisplayName": "Seed Drop",
+    "Text": "Seed Drop"
   },
   {
     "FileName": "server.ogg",
@@ -492,6 +1746,42 @@
     "Text": "Seven"
   },
   {
+    "FileName": "shadow_blades.ogg",
+    "DisplayName": "Shadow Blades",
+    "FormattedDisplayName": "Shadow Blades",
+    "Text": "Shadow Blades"
+  },
+  {
+    "FileName": "shadow_dance.ogg",
+    "DisplayName": "Shadow Dance",
+    "FormattedDisplayName": "Shadow Dance",
+    "Text": "Shadow Dance"
+  },
+  {
+    "FileName": "shadowmeld.ogg",
+    "DisplayName": "Shadowmeld",
+    "FormattedDisplayName": "Shadowmeld",
+    "Text": "Shadowmeld"
+  },
+  {
+    "FileName": "shield_charge.ogg",
+    "DisplayName": "Shield Charge",
+    "FormattedDisplayName": "Shield Charge",
+    "Text": "Shield Charge"
+  },
+  {
+    "FileName": "shield_wall.ogg",
+    "DisplayName": "Shield Wall",
+    "FormattedDisplayName": "Shield Wall",
+    "Text": "Shield Wall"
+  },
+  {
+    "FileName": "shiv.ogg",
+    "DisplayName": "Shiv",
+    "FormattedDisplayName": "Shiv",
+    "Text": "Shiv"
+  },
+  {
     "FileName": "shroom.ogg",
     "DisplayName": "Shroom",
     "FormattedDisplayName": "Shroom",
@@ -502,6 +1792,18 @@
     "DisplayName": "Shrooms",
     "FormattedDisplayName": "Shrooms",
     "Text": "Shrooms"
+  },
+  {
+    "FileName": "sigil_of_spite.ogg",
+    "DisplayName": "Sigil of Spite",
+    "FormattedDisplayName": "Sigil of Spite",
+    "Text": "Sigil of Spite"
+  },
+  {
+    "FileName": "silvermoon_health_potion.ogg",
+    "DisplayName": "Silvermoon Health Potion",
+    "FormattedDisplayName": "Silvermoon Health Potion",
+    "Text": "Silvermoon Health Potion"
   },
   {
     "FileName": "six.ogg",
@@ -526,6 +1828,12 @@
     "DisplayName": "Soak Back Right",
     "FormattedDisplayName": "Soak Back Right",
     "Text": "Soak Back Right"
+  },
+  {
+    "FileName": "soak_circle.ogg",
+    "DisplayName": "Soak Circle",
+    "FormattedDisplayName": "Soak Circle",
+    "Text": "Soak Circle"
   },
   {
     "FileName": "soak_cross.ogg",
@@ -570,10 +1878,22 @@
     "Text": "Soak Skull"
   },
   {
+    "FileName": "soak_square.ogg",
+    "DisplayName": "Soak Square",
+    "FormattedDisplayName": "Soak Square",
+    "Text": "Soak Square"
+  },
+  {
     "FileName": "soak_star.ogg",
     "DisplayName": "Soak Star",
     "FormattedDisplayName": "Soak Star",
     "Text": "Soak Star"
+  },
+  {
+    "FileName": "soak_triangle.ogg",
+    "DisplayName": "Soak Triangle",
+    "FormattedDisplayName": "Soak Triangle",
+    "Text": "Soak Triangle"
   },
   {
     "FileName": "soak.ogg",
@@ -586,6 +1906,12 @@
     "DisplayName": "Soaks",
     "FormattedDisplayName": "Soaks",
     "Text": "Soaks"
+  },
+  {
+    "FileName": "solar_eclipse.ogg",
+    "DisplayName": "Solar Eclipse",
+    "FormattedDisplayName": "Solar Eclipse",
+    "Text": "Solar Eclipse"
   },
   {
     "FileName": "soulstone.ogg",
@@ -606,6 +1932,96 @@
     "Text": "South"
   },
   {
+    "FileName": "spatial_paradox.ogg",
+    "DisplayName": "Spatial Paradox",
+    "FormattedDisplayName": "Spatial Paradox",
+    "Text": "Spatial Paradox"
+  },
+  {
+    "FileName": "spell_reflect.ogg",
+    "DisplayName": "Spell Reflect",
+    "FormattedDisplayName": "Spell Reflect",
+    "Text": "Spell Reflect"
+  },
+  {
+    "FileName": "spell_reflection.ogg",
+    "DisplayName": "Spell Reflection",
+    "FormattedDisplayName": "Spell Reflection",
+    "Text": "Spell Reflection"
+  },
+  {
+    "FileName": "spellwarding.ogg",
+    "DisplayName": "Spellwarding",
+    "FormattedDisplayName": "Spellwarding",
+    "Text": "Spellwarding"
+  },
+  {
+    "FileName": "spirit_link_totem.ogg",
+    "DisplayName": "Spirit Link Totem",
+    "FormattedDisplayName": "Spirit Link Totem",
+    "Text": "Spirit Link Totem"
+  },
+  {
+    "FileName": "spirit_link.ogg",
+    "DisplayName": "Spirit Link",
+    "FormattedDisplayName": "Spirit Link",
+    "Text": "Spirit Link"
+  },
+  {
+    "FileName": "spirit_of_redemption.ogg",
+    "DisplayName": "Spirit of Redemption",
+    "FormattedDisplayName": "Spirit of Redemption",
+    "Text": "Spirit of Redemption"
+  },
+  {
+    "FileName": "spiritwalker_s_grace.ogg",
+    "DisplayName": "Spiritwalker\u0027s Grace",
+    "FormattedDisplayName": "Spiritwalker\u0027s Grace",
+    "Text": "Spiritwalker\u0027s Grace"
+  },
+  {
+    "FileName": "spread_at_cross.ogg",
+    "DisplayName": "Spread at Cross",
+    "FormattedDisplayName": "Spread at Cross",
+    "Text": "Spread at Cross"
+  },
+  {
+    "FileName": "spread_at_moon.ogg",
+    "DisplayName": "Spread at Moon",
+    "FormattedDisplayName": "Spread at Moon",
+    "Text": "Spread at Moon"
+  },
+  {
+    "FileName": "spread_at_skull.ogg",
+    "DisplayName": "Spread at Skull",
+    "FormattedDisplayName": "Spread at Skull",
+    "Text": "Spread at Skull"
+  },
+  {
+    "FileName": "spread_at_square.ogg",
+    "DisplayName": "Spread at Square",
+    "FormattedDisplayName": "Spread at Square",
+    "Text": "Spread at Square"
+  },
+  {
+    "FileName": "spread_at_star.ogg",
+    "DisplayName": "Spread at Star",
+    "FormattedDisplayName": "Spread at Star",
+    "Text": "Spread at Star"
+  },
+  {
+    "FileName": "spread_at_sun.ogg",
+    "DisplayName": "Spread at Sun",
+    "FormattedDisplayName": "Spread at Sun",
+    "Text": "Spread at Sun"
+  },
+  {
+    "FileName": "spread_at_triangle.ogg",
+    "DisplayName": "Spread at Triangle",
+    "FormattedDisplayName": "Spread at Triangle",
+    "Text": "Spread at Triangle"
+  },
+  {
     "FileName": "spread.ogg",
     "DisplayName": "Spread",
     "FormattedDisplayName": "Spread",
@@ -618,10 +2034,52 @@
     "Text": "Stack"
   },
   {
+    "FileName": "stampeding_roar.ogg",
+    "DisplayName": "Stampeding Roar",
+    "FormattedDisplayName": "Stampeding Roar",
+    "Text": "Stampeding Roar"
+  },
+  {
+    "FileName": "stars.ogg",
+    "DisplayName": "Stars",
+    "FormattedDisplayName": "Stars",
+    "Text": "Stars"
+  },
+  {
+    "FileName": "stasis_pop.ogg",
+    "DisplayName": "Stasis Pop",
+    "FormattedDisplayName": "Stasis Pop",
+    "Text": "Stasis Pop"
+  },
+  {
+    "FileName": "stasis.ogg",
+    "DisplayName": "Stasis",
+    "FormattedDisplayName": "Stasis",
+    "Text": "Stasis"
+  },
+  {
+    "FileName": "stoneform.ogg",
+    "DisplayName": "Stoneform",
+    "FormattedDisplayName": "Stoneform",
+    "Text": "Stoneform"
+  },
+  {
     "FileName": "stop_cast.ogg",
     "DisplayName": "Stop Cast",
     "FormattedDisplayName": "Stop Cast",
     "Text": "Stop Cast"
+  },
+  {
+    "FileName": "stormkeeper.ogg",
+    "DisplayName": "Stormkeeper",
+    "FormattedDisplayName": "Stormkeeper",
+    "Text": "Stormkeeper"
+  },
+  {
+    "FileName": "strike_of_the_windlord.ogg",
+    "DisplayName": "Strike of the Windlord",
+    "FormattedDisplayName": "Strike of the Windlord",
+    "Text": "Strike of the Windlord"
   },
   {
     "FileName": "suck.ogg",
@@ -630,10 +2088,64 @@
     "Text": "Suck"
   },
   {
+    "FileName": "summon_darkglare.ogg",
+    "DisplayName": "Summon Darkglare",
+    "FormattedDisplayName": "Summon Darkglare",
+    "Text": "Summon Darkglare"
+  },
+  {
+    "FileName": "summon_demonic_tyrant.ogg",
+    "DisplayName": "Summon Demonic Tyrant",
+    "FormattedDisplayName": "Summon Demonic Tyrant",
+    "Text": "Summon Demonic Tyrant"
+  },
+  {
+    "FileName": "summon_doomguard.ogg",
+    "DisplayName": "Summon Doomguard",
+    "FormattedDisplayName": "Summon Doomguard",
+    "Text": "Summon Doomguard"
+  },
+  {
+    "FileName": "summon_infernal.ogg",
+    "DisplayName": "Summon Infernal",
+    "FormattedDisplayName": "Summon Infernal",
+    "Text": "Summon Infernal"
+  },
+  {
+    "FileName": "sundering.ogg",
+    "DisplayName": "Sundering",
+    "FormattedDisplayName": "Sundering",
+    "Text": "Sundering"
+  },
+  {
+    "FileName": "survival_instincts.ogg",
+    "DisplayName": "Survival Instincts",
+    "FormattedDisplayName": "Survival Instincts",
+    "Text": "Survival Instincts"
+  },
+  {
+    "FileName": "survival_of_the_fittest.ogg",
+    "DisplayName": "Survival of the Fittest",
+    "FormattedDisplayName": "Survival of the Fittest",
+    "Text": "Survival of the Fittest"
+  },
+  {
+    "FileName": "sweeping_strikes.ogg",
+    "DisplayName": "Sweeping Strikes",
+    "FormattedDisplayName": "Sweeping Strikes",
+    "Text": "Sweeping Strikes"
+  },
+  {
     "FileName": "symbiotic_relationship.ogg",
     "DisplayName": "Symbiotic Relationship",
     "FormattedDisplayName": "Symbiotic Relationship",
     "Text": "Symbiotic Relationship"
+  },
+  {
+    "FileName": "takedown.ogg",
+    "DisplayName": "Takedown",
+    "FormattedDisplayName": "Takedown",
+    "Text": "Takedown"
   },
   {
     "FileName": "targeted.ogg",
@@ -660,10 +2172,112 @@
     "Text": "Tether"
   },
   {
+    "FileName": "the_hunt.ogg",
+    "DisplayName": "The Hunt",
+    "FormattedDisplayName": "The Hunt",
+    "Text": "The Hunt"
+  },
+  {
     "FileName": "three.ogg",
     "DisplayName": "Three",
     "FormattedDisplayName": "Three",
     "Text": "Three"
+  },
+  {
+    "FileName": "thunder_focus_tea.ogg",
+    "DisplayName": "Thunder Focus Tea",
+    "FormattedDisplayName": "Thunder Focus Tea",
+    "Text": "Thunder Focus Tea"
+  },
+  {
+    "FileName": "tiger_s_fury.ogg",
+    "DisplayName": "Tiger\u0027s Fury",
+    "FormattedDisplayName": "Tiger\u0027s Fury",
+    "Text": "Tiger\u0027s Fury"
+  },
+  {
+    "FileName": "time_dilation.ogg",
+    "DisplayName": "Time Dilation",
+    "FormattedDisplayName": "Time Dilation",
+    "Text": "Time Dilation"
+  },
+  {
+    "FileName": "time_skip.ogg",
+    "DisplayName": "Time Skip",
+    "FormattedDisplayName": "Time Skip",
+    "Text": "Time Skip"
+  },
+  {
+    "FileName": "time_spiral.ogg",
+    "DisplayName": "Time Spiral",
+    "FormattedDisplayName": "Time Spiral",
+    "Text": "Time Spiral"
+  },
+  {
+    "FileName": "tip_the_scales.ogg",
+    "DisplayName": "Tip the Scales",
+    "FormattedDisplayName": "Tip the Scales",
+    "Text": "Tip the Scales"
+  },
+  {
+    "FileName": "tip.ogg",
+    "DisplayName": "Tip",
+    "FormattedDisplayName": "Tip",
+    "Text": "Tip"
+  },
+  {
+    "FileName": "touch_of_death.ogg",
+    "DisplayName": "Touch of Death",
+    "FormattedDisplayName": "Touch of Death",
+    "Text": "Touch of Death"
+  },
+  {
+    "FileName": "touch_of_karma.ogg",
+    "DisplayName": "Touch of Karma",
+    "FormattedDisplayName": "Touch of Karma",
+    "Text": "Touch of Karma"
+  },
+  {
+    "FileName": "touch_of_the_magi.ogg",
+    "DisplayName": "Touch of the Magi",
+    "FormattedDisplayName": "Touch of the Magi",
+    "Text": "Touch of the Magi"
+  },
+  {
+    "FileName": "tranq.ogg",
+    "DisplayName": "Tranq",
+    "FormattedDisplayName": "Tranq",
+    "SSML": "\u003Cspeak\u003E\n  \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022tr\u00E6\u014Bk\u0022\u003ETranq=tr\u00E6\u014Bk\u003C/phoneme\u003E\n\u003C/speak\u003E"
+  },
+  {
+    "FileName": "tranquility.ogg",
+    "DisplayName": "Tranquility",
+    "FormattedDisplayName": "Tranquility",
+    "Text": "Tranquility"
+  },
+  {
+    "FileName": "tree_of_life.ogg",
+    "DisplayName": "Tree of Life",
+    "FormattedDisplayName": "Tree of Life",
+    "Text": "Tree of Life"
+  },
+  {
+    "FileName": "trees.ogg",
+    "DisplayName": "Trees",
+    "FormattedDisplayName": "Trees",
+    "Text": "Trees"
+  },
+  {
+    "FileName": "trueshot.ogg",
+    "DisplayName": "Trueshot",
+    "FormattedDisplayName": "Trueshot",
+    "Text": "Trueshot"
+  },
+  {
+    "FileName": "turtle.ogg",
+    "DisplayName": "Turtle",
+    "FormattedDisplayName": "Turtle",
+    "Text": "Turtle"
   },
   {
     "FileName": "two.ogg",
@@ -672,10 +2286,100 @@
     "Text": "Two"
   },
   {
+    "FileName": "tyrant.ogg",
+    "DisplayName": "Tyrant",
+    "FormattedDisplayName": "Tyrant",
+    "Text": "Tyrant"
+  },
+  {
+    "FileName": "ultimate_penitence.ogg",
+    "DisplayName": "Ultimate Penitence",
+    "FormattedDisplayName": "Ultimate Penitence",
+    "Text": "Ultimate Penitence"
+  },
+  {
+    "FileName": "unending_resolve.ogg",
+    "DisplayName": "Unending Resolve",
+    "FormattedDisplayName": "Unending Resolve",
+    "Text": "Unending Resolve"
+  },
+  {
+    "FileName": "uppies.ogg",
+    "DisplayName": "Uppies",
+    "FormattedDisplayName": "Uppies",
+    "Text": "Uppies"
+  },
+  {
+    "FileName": "vaelgor_s_final_stare.ogg",
+    "DisplayName": "Vaelgor\u0027s Final Stare",
+    "FormattedDisplayName": "Vaelgor\u0027s Final Stare",
+    "Text": "Vaelgor\u0027s Final Stare"
+  },
+  {
+    "FileName": "vampiric_blood.ogg",
+    "DisplayName": "Vampiric Blood",
+    "FormattedDisplayName": "Vampiric Blood",
+    "Text": "Vampiric Blood"
+  },
+  {
+    "FileName": "vampiric_embrace.ogg",
+    "DisplayName": "Vampiric Embrace",
+    "FormattedDisplayName": "Vampiric Embrace",
+    "Text": "Vampiric Embrace"
+  },
+  {
+    "FileName": "vanish.ogg",
+    "DisplayName": "Vanish",
+    "FormattedDisplayName": "Vanish",
+    "Text": "Vanish"
+  },
+  {
+    "FileName": "vengeful_retreat.ogg",
+    "DisplayName": "Vengeful Retreat",
+    "FormattedDisplayName": "Vengeful Retreat",
+    "Text": "Vengeful Retreat"
+  },
+  {
+    "FileName": "void_metamorphosis.ogg",
+    "DisplayName": "Void Metamorphosis",
+    "FormattedDisplayName": "Void Metamorphosis",
+    "Text": "Void Metamorphosis"
+  },
+  {
+    "FileName": "void_torrent.ogg",
+    "DisplayName": "Void Torrent",
+    "FormattedDisplayName": "Void Torrent",
+    "Text": "Void Torrent"
+  },
+  {
     "FileName": "void.ogg",
     "DisplayName": "Void",
     "FormattedDisplayName": "Void",
     "Text": "Void"
+  },
+  {
+    "FileName": "voidform.ogg",
+    "DisplayName": "Voidform",
+    "FormattedDisplayName": "Voidform",
+    "Text": "Voidform"
+  },
+  {
+    "FileName": "volley.ogg",
+    "DisplayName": "Volley",
+    "FormattedDisplayName": "Volley",
+    "Text": "Volley"
+  },
+  {
+    "FileName": "wake_of_ashes.ogg",
+    "DisplayName": "Wake of Ashes",
+    "FormattedDisplayName": "Wake of Ashes",
+    "Text": "Wake of Ashes"
+  },
+  {
+    "FileName": "wall.ogg",
+    "DisplayName": "Wall",
+    "FormattedDisplayName": "Wall",
+    "Text": "Wall"
   },
   {
     "FileName": "watch_side.ogg",
@@ -702,9 +2406,57 @@
     "Text": "West"
   },
   {
+    "FileName": "wind_rush.ogg",
+    "DisplayName": "Wind Rush",
+    "FormattedDisplayName": "Wind Rush",
+    "Text": "Wind Rush"
+  },
+  {
+    "FileName": "windrush_totem.ogg",
+    "DisplayName": "Windrush Totem",
+    "FormattedDisplayName": "Windrush Totem",
+    "Text": "Windrush Totem"
+  },
+  {
+    "FileName": "wings.ogg",
+    "DisplayName": "Wings",
+    "FormattedDisplayName": "Wings",
+    "Text": "Wings"
+  },
+  {
+    "FileName": "xuen.ogg",
+    "DisplayName": "Xuen",
+    "FormattedDisplayName": "Xuen",
+    "Text": "Xuen"
+  },
+  {
     "FileName": "yellow.ogg",
     "DisplayName": "Yellow",
     "FormattedDisplayName": "Yellow",
     "Text": "Yellow"
+  },
+  {
+    "FileName": "yulon.ogg",
+    "DisplayName": "Yu\u0027lon",
+    "FormattedDisplayName": "Yu\u0027lon",
+    "SSML": "\u003Cspeak\u003E\n  \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022\u02C8ju\u02D0l\u0252n\u0022\u003EYu\u0027lon=\u02C8ju\u02D0l\u0252n\u003C/phoneme\u003E\n\u003C/speak\u003E"
+  },
+  {
+    "FileName": "zen_meditation.ogg",
+    "DisplayName": "Zen Meditation",
+    "FormattedDisplayName": "Zen Meditation",
+    "Text": "Zen Meditation"
+  },
+  {
+    "FileName": "zenith.ogg",
+    "DisplayName": "Zenith",
+    "FormattedDisplayName": "Zenith",
+    "Text": "Zenith"
+  },
+  {
+    "FileName": "zephyr.ogg",
+    "DisplayName": "Zephyr",
+    "FormattedDisplayName": "Zephyr",
+    "Text": "Zephyr"
   }
 ]

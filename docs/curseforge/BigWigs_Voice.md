@@ -19,7 +19,7 @@ BigWigs.
 
 ## Voices
 
-Wavenet_E (female), Neural2_C (female) and Studio_Q (male). Samples are on the [GitHub page](https://github.com/KogasaPls/WoWVoxPacks#voices). Install as many of them as you like, but enable only one.
+Wavenet_E (en_US female), Neural2_C (en_US female) and Studio_Q (en_US male). Samples are on the [GitHub page](https://github.com/KogasaPls/WoWVoxPacks#voices). Install as many of them as you like, but enable only one.
 
 ## Source
 

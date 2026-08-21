@@ -17,7 +17,7 @@ ExBoss, and LibSharedMedia-3.0, which comes bundled with almost every raid addon
 
 ## Voices
 
-Wavenet_E (female), Neural2_C (female) and Studio_Q (male). Samples are on the [GitHub page](https://github.com/KogasaPls/WoWVoxPacks#voices). Install as many of them as you like; they sit side by side.
+Wavenet_E (en_US female), Neural2_C (en_US female) and Studio_Q (en_US male). Samples are on the [GitHub page](https://github.com/KogasaPls/WoWVoxPacks#voices). Install as many of them as you like; they sit side by side.
 
 ## Source
 

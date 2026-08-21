@@ -23,7 +23,7 @@ Northern Sky Raid Tools, and LibSharedMedia-3.0, which comes bundled with almost
 
 ## Voices
 
-Wavenet_E (female), Neural2_C (female) and Studio_Q (male). Samples are on the [GitHub page](https://github.com/KogasaPls/WoWVoxPacks#voices). Install only one of them; a second pack registers nothing and says so in chat.
+Wavenet_E (en_US female), Neural2_C (en_US female) and Studio_Q (en_US male). Samples are on the [GitHub page](https://github.com/KogasaPls/WoWVoxPacks#voices). Install only one of them; a second pack registers nothing and says so in chat.
 
 ## Source
 

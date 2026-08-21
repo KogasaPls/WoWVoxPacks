@@ -32,6 +32,21 @@ public class BigWigsVoiceAddOnServiceTests
     }
 
     [Fact]
+    public async Task BuildAddOnAsync_NamesTheFolderAfterTheVoice()
+    {
+        BigWigsVoiceAddOnService service =
+            new(new StubOptions(Settings), new FakeUpstreamClient([]));
+
+        AddOn addOn = await service.BuildAddOnAsync("/tmp/output", TtsSettings);
+
+        // Voice-suffixed so several voices can be installed side by side; BigWigs finds a pack
+        // by its TOC metadata, never by folder name.
+        Assert.Equal("BigWigs_Voice_WoWVoxPacks_Neural2_C", addOn.AddOnDirectoryName);
+        Assert.Contains("BigWigs_Voice_WoWVoxPacks_Neural2_C", addOn.GetFileContent("Core.lua"),
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
     public async Task BuildAddOnAsync_PrefersTheCuratedEntry_WhenUpstreamNamesTheSameSpellDifferently()
     {
         List<SoundFile> curated =

@@ -23,6 +23,7 @@ public sealed class BigWigsVoiceAddOnService(
         IEnumerable<BigWigsVoiceSoundFile> soundFiles = await GetSoundFilesAsync(cancellationToken);
 
         return new AddOnBuilder(AddOnSettings, ttsSettings)
+            .WithTitle($"BigWigs Voice WoWVoxPacks {ttsSettings.Voice}")
             .WithDisplayTitle($"BigWigs |cffff7f3f+|r|cffffffffVoice: WoWVoxPacks ({ttsSettings.Voice})|r")
             .AddFile("Core.lua", CoreLuaFile.Render)
             .AddSoundFiles(JsonSoundFiles.Value, overwrite: true)

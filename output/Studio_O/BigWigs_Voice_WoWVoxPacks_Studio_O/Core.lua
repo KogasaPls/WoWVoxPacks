@@ -12,8 +12,8 @@ addon.SendMessage = BigWigsLoader.SendMessage
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-local path = "Interface\\AddOns\\BigWigs_Voice_WoWVoxPacks\\Sounds\\%s.ogg"
-local pathYou = "Interface\\AddOns\\BigWigs_Voice_WoWVoxPacks\\Sounds\\%sy.ogg"
+local path = "Interface\\AddOns\\BigWigs_Voice_WoWVoxPacks_Studio_O\\Sounds\\%s.ogg"
+local pathYou = "Interface\\AddOns\\BigWigs_Voice_WoWVoxPacks_Studio_O\\Sounds\\%sy.ogg"
 -- Nothing renders the y variants yet, so an on-me callout that goes straight to
 -- BigWigs' own sound would lose the spell name on the alerts that matter most.
 local function handler(_, module, key, sound, isOnMe)

@@ -1,5 +1,5 @@
 -- The packs that are not part of the Callouts work but ship in the same release:
--- BigWigs_Voice_WoWVoxPacks/Core.lua, ExBoss_WoWVoxPacks_{Voice}/Core.lua and
+-- BigWigs_Voice_WoWVoxPacks_{Voice}/Core.lua, ExBoss_WoWVoxPacks_{Voice}/Core.lua and
 -- BigWigs_Countdown_WoWVoxPacks_{Voice}/Countdown.lua.
 
 local harness = require("support.harness")
@@ -17,7 +17,7 @@ local function StubBigWigs()
     return registered
 end
 
-local VOICE_SOUNDS = "Interface\\AddOns\\BigWigs_Voice_WoWVoxPacks\\Sounds\\"
+local VOICE_SOUNDS = "Interface\\AddOns\\BigWigs_Voice_WoWVoxPacks_Neural2_C\\Sounds\\"
 
 --- Stands in for BigWigs itself: keeps the handler the pack registers, and records anything
 --- the pack hands back for BigWigs to sound instead.
@@ -38,7 +38,7 @@ end
 
 local function LoadBigWigs_Voice(world)
     local bigwigs = StubBigWigs_Voice()
-    world:LoadAddOn("BigWigs_Voice_WoWVoxPacks")
+    world:LoadAddOn("BigWigs_Voice_WoWVoxPacks_Neural2_C")
     truthy(bigwigs.handler, "the pack no longer registers a BigWigs_Voice handler")
     return bigwigs
 end

@@ -1,5 +1,5 @@
 ---
-summary: A {Voice} countdown voice for BigWigs.
+summary: TTS sound files for the BigWigs countdown, using Google Cloud {Voice} ({VoiceDescription}).
 ---
 # BigWigs Countdown: WoWVoxPacks ({Voice})
 

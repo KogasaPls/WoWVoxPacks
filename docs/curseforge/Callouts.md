@@ -1,5 +1,5 @@
 ---
-summary: Raid callout sounds in the {Voice} voice, pickable in any BigWigs, NSRT or Liquid Reminders sound dropdown.
+summary: TTS sound files for spell names and raid callouts, using Google Cloud {Voice} ({VoiceDescription}).
 ---
 # WoWVoxPacks Callouts ({Voice})
 

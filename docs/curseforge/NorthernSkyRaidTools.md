@@ -1,5 +1,5 @@
 ---
-summary: Replaces Northern Sky Raid Tools' in-game text-to-speech with pre-rendered {Voice} recordings.
+summary: TTS sound files for Northern Sky Raid Tools, using Google Cloud {Voice} ({VoiceDescription}).
 ---
 # WoWVoxPacks Northern Sky Raid Tools ({Voice})
 

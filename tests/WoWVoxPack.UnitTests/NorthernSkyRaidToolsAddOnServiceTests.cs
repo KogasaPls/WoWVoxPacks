@@ -114,11 +114,9 @@ public sealed class NorthernSkyRaidToolsAddOnServiceTests : IDisposable
         string vocabularyPath = Path.Combine(_temporaryDirectory, "nsrt-vocabulary.txt");
         string overridesPath = Path.Combine(_temporaryDirectory, "CalloutPronunciations.json");
         File.WriteAllText(vocabularyPath, "AntiMagicShell\n");
+        string sharedSsml = "{\"Ssml\":\"<speak>Anti-Magic Shell</speak>\"}";
         File.WriteAllText(overridesPath,
-            """
-            {"AntiMagicShell":{"Ssml":"<speak>Anti-Magic Shell</speak>"},
-             "Anti-Magic Shell":{"Ssml":"<speak>Anti-Magic Shell</speak>"}}
-            """);
+            "{\"AntiMagicShell\":" + sharedSsml + ",\"Anti-Magic Shell\":" + sharedSsml + "}");
         File.WriteAllText(Path.Combine(_temporaryDirectory, "Callouts_Sounds.json"), "[]");
         File.WriteAllText(Path.Combine(_temporaryDirectory, "lorrgs-vocabulary.txt"), string.Empty);
         File.WriteAllText(Path.Combine(_temporaryDirectory, "RetiredCallouts.json"),

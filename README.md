@@ -37,6 +37,13 @@ The following voices are available.
 - Studio_O (Female)
   - <video src='https://github.com/user-attachments/assets/04bd2217-f757-4165-8414-9ea080eec041' width=10></video>
 
+## CurseForge pages
+
+`docs/curseforge/` holds one page per addon, written with `{Voice}` where the voice name goes.
+CurseForge has no API for editing a project description, so publishing is a paste into the web
+editor; `scripts/curseforge_description.py --addon Callouts --voice Wavenet_E` prints the
+substituted markdown, and `--summary` prints the summary field.
+
 ## Tests
 
 `dotnet test` covers the generators. `tests/lua/run.sh` regenerates the addon Lua from the C#

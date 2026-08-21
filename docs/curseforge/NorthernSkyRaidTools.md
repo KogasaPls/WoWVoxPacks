@@ -12,22 +12,14 @@ No configuration is required, just install and load the addon. Two NSRT settings
 ## What it covers
 
 - Raid cooldown assignments read from a note, by spell name: `Tranquility`, `Rallying Cry`, `Anti-Magic Zone`
-- Encounter alerts ("Don't soak", "Stop Cast", "Watch Spawns") and NSRT's own vocabulary: `Soak`, `DropPool`, `Dispel`, directions, and the numbers `1` through `10`
+- Encounter alerts ("Don't soak", "Stop Cast", "Watch Spawns") and the mechanic words NSRT uses: `Soak`, `Dispel`, `Frontal`, directions, and the numbers `1` through `10`
 - The ready-check reminders NSRT emits as fixed phrases, such as `Soulstone` and `Source of Magic`
 
 ## Requirements
 
 Northern Sky Raid Tools, and LibSharedMedia-3.0, which comes bundled with almost every raid addon.
 
-## Which WoWVoxPacks addon do I want?
-
-| Pack | Use it when | Voices at once |
-| --- | --- | --- |
-| [BigWigs Voice]({Url:BigWigs_Voice}) | you want BigWigs to speak boss ability names | one enabled |
-| [BigWigs Countdown]({Url:BigWigs_Countdown}) | you want the BigWigs countdown in this voice | as many as you like |
-| [Northern Sky Raid Tools]({Url:NorthernSkyRaidTools}) | you use NSRT and want its callouts to stop going through the in-game text-to-speech | one |
-| [Callouts]({Url:Callouts}) | you want to pick voice lines by hand in BigWigs, NSRT or Liquid Reminders | as many as you like |
-| [ExBoss]({Url:ExBoss}) | you use ExBoss and want its callouts spoken in English | as many as you like |
+{PacksTable}
 
 ## Voices
 

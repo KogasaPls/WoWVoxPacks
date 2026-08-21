@@ -11,6 +11,8 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 SCRIPT = REPOSITORY_ROOT / "scripts" / "curseforge_description.py"
 PAGES = REPOSITORY_ROOT / "docs" / "curseforge"
 WORKFLOW = REPOSITORY_ROOT / ".github" / "workflows" / "publish-to-curseforge.yml"
+# Wide enough to catch {Url:BigWigs_Voice}, the form a missing substitution leaves behind.
+PLACEHOLDER = r"\{[A-Za-z][A-Za-z0-9_:.-]*\}"
 
 
 def published_matrix() -> dict[str, dict[str, int]]:
@@ -35,7 +37,8 @@ def run(*arguments: str) -> str:
 class CurseForgeDescriptionTests(unittest.TestCase):
     def test_every_published_addon_has_a_page(self):
         addons = {addon for projects in published_matrix().values() for addon in projects}
-        self.assertEqual(addons, {page.stem for page in PAGES.glob("*.md")})
+        self.assertEqual(addons, {page.stem for page in PAGES.glob("*.md")
+                                 if not page.stem.startswith("_")})
 
     def test_published_voices_match_the_publish_workflow(self):
         module = SCRIPT.read_text(encoding="utf-8")
@@ -51,8 +54,8 @@ class CurseForgeDescriptionTests(unittest.TestCase):
                 with self.subTest(voice=voice, addon=addon):
                     page = run("--addon", addon, "--voice", voice)
                     summary = run("--addon", addon, "--voice", voice, "--summary")
-                    self.assertEqual([], re.findall(r"\{[A-Za-z]+\}", page))
-                    self.assertEqual([], re.findall(r"\{[A-Za-z]+\}", summary))
+                    self.assertEqual([], re.findall(PLACEHOLDER, page))
+                    self.assertEqual([], re.findall(PLACEHOLDER, summary))
                     self.assertIn(voice, page)
                     self.assertTrue(summary.strip())
 

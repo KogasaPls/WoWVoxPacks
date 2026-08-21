@@ -17,8 +17,7 @@ namespace WoWVoxPack.AddOns.Callouts;
 /// <para>
 /// <c>LibStub</c> is only guaranteed to be on the load order by <c>## OptionalDeps</c>, not
 /// guaranteed present, so the file calls it through the silent form and bails out rather than
-/// throwing at login with no LibSharedMedia installed. Registering is all it does: it creates
-/// no frame, listens for no event, and prints nothing.
+/// throwing at login with no LibSharedMedia installed.
 /// </para>
 /// </summary>
 public static class CalloutsLuaFile

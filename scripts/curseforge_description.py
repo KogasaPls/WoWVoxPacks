@@ -3,6 +3,7 @@
 
 import argparse
 import sys
+from functools import cache
 from pathlib import Path
 
 # Mirrors the voices publish-to-curseforge.yml holds project IDs for.
@@ -55,6 +56,9 @@ def project_url(addon: str, voice: str) -> str:
 
 
 def substitute(text: str, voice: str) -> str:
+    text = text.replace(
+        "{PacksTable}",
+        (DESCRIPTIONS / "_packs-table.md").read_text(encoding="utf-8").rstrip("\n"))
     for addon in ADDON_SLUGS:
         text = text.replace(f"{{Url:{addon}}}", project_url(addon, voice))
     return (text
@@ -62,8 +66,11 @@ def substitute(text: str, voice: str) -> str:
             .replace("{Voice}", voice))
 
 
+@cache
 def addons() -> list[str]:
-    return sorted(page.stem for page in DESCRIPTIONS.glob("*.md"))
+    """Pages named for an addon. A leading underscore marks a shared fragment instead."""
+    return sorted(page.stem for page in DESCRIPTIONS.glob("*.md")
+                  if not page.stem.startswith("_"))
 
 
 def write_all(destination: Path) -> None:
@@ -97,7 +104,10 @@ def main() -> int:
         print("--addon and --voice are required unless --all is given", file=sys.stderr)
         return 2
     summary, body = render(arguments.addon, arguments.voice)
-    print(summary if arguments.summary else body, end="" if not arguments.summary else "\n")
+    if arguments.summary:
+        print(summary)
+    else:
+        print(body, end="")
     return 0
 
 

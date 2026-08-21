@@ -44,6 +44,12 @@ CurseForge has no API for editing a project description, so publishing is a past
 editor; `scripts/curseforge_description.py --addon Callouts --voice Wavenet_E` prints the
 substituted markdown, and `--summary` prints the summary field.
 
+Nothing keeps a pasted page in step with the repo, so `scripts/curseforge_drift.py
+--api-key-file <path>` compares every live page against its template and names the ones
+that differ. It needs a read-only API key from console.curseforge.com, which is a
+different credential from the upload token the publisher uses. The
+`Check CurseForge descriptions` workflow runs it weekly.
+
 ## Tests
 
 `dotnet test` covers the generators. `tests/lua/run.sh` regenerates the addon Lua from the C#

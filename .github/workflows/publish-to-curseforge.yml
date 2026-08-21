@@ -9,6 +9,10 @@ on:
         description: 'Tag to publish. Empty resolves the latest release.'
         type: string
         default: ''
+      changelog:
+        description: 'Markdown notes for the uploaded files. Empty falls back to the release body.'
+        type: string
+        default: ''
   workflow_dispatch:
     inputs:
       release_tag:
@@ -105,6 +109,27 @@ jobs:
           fi
           echo "Publishing ${RELEASE_TAG}"
           echo "RELEASE_TAG=${RELEASE_TAG}" >> "$GITHUB_ENV"
+      - name: Set changelog
+        # A manual run has no caller to hand it the notes, and resolving them from history
+        # would need the full clone of output/ that this job otherwise never pays for. The
+        # release body carries the same notes for any tag this workflow released.
+        env:
+          CHANGELOG_INPUT: ${{ inputs.changelog }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          changelog="$CHANGELOG_INPUT"
+          if [ -z "$changelog" ]; then
+            changelog=$(curl -sf \
+              -H "Authorization: Bearer ${GH_TOKEN}" \
+              "https://api.github.com/repos/${{ github.repository }}/releases/tags/${RELEASE_TAG}" \
+              | jq -r '.body // ""')
+          fi
+          delimiter="CHANGELOG_${RANDOM}${RANDOM}"
+          {
+            echo "RELEASE_CHANGELOG<<${delimiter}"
+            echo "$changelog"
+            echo "${delimiter}"
+          } >> "$GITHUB_ENV"
       - name: Check out the release
         # Before the assets are downloaded: checkout cleans the workspace. The tag's own
         # settings are what that build declared, which a manual run of an older tag needs.
@@ -145,3 +170,5 @@ jobs:
           display_name: ${{ matrix.addon }} (${{ matrix.voice }}) ${{ env.RELEASE_TAG }}
           game_versions: ${{ env.RELEASE_GAME_VERSIONS }}
           relations: ${{ fromJSON(matrix.addon-to-relations-json)[matrix.addon] }}
+          changelog: ${{ env.RELEASE_CHANGELOG }}
+          changelog_type: markdown

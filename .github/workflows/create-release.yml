@@ -19,6 +19,7 @@ jobs:
     outputs:
       release_tag: ${{ steps.set-release-tag.outputs.release_tag || steps.set-release-tag-push.outputs.release_tag }}
       released: ${{ steps.existing-release.outputs.skip != 'true' }}
+      changelog: ${{ steps.release-notes.outputs.changelog }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -108,6 +109,22 @@ jobs:
               exit 1
               ;;
           esac
+      - name: Generate release notes
+        id: release-notes
+        if: steps.existing-release.outputs.skip != 'true'
+        # The tag is created by the release below, so the notes span the previous tag to HEAD.
+        # checkout above uses fetch-depth: 0, which is what makes that history local.
+        env:
+          REPOSITORY_URL: ${{ github.server_url }}/${{ github.repository }}
+        run: |
+          notes=$(python scripts/release_notes.py --tag "$RELEASE_TAG" --repository-url "$REPOSITORY_URL")
+          echo "$notes"
+          delimiter="RELEASE_NOTES_${RANDOM}${RANDOM}"
+          {
+            echo "changelog<<${delimiter}"
+            echo "$notes"
+            echo "${delimiter}"
+          } >> "$GITHUB_OUTPUT"
       - name: Package artifacts
         if: steps.existing-release.outputs.skip != 'true'
         run: ./scripts/package.sh
@@ -150,3 +167,4 @@ jobs:
     secrets: inherit
     with:
       release_tag: ${{ needs.create-release.outputs.release_tag }}
+      changelog: ${{ needs.create-release.outputs.changelog }}

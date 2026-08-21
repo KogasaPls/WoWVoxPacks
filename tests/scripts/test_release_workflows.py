@@ -179,6 +179,44 @@ class ReleaseWorkflowTests(unittest.TestCase):
                 release_creator[step:end],
             )
 
+    def test_every_upload_carries_the_notes_the_release_generated(self):
+        """CurseForge shows whatever the upload sends, and it sent nothing until now.
+
+        The action takes the changelog as an input; omitting it publishes a file with an
+        empty changelog page, which is what every release through v12.1.0-r9 did.
+        """
+        release_creator = (
+            REPOSITORY_ROOT / ".github/workflows/create-release.yml"
+        ).read_text(encoding="utf-8")
+        publisher = (
+            REPOSITORY_ROOT / ".github/workflows/publish-to-curseforge.yml"
+        ).read_text(encoding="utf-8")
+
+        self.assertIn("python scripts/release_notes.py", release_creator)
+        self.assertIn(
+            "changelog: ${{ steps.release-notes.outputs.changelog }}", release_creator
+        )
+        self.assertIn(
+            "changelog: ${{ needs.create-release.outputs.changelog }}", release_creator
+        )
+        # A multiline value only survives $GITHUB_OUTPUT behind a heredoc delimiter.
+        self.assertIn('echo "changelog<<${delimiter}"', release_creator)
+        self.assertIn("      changelog:\n        description:", publisher)
+        self.assertIn("changelog: ${{ env.RELEASE_CHANGELOG }}", publisher)
+        self.assertIn("changelog_type: markdown", publisher)
+
+    def test_generating_the_notes_cannot_release_a_tag_the_run_would_skip(self):
+        """The notes step runs before packaging and must honour the same skip."""
+        release_creator = (
+            REPOSITORY_ROOT / ".github/workflows/create-release.yml"
+        ).read_text(encoding="utf-8")
+
+        step = release_creator.index("- name: Generate release notes")
+        end = release_creator.find("\n      - name: ", step)
+        self.assertIn(
+            "if: steps.existing-release.outputs.skip != 'true'", release_creator[step:end]
+        )
+
     def test_publisher_asks_for_no_permission_its_caller_lacks(self):
         """A called workflow can only be granted less than the job that calls it.
 

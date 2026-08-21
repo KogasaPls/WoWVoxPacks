@@ -1,7 +1,3 @@
-local function Warn(message)
-    print("|cffff7f3fWoWVoxPacks|r " .. message)
-end
-
 -- LibStub(name, true) is the silent form: nil instead of an error.
 local LSM = LibStub and LibStub("LibSharedMedia-3.0", true)
 if not LSM then return end
@@ -319,20 +315,3 @@ LSM:Register("sound", "|cffff7f3fWVP Studio_O: Zen Meditation|r", path .. "zen_m
 LSM:Register("sound", "|cffff7f3fWVP Studio_O: Zenith|r", path .. "zenith.ogg")
 LSM:Register("sound", "|cffff7f3fWVP Studio_O: Zephyr|r", path .. "zephyr.ogg")
 LSM:Register("sound", "|cffff7f3fWVP Studio_O: Invoke Chi-ji, the Red Crane|r", path .. "invoke_chiji_the_red_crane.ogg")
-
--- The pre-rename folder registers the same sounds under plain-text keys, which sort above
--- this pack's block. It cannot collide with these keys, and it is what still serves the
--- names the user's existing profiles store, so this only reports it.
-local warned = false
-local function WarnStaleFolder()
-    if warned then return end
-    local name = "SharedMedia_Abilities_WoWVoxPacks_Studio_O"
-    if not (C_AddOns and C_AddOns.IsAddOnLoaded and C_AddOns.IsAddOnLoaded(name)) then return end
-    warned = true
-    Warn(name .. " is still installed and adds a duplicate set of these sounds near the top "
-        .. "of every sound dropdown. It is safe to delete once you have re-picked your sounds.")
-end
-
-local frame = CreateFrame("Frame")
-frame:RegisterEvent("PLAYER_LOGIN")
-frame:SetScript("OnEvent", WarnStaleFolder)

@@ -10,7 +10,8 @@ A collection of modern TTS voices for World of Warcraft addons.
 - WoWVoxPacks_{Voice}_BigWigs_Countdown: Adds a new voice option for BigWigs' countdown (must be configured in BigWigs).
 - WoWVoxPacks_{Voice}_Callouts: Spell names and other generic callouts.
 - WoWVoxPacks_{Voice}_NorthernSkyRaidTools: Install exactly one voice addon for Northern Sky Raid Tools. It contains
-  its own recordings and needs neither Callouts nor an in-game setting.
+  its own recordings, including the Callouts spell names under plain keys so NSRT plays them automatically for
+  assignments and alerts, and needs neither Callouts nor an in-game setting.
 
 <video src='https://github.com/user-attachments/assets/8bceffae-2e57-49cb-bb74-aab43ac65ae7' width=180></video>
 

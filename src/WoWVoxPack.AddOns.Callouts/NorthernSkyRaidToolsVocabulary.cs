@@ -14,9 +14,16 @@ public static class NorthernSkyRaidToolsVocabulary
 
     public static IReadOnlyList<CalloutRegistration> Load(
         IEnumerable<string> vocabularyPaths,
-        IReadOnlyDictionary<string, PronunciationOverride> overrides) =>
-        CreateRegistrations(
+        IReadOnlyDictionary<string, PronunciationOverride> overrides,
+        IEnumerable<CalloutRegistration>? calloutRegistrations = null)
+    {
+        IReadOnlyList<CalloutRegistration> registrations = CreateRegistrations(
             vocabularyPaths.SelectMany(path => Parse(File.ReadLines(path))), overrides);
+
+        return calloutRegistrations is null
+            ? registrations
+            : [.. registrations, .. FoldInCallouts(registrations, calloutRegistrations)];
+    }
 
     /// <summary>
     /// Keeps each source key exactly as written. Whitespace is inspected only to recognize a
@@ -27,6 +34,38 @@ public static class NorthernSkyRaidToolsVocabulary
             .Where(line => !string.IsNullOrWhiteSpace(line)
                            && !line.TrimStart().StartsWith('#'))
             .ToList();
+
+    /// <summary>
+    /// Key dedup is case-insensitive because NSRT's sound lookup is (its cache lowercases every
+    /// key). Retirement-only registrations stay out: retirement preserves keys that shipped, and
+    /// this pack never shipped them.
+    /// </summary>
+    private static IEnumerable<CalloutRegistration> FoldInCallouts(
+        IEnumerable<CalloutRegistration> registrations,
+        IEnumerable<CalloutRegistration> calloutRegistrations)
+    {
+        HashSet<string> registered = new(
+            registrations.SelectMany(registration => registration.MediaKeys),
+            StringComparer.OrdinalIgnoreCase);
+
+        foreach (CalloutRegistration callout in calloutRegistrations)
+        {
+            if (callout.ReuseExistingAudioOnly)
+            {
+                continue;
+            }
+
+            List<string> mediaKeys = callout.MediaKeys
+                .Union([callout.SoundFile.DisplayName], StringComparer.OrdinalIgnoreCase)
+                .Where(registered.Add)
+                .ToList();
+
+            if (mediaKeys.Count > 0)
+            {
+                yield return new CalloutRegistration(callout.SoundFile, mediaKeys);
+            }
+        }
+    }
 
     private static IReadOnlyList<CalloutRegistration> CreateRegistrations(
         IEnumerable<string> mediaKeys,

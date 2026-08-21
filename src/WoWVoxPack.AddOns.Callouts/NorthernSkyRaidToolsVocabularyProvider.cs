@@ -5,18 +5,19 @@ using WoWVoxPack.TTS;
 
 namespace WoWVoxPack.AddOns.Callouts;
 
-/// <summary>Loads only Northern Sky Raid Tools' literal media-key vocabulary.</summary>
+/// <summary>Loads the Northern Sky Raid Tools vocabulary, folding in Callouts when given.</summary>
 public sealed class NorthernSkyRaidToolsVocabularyProvider
 {
     private readonly Lazy<IReadOnlyList<CalloutRegistration>> _registrations;
 
     public NorthernSkyRaidToolsVocabularyProvider(IReadOnlyList<string> vocabularyPaths,
-        string overridesPath)
+        string overridesPath, CalloutsVocabularyProvider? callouts = null)
     {
         _registrations = new Lazy<IReadOnlyList<CalloutRegistration>>(() =>
             NorthernSkyRaidToolsVocabulary.Load(
                 vocabularyPaths,
-                CalloutPronunciation.LoadOverrides(overridesPath)));
+                CalloutPronunciation.LoadOverrides(overridesPath),
+                callouts?.Registrations));
     }
 
     public IReadOnlyList<CalloutRegistration> Registrations => _registrations.Value;

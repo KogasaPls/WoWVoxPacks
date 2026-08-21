@@ -41,7 +41,7 @@ IHostBuilder hostBuilder = Host.CreateDefaultBuilder(args)
                 Assembly.GetExecutingAssembly().GetCustomAttribute<SolutionFileAttribute>()!.SolutionFile)!,
                 "lorrgs-vocabulary.txt"),
             Path.Combine(AppContext.BaseDirectory, "RetiredCallouts.json")));
-        services.AddSingleton(_ =>
+        services.AddSingleton(sp =>
         {
             string solutionDirectory = Path.GetDirectoryName(
                 Assembly.GetExecutingAssembly().GetCustomAttribute<SolutionFileAttribute>()!.SolutionFile)!;
@@ -50,7 +50,8 @@ IHostBuilder hostBuilder = Host.CreateDefaultBuilder(args)
                 NorthernSkyRaidToolsVocabulary.VocabularyFileNames
                     .Select(fileName => Path.Combine(solutionDirectory, fileName))
                     .ToArray(),
-                Path.Combine(AppContext.BaseDirectory, "CalloutPronunciations.json"));
+                Path.Combine(AppContext.BaseDirectory, "CalloutPronunciations.json"),
+                sp.GetRequiredService<CalloutsVocabularyProvider>());
         });
         services.TryAddEnumerable(ServiceDescriptor.Singleton<IAddOnService, BigWigsVoiceAddOnService>());
         services.TryAddEnumerable(ServiceDescriptor.Singleton<IAddOnService, BigWigsCountdownAddOnService>());

@@ -49,11 +49,12 @@ services.AddSingleton(_ => new CalloutsVocabularyProvider(
     Path.Combine(AppContext.BaseDirectory, "CalloutPronunciations.json"),
     Path.Combine(repoRoot, "lorrgs-vocabulary.txt"),
     Path.Combine(AppContext.BaseDirectory, "RetiredCallouts.json")));
-services.AddSingleton(_ => new NorthernSkyRaidToolsVocabularyProvider(
+services.AddSingleton(sp => new NorthernSkyRaidToolsVocabularyProvider(
     NorthernSkyRaidToolsVocabulary.VocabularyFileNames
         .Select(fileName => Path.Combine(repoRoot, fileName))
         .ToArray(),
-    Path.Combine(AppContext.BaseDirectory, "CalloutPronunciations.json")));
+    Path.Combine(AppContext.BaseDirectory, "CalloutPronunciations.json"),
+    sp.GetRequiredService<CalloutsVocabularyProvider>()));
 
 // The BigWigs pack's Lua is the same whatever the spell list holds, and fetching the real one
 // would put GitHub between the harness and a run.

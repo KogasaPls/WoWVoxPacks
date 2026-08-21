@@ -34,6 +34,14 @@ test("northern sky raid tools: NSRT numeric normalization resolves the literal k
     end
 end)
 
+test("northern sky raid tools: a Callouts spell name resolves to the per-voice recording", function()
+    local world = World.new():LoadNsrt():LoadNorthernSkyRaidTools("Neural2_C")
+
+    world:TTS("Adrenaline Rush")
+
+    equal(world:LastPlayed(), SoundPath("Neural2_C", "adrenaline_rush.ogg"))
+end)
+
 test("northern sky raid tools: loads quietly without LibSharedMedia", function()
     local world = World.new({ libstub = false })
 

@@ -91,6 +91,41 @@ public class CalloutVocabularyProviderTests
     }
 
     [Fact]
+    public void NorthernSkyRaidTools_FoldsCalloutsInUnderPlainKeys()
+    {
+        string directory = Directory.CreateTempSubdirectory().FullName;
+        File.WriteAllText(Path.Combine(directory, "Callouts_Sounds.json"),
+            """[{"FileName":"tranquility.ogg","Text":"Tranquility","DisplayName":"Tranquility"}]""");
+        File.WriteAllText(Path.Combine(directory, "CalloutPronunciations.json"), "{}");
+        File.WriteAllText(Path.Combine(directory, "lorrgs-vocabulary.txt"),
+            "Anti-Magic Shell\nDarkness\n");
+        File.WriteAllText(Path.Combine(directory, "RetiredCallouts.json"), "[\"OldCallout\"]");
+        File.WriteAllText(Path.Combine(directory, "nsrt-vocabulary.txt"), "DropPool\ndarkness\n");
+
+        CalloutsVocabularyProvider callouts = new(
+            Path.Combine(directory, "Callouts_Sounds.json"),
+            Path.Combine(directory, "CalloutPronunciations.json"),
+            Path.Combine(directory, "lorrgs-vocabulary.txt"),
+            Path.Combine(directory, "RetiredCallouts.json"));
+        NorthernSkyRaidToolsVocabularyProvider provider = new(
+            [Path.Combine(directory, "nsrt-vocabulary.txt")],
+            Path.Combine(directory, "CalloutPronunciations.json"),
+            callouts);
+
+        IReadOnlyList<CalloutRegistration> registrations = provider.Registrations;
+
+        CalloutRegistration folded = registrations.Single(r => r.MediaKeys.Contains("Anti-Magic Shell"));
+        Assert.Same(
+            callouts.Registrations.Single(r => r.SoundFile.DisplayName == "Anti-Magic Shell").SoundFile,
+            folded.SoundFile);
+        Assert.Contains(registrations, r => r.MediaKeys.SequenceEqual(["Tranquility"]));
+        Assert.Contains(registrations, r => r.MediaKeys.SequenceEqual(["darkness"]));
+        Assert.DoesNotContain(registrations,
+            r => r.MediaKeys.Contains("Darkness") || r.SoundFile.DisplayName == "Old Callout");
+        Assert.DoesNotContain(provider.SoundFiles, f => f.DisplayName == "Darkness");
+    }
+
+    [Fact]
     public void Callouts_ToleratesAMissingRetiredCalloutsFile()
     {
         string directory = Directory.CreateTempSubdirectory().FullName;

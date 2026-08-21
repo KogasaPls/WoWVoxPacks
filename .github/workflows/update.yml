@@ -22,15 +22,11 @@ jobs:
       version_changed: ${{ steps.compare-versions.outputs.version_changed }}
     steps:
       - name: Get latest BigWigsVoice release
-        id: get-bigwigsvoice-release
-        uses: pozetroninc/github-action-get-latest-release@v0.8.0
-        with:
-          owner: BigWigsMods
-          repo: BigWigs_Voice
-          excludes: prerelease, draft
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Write version to file
-        run: echo "${{ steps.get-bigwigsvoice-release.outputs.release }}" > version.txt
+        # The releases/latest endpoint returns the newest release that is neither a draft
+        # nor a prerelease, matching the excludes the retired action was configured with.
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh api repos/BigWigsMods/BigWigs_Voice/releases/latest --jq .tag_name > version.txt
       - name: Get previous version
         run: |
           curl -sf -L \

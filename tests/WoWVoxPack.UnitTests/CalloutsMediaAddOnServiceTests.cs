@@ -79,7 +79,7 @@ public sealed class CalloutsMediaAddOnServiceTests : IDisposable
         File.WriteAllText(retiredPath, System.Text.Json.JsonSerializer.Serialize(retiredNames));
 
         CalloutsVocabularyProvider vocabulary =
-            new(curatedPath, overridesPath, lorrgsPath, retiredPath);
+            new(curatedPath, overridesPath, [lorrgsPath], retiredPath);
         return new CalloutsMediaAddOnService(new StubOptions(Settings), vocabulary);
     }
 

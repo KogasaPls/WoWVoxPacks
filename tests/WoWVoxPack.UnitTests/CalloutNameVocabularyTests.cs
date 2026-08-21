@@ -211,11 +211,63 @@ public class CalloutNameVocabularyTests
         }
     }
 
+    [Fact]
+    public void TrackedVocabulary_CarriesTheGenericMechanicNames()
+    {
+        string[] expected = ["Frontal", "Dispel", "Soak", "Drop Pool", "Feather", "One", "Ten"];
+        IReadOnlyList<CalloutRegistration> registrations = LoadTrackedRegistrations();
+
+        foreach (string displayName in expected)
+        {
+            Assert.Contains(registrations,
+                entry => entry.SoundFile.DisplayName.Equals(displayName, StringComparison.Ordinal));
+        }
+    }
+
+    [Fact]
+    public void TrackedVocabulary_ExcludesFightSpecificNorthernSkyRaidToolsNames()
+    {
+        string[] fightSpecific = ["Bouncer", "Entertainer", "Obelisk", "Sacred Toll", "Shrooms"];
+        IReadOnlyList<CalloutRegistration> registrations = LoadTrackedRegistrations();
+
+        foreach (string displayName in fightSpecific)
+        {
+            Assert.DoesNotContain(registrations,
+                entry => entry.SoundFile.DisplayName.Equals(displayName, StringComparison.Ordinal));
+        }
+    }
+
+    [Fact]
+    public void TrackedVocabulary_RendersSharedNamesIdenticallyToNorthernSkyRaidTools()
+    {
+        IReadOnlyList<CalloutRegistration> callouts = LoadTrackedRegistrations();
+        IReadOnlyList<CalloutRegistration> northernSky = new NorthernSkyRaidToolsVocabularyProvider(
+                [.. NorthernSkyRaidToolsVocabulary.VocabularyFileNames.Select(FindRepoFile)],
+                FindRepoFile("src/WoWVoxPack.AddOns.Callouts/CalloutPronunciations.json"))
+            .Registrations;
+
+        Dictionary<string, SoundFile> byFileName = new(StringComparer.OrdinalIgnoreCase);
+        foreach (CalloutRegistration registration in northernSky)
+        {
+            byFileName.TryAdd(registration.SoundFile.FileName, registration.SoundFile);
+        }
+
+        // A shared file name rendering different audio is what FoldInCallouts refuses to build.
+        foreach (CalloutRegistration callout in callouts)
+        {
+            if (byFileName.TryGetValue(callout.SoundFile.FileName, out SoundFile? shared))
+            {
+                Assert.Equal(shared.Text, callout.SoundFile.Text);
+                Assert.Equal(shared.Ssml, callout.SoundFile.Ssml);
+            }
+        }
+    }
+
     private static IReadOnlyList<CalloutRegistration> LoadTrackedRegistrations() =>
         new CalloutsVocabularyProvider(
             FindRepoFile("src/WoWVoxPack.AddOns.Callouts/Callouts_Sounds.json"),
             FindRepoFile("src/WoWVoxPack.AddOns.Callouts/CalloutPronunciations.json"),
-            FindRepoFile("lorrgs-vocabulary.txt"),
+            [FindRepoFile("lorrgs-vocabulary.txt"), FindRepoFile("callout-vocabulary.txt")],
             FindRepoFile("src/WoWVoxPack.AddOns.Callouts/RetiredCallouts.json"))
         .Registrations;
 

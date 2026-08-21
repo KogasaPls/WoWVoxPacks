@@ -18,7 +18,7 @@ public class CalloutVocabularyProviderTests
         CalloutsVocabularyProvider provider = new(
             Path.Combine(directory, "Callouts_Sounds.json"),
             Path.Combine(directory, "CalloutPronunciations.json"),
-            Path.Combine(directory, "lorrgs-vocabulary.txt"),
+            [Path.Combine(directory, "lorrgs-vocabulary.txt")],
             Path.Combine(directory, "RetiredCallouts.json"));
 
         IReadOnlyList<CalloutRegistration> first = provider.Registrations;
@@ -105,7 +105,7 @@ public class CalloutVocabularyProviderTests
         CalloutsVocabularyProvider callouts = new(
             Path.Combine(directory, "Callouts_Sounds.json"),
             Path.Combine(directory, "CalloutPronunciations.json"),
-            Path.Combine(directory, "lorrgs-vocabulary.txt"),
+            [Path.Combine(directory, "lorrgs-vocabulary.txt")],
             Path.Combine(directory, "RetiredCallouts.json"));
         NorthernSkyRaidToolsVocabularyProvider provider = new(
             [Path.Combine(directory, "nsrt-vocabulary.txt")],
@@ -137,7 +137,7 @@ public class CalloutVocabularyProviderTests
         CalloutsVocabularyProvider callouts = new(
             Path.Combine(directory, "Callouts_Sounds.json"),
             Path.Combine(directory, "CalloutPronunciations.json"),
-            Path.Combine(directory, "lorrgs-vocabulary.txt"),
+            [Path.Combine(directory, "lorrgs-vocabulary.txt")],
             Path.Combine(directory, "RetiredCallouts.json"));
         NorthernSkyRaidToolsVocabularyProvider provider = new(
             [Path.Combine(directory, "nsrt-vocabulary.txt")],
@@ -166,7 +166,7 @@ public class CalloutVocabularyProviderTests
         CalloutsVocabularyProvider callouts = new(
             Path.Combine(directory, "Callouts_Sounds.json"),
             Path.Combine(directory, "CalloutPronunciations.json"),
-            Path.Combine(directory, "lorrgs-vocabulary.txt"),
+            [Path.Combine(directory, "lorrgs-vocabulary.txt")],
             Path.Combine(directory, "RetiredCallouts.json"));
         NorthernSkyRaidToolsVocabularyProvider provider = new(
             [Path.Combine(directory, "nsrt-vocabulary.txt")],
@@ -191,7 +191,7 @@ public class CalloutVocabularyProviderTests
         CalloutsVocabularyProvider callouts = new(
             Path.Combine(directory, "Callouts_Sounds.json"),
             Path.Combine(directory, "CalloutPronunciations.json"),
-            Path.Combine(directory, "lorrgs-vocabulary.txt"),
+            [Path.Combine(directory, "lorrgs-vocabulary.txt")],
             Path.Combine(directory, "RetiredCallouts.json"));
         NorthernSkyRaidToolsVocabularyProvider provider = new(
             [Path.Combine(directory, "nsrt-vocabulary.txt")],
@@ -214,7 +214,7 @@ public class CalloutVocabularyProviderTests
         CalloutsVocabularyProvider provider = new(
             Path.Combine(directory, "Callouts_Sounds.json"),
             Path.Combine(directory, "CalloutPronunciations.json"),
-            Path.Combine(directory, "lorrgs-vocabulary.txt"),
+            [Path.Combine(directory, "lorrgs-vocabulary.txt")],
             Path.Combine(directory, "RetiredCallouts.json"));
 
         Assert.Empty(provider.Registrations);

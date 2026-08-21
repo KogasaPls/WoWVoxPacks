@@ -5,7 +5,11 @@ using WoWVoxPack.TTS;
 
 namespace WoWVoxPack.AddOns.Callouts;
 
-/// <summary>Loads the curated, player-reminder, and retired Callouts vocabulary.</summary>
+/// <summary>
+/// Loads the curated, tracked-vocabulary, and retired Callouts entries. Every tracked file goes
+/// through the same derivation as the Northern Sky Raid Tools vocabulary, so a name both packs
+/// carry renders one identical recording and folds in without contest.
+/// </summary>
 public sealed class CalloutsVocabularyProvider
 {
     private readonly Lazy<IReadOnlyList<CalloutRegistration>> _registrations;
@@ -13,13 +17,13 @@ public sealed class CalloutsVocabularyProvider
     public CalloutsVocabularyProvider(
         string curatedJsonPath,
         string overridesPath,
-        string playerReminderVocabularyPath,
+        IReadOnlyList<string> vocabularyPaths,
         string retiredJsonPath)
     {
         _registrations = new Lazy<IReadOnlyList<CalloutRegistration>>(() =>
             CalloutVocabulary.Merge(
                 AddOnBuilder.LoadSoundFileJsonWithSsmlFallback(curatedJsonPath),
-                CalloutNameVocabulary.Load(playerReminderVocabularyPath),
+                vocabularyPaths.SelectMany(CalloutNameVocabulary.Load),
                 CalloutPronunciation.LoadOverrides(overridesPath),
                 LoadRetiredNames(retiredJsonPath)));
     }

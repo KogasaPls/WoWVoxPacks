@@ -90,7 +90,7 @@ public sealed class NorthernSkyRaidToolsAddOnServiceTests : IDisposable
                 new CalloutsVocabularyProvider(
                     Path.Combine(_temporaryDirectory, "Callouts_Sounds.json"),
                     overridesPath,
-                    Path.Combine(_temporaryDirectory, "lorrgs-vocabulary.txt"),
+                    [Path.Combine(_temporaryDirectory, "lorrgs-vocabulary.txt")],
                     Path.Combine(_temporaryDirectory, "RetiredCallouts.json"))));
         TtsSettings ttsSettings = new() { Voice = VoiceName.Studio_O };
 
@@ -132,7 +132,7 @@ public sealed class NorthernSkyRaidToolsAddOnServiceTests : IDisposable
                 new CalloutsVocabularyProvider(
                     Path.Combine(_temporaryDirectory, "Callouts_Sounds.json"),
                     overridesPath,
-                    Path.Combine(_temporaryDirectory, "lorrgs-vocabulary.txt"),
+                    [Path.Combine(_temporaryDirectory, "lorrgs-vocabulary.txt")],
                     Path.Combine(_temporaryDirectory, "RetiredCallouts.json"))));
 
         AddOn addOn = await service.BuildAddOnAsync(

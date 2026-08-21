@@ -34,22 +34,19 @@ IHostBuilder hostBuilder = Host.CreateDefaultBuilder(args)
         services.AddSingleton<ITtsProvider, GoogleTtsProvider>();
         services.AddSingleton<ISoundFileService, SoundFileService>();
         services.AddHttpClient<IBigWigsVoiceUpstreamClient, BigWigsVoiceUpstreamClient>();
+        string solutionDirectory = Path.GetDirectoryName(
+            Assembly.GetExecutingAssembly().GetCustomAttribute<SolutionFileAttribute>()!.SolutionFile)!;
         services.AddSingleton(_ => new CalloutsVocabularyProvider(
             Path.Combine(AppContext.BaseDirectory, "Callouts_Sounds.json"),
             Path.Combine(AppContext.BaseDirectory, "CalloutPronunciations.json"),
-            Path.Combine(Path.GetDirectoryName(
-                Assembly.GetExecutingAssembly().GetCustomAttribute<SolutionFileAttribute>()!.SolutionFile)!,
-                "lorrgs-vocabulary.txt"),
+            [.. CalloutVocabulary.VocabularyFileNames
+                .Select(fileName => Path.Combine(solutionDirectory, fileName))],
             Path.Combine(AppContext.BaseDirectory, "RetiredCallouts.json")));
         services.AddSingleton(sp =>
         {
-            string solutionDirectory = Path.GetDirectoryName(
-                Assembly.GetExecutingAssembly().GetCustomAttribute<SolutionFileAttribute>()!.SolutionFile)!;
-
             return new NorthernSkyRaidToolsVocabularyProvider(
-                NorthernSkyRaidToolsVocabulary.VocabularyFileNames
-                    .Select(fileName => Path.Combine(solutionDirectory, fileName))
-                    .ToArray(),
+                [.. NorthernSkyRaidToolsVocabulary.VocabularyFileNames
+                    .Select(fileName => Path.Combine(solutionDirectory, fileName))],
                 Path.Combine(AppContext.BaseDirectory, "CalloutPronunciations.json"),
                 sp.GetRequiredService<CalloutsVocabularyProvider>());
         });

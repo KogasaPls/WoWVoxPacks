@@ -5,8 +5,8 @@ A collection of modern TTS voices for World of Warcraft addons.
 ## AddOns
 
 - WoWVoxPacks_{Voice}_BigWigs_Voice: A clone of [BigWigs_Voice](https://www.curseforge.com/wow/addons/bigwigs_voice)
-  with a different TTS voice. **Not compatible with BigWigs_Voice. Only one version may be installed at a time.** Simply
-  disabling the conflicting addons ingame will not work.
+  with a different TTS voice. Install as many voices as you like, but **enable only one BigWigs voice pack at a time**,
+  BigWigs_Voice included: every pack registers the same name and `BigWigsAPI.RegisterVoicePack` errors on a duplicate.
 - WoWVoxPacks_{Voice}_BigWigs_Countdown: Adds a new voice option for BigWigs' countdown (must be configured in BigWigs).
 - WoWVoxPacks_{Voice}_Callouts: Spell names and other generic callouts.
 - WoWVoxPacks_{Voice}_NorthernSkyRaidTools: Install exactly one voice addon for Northern Sky Raid Tools. It contains
@@ -36,6 +36,13 @@ The following voices are available.
   - <video src='https://github.com/user-attachments/assets/c6f39c01-4934-41dd-9f4e-7b3ca7acffdc' width=10></video>
 - Studio_O (Female)
   - <video src='https://github.com/user-attachments/assets/04bd2217-f757-4165-8414-9ea080eec041' width=10></video>
+
+## CurseForge pages
+
+`docs/curseforge/` holds one page per addon, written with `{Voice}` where the voice name goes.
+CurseForge has no API for editing a project description, so publishing is a paste into the web
+editor; `scripts/curseforge_description.py --addon Callouts --voice Wavenet_E` prints the
+substituted markdown, and `--summary` prints the summary field.
 
 ## Tests
 

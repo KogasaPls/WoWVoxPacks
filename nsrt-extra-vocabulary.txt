@@ -1,46 +1,24 @@
-# Northern Sky Raid Tools alert strings that its Media/Sounds has no file for.
-# Hand-maintained. scripts/check_nsrt_tts_coverage.py lists what is still missing, and
-# names the sites whose string the game builds at runtime so they can be enumerated here.
-Bait
-Beams
-Blazes
-Blistering Scales
-Breath
-CC Adds
-Debuffs
-Dodge
-Don't soak
-Explosion
-Frontal
-Gateway
-Glaives
+# Strings Northern Sky Raid Tools composes at runtime, enumerated by hand.
+# scripts/check_nsrt_tts_coverage.py names the sites ("Soak " .. <runtime>); list here every
+# string a site can produce. Literal alert strings are generated into nsrt-alert-vocabulary.txt
+# by .github/workflows/update.yml and do not belong in this file.
 Go to Back Left
 Go to Back Right
 Go to Flex Spot
 Go to Front Left
 Go to Front Right
-Interrupts
-Knock
-Memory Game
-Orbs
-Sacred Toll
-Shrooms
+Rebuff Arcane Intellect
+Rebuff Battle Shout
+Rebuff Blessing of the Bronze
+Rebuff Mark of the Wild
+Rebuff Power Word: Fortitude
+Rebuff Skyfury
+Rebuff Soulstone
 Soak Back Left
 Soak Back Right
 Soak Cross
 Soak Front Left
 Soak Front Right
-Soak Left
 Soak Orange
-Soak Right
 Soak Skull
 Soak Star
-Soaks
-Soulstone
-Source of Magic
-Stop Cast
-Symbiotic Relationship
-Taunt
-Tether
-Watch Side
-Watch Spawns

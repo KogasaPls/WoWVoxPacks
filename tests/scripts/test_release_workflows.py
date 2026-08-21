@@ -103,6 +103,36 @@ class ReleaseWorkflowTests(unittest.TestCase):
         self.assertIn('"${new_count}" -lt $(( old_count / 2 ))', updater)
         self.assertIn("(_recordingsByFileName.Count + 1) / 2", manifest)
 
+    def test_every_nsrt_vocabulary_the_builder_reads_stays_current(self):
+        """Each generated vocabulary flows through the update PR; only the last is hand-owned.
+
+        The alert-text vocabulary once had no automated path into the repo: the coverage
+        report was advisory only, and the "Waves" alert shipped unspoken for two weeks. A
+        vocabulary the builder reads must be regenerated and committed by the updater unless
+        it is the hand-enumerated composed-string file.
+        """
+        source = (
+            REPOSITORY_ROOT
+            / "src/WoWVoxPack.AddOns.Callouts/NorthernSkyRaidToolsVocabulary.cs"
+        ).read_text(encoding="utf-8")
+        names = re.findall(r'"(nsrt-[\w-]+\.txt)"', source)
+        self.assertEqual(
+            ["nsrt-vocabulary.txt", "nsrt-alert-vocabulary.txt", "nsrt-extra-vocabulary.txt"],
+            names,
+        )
+
+        updater = (
+            REPOSITORY_ROOT / ".github/workflows/update.yml"
+        ).read_text(encoding="utf-8")
+        add_paths = updater.split("add-paths: |", 1)[1].split("sign-commits:", 1)[0]
+        for name in names:
+            self.assertTrue((REPOSITORY_ROOT / name).is_file(), name)
+        for generated in names[:-1]:
+            new_name = generated.replace(".txt", ".new")
+            self.assertIn(f"mv {new_name} {generated}", updater)
+            self.assertIn(generated, add_paths)
+        self.assertNotIn(names[-1], add_paths)
+
     def test_release_creator_cannot_release_the_same_tag_twice(self):
         """The PAT that fixes the event also makes tag pushes re-enter this workflow.
 

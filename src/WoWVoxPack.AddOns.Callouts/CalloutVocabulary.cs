@@ -10,6 +10,13 @@ namespace WoWVoxPack.AddOns.Callouts;
 /// </summary>
 public static class CalloutVocabulary
 {
+    /// <summary>
+    /// The tracked name files, in load order: the generated player-reminder spell list, then the
+    /// hand-maintained generic mechanics and instructions.
+    /// </summary>
+    public static readonly IReadOnlyList<string> VocabularyFileNames =
+        ["lorrgs-vocabulary.txt", "callout-vocabulary.txt"];
+
     public static IReadOnlyList<CalloutRegistration> Merge(
         IEnumerable<SoundFile> curated,
         IEnumerable<string> upstreamSoundNames,

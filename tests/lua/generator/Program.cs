@@ -47,7 +47,9 @@ foreach (string name in (string[])["Callouts", "NorthernSkyRaidTools", "ExBoss",
 services.AddSingleton(_ => new CalloutsVocabularyProvider(
     Path.Combine(AppContext.BaseDirectory, "Callouts_Sounds.json"),
     Path.Combine(AppContext.BaseDirectory, "CalloutPronunciations.json"),
-    Path.Combine(repoRoot, "lorrgs-vocabulary.txt"),
+    CalloutVocabulary.VocabularyFileNames
+        .Select(fileName => Path.Combine(repoRoot, fileName))
+        .ToArray(),
     Path.Combine(AppContext.BaseDirectory, "RetiredCallouts.json")));
 services.AddSingleton(sp => new NorthernSkyRaidToolsVocabularyProvider(
     NorthernSkyRaidToolsVocabulary.VocabularyFileNames

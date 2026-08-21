@@ -37,9 +37,11 @@ IHostBuilder hostBuilder = Host.CreateDefaultBuilder(args)
         services.AddSingleton(_ => new CalloutsVocabularyProvider(
             Path.Combine(AppContext.BaseDirectory, "Callouts_Sounds.json"),
             Path.Combine(AppContext.BaseDirectory, "CalloutPronunciations.json"),
-            Path.Combine(Path.GetDirectoryName(
-                Assembly.GetExecutingAssembly().GetCustomAttribute<SolutionFileAttribute>()!.SolutionFile)!,
-                "lorrgs-vocabulary.txt"),
+            CalloutVocabulary.VocabularyFileNames
+                .Select(fileName => Path.Combine(Path.GetDirectoryName(
+                    Assembly.GetExecutingAssembly()
+                        .GetCustomAttribute<SolutionFileAttribute>()!.SolutionFile)!, fileName))
+                .ToArray(),
             Path.Combine(AppContext.BaseDirectory, "RetiredCallouts.json")));
         services.AddSingleton(sp =>
         {

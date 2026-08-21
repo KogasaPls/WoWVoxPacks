@@ -1,0 +1,81 @@
+# Generic raid callouts: mechanic types and instructions that are not tied to one encounter.
+# Fight-specific names belong in the Northern Sky Raid Tools vocabulary, not here.
+# One name per line. Names run through the same pronunciation pipeline as every other
+# vocabulary file, so a name shared with nsrt-vocabulary.txt renders the identical recording.
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+Adds
+Beam
+Blue
+Bomb
+Boss
+Break
+Breath
+CC Adds
+Charge
+Clear
+Collect
+Debuff
+Debuffs
+Dispel
+Dodge
+Don't soak
+DropPool
+East
+Feather
+Fire
+Fixate
+Frontal
+Frost
+Gate
+Gateway
+Go to Back Left
+Go to Back Right
+Go to Flex Spot
+Go to Front Left
+Go to Front Right
+Green
+HealAbsorb
+Hide
+Interrupt
+Knock
+Left
+Linked
+MindControl
+Moon
+Next
+North
+Orange
+Orb
+Purple
+Ranged
+Red
+Right
+Root
+RunOut
+Skull
+Soak
+Soak Back Left
+Soak Back Right
+Soak Front Left
+Soak Front Right
+Soak Left
+Soak Orange
+Soak Right
+Soak Star
+South
+Stack
+Suck
+Targeted
+Taunt
+Waves
+West
+Yellow

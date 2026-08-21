@@ -402,6 +402,48 @@
     "Text": "Ranged"
   },
   {
+    "FileName": "rebuff_arcane_intellect.ogg",
+    "DisplayName": "Rebuff Arcane Intellect",
+    "FormattedDisplayName": "Rebuff Arcane Intellect",
+    "Text": "Rebuff Arcane Intellect"
+  },
+  {
+    "FileName": "rebuff_battle_shout.ogg",
+    "DisplayName": "Rebuff Battle Shout",
+    "FormattedDisplayName": "Rebuff Battle Shout",
+    "Text": "Rebuff Battle Shout"
+  },
+  {
+    "FileName": "rebuff_blessing_of_the_bronze.ogg",
+    "DisplayName": "Rebuff Blessing of the Bronze",
+    "FormattedDisplayName": "Rebuff Blessing of the Bronze",
+    "Text": "Rebuff Blessing of the Bronze"
+  },
+  {
+    "FileName": "rebuff_mark_of_the_wild.ogg",
+    "DisplayName": "Rebuff Mark of the Wild",
+    "FormattedDisplayName": "Rebuff Mark of the Wild",
+    "Text": "Rebuff Mark of the Wild"
+  },
+  {
+    "FileName": "rebuff_power_word_fortitude.ogg",
+    "DisplayName": "Rebuff Power Word: Fortitude",
+    "FormattedDisplayName": "Rebuff Power Word: Fortitude",
+    "Text": "Rebuff Power Word: Fortitude"
+  },
+  {
+    "FileName": "rebuff_skyfury.ogg",
+    "DisplayName": "Rebuff Skyfury",
+    "FormattedDisplayName": "Rebuff Skyfury",
+    "Text": "Rebuff Skyfury"
+  },
+  {
+    "FileName": "rebuff_soulstone.ogg",
+    "DisplayName": "Rebuff Soulstone",
+    "FormattedDisplayName": "Rebuff Soulstone",
+    "Text": "Rebuff Soulstone"
+  },
+  {
     "FileName": "red.ogg",
     "DisplayName": "Red",
     "FormattedDisplayName": "Red",
@@ -646,6 +688,12 @@
     "DisplayName": "Watch Spawns",
     "FormattedDisplayName": "Watch Spawns",
     "Text": "Watch Spawns"
+  },
+  {
+    "FileName": "waves.ogg",
+    "DisplayName": "Waves",
+    "FormattedDisplayName": "Waves",
+    "Text": "Waves"
   },
   {
     "FileName": "west.ogg",

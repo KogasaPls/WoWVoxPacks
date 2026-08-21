@@ -55,6 +55,20 @@ class NormalizationTests(unittest.TestCase):
         self.assertEqual(["lorrgs https://lorrgs.io/"],
                          drift.markdown_to_lines("[lorrgs](https://lorrgs.io/)"))
 
+    def test_punctuation_around_an_inline_element_does_not_count_as_drift(self):
+        html = ('<p>set it to <code>WoWVoxPacks: Neural2_C</code>. See '
+                '<a href="https://example.com/x">the page</a>, then stop.</p>')
+        self.assertEqual(
+            drift.markdown_to_lines(
+                "set it to `WoWVoxPacks: Neural2_C`. See [the page](https://example.com/x), "
+                "then stop."),
+            drift.html_to_lines(html))
+
+    def test_an_inline_element_opening_a_bracket_does_not_count_as_drift(self):
+        html = "<p>names (<code>Tranquility</code>, <code>Rally</code>) matter</p>"
+        self.assertEqual(drift.markdown_to_lines("names (`Tranquility`, `Rally`) matter"),
+                         drift.html_to_lines(html))
+
     def test_non_breaking_space_does_not_count_as_drift(self):
         self.assertEqual(drift.html_to_lines("<p>a\xa0b</p>"), drift.markdown_to_lines("a b"))
 

@@ -1,5 +1,5 @@
 ---
-summary: English voice callouts for ExBoss in the {Voice} voice.
+summary: TTS sound files for ExBoss, using Google Cloud {Voice} ({VoiceDescription}).
 ---
 # ExBoss: WoWVoxPacks ({Voice})
 

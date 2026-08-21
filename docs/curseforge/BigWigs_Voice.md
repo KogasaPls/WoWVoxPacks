@@ -1,5 +1,5 @@
 ---
-summary: BigWigs_Voice rebuilt in the {Voice} voice.
+summary: TTS sound files for BigWigs Voice, using Google Cloud {Voice} ({VoiceDescription}).
 ---
 # BigWigs Voice: WoWVoxPacks ({Voice})
 

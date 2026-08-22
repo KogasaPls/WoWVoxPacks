@@ -27,14 +27,14 @@ public sealed class AddOnBuilder(AddOnSettings settings, TtsSettings ttsSettings
     }
 
     /// <summary>
-    /// Like <see cref="LoadSoundFileJson"/>, but backfills SSML phoneme markup for entries
-    /// whose <see cref="SoundFile.Text"/> contains an IPA escape ('=') and has no explicit
-    /// <see cref="SoundFile.Ssml"/> set. Shared by addons (Callouts, ExBoss)
-    /// whose sound-file JSON manifests use this convention.
+    /// Like <see cref="LoadSoundFileJson"/>, but lifts the IPA escape ('=') out of
+    /// <see cref="SoundFile.Text"/> into <see cref="SoundFile.Pronunciations"/> for entries with
+    /// no explicit <see cref="SoundFile.Ssml"/>. Shared by addons (Callouts, ExBoss) whose
+    /// sound-file JSON manifests use this convention.
     /// </summary>
-    public static List<SoundFile> LoadSoundFileJsonWithSsmlFallback(string filePath)
+    public static List<SoundFile> LoadSoundFileJsonWithIpaHints(string filePath)
     {
-        return LoadSoundFileJson(filePath).Select(RewriteSsmlFallback).ToList();
+        return LoadSoundFileJson(filePath).Select(LiftIpaHints).ToList();
     }
 
     public AddOnBuilder WithTitle(string title)
@@ -110,15 +110,18 @@ public sealed class AddOnBuilder(AddOnSettings settings, TtsSettings ttsSettings
             new Dictionary<string, Func<AddOn, string>>(_fileFactories, StringComparer.OrdinalIgnoreCase));
     }
 
-    private static SoundFile RewriteSsmlFallback(SoundFile soundFile)
+    private static SoundFile LiftIpaHints(SoundFile soundFile)
     {
         if (soundFile.Ssml is not null || soundFile.Text?.Contains('=') != true)
         {
             return soundFile;
         }
 
-        return new SoundFile(soundFile.FileName, ssml: SoundFile.GetSsml(soundFile.Text),
-            displayName: soundFile.DisplayName, formattedDisplayName: soundFile.FormattedDisplayName)
+        (string text, IReadOnlyList<Pronunciation> pronunciations) = SoundFile.ParseIpaHints(soundFile.Text);
+
+        return new SoundFile(soundFile.FileName, text: text,
+            displayName: soundFile.DisplayName, formattedDisplayName: soundFile.FormattedDisplayName,
+            pronunciations: pronunciations)
         {
             ExplicitKey = soundFile.ExplicitKey
         };
@@ -139,7 +142,7 @@ public sealed class AddOnBuilder(AddOnSettings settings, TtsSettings ttsSettings
         foreach (IGrouping<string, SoundFile> group in perFile)
         {
             SoundFile[] distinct = group
-                .DistinctBy(f => (f.Text, f.Ssml, f.CopyFromPath))
+                .Distinct(SoundFileContentEqualityComparer.Default)
                 .ToArray();
 
             if (distinct.Length > 1)

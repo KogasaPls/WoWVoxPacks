@@ -9,7 +9,7 @@ public sealed class ExBossAddOnService(IOptionsSnapshot<AddOnSettings> addOnOpti
     : IAddOnService
 {
     private static readonly Lazy<List<SoundFile>> JsonSoundFiles = new(() =>
-        AddOnBuilder.LoadSoundFileJsonWithSsmlFallback(Path.Combine(AppContext.BaseDirectory, "Labels.json")));
+        AddOnBuilder.LoadSoundFileJsonWithIpaHints(Path.Combine(AppContext.BaseDirectory, "Labels.json")));
 
     private AddOnSettings AddOnSettings { get; } = addOnOptions.Get("ExBoss");
 

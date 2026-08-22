@@ -1,14 +1,102 @@
 {
-  "Fung": { "Text": "Fung=fʌŋ" },
-  "DropPool": { "Text": "Drop Pool" },
-  "HealAbsorb": { "Text": "Heal Absorb" },
-  "Innervate": { "Text": "Innervate=ˈɪnɚveɪt" },
+  "Fung": {
+    "Text": "Fung",
+    "Pronunciations": [
+      {
+        "Phrase": "Fung",
+        "Ipa": "fʌŋ"
+      }
+    ]
+  },
+  "DropPool": {
+    "Text": "Drop Pool"
+  },
+  "HealAbsorb": {
+    "Text": "Heal Absorb"
+  },
+  "Innervate": {
+    "Text": "Innervate",
+    "Pronunciations": [
+      {
+        "Phrase": "Innervate",
+        "Ipa": "ˈɪnɚveɪt"
+      }
+    ]
+  },
   "Invoke Chi-Ji, the Red Crane": {
     "FileName": "invoke_chiji_the_red_crane.ogg",
-    "Ssml": "<speak>Invoke <phoneme alphabet=\"IPA\" ph=\"tʃiːdʒiː\">Chi-Ji</phoneme>, the Red Crane</speak>"
+    "Text": "Invoke Chi-Ji, the Red Crane",
+    "Pronunciations": [
+      {
+        "Phrase": "Chi-Ji",
+        "Ipa": "tʃiːdʒiː"
+      }
+    ]
   },
   "Invoke Yu'lon, the Jade Serpent": {
     "FileName": "invoke_yulon_the_jade_serpent.ogg",
-    "Ssml": "<speak>Invoke <phoneme alphabet=\"IPA\" ph=\"ˈjuːlɒn\">Yu'lon</phoneme>, the Jade Serpent</speak>"
+    "Text": "Invoke Yu'lon, the Jade Serpent",
+    "Pronunciations": [
+      {
+        "Phrase": "Yu'lon",
+        "Ipa": "ˈjuːlɒn"
+      }
+    ]
+  },
+  "Rebuff Arcane Intellect": {
+    "Pronunciations": [
+      {
+        "Phrase": "Rebuff",
+        "Ipa": "ˌriːˈbʌf"
+      }
+    ]
+  },
+  "Rebuff Battle Shout": {
+    "Pronunciations": [
+      {
+        "Phrase": "Rebuff",
+        "Ipa": "ˌriːˈbʌf"
+      }
+    ]
+  },
+  "Rebuff Blessing of the Bronze": {
+    "Pronunciations": [
+      {
+        "Phrase": "Rebuff",
+        "Ipa": "ˌriːˈbʌf"
+      }
+    ]
+  },
+  "Rebuff Mark of the Wild": {
+    "Pronunciations": [
+      {
+        "Phrase": "Rebuff",
+        "Ipa": "ˌriːˈbʌf"
+      }
+    ]
+  },
+  "Rebuff Power Word: Fortitude": {
+    "Pronunciations": [
+      {
+        "Phrase": "Rebuff",
+        "Ipa": "ˌriːˈbʌf"
+      }
+    ]
+  },
+  "Rebuff Skyfury": {
+    "Pronunciations": [
+      {
+        "Phrase": "Rebuff",
+        "Ipa": "ˌriːˈbʌf"
+      }
+    ]
+  },
+  "Rebuff Soulstone": {
+    "Pronunciations": [
+      {
+        "Phrase": "Rebuff",
+        "Ipa": "ˌriːˈbʌf"
+      }
+    ]
   }
 }

@@ -90,13 +90,13 @@ public class CalloutNameVocabularyTests
 
         Assert.Contains(registrations,
             entry => entry.SoundFile.DisplayName == "Innervate"
-                     && entry.SoundFile.Ssml!.Contains("ˈɪnɚveɪt"));
+                     && entry.SoundFile.Pronunciations!.Contains(new Pronunciation("Innervate", "ˈɪnɚveɪt")));
         Assert.Contains(registrations,
             entry => entry.SoundFile.DisplayName == "Invoke Yu'lon, the Jade Serpent"
-                     && entry.SoundFile.Ssml!.Contains("ˈjuːlɒn"));
+                     && entry.SoundFile.Pronunciations!.Contains(new Pronunciation("Yu'lon", "ˈjuːlɒn")));
         Assert.Contains(registrations,
             entry => entry.SoundFile.DisplayName == "Invoke Chi-Ji, the Red Crane"
-                     && entry.SoundFile.Ssml!.Contains("tʃiːdʒiː"));
+                     && entry.SoundFile.Pronunciations!.Contains(new Pronunciation("Chi-Ji", "tʃiːdʒiː")));
     }
 
     [Fact]
@@ -173,13 +173,10 @@ public class CalloutNameVocabularyTests
                 entry => entry.GetProperty("DisplayName").GetString()!,
                 StringComparer.Ordinal);
 
-        Assert.Equal("<speak><phoneme alphabet=\"ipa\" ph=\"eɪ.ɛm.ɛs\">AMS</phoneme></speak>",
-            entries["AMS"].GetProperty("SSML").GetString());
-        Assert.Equal("<speak><phoneme alphabet=\"ipa\" ph=\"eɪ.ɛm.zi\">AMZ</phoneme></speak>",
-            entries["AMZ"].GetProperty("SSML").GetString());
+        AssertLetterNameIpa(entries["AMS"], "AMS", "eɪ.ɛm.ɛs");
+        AssertLetterNameIpa(entries["AMZ"], "AMZ", "eɪ.ɛm.zi");
+        AssertLetterNameIpa(entries["PI"], "PI", "pi.aɪ");
         Assert.Equal("Bop", entries["BoP"].GetProperty("Text").GetString());
-        Assert.Equal("<speak><phoneme alphabet=\"ipa\" ph=\"pi.aɪ\">PI</phoneme></speak>",
-            entries["PI"].GetProperty("SSML").GetString());
     }
 
     [Fact]
@@ -270,6 +267,15 @@ public class CalloutNameVocabularyTests
             [FindRepoFile("lorrgs-vocabulary.txt"), FindRepoFile("callout-vocabulary.txt")],
             FindRepoFile("src/WoWVoxPack.AddOns.Callouts/RetiredCallouts.json"))
         .Registrations;
+
+    private static void AssertLetterNameIpa(JsonElement entry, string phrase, string ipa)
+    {
+        Assert.Equal(phrase, entry.GetProperty("Text").GetString());
+
+        JsonElement pronunciation = Assert.Single(entry.GetProperty("Pronunciations").EnumerateArray());
+        Assert.Equal(phrase, pronunciation.GetProperty("Phrase").GetString());
+        Assert.Equal(ipa, pronunciation.GetProperty("Ipa").GetString());
+    }
 
     private static string FindRepoFile(string fileName)
     {

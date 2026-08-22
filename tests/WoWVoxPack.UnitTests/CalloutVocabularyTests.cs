@@ -71,7 +71,7 @@ public class CalloutVocabularyTests
     }
 
     [Fact]
-    public void Merge_ExpandsTheIpaConventionIntoSsml()
+    public void Merge_LiftsTheIpaConventionIntoPronunciations()
     {
         Dictionary<string, PronunciationOverride> overrides = new(StringComparer.OrdinalIgnoreCase)
         {
@@ -80,11 +80,11 @@ public class CalloutVocabularyTests
 
         CalloutRegistration fung = Assert.Single(CalloutVocabulary.Merge([], ["Fung"], overrides));
 
-        // Left unexpanded, Google TTS would say the '=' and the phonemes out loud.
+        // Google matches the phrase against the input, so the hint cannot stay in the text.
         Assert.Equal("Fung", fung.SoundFile.DisplayName);
-        Assert.Null(fung.SoundFile.Text);
-        Assert.Contains("<phoneme", fung.SoundFile.Ssml);
-        Assert.Contains("fʌŋ", fung.SoundFile.Ssml);
+        Assert.Equal("Fung", fung.SoundFile.Text);
+        Assert.Null(fung.SoundFile.Ssml);
+        Assert.Equal([new Pronunciation("Fung", "fʌŋ")], fung.SoundFile.Pronunciations);
     }
 
     [Fact]

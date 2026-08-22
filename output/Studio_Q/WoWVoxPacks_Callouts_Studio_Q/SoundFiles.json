@@ -27,13 +27,25 @@
     "FileName": "ams.ogg",
     "DisplayName": "AMS",
     "FormattedDisplayName": "AMS",
-    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022e\u026A.\u025Bm.\u025Bs\u0022\u003EAMS\u003C/phoneme\u003E\u003C/speak\u003E"
+    "Text": "AMS",
+    "Pronunciations": [
+      {
+        "Phrase": "AMS",
+        "Ipa": "e\u026A.\u025Bm.\u025Bs"
+      }
+    ]
   },
   {
     "FileName": "amz.ogg",
     "DisplayName": "AMZ",
     "FormattedDisplayName": "AMZ",
-    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022e\u026A.\u025Bm.zi\u0022\u003EAMZ\u003C/phoneme\u003E\u003C/speak\u003E"
+    "Text": "AMZ",
+    "Pronunciations": [
+      {
+        "Phrase": "AMZ",
+        "Ipa": "e\u026A.\u025Bm.zi"
+      }
+    ]
   },
   {
     "FileName": "ankh.ogg",
@@ -393,7 +405,13 @@
     "FileName": "chiji.ogg",
     "DisplayName": "Chi-ji",
     "FormattedDisplayName": "Chi-ji",
-    "SSML": "\u003Cspeak\u003E\n  \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022t\u0283i\u02D0d\u0292i\u02D0\u0022\u003EChi-ji=t\u0283i\u02D0d\u0292i\u02D0\u003C/phoneme\u003E\n\u003C/speak\u003E"
+    "Text": "Chi-ji",
+    "Pronunciations": [
+      {
+        "Phrase": "Chi-ji",
+        "Ipa": "t\u0283i\u02D0d\u0292i\u02D0"
+      }
+    ]
   },
   {
     "FileName": "clear.ogg",
@@ -1155,7 +1173,13 @@
     "FileName": "innervate.ogg",
     "DisplayName": "Innervate",
     "FormattedDisplayName": "Innervate",
-    "SSML": "\u003Cspeak\u003E\n  \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022\u02C8\u026An\u025Ave\u026At\u0022\u003EInnervate=\u02C8\u026An\u025Ave\u026At\u003C/phoneme\u003E\n\u003C/speak\u003E"
+    "Text": "Innervate",
+    "Pronunciations": [
+      {
+        "Phrase": "Innervate",
+        "Ipa": "\u02C8\u026An\u025Ave\u026At"
+      }
+    ]
   },
   {
     "FileName": "interrupt.ogg",
@@ -1173,14 +1197,26 @@
     "FileName": "invoke_chiji_the_red_crane.ogg",
     "DisplayName": "Invoke Chi-Ji, the Red Crane",
     "FormattedDisplayName": "Invoke Chi-Ji, the Red Crane",
-    "SSML": "\u003Cspeak\u003EInvoke \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022t\u0283i\u02D0d\u0292i\u02D0\u0022\u003EChi-Ji\u003C/phoneme\u003E, the Red Crane\u003C/speak\u003E"
+    "Text": "Invoke Chi-Ji, the Red Crane",
+    "Pronunciations": [
+      {
+        "Phrase": "Chi-Ji",
+        "Ipa": "t\u0283i\u02D0d\u0292i\u02D0"
+      }
+    ]
   },
   {
     "Key": "retired:Invoke Chi-ji, the Red Crane",
     "FileName": "invoke_chiji_the_red_crane.ogg",
     "DisplayName": "Invoke Chi-ji, the Red Crane",
     "FormattedDisplayName": "Invoke Chi-ji, the Red Crane",
-    "SSML": "\u003Cspeak\u003EInvoke \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022t\u0283i\u02D0d\u0292i\u02D0\u0022\u003EChi-Ji\u003C/phoneme\u003E, the Red Crane\u003C/speak\u003E"
+    "Text": "Invoke Chi-Ji, the Red Crane",
+    "Pronunciations": [
+      {
+        "Phrase": "Chi-Ji",
+        "Ipa": "t\u0283i\u02D0d\u0292i\u02D0"
+      }
+    ]
   },
   {
     "FileName": "invoke_niuzao_the_black_ox.ogg",
@@ -1198,7 +1234,13 @@
     "FileName": "invoke_yulon_the_jade_serpent.ogg",
     "DisplayName": "Invoke Yu\u0027lon, the Jade Serpent",
     "FormattedDisplayName": "Invoke Yu\u0027lon, the Jade Serpent",
-    "SSML": "\u003Cspeak\u003EInvoke \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022\u02C8ju\u02D0l\u0252n\u0022\u003EYu\u0027lon\u003C/phoneme\u003E, the Jade Serpent\u003C/speak\u003E"
+    "Text": "Invoke Yu\u0027lon, the Jade Serpent",
+    "Pronunciations": [
+      {
+        "Phrase": "Yu\u0027lon",
+        "Ipa": "\u02C8ju\u02D0l\u0252n"
+      }
+    ]
   },
   {
     "FileName": "ironbark.ogg",
@@ -1444,7 +1486,13 @@
     "FileName": "pi.ogg",
     "DisplayName": "PI",
     "FormattedDisplayName": "PI",
-    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022pi.a\u026A\u0022\u003EPI\u003C/phoneme\u003E\u003C/speak\u003E"
+    "Text": "PI",
+    "Pronunciations": [
+      {
+        "Phrase": "PI",
+        "Ipa": "pi.a\u026A"
+      }
+    ]
   },
   {
     "FileName": "pillar_of_frost.ogg",
@@ -2140,7 +2188,13 @@
     "FileName": "tranq.ogg",
     "DisplayName": "Tranq",
     "FormattedDisplayName": "Tranq",
-    "SSML": "\u003Cspeak\u003E\n  \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022tr\u00E6\u014Bk\u0022\u003ETranq=tr\u00E6\u014Bk\u003C/phoneme\u003E\n\u003C/speak\u003E"
+    "Text": "Tranq",
+    "Pronunciations": [
+      {
+        "Phrase": "Tranq",
+        "Ipa": "tr\u00E6\u014Bk"
+      }
+    ]
   },
   {
     "FileName": "tranquility.ogg",
@@ -2314,7 +2368,13 @@
     "FileName": "yulon.ogg",
     "DisplayName": "Yu\u0027lon",
     "FormattedDisplayName": "Yu\u0027lon",
-    "SSML": "\u003Cspeak\u003E\n  \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022\u02C8ju\u02D0l\u0252n\u0022\u003EYu\u0027lon=\u02C8ju\u02D0l\u0252n\u003C/phoneme\u003E\n\u003C/speak\u003E"
+    "Text": "Yu\u0027lon",
+    "Pronunciations": [
+      {
+        "Phrase": "Yu\u0027lon",
+        "Ipa": "\u02C8ju\u02D0l\u0252n"
+      }
+    ]
   },
   {
     "FileName": "zen_meditation.ogg",

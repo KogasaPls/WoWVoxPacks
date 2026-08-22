@@ -34,11 +34,37 @@ public class SoundFileTests
     }
 
     [Fact]
-    public void GetSsml_UsesPhonemeMarkupForWordsWithIpa()
+    public void ParseIpaHints_LiftsEveryHintOutOfTheText()
     {
-        string ssml = SoundFile.GetSsml("Taivan=ˈtaɪvɑːn incoming");
+        (string text, IReadOnlyList<Pronunciation> pronunciations) =
+            SoundFile.ParseIpaHints("Taivan=ˈtaɪvɑːn incoming");
 
-        Assert.Contains("<phoneme alphabet=\"IPA\" ph=\"ˈtaɪvɑːn\">Taivan=ˈtaɪvɑːn </phoneme>", ssml);
-        Assert.Contains("incoming", ssml);
+        Assert.Equal("Taivan incoming", text);
+        Assert.Equal([new Pronunciation("Taivan", "ˈtaɪvɑːn")], pronunciations);
+    }
+
+    [Fact]
+    public void ParseIpaHints_KeepsTheHintOutOfWhatIsSpoken()
+    {
+        (string text, IReadOnlyList<Pronunciation> pronunciations) = SoundFile.ParseIpaHints("Tempest Winds=wɪndz");
+
+        Assert.Equal("Tempest Winds", text);
+        Assert.Equal([new Pronunciation("Winds", "wɪndz")], pronunciations);
+    }
+
+    [Fact]
+    public void ParseIpaHints_LeavesPlainTextAlone()
+    {
+        (string text, IReadOnlyList<Pronunciation> pronunciations) = SoundFile.ParseIpaHints("Gale Force");
+
+        Assert.Equal("Gale Force", text);
+        Assert.Empty(pronunciations);
+    }
+
+    [Fact]
+    public void StripIpaHints_LeavesEveryWordSpelledOut()
+    {
+        Assert.Equal("Winds of Northrend", SoundFile.StripIpaHints("Winds=wɪndz of Northrend"));
+        Assert.Equal("Gale Force", SoundFile.StripIpaHints("Gale Force"));
     }
 }

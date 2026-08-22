@@ -21,11 +21,18 @@ public class SoundFileContentEqualityComparer : IEqualityComparer<SoundFile>
             return false;
         }
 
-        return x.Text == y.Text && x.Ssml == y.Ssml && x.FileName == y.FileName;
+        return x.Text == y.Text && x.Ssml == y.Ssml && x.FileName == y.FileName &&
+               x.CopyFromPath == y.CopyFromPath &&
+               SamePronunciations(x.Pronunciations, y.Pronunciations);
     }
 
     public int GetHashCode(SoundFile obj)
     {
-        return HashCode.Combine(obj.Text, obj.Ssml, obj.FileName);
+        return HashCode.Combine(obj.Text, obj.Ssml, obj.FileName, obj.Pronunciations?.Count ?? 0);
+    }
+
+    private static bool SamePronunciations(IReadOnlyList<Pronunciation>? x, IReadOnlyList<Pronunciation>? y)
+    {
+        return (x ?? []).SequenceEqual(y ?? []);
     }
 }

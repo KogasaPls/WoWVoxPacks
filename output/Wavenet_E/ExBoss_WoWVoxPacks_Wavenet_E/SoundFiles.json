@@ -117,31 +117,61 @@
     "FileName": "aoe-5.ogg",
     "DisplayName": "5\u79D2\u540EAOE",
     "FormattedDisplayName": "5\u79D2\u540EAOE",
-    "SSML": "\u003Cspeak\u003E\n  \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022\u02CCe\u026A.jo\u028A\u02C8wi\u0022\u003EAOE=\u02CCe\u026A.jo\u028A\u02C8wi \u003C/phoneme\u003E5\u003C/speak\u003E"
+    "Text": "AOE 5",
+    "Pronunciations": [
+      {
+        "Phrase": "AOE",
+        "Ipa": "\u02CCe\u026A.jo\u028A\u02C8wi"
+      }
+    ]
   },
   {
     "FileName": "aoe-break.ogg",
     "DisplayName": "\u51C6\u5907AOE(\u65AD\u6761)",
     "FormattedDisplayName": "\u51C6\u5907AOE(\u65AD\u6761)",
-    "SSML": "\u003Cspeak\u003E\n  \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022\u02CCe\u026A.jo\u028A\u02C8wi\u0022\u003EAOE=\u02CCe\u026A.jo\u028A\u02C8wi \u003C/phoneme\u003EBreak\u003C/speak\u003E"
+    "Text": "AOE Break",
+    "Pronunciations": [
+      {
+        "Phrase": "AOE",
+        "Ipa": "\u02CCe\u026A.jo\u028A\u02C8wi"
+      }
+    ]
   },
   {
     "FileName": "aoe-cont.ogg",
     "DisplayName": "\u6301\u7EEDAOE",
     "FormattedDisplayName": "\u6301\u7EEDAOE",
-    "SSML": "\u003Cspeak\u003E\n  \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022\u02CCe\u026A.jo\u028A\u02C8wi\u0022\u003EAOE=\u02CCe\u026A.jo\u028A\u02C8wi \u003C/phoneme\u003ECont\u003C/speak\u003E"
+    "Text": "AOE Cont",
+    "Pronunciations": [
+      {
+        "Phrase": "AOE",
+        "Ipa": "\u02CCe\u026A.jo\u028A\u02C8wi"
+      }
+    ]
   },
   {
     "FileName": "aoe-inc.ogg",
     "DisplayName": "\u51C6\u5907AOE",
     "FormattedDisplayName": "\u51C6\u5907AOE",
-    "SSML": "\u003Cspeak\u003E\n  \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022\u02CCe\u026A.jo\u028A\u02C8wi\u0022\u003EAOE=\u02CCe\u026A.jo\u028A\u02C8wi\u003C/phoneme\u003E\n\u003C/speak\u003E"
+    "Text": "AOE",
+    "Pronunciations": [
+      {
+        "Phrase": "AOE",
+        "Ipa": "\u02CCe\u026A.jo\u028A\u02C8wi"
+      }
+    ]
   },
   {
     "FileName": "aoe.ogg",
     "DisplayName": "AOE",
     "FormattedDisplayName": "AOE",
-    "SSML": "\u003Cspeak\u003E\n  \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022\u02CCe\u026A.jo\u028A\u02C8wi\u0022\u003EAOE=\u02CCe\u026A.jo\u028A\u02C8wi\u003C/phoneme\u003E\n\u003C/speak\u003E"
+    "Text": "AOE",
+    "Pronunciations": [
+      {
+        "Phrase": "AOE",
+        "Ipa": "\u02CCe\u026A.jo\u028A\u02C8wi"
+      }
+    ]
   },
   {
     "FileName": "arrow.ogg",
@@ -783,7 +813,13 @@
     "FileName": "massive-aoe.ogg",
     "DisplayName": "\u8D85\u5927AOE",
     "FormattedDisplayName": "\u8D85\u5927AOE",
-    "SSML": "\u003Cspeak\u003EMassive \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022\u02CCe\u026A.jo\u028A\u02C8wi\u0022\u003EAOE=\u02CCe\u026A.jo\u028A\u02C8wi\u003C/phoneme\u003E\u003C/speak\u003E"
+    "Text": "Massive AOE",
+    "Pronunciations": [
+      {
+        "Phrase": "AOE",
+        "Ipa": "\u02CCe\u026A.jo\u028A\u02C8wi"
+      }
+    ]
   },
   {
     "FileName": "mirror.ogg",

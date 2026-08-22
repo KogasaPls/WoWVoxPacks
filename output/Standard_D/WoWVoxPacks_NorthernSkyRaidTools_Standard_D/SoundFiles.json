@@ -27,13 +27,25 @@
     "FileName": "ams.ogg",
     "DisplayName": "AMS",
     "FormattedDisplayName": "AMS",
-    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022e\u026A.\u025Bm.\u025Bs\u0022\u003EAMS\u003C/phoneme\u003E\u003C/speak\u003E"
+    "Text": "AMS",
+    "Pronunciations": [
+      {
+        "Phrase": "AMS",
+        "Ipa": "e\u026A.\u025Bm.\u025Bs"
+      }
+    ]
   },
   {
     "FileName": "amz.ogg",
     "DisplayName": "AMZ",
     "FormattedDisplayName": "AMZ",
-    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022e\u026A.\u025Bm.zi\u0022\u003EAMZ\u003C/phoneme\u003E\u003C/speak\u003E"
+    "Text": "AMZ",
+    "Pronunciations": [
+      {
+        "Phrase": "AMZ",
+        "Ipa": "e\u026A.\u025Bm.zi"
+      }
+    ]
   },
   {
     "FileName": "ankh.ogg",
@@ -405,7 +417,13 @@
     "FileName": "chiji.ogg",
     "DisplayName": "Chi-ji",
     "FormattedDisplayName": "Chi-ji",
-    "SSML": "\u003Cspeak\u003E\n  \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022t\u0283i\u02D0d\u0292i\u02D0\u0022\u003EChi-ji=t\u0283i\u02D0d\u0292i\u02D0\u003C/phoneme\u003E\n\u003C/speak\u003E"
+    "Text": "Chi-ji",
+    "Pronunciations": [
+      {
+        "Phrase": "Chi-ji",
+        "Ipa": "t\u0283i\u02D0d\u0292i\u02D0"
+      }
+    ]
   },
   {
     "FileName": "cleaner.ogg",
@@ -963,7 +981,13 @@
     "FileName": "fung.ogg",
     "DisplayName": "Fung",
     "FormattedDisplayName": "Fung",
-    "SSML": "\u003Cspeak\u003E\n  \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022f\u028C\u014B\u0022\u003EFung=f\u028C\u014B\u003C/phoneme\u003E\n\u003C/speak\u003E"
+    "Text": "Fung",
+    "Pronunciations": [
+      {
+        "Phrase": "Fung",
+        "Ipa": "f\u028C\u014B"
+      }
+    ]
   },
   {
     "FileName": "fury_of_elune.ogg",
@@ -1185,7 +1209,13 @@
     "FileName": "innervate.ogg",
     "DisplayName": "Innervate",
     "FormattedDisplayName": "Innervate",
-    "SSML": "\u003Cspeak\u003E\n  \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022\u02C8\u026An\u025Ave\u026At\u0022\u003EInnervate=\u02C8\u026An\u025Ave\u026At\u003C/phoneme\u003E\n\u003C/speak\u003E"
+    "Text": "Innervate",
+    "Pronunciations": [
+      {
+        "Phrase": "Innervate",
+        "Ipa": "\u02C8\u026An\u025Ave\u026At"
+      }
+    ]
   },
   {
     "FileName": "interrupt.ogg",
@@ -1203,7 +1233,13 @@
     "FileName": "invoke_chiji_the_red_crane.ogg",
     "DisplayName": "Invoke Chi-Ji, the Red Crane",
     "FormattedDisplayName": "Invoke Chi-Ji, the Red Crane",
-    "SSML": "\u003Cspeak\u003EInvoke \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022t\u0283i\u02D0d\u0292i\u02D0\u0022\u003EChi-Ji\u003C/phoneme\u003E, the Red Crane\u003C/speak\u003E"
+    "Text": "Invoke Chi-Ji, the Red Crane",
+    "Pronunciations": [
+      {
+        "Phrase": "Chi-Ji",
+        "Ipa": "t\u0283i\u02D0d\u0292i\u02D0"
+      }
+    ]
   },
   {
     "FileName": "invoke_niuzao_the_black_ox.ogg",
@@ -1221,7 +1257,13 @@
     "FileName": "invoke_yulon_the_jade_serpent.ogg",
     "DisplayName": "Invoke Yu\u0027lon, the Jade Serpent",
     "FormattedDisplayName": "Invoke Yu\u0027lon, the Jade Serpent",
-    "SSML": "\u003Cspeak\u003EInvoke \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022\u02C8ju\u02D0l\u0252n\u0022\u003EYu\u0027lon\u003C/phoneme\u003E, the Jade Serpent\u003C/speak\u003E"
+    "Text": "Invoke Yu\u0027lon, the Jade Serpent",
+    "Pronunciations": [
+      {
+        "Phrase": "Yu\u0027lon",
+        "Ipa": "\u02C8ju\u02D0l\u0252n"
+      }
+    ]
   },
   {
     "FileName": "ironbark.ogg",
@@ -1479,7 +1521,13 @@
     "FileName": "pi.ogg",
     "DisplayName": "PI",
     "FormattedDisplayName": "PI",
-    "SSML": "\u003Cspeak\u003E\u003Cphoneme alphabet=\u0022ipa\u0022 ph=\u0022pi.a\u026A\u0022\u003EPI\u003C/phoneme\u003E\u003C/speak\u003E"
+    "Text": "PI",
+    "Pronunciations": [
+      {
+        "Phrase": "PI",
+        "Ipa": "pi.a\u026A"
+      }
+    ]
   },
   {
     "FileName": "pillar_of_frost.ogg",
@@ -1599,43 +1647,85 @@
     "FileName": "rebuff_arcane_intellect.ogg",
     "DisplayName": "Rebuff Arcane Intellect",
     "FormattedDisplayName": "Rebuff Arcane Intellect",
-    "Text": "Rebuff Arcane Intellect"
+    "Text": "Rebuff Arcane Intellect",
+    "Pronunciations": [
+      {
+        "Phrase": "Rebuff",
+        "Ipa": "\u02CCri\u02D0\u02C8b\u028Cf"
+      }
+    ]
   },
   {
     "FileName": "rebuff_battle_shout.ogg",
     "DisplayName": "Rebuff Battle Shout",
     "FormattedDisplayName": "Rebuff Battle Shout",
-    "Text": "Rebuff Battle Shout"
+    "Text": "Rebuff Battle Shout",
+    "Pronunciations": [
+      {
+        "Phrase": "Rebuff",
+        "Ipa": "\u02CCri\u02D0\u02C8b\u028Cf"
+      }
+    ]
   },
   {
     "FileName": "rebuff_blessing_of_the_bronze.ogg",
     "DisplayName": "Rebuff Blessing of the Bronze",
     "FormattedDisplayName": "Rebuff Blessing of the Bronze",
-    "Text": "Rebuff Blessing of the Bronze"
+    "Text": "Rebuff Blessing of the Bronze",
+    "Pronunciations": [
+      {
+        "Phrase": "Rebuff",
+        "Ipa": "\u02CCri\u02D0\u02C8b\u028Cf"
+      }
+    ]
   },
   {
     "FileName": "rebuff_mark_of_the_wild.ogg",
     "DisplayName": "Rebuff Mark of the Wild",
     "FormattedDisplayName": "Rebuff Mark of the Wild",
-    "Text": "Rebuff Mark of the Wild"
+    "Text": "Rebuff Mark of the Wild",
+    "Pronunciations": [
+      {
+        "Phrase": "Rebuff",
+        "Ipa": "\u02CCri\u02D0\u02C8b\u028Cf"
+      }
+    ]
   },
   {
     "FileName": "rebuff_power_word_fortitude.ogg",
     "DisplayName": "Rebuff Power Word: Fortitude",
     "FormattedDisplayName": "Rebuff Power Word: Fortitude",
-    "Text": "Rebuff Power Word: Fortitude"
+    "Text": "Rebuff Power Word: Fortitude",
+    "Pronunciations": [
+      {
+        "Phrase": "Rebuff",
+        "Ipa": "\u02CCri\u02D0\u02C8b\u028Cf"
+      }
+    ]
   },
   {
     "FileName": "rebuff_skyfury.ogg",
     "DisplayName": "Rebuff Skyfury",
     "FormattedDisplayName": "Rebuff Skyfury",
-    "Text": "Rebuff Skyfury"
+    "Text": "Rebuff Skyfury",
+    "Pronunciations": [
+      {
+        "Phrase": "Rebuff",
+        "Ipa": "\u02CCri\u02D0\u02C8b\u028Cf"
+      }
+    ]
   },
   {
     "FileName": "rebuff_soulstone.ogg",
     "DisplayName": "Rebuff Soulstone",
     "FormattedDisplayName": "Rebuff Soulstone",
-    "Text": "Rebuff Soulstone"
+    "Text": "Rebuff Soulstone",
+    "Pronunciations": [
+      {
+        "Phrase": "Rebuff",
+        "Ipa": "\u02CCri\u02D0\u02C8b\u028Cf"
+      }
+    ]
   },
   {
     "FileName": "recklessness.ogg",
@@ -2247,7 +2337,13 @@
     "FileName": "tranq.ogg",
     "DisplayName": "Tranq",
     "FormattedDisplayName": "Tranq",
-    "SSML": "\u003Cspeak\u003E\n  \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022tr\u00E6\u014Bk\u0022\u003ETranq=tr\u00E6\u014Bk\u003C/phoneme\u003E\n\u003C/speak\u003E"
+    "Text": "Tranq",
+    "Pronunciations": [
+      {
+        "Phrase": "Tranq",
+        "Ipa": "tr\u00E6\u014Bk"
+      }
+    ]
   },
   {
     "FileName": "tranquility.ogg",
@@ -2439,7 +2535,13 @@
     "FileName": "yulon.ogg",
     "DisplayName": "Yu\u0027lon",
     "FormattedDisplayName": "Yu\u0027lon",
-    "SSML": "\u003Cspeak\u003E\n  \u003Cphoneme alphabet=\u0022IPA\u0022 ph=\u0022\u02C8ju\u02D0l\u0252n\u0022\u003EYu\u0027lon=\u02C8ju\u02D0l\u0252n\u003C/phoneme\u003E\n\u003C/speak\u003E"
+    "Text": "Yu\u0027lon",
+    "Pronunciations": [
+      {
+        "Phrase": "Yu\u0027lon",
+        "Ipa": "\u02C8ju\u02D0l\u0252n"
+      }
+    ]
   },
   {
     "FileName": "zen_meditation.ogg",

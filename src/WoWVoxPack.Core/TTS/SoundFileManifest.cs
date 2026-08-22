@@ -35,7 +35,7 @@ public sealed class SoundFileManifest
     /// <summary>The entries whose recording this build has to render.</summary>
     /// <remarks>Voice, rate, pitch and sample rate are not part of the per-entry comparison.</remarks>
     public IEnumerable<SoundFile> FilesToCreate(IEnumerable<SoundFile> currentSoundFiles, string soundDirectory,
-        bool recipeChanged = false)
+        bool recipeChanged = false, bool allowFullRerender = false)
     {
         List<SoundFile> current = currentSoundFiles.ToList();
 
@@ -48,7 +48,10 @@ public sealed class SoundFileManifest
             current.Where(f => !File.Exists(Path.Combine(soundDirectory, f.FileName)));
         IEnumerable<SoundFile> changed = current.Where(f => !IsSameContentAsManifestEntry(f));
 
-        return missing.UnionBy(changed, f => f.FileName);
+        SoundFile[] toCreate = missing.UnionBy(changed, f => f.FileName).ToArray();
+        GuardAgainstUnintendedFullRerender(toCreate.Length, allowFullRerender);
+
+        return toCreate;
     }
 
     /// <summary>
@@ -81,6 +84,38 @@ public sealed class SoundFileManifest
         string json = JsonSerializer.Serialize(soundFiles.OrderBy(s => s.FileName).ToList(),
             SoundFileJsonContext.Default.ListSoundFile);
         return AtomicFile.WriteAllTextAsync(path, json, cancellationToken);
+    }
+
+    /// <summary>
+    /// Refuses to spend on a re-render nobody asked for. Changing the shape of a field the
+    /// manifest compares, as moving spell names from SSML to text did, silently marks every entry
+    /// in the pack as changed: that run billed 5,167 calls before it was noticed, and would have
+    /// billed 30,000. A recipe change is the one case where re-rendering everything is the point,
+    /// and it arrives here as <paramref name="allowFullRerender"/>.
+    /// </summary>
+    private void GuardAgainstUnintendedFullRerender(int count, bool allowFullRerender)
+    {
+        if (allowFullRerender || _recordingsByFileName.Count == 0 || count <= RerenderLimit())
+        {
+            return;
+        }
+
+        throw new InvalidOperationException(
+            $"The build would render {count} of {_recordingsByFileName.Count} recordings, past the " +
+            $"{RerenderLimit()} a routine build is allowed. Run with --Matrix:DryRun true to see what " +
+            "changed, and --Matrix:AllowFullRerender true if rendering all of them is the intent.");
+    }
+
+    /// <summary>
+    /// How much of a pack one build may re-render without saying so. Generous enough for a season
+    /// of upstream additions, which arrive as new files rather than changed ones and are exempt
+    /// anyway, and far below the whole-pack churn a comparison bug produces.
+    /// </summary>
+    private int RerenderLimit()
+    {
+        const int alwaysAllowed = 200;
+
+        return Math.Max(alwaysAllowed, (_recordingsByFileName.Count + 3) / 4);
     }
 
     /// <summary>

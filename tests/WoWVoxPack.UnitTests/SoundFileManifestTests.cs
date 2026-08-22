@@ -21,6 +21,45 @@ public class SoundFileManifestTests : IDisposable
     }
 
     [Fact]
+    public async Task FilesToCreate_RefusesToRerenderMostOfAPack_UnlessAsked()
+    {
+        SoundFile[] rendered = Recordings(1000, "take one").ToArray();
+        await (await SoundFileManifest.LoadAsync(ManifestPath)).SaveAsync(ManifestPath, rendered);
+        foreach (SoundFile soundFile in rendered)
+        {
+            await File.WriteAllTextAsync(Path.Combine(_tempDirectory, soundFile.FileName), "audio");
+        }
+
+        SoundFileManifest manifest = await SoundFileManifest.LoadAsync(ManifestPath);
+        SoundFile[] everythingChanged = Recordings(1000, "take two").ToArray();
+
+        InvalidOperationException refusal = Assert.Throws<InvalidOperationException>(
+            () => manifest.FilesToCreate(everythingChanged, _tempDirectory).ToArray());
+        Assert.Contains("--Matrix:AllowFullRerender", refusal.Message);
+
+        Assert.Equal(1000,
+            manifest.FilesToCreate(everythingChanged, _tempDirectory, allowFullRerender: true).Count());
+    }
+
+    [Fact]
+    public async Task FilesToCreate_AllowsAnOrdinaryRoundOfEdits()
+    {
+        SoundFile[] rendered = Recordings(1000, "take one").ToArray();
+        await (await SoundFileManifest.LoadAsync(ManifestPath)).SaveAsync(ManifestPath, rendered);
+        foreach (SoundFile soundFile in rendered)
+        {
+            await File.WriteAllTextAsync(Path.Combine(_tempDirectory, soundFile.FileName), "audio");
+        }
+
+        SoundFileManifest manifest = await SoundFileManifest.LoadAsync(ManifestPath);
+        SoundFile[] current = rendered
+            .Select((f, i) => i < 150 ? new SoundFile(f.FileName, text: "reworded", displayName: f.DisplayName) : f)
+            .ToArray();
+
+        Assert.Equal(150, manifest.FilesToCreate(current, _tempDirectory).Count());
+    }
+
+    [Fact]
     public async Task FilesToCreate_IncludesFiles_MissingFromDisk()
     {
         SoundFile soundFile = new("alert.ogg", text: "Alert", displayName: "Alert");
@@ -252,5 +291,11 @@ public class SoundFileManifestTests : IDisposable
     public void Dispose()
     {
         Directory.Delete(_tempDirectory, true);
+    }
+
+    private static IEnumerable<SoundFile> Recordings(int count, string text)
+    {
+        return Enumerable.Range(0, count)
+            .Select(i => new SoundFile($"sound{i}.ogg", text: text, displayName: $"Sound {i}"));
     }
 }

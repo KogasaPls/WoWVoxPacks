@@ -35,10 +35,13 @@ public class AddOnBuildOrchestrator(
             Logger.LogInformation("Building {AddOnName} addon in directory {OutputDirectory}", addOn.Title,
                 addOn.AddOnDirectory);
 
-            await AddOnFileWriter.WriteAllFilesAsync(addOn, cancellationToken);
-
             string soundOutputDirectory = addOn.SoundDirectory;
-            Directory.CreateDirectory(soundOutputDirectory);
+
+            if (!BuildMatrix.DryRun)
+            {
+                await AddOnFileWriter.WriteAllFilesAsync(addOn, cancellationToken);
+                Directory.CreateDirectory(soundOutputDirectory);
+            }
 
             SoundFileManifest manifest =
                 await SoundFileManifest.LoadAsync(addOn.SoundFilesJsonPath, cancellationToken);
@@ -54,11 +57,18 @@ public class AddOnBuildOrchestrator(
             }
 
             SoundFile[] soundFilesToCreate =
-                manifest.FilesToCreate(addOn.SoundFiles, soundOutputDirectory, recipeChanged).ToArray();
+                manifest.FilesToCreate(addOn.SoundFiles, soundOutputDirectory, recipeChanged,
+                    BuildMatrix.AllowFullRerender).ToArray();
 
             // Asked before anything is rendered: a pack that lost most of its vocabulary is a
             // failed build, and finding that out after paying for thousands of files is worse.
             string[] soundFilesToRemove = manifest.FilesToRemove(addOn.SoundFiles).ToArray();
+
+            if (BuildMatrix.DryRun)
+            {
+                ReportPlan(addOn, soundFilesToCreate, soundFilesToRemove);
+                continue;
+            }
 
             await CreateSoundFilesAsync(soundFilesToCreate, soundOutputDirectory, ttsSettings, cancellationToken);
 
@@ -71,6 +81,28 @@ public class AddOnBuildOrchestrator(
         }
 
         Logger.LogInformation("Finished building add-ons");
+    }
+
+    /// <summary>
+    /// What a real run would spend, before it spends it. Two runs in a row have re-rendered a
+    /// whole pack because a field the manifest compares changed shape, so the plan is worth
+    /// reading rather than predicting.
+    /// </summary>
+    private void ReportPlan(AddOn addOn, IReadOnlyCollection<SoundFile> toCreate, IReadOnlyCollection<string> toRemove)
+    {
+        Logger.LogInformation("[dry run] {AddOnName}: {CreateCount} to render, {RemoveCount} to remove",
+            addOn.Title, toCreate.Count, toRemove.Count);
+
+        foreach (SoundFile soundFile in toCreate)
+        {
+            Logger.LogInformation("[dry run]   render {FileName} {Spoken}", soundFile.FileName,
+                soundFile.Ssml ?? soundFile.Text);
+        }
+
+        foreach (string fileName in toRemove)
+        {
+            Logger.LogInformation("[dry run]   remove {FileName}", fileName);
+        }
     }
 
     private IEnumerable<(IAddOnService AddOnService, TtsSettings TtsSettings, string OutputDirectory)> Matrix()

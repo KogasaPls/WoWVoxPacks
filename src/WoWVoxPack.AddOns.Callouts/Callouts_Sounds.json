@@ -1,8 +1,14 @@
 [
   {
     "FileName": "tranq.ogg",
-    "Text": "Tranq=træŋk",
-    "DisplayName": "Tranq"
+    "Text": "Tranq",
+    "DisplayName": "Tranq",
+    "Pronunciations": [
+      {
+        "Phrase": "Tranq",
+        "Ipa": "træŋk"
+      }
+    ]
   },
   {
     "FileName": "convoke.ogg",
@@ -31,13 +37,25 @@
   },
   {
     "FileName": "yulon.ogg",
-    "Text": "Yu'lon=ˈjuːlɒn",
-    "DisplayName": "Yu'lon"
+    "Text": "Yu'lon",
+    "DisplayName": "Yu'lon",
+    "Pronunciations": [
+      {
+        "Phrase": "Yu'lon",
+        "Ipa": "ˈjuːlɒn"
+      }
+    ]
   },
   {
     "FileName": "chiji.ogg",
-    "Text": "Chi-ji=tʃiːdʒiː",
-    "DisplayName": "Chi-ji"
+    "Text": "Chi-ji",
+    "DisplayName": "Chi-ji",
+    "Pronunciations": [
+      {
+        "Phrase": "Chi-ji",
+        "Ipa": "tʃiːdʒiː"
+      }
+    ]
   },
   {
     "FileName": "conduit.ogg",
@@ -56,13 +74,25 @@
   },
   {
     "FileName": "ams.ogg",
-    "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"eɪ.ɛm.ɛs\">AMS</phoneme></speak>",
-    "DisplayName": "AMS"
+    "DisplayName": "AMS",
+    "Text": "AMS",
+    "Pronunciations": [
+      {
+        "Phrase": "AMS",
+        "Ipa": "eɪ.ɛm.ɛs"
+      }
+    ]
   },
   {
     "FileName": "amz.ogg",
-    "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"eɪ.ɛm.zi\">AMZ</phoneme></speak>",
-    "DisplayName": "AMZ"
+    "DisplayName": "AMZ",
+    "Text": "AMZ",
+    "Pronunciations": [
+      {
+        "Phrase": "AMZ",
+        "Ipa": "eɪ.ɛm.zi"
+      }
+    ]
   },
   {
     "FileName": "cheetah.ogg",
@@ -181,8 +211,14 @@
   },
   {
     "FileName": "pi.ogg",
-    "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"pi.aɪ\">PI</phoneme></speak>",
-    "DisplayName": "PI"
+    "DisplayName": "PI",
+    "Text": "PI",
+    "Pronunciations": [
+      {
+        "Phrase": "PI",
+        "Ipa": "pi.aɪ"
+      }
+    ]
   },
   {
     "FileName": "barrier.ogg",

@@ -5,7 +5,14 @@ namespace WoWVoxPack.AddOns.BigWigs_Voice;
 public class BigWigsVoiceSoundFile : SoundFile
 {
     public BigWigsVoiceSoundFile(string spellId, string spellName)
-        : base($"{spellId}.ogg", ssml: GetSsml(spellName), displayName: spellName)
+        : this(spellId, spellName, ParseIpaHints(spellName))
+    {
+    }
+
+    private BigWigsVoiceSoundFile(string spellId, string spellName,
+        (string Text, IReadOnlyList<Pronunciation> Pronunciations) spoken)
+        : base($"{spellId}.ogg", text: spoken.Text, displayName: spoken.Text,
+            pronunciations: spoken.Pronunciations)
     {
         SpellId = spellId;
         SpellName = spellName;

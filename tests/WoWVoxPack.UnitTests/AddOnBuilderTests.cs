@@ -160,7 +160,7 @@ public class AddOnBuilderTests
     }
 
     [Fact]
-    public void LoadSoundFileJsonWithSsmlFallback_BackfillsSsml_OnlyForEntriesWithIpaEscape()
+    public void LoadSoundFileJsonWithIpaHints_LiftsHints_OnlyForEntriesWithIpaEscape()
     {
         string path = WriteTempJson("""
             [
@@ -170,13 +170,16 @@ public class AddOnBuilderTests
             """);
         try
         {
-            List<SoundFile> soundFiles = AddOnBuilder.LoadSoundFileJsonWithSsmlFallback(path);
+            List<SoundFile> soundFiles = AddOnBuilder.LoadSoundFileJsonWithIpaHints(path);
 
             SoundFile plain = soundFiles.Single(f => f.DisplayName == "Plain");
             SoundFile taivan = soundFiles.Single(f => f.DisplayName == "Taivan");
 
-            Assert.Null(plain.Ssml);
-            Assert.Equal(SoundFile.GetSsml("Taivan=t1 incoming"), taivan.Ssml);
+            Assert.Null(plain.Pronunciations);
+            Assert.Equal("incoming", plain.Text);
+            Assert.Null(taivan.Ssml);
+            Assert.Equal("Taivan incoming", taivan.Text);
+            Assert.Equal([new Pronunciation("Taivan", "t1")], taivan.Pronunciations);
         }
         finally
         {

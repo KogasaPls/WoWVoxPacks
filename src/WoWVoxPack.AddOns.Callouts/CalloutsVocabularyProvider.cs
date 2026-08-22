@@ -22,7 +22,7 @@ public sealed class CalloutsVocabularyProvider
     {
         _registrations = new Lazy<IReadOnlyList<CalloutRegistration>>(() =>
             CalloutVocabulary.Merge(
-                AddOnBuilder.LoadSoundFileJsonWithSsmlFallback(curatedJsonPath),
+                AddOnBuilder.LoadSoundFileJsonWithIpaHints(curatedJsonPath),
                 vocabularyPaths.SelectMany(CalloutNameVocabulary.Load),
                 CalloutPronunciation.LoadOverrides(overridesPath),
                 LoadRetiredNames(retiredJsonPath)));

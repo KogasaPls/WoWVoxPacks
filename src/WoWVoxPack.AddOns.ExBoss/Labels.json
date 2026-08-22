@@ -2,7 +2,13 @@
   {
     "DisplayName": "准备AOE",
     "FileName": "aoe-inc.ogg",
-    "Text": "AOE=ˌeɪ.joʊˈwi"
+    "Text": "AOE",
+    "Pronunciations": [
+      {
+        "Phrase": "AOE",
+        "Ipa": "ˌeɪ.joʊˈwi"
+      }
+    ]
   },
   {
     "DisplayName": "准备引线",
@@ -202,7 +208,13 @@
   {
     "DisplayName": "准备AOE(断条)",
     "FileName": "aoe-break.ogg",
-    "Text": "AOE=ˌeɪ.joʊˈwi Break"
+    "Text": "AOE Break",
+    "Pronunciations": [
+      {
+        "Phrase": "AOE",
+        "Ipa": "ˌeɪ.joʊˈwi"
+      }
+    ]
   },
   {
     "DisplayName": "准备吸球",
@@ -392,7 +404,13 @@
   {
     "DisplayName": "AOE",
     "FileName": "aoe.ogg",
-    "Text": "AOE=ˌeɪ.joʊˈwi"
+    "Text": "AOE",
+    "Pronunciations": [
+      {
+        "Phrase": "AOE",
+        "Ipa": "ˌeɪ.joʊˈwi"
+      }
+    ]
   },
   {
     "DisplayName": "小心脚下",
@@ -442,7 +460,13 @@
   {
     "DisplayName": "5秒后AOE",
     "FileName": "aoe-5.ogg",
-    "Text": "AOE=ˌeɪ.joʊˈwi 5"
+    "Text": "AOE 5",
+    "Pronunciations": [
+      {
+        "Phrase": "AOE",
+        "Ipa": "ˌeɪ.joʊˈwi"
+      }
+    ]
   },
   {
     "DisplayName": "补给协议",
@@ -452,12 +476,24 @@
   {
     "DisplayName": "超大AOE",
     "FileName": "massive-aoe.ogg",
-    "Text": "Massive AOE=ˌeɪ.joʊˈwi"
+    "Text": "Massive AOE",
+    "Pronunciations": [
+      {
+        "Phrase": "AOE",
+        "Ipa": "ˌeɪ.joʊˈwi"
+      }
+    ]
   },
   {
     "DisplayName": "持续AOE",
     "FileName": "aoe-cont.ogg",
-    "Text": "AOE=ˌeɪ.joʊˈwi Cont"
+    "Text": "AOE Cont",
+    "Pronunciations": [
+      {
+        "Phrase": "AOE",
+        "Ipa": "ˌeɪ.joʊˈwi"
+      }
+    ]
   },
   {
     "DisplayName": "打背面",

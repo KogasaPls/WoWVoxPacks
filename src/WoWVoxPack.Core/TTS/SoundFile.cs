@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
-using System.Xml.Linq;
 
 namespace WoWVoxPack.TTS;
 
@@ -8,11 +7,12 @@ public class SoundFile
 {
     [JsonConstructor]
     public SoundFile(string fileName, string? text = null, string? ssml = null, string? displayName = null,
-        string? formattedDisplayName = null)
+        string? formattedDisplayName = null, IReadOnlyList<Pronunciation>? pronunciations = null)
     {
         FileName = Path.ChangeExtension(fileName, ".ogg").ToLowerInvariant();
         Text = text;
         Ssml = ssml;
+        Pronunciations = pronunciations is { Count: > 0 } ? pronunciations : null;
         DisplayName = displayName ?? Path.ChangeExtension(fileName, null);
         FormattedDisplayName = formattedDisplayName ?? DisplayName;
     }
@@ -54,22 +54,39 @@ public class SoundFile
     [JsonPropertyOrder(-1)]
     public string? Ssml { get; set; }
 
+    [JsonPropertyName("Pronunciations")]
+    [JsonPropertyOrder(0)]
+    public IReadOnlyList<Pronunciation>? Pronunciations { get; set; }
+
     [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
     public string? CopyFromPath { get; set; }
 
-    public static string GetSsml(string text)
+    /// <summary>
+    /// Drops the "=IPA" hint upstream spell lists and the repo's own manifests attach to a word,
+    /// leaving the plain spelling.
+    /// </summary>
+    public static string StripIpaHints(string text)
     {
-        string[] words = text.Split([' '], StringSplitOptions.RemoveEmptyEntries);
-        IEnumerable<XNode> content = words.Select((word, index) => new
-            {
-                Word = word + (index == words.Length - 1 ? string.Empty : " "),
-                WordIpa = word.Split('=').ElementAtOrDefault(1)
-            })
-            .Select(x => x.WordIpa is null
-                ? new XText(x.Word) as XNode
-                : new XElement("phoneme", new XAttribute("alphabet", "IPA"),
-                    new XAttribute("ph", x.WordIpa), x.Word));
+        return !text.Contains('=')
+            ? text
+            : string.Join(' ', text.Split(' ').Select(word => word.Split('=')[0]));
+    }
 
-        return new XDocument(new XElement("speak", content)).ToString().TrimEnd();
+    /// <summary>
+    /// Splits the repo's "Word=IPA" convention into what is said and how to say it. The hint has
+    /// to leave the text: Google applies a custom pronunciation by matching the phrase in the
+    /// input, and a phrase inside a phoneme tag is documented not to match.
+    /// </summary>
+    public static (string Text, IReadOnlyList<Pronunciation> Pronunciations) ParseIpaHints(string markedUpText)
+    {
+        List<Pronunciation> pronunciations = markedUpText
+            .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+            .Select(word => word.Split('='))
+            .Where(parts => parts.Length == 2 && parts[0].Length > 0 && parts[1].Length > 0)
+            .Select(parts => new Pronunciation(parts[0], parts[1]))
+            .DistinctBy(p => p.Phrase)
+            .ToList();
+
+        return (StripIpaHints(markedUpText), pronunciations);
     }
 }

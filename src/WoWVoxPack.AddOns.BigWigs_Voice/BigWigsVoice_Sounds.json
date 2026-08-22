@@ -2,7 +2,13 @@
   {
     "DisplayName": "Goresplatter",
     "FileName": "338353.ogg",
-    "SSML": "<speak><phoneme alphabet=\"IPA\" ph=\"ˈɡɔrˌsplætər\">Goresplatter</phoneme></speak>"
+    "Text": "Goresplatter",
+    "Pronunciations": [
+      {
+        "Phrase": "Goresplatter",
+        "Ipa": "ˈɡɔrˌsplætər"
+      }
+    ]
   },
   {
     "DisplayName": "B.4.T.T.L.3. Mine",
@@ -12,12 +18,28 @@
   {
     "DisplayName": "Discom-BOMB-ulator",
     "FileName": "285454.ogg",
-    "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"ˌdɪs.kəmˈbɑːm.jəˌleɪ.tɚ\">Discom-BOMB-ulator</phoneme></speak>"
+    "Text": "Discom-BOMB-ulator",
+    "Pronunciations": [
+      {
+        "Phrase": "Discom-BOMB-ulator",
+        "Ipa": "ˌdɪs.kəmˈbɑːm.jəˌleɪ.tɚ"
+      }
+    ]
   },
   {
     "DisplayName": "Call Earthrager",
     "FileName": "257593.ogg",
-    "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"kɔl ˈɝθˌreɪ.dʒɚ\">Call Earthrager</phoneme></speak>"
+    "Text": "Call Earthrager",
+    "Pronunciations": [
+      {
+        "Phrase": "Call",
+        "Ipa": "kɔl"
+      },
+      {
+        "Phrase": "Earthrager",
+        "Ipa": "ˈɝθˌreɪ.dʒɚ"
+      }
+    ]
   },
   {
     "DisplayName": "Fill 'Er Up",
@@ -37,12 +59,32 @@
   {
     "DisplayName": "Unrelenting Carnage",
     "FileName": "471403.ogg",
-    "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"ʌn.rɪˈlɛnt.ɪŋ ˈkɑːːrnɪdʒ\">Unrelenting Carnage</phoneme></speak>"
+    "Text": "Unrelenting Carnage",
+    "Pronunciations": [
+      {
+        "Phrase": "Unrelenting",
+        "Ipa": "ʌn.rɪˈlɛnt.ɪŋ"
+      },
+      {
+        "Phrase": "Carnage",
+        "Ipa": "ˈkɑːrnɪdʒ"
+      }
+    ]
   },
   {
     "DisplayName": "Bomb Voyage!",
     "FileName": "459978.ogg",
-    "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"bɑm vɔɪˈɑʒ\">Bomb Voyage</phoneme></speak>"
+    "Text": "Bomb Voyage",
+    "Pronunciations": [
+      {
+        "Phrase": "Bomb",
+        "Ipa": "bɑm"
+      },
+      {
+        "Phrase": "Voyage",
+        "Ipa": "vɔɪˈɑʒ"
+      }
+    ]
   },
   {
     "DisplayName": "Embrace of K'aresh",
@@ -62,47 +104,129 @@
   {
     "DisplayName": "Void Tear",
     "FileName": "1248171.ogg",
-    "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"void tɛɹ\">Void Tear</phoneme></speak>"
+    "Text": "Void Tear",
+    "Pronunciations": [
+      {
+        "Phrase": "Void",
+        "Ipa": "vɔɪd"
+      },
+      {
+        "Phrase": "Tear",
+        "Ipa": "tɛɹ"
+      }
+    ]
   },
   {
     "DisplayName": "Plant Arathi Bomb",
     "FileName": "451091.ogg",
-    "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"plænt\">Plant</phoneme><phoneme alphabet=\"ipa\" ph=\"əˈɹɑθi\">Arathi</phoneme><phoneme alphabet=\"ipa\" ph=\"ˈbɑm\">Bomb</phoneme></speak>"
+    "Text": "Plant Arathi Bomb",
+    "Pronunciations": [
+      {
+        "Phrase": "Plant",
+        "Ipa": "plænt"
+      },
+      {
+        "Phrase": "Arathi",
+        "Ipa": "əˈɹɑθi"
+      },
+      {
+        "Phrase": "Bomb",
+        "Ipa": "ˈbɑm"
+      }
+    ]
   },
   {
     "DisplayName": "Sigil of Chains",
     "FileName": "1240891.ogg",
-    "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"ˈsɪdʒɪl\">Sigil</phoneme> of Chains</speak>"
+    "Text": "Sigil of Chains",
+    "Pronunciations": [
+      {
+        "Phrase": "Sigil",
+        "Ipa": "ˈsɪdʒɪl"
+      }
+    ]
   },
   {
     "DisplayName": "Arathi Bombs",
     "FileName": "434655.ogg",
-    "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"əˈɹɑθi\">Arathi</phoneme><phoneme alphabet=\"ipa\" ph=\"ˈbɑmz\">Bombs</phoneme></speak>"
+    "Text": "Arathi Bombs",
+    "Pronunciations": [
+      {
+        "Phrase": "Arathi",
+        "Ipa": "əˈɹɑθi"
+      },
+      {
+        "Phrase": "Bombs",
+        "Ipa": "ˈbɑmz"
+      }
+    ]
   },
   {
     "DisplayName": "Lumbering Mindgorger",
     "FileName": "-13460.ogg",
-    "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"ˈlʌm.bɚ.ɪŋ\">Lumbering</phoneme><phoneme alphabet=\"ipa\" ph=\"ˈmaɪndˌɡɔɹ.d͡ʒɚ\">Mindgorger</phoneme></speak>"
+    "Text": "Lumbering Mindgorger",
+    "Pronunciations": [
+      {
+        "Phrase": "Lumbering",
+        "Ipa": "ˈlʌm.bɚ.ɪŋ"
+      },
+      {
+        "Phrase": "Mindgorger",
+        "Ipa": "ˈmaɪndˌɡɔɹ.d͡ʒɚ"
+      }
+    ]
   },
   {
     "DisplayName": "Malefic Wave",
     "FileName": "1224478.ogg",
-    "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"məˈlɛfɪk\">Malefic</phoneme> Wave</speak>"
+    "Text": "Malefic Wave",
+    "Pronunciations": [
+      {
+        "Phrase": "Malefic",
+        "Ipa": "məˈlɛfɪk"
+      }
+    ]
   },
   {
     "DisplayName": "Lightsower Dash",
     "FileName": "1234850.ogg",
-    "SSML": "<speak><phoneme alphabet=\"ipa\"  ph=\"ˈlaɪtˌsoʊ.ɚ\">Lightsower</phoneme> Dash</speak>"
+    "Text": "Lightsower Dash",
+    "Pronunciations": [
+      {
+        "Phrase": "Lightsower",
+        "Ipa": "ˈlaɪtˌsoʊ.ɚ"
+      }
+    ]
   },
   {
     "DisplayName": "Fingers of Gul'dan",
     "FileName": "1218203.ogg",
-    "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"ˈfɪŋɡɚz əv ɡʊlˈdɑn\">Fingers of Gul'dan</phoneme></speak>"
+    "Text": "Fingers of Gul'dan",
+    "Pronunciations": [
+      {
+        "Phrase": "Fingers",
+        "Ipa": "ˈfɪŋɡɚz"
+      },
+      {
+        "Phrase": "of",
+        "Ipa": "əv"
+      },
+      {
+        "Phrase": "Gul'dan",
+        "Ipa": "ɡʊlˈdɑn"
+      }
+    ]
   },
   {
     "DisplayName": "Ssscavenging",
     "FileName": "1296216.ogg",
-    "SSML": "<speak><phoneme alphabet=\"ipa\" ph=\"ssˈskævəndʒɪŋ\">Ssscavenging</phoneme></speak>"
+    "Text": "Ssscavenging",
+    "Pronunciations": [
+      {
+        "Phrase": "Ssscavenging",
+        "Ipa": "ssˈskævəndʒɪŋ"
+      }
+    ]
   },
   {
     "DisplayName": "Axegrinder",

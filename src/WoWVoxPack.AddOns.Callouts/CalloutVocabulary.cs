@@ -131,27 +131,26 @@ public static class CalloutVocabulary
     {
         overrides.TryGetValue(soundName, out PronunciationOverride? @override);
 
-        string displayName = @override?.Text is { } overrideText
-            ? overrideText.Split('=')[0]
-            : CalloutPronunciation.ToDisplayName(soundName);
+        // The media key, never the override's text: a retired alias and its replacement share
+        // one recording and must still register under their own LibSharedMedia names.
+        string displayName = CalloutPronunciation.ToDisplayName(soundName);
 
         string? text = @override?.Ssml is null ? @override?.Text ?? displayName : null;
 
-        // Expand the repo's "Word=IPA" convention, or the '=' and the phonemes get
-        // spoken literally. LoadSoundFileJsonWithSsmlFallback does this for the
-        // curated JSON; entries built here have to do it themselves.
         string? ssml = @override?.Ssml;
+        IReadOnlyList<Pronunciation> pronunciations = @override?.Pronunciations ?? [];
         if (ssml is null && text?.Contains('=') == true)
         {
-            ssml = SoundFile.GetSsml(text);
-            text = null;
+            (text, IReadOnlyList<Pronunciation> lifted) = SoundFile.ParseIpaHints(text);
+            pronunciations = pronunciations.Count > 0 ? pronunciations : lifted;
         }
 
         SoundFile soundFile = new(
             @override?.FileName ?? CalloutPronunciation.ToFileName(displayName),
             text: text,
             ssml: ssml,
-            displayName: displayName);
+            displayName: displayName,
+            pronunciations: pronunciations);
 
         return (displayName, soundFile, [soundName]);
     }

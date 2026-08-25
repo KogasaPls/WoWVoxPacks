@@ -36,6 +36,9 @@ IHostBuilder hostBuilder = Host.CreateDefaultBuilder(args)
         services.AddHttpClient<IBigWigsVoiceUpstreamClient, BigWigsVoiceUpstreamClient>();
         string solutionDirectory = Path.GetDirectoryName(
             Assembly.GetExecutingAssembly().GetCustomAttribute<SolutionFileAttribute>()!.SolutionFile)!;
+        services.AddSingleton(PronunciationCatalog.Load(
+            Path.Combine(solutionDirectory, "pronunciations.json")));
+        services.AddSingleton<PronunciationResolver>();
         services.AddSingleton(_ => new CalloutsVocabularyProvider(
             Path.Combine(AppContext.BaseDirectory, "Callouts_Sounds.json"),
             Path.Combine(AppContext.BaseDirectory, "CalloutPronunciations.json"),
@@ -80,6 +83,7 @@ IHostBuilder hostBuilder = Host.CreateDefaultBuilder(args)
             sp.GetRequiredService<IEnumerable<IAddOnService>>(),
             sp.GetRequiredService<IOptions<BuildMatrix>>(),
             sp.GetRequiredService<ISoundFileService>(),
+            sp.GetRequiredService<PronunciationResolver>(),
             ResolveOutputDirectoryBase()));
         services.AddHostedService<Worker>();
     }).ConfigureLogging((_, logging) =>

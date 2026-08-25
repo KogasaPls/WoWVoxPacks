@@ -1,16 +1,5 @@
 [
   {
-    "DisplayName": "Goresplatter",
-    "FileName": "338353.ogg",
-    "Text": "Goresplatter",
-    "Pronunciations": [
-      {
-        "Phrase": "Goresplatter",
-        "Ipa": "ˈɡɔrˌsplætər"
-      }
-    ]
-  },
-  {
     "DisplayName": "B.4.T.T.L.3. Mine",
     "FileName": "1216431.ogg",
     "Text": "Battle Mine"
@@ -18,28 +7,12 @@
   {
     "DisplayName": "Discom-BOMB-ulator",
     "FileName": "285454.ogg",
-    "Text": "Discom-BOMB-ulator",
-    "Pronunciations": [
-      {
-        "Phrase": "Discom-BOMB-ulator",
-        "Ipa": "ˌdɪs.kəmˈbɑːm.jəˌleɪ.tɚ"
-      }
-    ]
+    "Text": "Discom-BOMB-ulator"
   },
   {
     "DisplayName": "Call Earthrager",
     "FileName": "257593.ogg",
-    "Text": "Call Earthrager",
-    "Pronunciations": [
-      {
-        "Phrase": "Call",
-        "Ipa": "kɔl"
-      },
-      {
-        "Phrase": "Earthrager",
-        "Ipa": "ˈɝθˌreɪ.dʒɚ"
-      }
-    ]
+    "Text": "Call Earthrager"
   },
   {
     "DisplayName": "Fill 'Er Up",
@@ -59,32 +32,12 @@
   {
     "DisplayName": "Unrelenting Carnage",
     "FileName": "471403.ogg",
-    "Text": "Unrelenting Carnage",
-    "Pronunciations": [
-      {
-        "Phrase": "Unrelenting",
-        "Ipa": "ʌn.rɪˈlɛnt.ɪŋ"
-      },
-      {
-        "Phrase": "Carnage",
-        "Ipa": "ˈkɑːrnɪdʒ"
-      }
-    ]
+    "Text": "Unrelenting Carnage"
   },
   {
     "DisplayName": "Bomb Voyage!",
     "FileName": "459978.ogg",
-    "Text": "Bomb Voyage",
-    "Pronunciations": [
-      {
-        "Phrase": "Bomb",
-        "Ipa": "bɑm"
-      },
-      {
-        "Phrase": "Voyage",
-        "Ipa": "vɔɪˈɑʒ"
-      }
-    ]
+    "Text": "Bomb Voyage"
   },
   {
     "DisplayName": "Embrace of K'aresh",
@@ -104,133 +57,46 @@
   {
     "DisplayName": "Void Tear",
     "FileName": "1248171.ogg",
-    "Text": "Void Tear",
-    "Pronunciations": [
-      {
-        "Phrase": "Void",
-        "Ipa": "vɔɪd"
-      },
-      {
-        "Phrase": "Tear",
-        "Ipa": "tɛɹ"
-      }
-    ]
+    "Text": "Void Tear"
   },
   {
     "DisplayName": "Plant Arathi Bomb",
     "FileName": "451091.ogg",
-    "Text": "Plant Arathi Bomb",
-    "Pronunciations": [
-      {
-        "Phrase": "Plant",
-        "Ipa": "plænt"
-      },
-      {
-        "Phrase": "Arathi",
-        "Ipa": "əˈɹɑθi"
-      },
-      {
-        "Phrase": "Bomb",
-        "Ipa": "ˈbɑm"
-      }
-    ]
+    "Text": "Plant Arathi Bomb"
   },
   {
     "DisplayName": "Sigil of Chains",
     "FileName": "1240891.ogg",
-    "Text": "Sigil of Chains",
-    "Pronunciations": [
-      {
-        "Phrase": "Sigil",
-        "Ipa": "ˈsɪdʒɪl"
-      }
-    ]
+    "Text": "Sigil of Chains"
   },
   {
     "DisplayName": "Arathi Bombs",
     "FileName": "434655.ogg",
-    "Text": "Arathi Bombs",
-    "Pronunciations": [
-      {
-        "Phrase": "Arathi",
-        "Ipa": "əˈɹɑθi"
-      },
-      {
-        "Phrase": "Bombs",
-        "Ipa": "ˈbɑmz"
-      }
-    ]
+    "Text": "Arathi Bombs"
   },
   {
     "DisplayName": "Lumbering Mindgorger",
     "FileName": "-13460.ogg",
-    "Text": "Lumbering Mindgorger",
-    "Pronunciations": [
-      {
-        "Phrase": "Lumbering",
-        "Ipa": "ˈlʌm.bɚ.ɪŋ"
-      },
-      {
-        "Phrase": "Mindgorger",
-        "Ipa": "ˈmaɪndˌɡɔɹ.d͡ʒɚ"
-      }
-    ]
+    "Text": "Lumbering Mindgorger"
   },
   {
     "DisplayName": "Malefic Wave",
     "FileName": "1224478.ogg",
-    "Text": "Malefic Wave",
-    "Pronunciations": [
-      {
-        "Phrase": "Malefic",
-        "Ipa": "məˈlɛfɪk"
-      }
-    ]
+    "Text": "Malefic Wave"
   },
   {
     "DisplayName": "Lightsower Dash",
     "FileName": "1234850.ogg",
-    "Text": "Lightsower Dash",
-    "Pronunciations": [
-      {
-        "Phrase": "Lightsower",
-        "Ipa": "ˈlaɪtˌsoʊ.ɚ"
-      }
-    ]
+    "Text": "Lightsower Dash"
   },
   {
     "DisplayName": "Fingers of Gul'dan",
     "FileName": "1218203.ogg",
-    "Text": "Fingers of Gul'dan",
-    "Pronunciations": [
-      {
-        "Phrase": "Fingers",
-        "Ipa": "ˈfɪŋɡɚz"
-      },
-      {
-        "Phrase": "of",
-        "Ipa": "əv"
-      },
-      {
-        "Phrase": "Gul'dan",
-        "Ipa": "ɡʊlˈdɑn"
-      }
-    ]
+    "Text": "Fingers of Gul'dan"
   },
   {
     "DisplayName": "Ssscavenging",
     "FileName": "1296216.ogg",
-    "Text": "Ssscavenging",
-    "Pronunciations": [
-      {
-        "Phrase": "Ssscavenging",
-        "Ipa": "ssˈskævəndʒɪŋ"
-      }
-    ]
-  },
-  {
-    "DisplayName": "Axegrinder",
-    "FileName": "1301111.ogg",
-    "Text": "Axe grinder"
+    "Text": "Ssscavenging"
   }
 ]

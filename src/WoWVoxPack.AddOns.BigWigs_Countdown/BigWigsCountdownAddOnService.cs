@@ -12,15 +12,15 @@ public sealed class BigWigsCountdownAddOnService(IOptionsSnapshot<AddOnSettings>
 
     private AddOnSettings AddOnSettings { get; } = addOnOptions.Get("BigWigs_Countdown");
 
-    public Task<AddOn> BuildAddOnAsync(string outputDirectoryBase, TtsSettings ttsSettings,
+    public Task<AddOnDraft> BuildAddOnAsync(string outputDirectoryBase, TtsSettings ttsSettings,
         CancellationToken cancellationToken = default)
     {
-        AddOn addOn = new AddOnBuilder(AddOnSettings, ttsSettings)
+        AddOnDraft addOn = new AddOnBuilder(AddOnSettings, ttsSettings, "BigWigs_Countdown")
             .WithTitle($"BigWigs Countdown WoWVoxPacks {ttsSettings.Voice}")
             .WithDisplayTitle($"BigWigs |cffff7f3f+|r|cffffffffCountdown: WoWVoxPacks ({ttsSettings.Voice})|r")
             .AddSoundFiles(CountdownSoundFiles.Value)
             .AddFile("Countdown.lua", CountdownLuaFile.Render)
-            .Build(outputDirectoryBase);
+            .BuildDraft(outputDirectoryBase);
 
         return Task.FromResult(addOn);
     }

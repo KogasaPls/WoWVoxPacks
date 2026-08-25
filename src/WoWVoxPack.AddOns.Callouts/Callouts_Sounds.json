@@ -2,13 +2,7 @@
   {
     "FileName": "tranq.ogg",
     "Text": "Tranq",
-    "DisplayName": "Tranq",
-    "Pronunciations": [
-      {
-        "Phrase": "Tranq",
-        "Ipa": "træŋk"
-      }
-    ]
+    "DisplayName": "Tranq"
   },
   {
     "FileName": "convoke.ogg",
@@ -38,24 +32,12 @@
   {
     "FileName": "yulon.ogg",
     "Text": "Yu'lon",
-    "DisplayName": "Yu'lon",
-    "Pronunciations": [
-      {
-        "Phrase": "Yu'lon",
-        "Ipa": "ˈjuːlɒn"
-      }
-    ]
+    "DisplayName": "Yu'lon"
   },
   {
     "FileName": "chiji.ogg",
     "Text": "Chi-ji",
-    "DisplayName": "Chi-ji",
-    "Pronunciations": [
-      {
-        "Phrase": "Chi-ji",
-        "Ipa": "tʃiːdʒiː"
-      }
-    ]
+    "DisplayName": "Chi-ji"
   },
   {
     "FileName": "conduit.ogg",
@@ -75,24 +57,12 @@
   {
     "FileName": "ams.ogg",
     "DisplayName": "AMS",
-    "Text": "AMS",
-    "Pronunciations": [
-      {
-        "Phrase": "AMS",
-        "Ipa": "eɪ.ɛm.ɛs"
-      }
-    ]
+    "Text": "AMS"
   },
   {
     "FileName": "amz.ogg",
     "DisplayName": "AMZ",
-    "Text": "AMZ",
-    "Pronunciations": [
-      {
-        "Phrase": "AMZ",
-        "Ipa": "eɪ.ɛm.zi"
-      }
-    ]
+    "Text": "AMZ"
   },
   {
     "FileName": "cheetah.ogg",
@@ -212,13 +182,7 @@
   {
     "FileName": "pi.ogg",
     "DisplayName": "PI",
-    "Text": "PI",
-    "Pronunciations": [
-      {
-        "Phrase": "PI",
-        "Ipa": "pi.aɪ"
-      }
-    ]
+    "Text": "PI"
   },
   {
     "FileName": "barrier.ogg",

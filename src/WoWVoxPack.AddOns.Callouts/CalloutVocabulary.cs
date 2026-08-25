@@ -138,19 +138,15 @@ public static class CalloutVocabulary
         string? text = @override?.Ssml is null ? @override?.Text ?? displayName : null;
 
         string? ssml = @override?.Ssml;
-        IReadOnlyList<Pronunciation> pronunciations = @override?.Pronunciations ?? [];
-        if (ssml is null && text?.Contains('=') == true)
-        {
-            (text, IReadOnlyList<Pronunciation> lifted) = SoundFile.ParseIpaHints(text);
-            pronunciations = pronunciations.Count > 0 ? pronunciations : lifted;
-        }
 
         SoundFile soundFile = new(
             @override?.FileName ?? CalloutPronunciation.ToFileName(displayName),
             text: text,
             ssml: ssml,
-            displayName: displayName,
-            pronunciations: pronunciations);
+            displayName: displayName)
+        {
+            PronunciationName = soundName
+        };
 
         return (displayName, soundFile, [soundName]);
     }

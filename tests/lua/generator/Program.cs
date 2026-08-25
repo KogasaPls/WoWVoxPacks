@@ -9,6 +9,7 @@
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging.Abstractions;
 
 using WoWVoxPack.AddOns;
 using WoWVoxPack.AddOns.BigWigs_Countdown;
@@ -76,19 +77,32 @@ if (Directory.Exists(outputRoot))
     Directory.Delete(outputRoot, recursive: true);
 }
 
-await Emit(sp.GetRequiredService<BigWigsVoiceAddOnService>(), VoiceName.Neural2_C);
-await Emit(sp.GetRequiredService<NorthernSkyRaidToolsAddOnService>(), VoiceName.Neural2_C);
-await Emit(sp.GetRequiredService<NorthernSkyRaidToolsAddOnService>(), VoiceName.Studio_O);
-await Emit(sp.GetRequiredService<CalloutsMediaAddOnService>(), VoiceName.Neural2_C);
-await Emit(sp.GetRequiredService<CalloutsMediaAddOnService>(), VoiceName.Studio_O);
-await Emit(sp.GetRequiredService<ExBossAddOnService>(), VoiceName.Neural2_C);
-await Emit(sp.GetRequiredService<BigWigsCountdownAddOnService>(), VoiceName.Neural2_C);
+List<AddOnDraft> drafts = [];
+await AddDraft(sp.GetRequiredService<BigWigsVoiceAddOnService>(), VoiceName.Neural2_C);
+await AddDraft(sp.GetRequiredService<NorthernSkyRaidToolsAddOnService>(), VoiceName.Neural2_C);
+await AddDraft(sp.GetRequiredService<NorthernSkyRaidToolsAddOnService>(), VoiceName.Studio_O);
+await AddDraft(sp.GetRequiredService<CalloutsMediaAddOnService>(), VoiceName.Neural2_C);
+await AddDraft(sp.GetRequiredService<CalloutsMediaAddOnService>(), VoiceName.Studio_O);
+await AddDraft(sp.GetRequiredService<ExBossAddOnService>(), VoiceName.Neural2_C);
+await AddDraft(sp.GetRequiredService<BigWigsCountdownAddOnService>(), VoiceName.Neural2_C);
+
+PronunciationResolver resolver = new(
+    PronunciationCatalog.Load(Path.Combine(repoRoot, "pronunciations.json")),
+    NullLogger<PronunciationResolver>.Instance);
+foreach (AddOn addOn in resolver.Resolve(drafts))
+{
+    await Emit(addOn);
+}
 
 return 0;
 
-async Task Emit(IAddOnService service, VoiceName voice)
+async Task AddDraft(IAddOnService service, VoiceName voice)
 {
-    AddOn addOn = await service.BuildAddOnAsync(outputRoot, new TtsSettings { Voice = voice });
+    drafts.Add(await service.BuildAddOnAsync(outputRoot, new TtsSettings { Voice = voice }));
+}
+
+async Task Emit(AddOn addOn)
+{
     Directory.CreateDirectory(addOn.AddOnDirectory);
 
     foreach (string file in addOn.Files)

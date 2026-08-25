@@ -1,0 +1,129 @@
+{
+  "ExactNames": [
+    {
+      "Name": "Axegrinder",
+      "Text": "Axe grinder"
+    },
+    {
+      "Name": "Goresplatter",
+      "Pronunciations": [
+        { "Phrase": "Goresplatter", "Ipa": "ˈɡɔrˌsplætər" }
+      ]
+    },
+    {
+      "Name": "Discom-BOMB-ulator",
+      "Pronunciations": [
+        { "Phrase": "Discom-BOMB-ulator", "Ipa": "ˌdɪs.kəmˈbɑːm.jəˌleɪ.tɚ" }
+      ]
+    },
+    {
+      "Name": "Call Earthrager",
+      "Pronunciations": [
+        { "Phrase": "Call", "Ipa": "kɔl" },
+        { "Phrase": "Earthrager", "Ipa": "ˈɝθˌreɪ.dʒɚ" }
+      ]
+    },
+    {
+      "Name": "Unrelenting Carnage",
+      "Pronunciations": [
+        { "Phrase": "Unrelenting", "Ipa": "ʌn.rɪˈlɛnt.ɪŋ" },
+        { "Phrase": "Carnage", "Ipa": "ˈkɑːrnɪdʒ" }
+      ]
+    },
+    {
+      "Name": "Bomb Voyage!",
+      "Pronunciations": [
+        { "Phrase": "Bomb", "Ipa": "bɑm" },
+        { "Phrase": "Voyage", "Ipa": "vɔɪˈɑʒ" }
+      ]
+    },
+    {
+      "Name": "Void Tear",
+      "Pronunciations": [
+        { "Phrase": "Void", "Ipa": "vɔɪd" },
+        { "Phrase": "Tear", "Ipa": "tɛɹ" }
+      ]
+    },
+    {
+      "Name": "Plant Arathi Bomb",
+      "Pronunciations": [
+        { "Phrase": "Plant", "Ipa": "plænt" },
+        { "Phrase": "Bomb", "Ipa": "ˈbɑm" }
+      ]
+    },
+    {
+      "Name": "Sigil of Chains",
+      "Pronunciations": [
+        { "Phrase": "Sigil", "Ipa": "ˈsɪdʒɪl" }
+      ]
+    },
+    {
+      "Name": "Arathi Bombs",
+      "Pronunciations": [
+        { "Phrase": "Bombs", "Ipa": "ˈbɑmz" }
+      ]
+    },
+    {
+      "Name": "Lumbering Mindgorger",
+      "Pronunciations": [
+        { "Phrase": "Lumbering", "Ipa": "ˈlʌm.bɚ.ɪŋ" },
+        { "Phrase": "Mindgorger", "Ipa": "ˈmaɪndˌɡɔɹ.d͡ʒɚ" }
+      ]
+    },
+    {
+      "Name": "Malefic Wave",
+      "Pronunciations": [
+        { "Phrase": "Malefic", "Ipa": "məˈlɛfɪk" }
+      ]
+    },
+    {
+      "Name": "Lightsower Dash",
+      "Pronunciations": [
+        { "Phrase": "Lightsower", "Ipa": "ˈlaɪtˌsoʊ.ɚ" }
+      ]
+    },
+    {
+      "Name": "Fingers of Gul'dan",
+      "Pronunciations": [
+        { "Phrase": "Fingers", "Ipa": "ˈfɪŋɡɚz" },
+        { "Phrase": "of", "Ipa": "əv" }
+      ]
+    },
+    {
+      "Name": "Ssscavenging",
+      "Pronunciations": [
+        { "Phrase": "Ssscavenging", "Ipa": "ssˈskævəndʒɪŋ" }
+      ]
+    },
+    {
+      "Name": "Tranq",
+      "Pronunciations": [
+        { "Phrase": "Tranq", "Ipa": "træŋk" }
+      ]
+    },
+    {
+      "Name": "Fung",
+      "Pronunciations": [
+        { "Phrase": "Fung", "Ipa": "fʌŋ" }
+      ]
+    },
+    {
+      "Name": "Innervate",
+      "Pronunciations": [
+        { "Phrase": "Innervate", "Ipa": "ˈɪnɚveɪt" }
+      ]
+    }
+  ],
+  "Phrases": [
+    { "Phrase": "AOE", "Ipa": "ˌeɪ.joʊˈwi" },
+    { "Phrase": "AMS", "Ipa": "eɪ.ɛm.ɛs" },
+    { "Phrase": "AMZ", "Ipa": "eɪ.ɛm.zi" },
+    { "Phrase": "Arathi", "Ipa": "əˈɹɑθi" },
+    { "Phrase": "Chi-Ji", "Ipa": "tʃiːdʒiː", "Aliases": ["Chi Ji"] },
+    { "Phrase": "Gul'dan", "Ipa": "ɡʊlˈdɑn" },
+    { "Phrase": "PI", "Ipa": "pi.aɪ" },
+    { "Phrase": "Rebuff", "Ipa": "ˌriːˈbʌf" },
+    { "Phrase": "Yu'lon", "Ipa": "ˈjuːlɒn" }
+  ],
+  "Exceptions": []
+}

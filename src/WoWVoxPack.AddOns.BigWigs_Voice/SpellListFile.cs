@@ -25,8 +25,10 @@ internal class SpellListFile
     private IEnumerable<BigWigsVoiceSoundFile> ParseSoundFiles()
     {
         using StringReader reader = new(Content);
+        int lineNumber = 0;
         while (reader.ReadLine() is { } line)
         {
+            lineNumber++;
             if (line.StartsWith(';') || string.IsNullOrWhiteSpace(line))
             {
                 continue;
@@ -41,7 +43,8 @@ internal class SpellListFile
             string spellId = parts[0];
             string spellName = parts[1];
 
-            yield return new BigWigsVoiceSoundFile(spellId, spellName);
+            yield return new BigWigsVoiceSoundFile(
+                spellId, spellName, $"upstream:{FileName}:{lineNumber}");
         }
     }
 }

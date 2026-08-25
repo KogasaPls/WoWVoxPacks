@@ -160,34 +160,6 @@ public class AddOnBuilderTests
     }
 
     [Fact]
-    public void LoadSoundFileJsonWithIpaHints_LiftsHints_OnlyForEntriesWithIpaEscape()
-    {
-        string path = WriteTempJson("""
-            [
-              {"FileName":"plain.ogg","DisplayName":"Plain","Text":"incoming"},
-              {"FileName":"taivan.ogg","DisplayName":"Taivan","Text":"Taivan=t1 incoming"}
-            ]
-            """);
-        try
-        {
-            List<SoundFile> soundFiles = AddOnBuilder.LoadSoundFileJsonWithIpaHints(path);
-
-            SoundFile plain = soundFiles.Single(f => f.DisplayName == "Plain");
-            SoundFile taivan = soundFiles.Single(f => f.DisplayName == "Taivan");
-
-            Assert.Null(plain.Pronunciations);
-            Assert.Equal("incoming", plain.Text);
-            Assert.Null(taivan.Ssml);
-            Assert.Equal("Taivan incoming", taivan.Text);
-            Assert.Equal([new Pronunciation("Taivan", "t1")], taivan.Pronunciations);
-        }
-        finally
-        {
-            File.Delete(path);
-        }
-    }
-
-    [Fact]
     public void Build_AllowsSeveralEntries_ToShareOneRecordingTheyAgreeOn()
     {
         AddOn addOn = new AddOnBuilder(DefaultSettings, DefaultTtsSettings)
@@ -210,6 +182,28 @@ public class AddOnBuilderTests
 
         Assert.Contains("frontal.ogg", exception.Message);
         Assert.Contains("注意头前", exception.Message);
+    }
+
+    [Fact]
+    public void BuildDraft_DefersRecordingConflictUntilFinalization()
+    {
+        AddOnDraft draft = new AddOnBuilder(DefaultSettings, DefaultTtsSettings, "Test")
+            .AddSoundFile(new SoundFile("alert.ogg", text: "First", displayName: "First"))
+            .AddSoundFile(new SoundFile("alert.ogg", text: "Second", displayName: "Second"))
+            .BuildDraft("/tmp/output");
+
+        Assert.Equal(2, draft.SoundFiles.Count());
+        Assert.Throws<InvalidOperationException>(() => draft.Finalize(draft.SoundFiles));
+    }
+
+    [Fact]
+    public void Build_StillFinalizesOrdinaryDirectCallers()
+    {
+        AddOn addOn = new AddOnBuilder(DefaultSettings, DefaultTtsSettings)
+            .AddSoundFile(new SoundFile("alert.ogg", text: "Alert", displayName: "Alert"))
+            .Build("/tmp/output");
+
+        Assert.Equal("alert.ogg", Assert.Single(addOn.SoundFiles).FileName);
     }
 
     private static string WriteTempJson(string json)

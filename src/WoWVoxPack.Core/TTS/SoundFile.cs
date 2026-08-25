@@ -15,6 +15,7 @@ public class SoundFile
         Pronunciations = pronunciations is { Count: > 0 } ? pronunciations : null;
         DisplayName = displayName ?? Path.ChangeExtension(fileName, null);
         FormattedDisplayName = formattedDisplayName ?? DisplayName;
+        PronunciationName = DisplayName;
     }
 
     [Required]
@@ -37,6 +38,12 @@ public class SoundFile
     /// </summary>
     [JsonIgnore]
     public string Key => ExplicitKey ?? DisplayName;
+
+    [JsonIgnore]
+    public string PronunciationName { get; set; }
+
+    [JsonIgnore]
+    public IReadOnlyList<PronunciationHint>? ImportedPronunciations { get; set; }
 
     [JsonPropertyName("DisplayName")]
     [JsonPropertyOrder(-4)]

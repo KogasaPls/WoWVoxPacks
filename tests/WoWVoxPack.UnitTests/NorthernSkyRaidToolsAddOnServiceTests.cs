@@ -27,9 +27,10 @@ public sealed class NorthernSkyRaidToolsAddOnServiceTests : IDisposable
             }),
             new NorthernSkyRaidToolsVocabularyProvider([vocabularyPath], overridesPath));
 
-        AddOn addOn = await service.BuildAddOnAsync(
+        AddOnDraft draft = await service.BuildAddOnAsync(
             _temporaryDirectory,
             new TtsSettings { Voice = VoiceName.Studio_O });
+        AddOn addOn = draft.Finalize(draft.SoundFiles);
 
         Assert.Equal("WoWVoxPacks_NorthernSkyRaidTools_Studio_O", addOn.Title);
         Assert.Equal("WoWVoxPacks_NorthernSkyRaidTools_Studio_O", addOn.AddOnDirectoryName);
@@ -57,9 +58,10 @@ public sealed class NorthernSkyRaidToolsAddOnServiceTests : IDisposable
             }),
             new NorthernSkyRaidToolsVocabularyProvider([vocabularyPath], overridesPath));
 
-        AddOn addOn = await service.BuildAddOnAsync(
+        AddOnDraft draft = await service.BuildAddOnAsync(
             _temporaryDirectory,
             new TtsSettings { Voice = VoiceName.Studio_O });
+        AddOn addOn = draft.Finalize(draft.SoundFiles);
 
         Assert.Single(addOn.SoundFiles);
         Assert.Equal("soak.ogg", Assert.Single(addOn.SoundFiles).FileName);
@@ -94,14 +96,16 @@ public sealed class NorthernSkyRaidToolsAddOnServiceTests : IDisposable
                     Path.Combine(_temporaryDirectory, "RetiredCallouts.json"))));
         TtsSettings ttsSettings = new() { Voice = VoiceName.Studio_O };
 
-        AddOn withoutRecording = await service.BuildAddOnAsync(_temporaryDirectory, ttsSettings);
+        AddOnDraft withoutRecordingDraft = await service.BuildAddOnAsync(_temporaryDirectory, ttsSettings);
+        AddOn withoutRecording = withoutRecordingDraft.Finalize(withoutRecordingDraft.SoundFiles);
 
         Assert.DoesNotContain("OldCallout", withoutRecording.GetFileContent("Core.lua"),
             StringComparison.Ordinal);
 
         Directory.CreateDirectory(withoutRecording.SoundDirectory);
         File.WriteAllBytes(Path.Combine(withoutRecording.SoundDirectory, "old_callout.ogg"), [1]);
-        AddOn withRecording = await service.BuildAddOnAsync(_temporaryDirectory, ttsSettings);
+        AddOnDraft withRecordingDraft = await service.BuildAddOnAsync(_temporaryDirectory, ttsSettings);
+        AddOn withRecording = withRecordingDraft.Finalize(withRecordingDraft.SoundFiles);
 
         Assert.Contains("LSM:Register(\"sound\", \"OldCallout\", path .. \"old_callout.ogg\")",
             withRecording.GetFileContent("Core.lua"), StringComparison.Ordinal);
@@ -135,8 +139,9 @@ public sealed class NorthernSkyRaidToolsAddOnServiceTests : IDisposable
                     [Path.Combine(_temporaryDirectory, "lorrgs-vocabulary.txt")],
                     Path.Combine(_temporaryDirectory, "RetiredCallouts.json"))));
 
-        AddOn addOn = await service.BuildAddOnAsync(
+        AddOnDraft draft = await service.BuildAddOnAsync(
             _temporaryDirectory, new TtsSettings { Voice = VoiceName.Studio_O });
+        AddOn addOn = draft.Finalize(draft.SoundFiles);
 
         Assert.Equal("anti_magic_shell.ogg", Assert.Single(addOn.SoundFiles).FileName);
         Assert.Contains(

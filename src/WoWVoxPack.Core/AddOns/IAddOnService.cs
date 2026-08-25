@@ -4,6 +4,6 @@ namespace WoWVoxPack.AddOns;
 
 public interface IAddOnService
 {
-    Task<AddOn> BuildAddOnAsync(string outputDirectoryBase, TtsSettings ttsSettings,
+    Task<AddOnDraft> BuildAddOnAsync(string outputDirectoryBase, TtsSettings ttsSettings,
         CancellationToken cancellationToken = default);
 }

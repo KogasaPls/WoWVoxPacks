@@ -6,7 +6,7 @@ using WoWVoxPack.TTS;
 
 namespace WoWVoxPack.AddOns;
 
-public sealed class AddOnBuilder(AddOnSettings settings, TtsSettings ttsSettings)
+public sealed class AddOnBuilder(AddOnSettings settings, TtsSettings ttsSettings, string? addOnId = null)
 {
     private readonly Dictionary<string, SoundFile> _soundFiles = new(StringComparer.OrdinalIgnoreCase);
     private readonly Dictionary<string, Func<AddOn, string>> _fileFactories = new(StringComparer.OrdinalIgnoreCase);
@@ -24,17 +24,6 @@ public sealed class AddOnBuilder(AddOnSettings settings, TtsSettings ttsSettings
         return Guard.Against.Null(
             JsonSerializer.Deserialize<List<SoundFile>>(File.ReadAllText(filePath),
                 SoundFileJsonContext.Default.ListSoundFile));
-    }
-
-    /// <summary>
-    /// Like <see cref="LoadSoundFileJson"/>, but lifts the IPA escape ('=') out of
-    /// <see cref="SoundFile.Text"/> into <see cref="SoundFile.Pronunciations"/> for entries with
-    /// no explicit <see cref="SoundFile.Ssml"/>. Shared by addons (Callouts, ExBoss) whose
-    /// sound-file JSON manifests use this convention.
-    /// </summary>
-    public static List<SoundFile> LoadSoundFileJsonWithIpaHints(string filePath)
-    {
-        return LoadSoundFileJson(filePath).Select(LiftIpaHints).ToList();
     }
 
     public AddOnBuilder WithTitle(string title)
@@ -82,8 +71,12 @@ public sealed class AddOnBuilder(AddOnSettings settings, TtsSettings ttsSettings
 
     public AddOn Build(string outputDirectoryBase)
     {
-        GuardAgainstConflictingRecordings();
+        AddOnDraft draft = BuildDraft(outputDirectoryBase);
+        return draft.Finalize(draft.SoundFiles);
+    }
 
+    public AddOnDraft BuildDraft(string outputDirectoryBase)
+    {
         string title = Guard.Against.NullOrWhiteSpace(_title ?? settings.Title);
         string displayTitle = _displayTitle ?? settings.DisplayTitle ?? title;
         string version = Guard.Against.NullOrWhiteSpace(settings.Version);
@@ -95,7 +88,8 @@ public sealed class AddOnBuilder(AddOnSettings settings, TtsSettings ttsSettings
             settings.AdditionalProperties ?? new Dictionary<string, string>(),
             StringComparer.OrdinalIgnoreCase);
 
-        return new AddOn(
+        return new AddOnDraft(
+            Guard.Against.NullOrWhiteSpace(addOnId ?? settings.Title),
             outputDirectoryBase,
             title,
             displayTitle,
@@ -108,49 +102,5 @@ public sealed class AddOnBuilder(AddOnSettings settings, TtsSettings ttsSettings
             settings.Interfaces,
             new Dictionary<string, SoundFile>(_soundFiles, StringComparer.OrdinalIgnoreCase),
             new Dictionary<string, Func<AddOn, string>>(_fileFactories, StringComparer.OrdinalIgnoreCase));
-    }
-
-    private static SoundFile LiftIpaHints(SoundFile soundFile)
-    {
-        if (soundFile.Ssml is not null || soundFile.Text?.Contains('=') != true)
-        {
-            return soundFile;
-        }
-
-        (string text, IReadOnlyList<Pronunciation> pronunciations) = SoundFile.ParseIpaHints(soundFile.Text);
-
-        return new SoundFile(soundFile.FileName, text: text,
-            displayName: soundFile.DisplayName, formattedDisplayName: soundFile.FormattedDisplayName,
-            pronunciations: pronunciations)
-        {
-            ExplicitKey = soundFile.ExplicitKey
-        };
-    }
-
-    /// <summary>
-    /// Several entries may share one recording, the way ExBoss points five labels at adds.ogg, but
-    /// only one of them can be rendered and the renderer takes whichever it reaches first. Where
-    /// they disagree about what to say, that choice silently decides what players hear, so it has
-    /// to be a build error instead: ExBoss shipped "FRONTAL" for frontal.ogg for exactly this
-    /// reason, while two other labels on the same file asked for "Frontal".
-    /// </summary>
-    private void GuardAgainstConflictingRecordings()
-    {
-        IEnumerable<IGrouping<string, SoundFile>> perFile =
-            _soundFiles.Values.GroupBy(f => f.FileName, StringComparer.OrdinalIgnoreCase);
-
-        foreach (IGrouping<string, SoundFile> group in perFile)
-        {
-            SoundFile[] distinct = group
-                .Distinct(SoundFileContentEqualityComparer.Default)
-                .ToArray();
-
-            if (distinct.Length > 1)
-            {
-                string keys = string.Join(", ", group.Select(f => $"'{f.Key}'"));
-                throw new InvalidOperationException(
-                    $"{group.Key} is claimed by entries that do not agree on what it says ({keys}).");
-            }
-        }
     }
 }

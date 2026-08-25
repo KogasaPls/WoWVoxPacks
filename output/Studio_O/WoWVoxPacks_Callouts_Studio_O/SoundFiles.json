@@ -1312,7 +1312,13 @@
     "FileName": "lightfused_mana_potion.ogg",
     "DisplayName": "Lightfused Mana Potion",
     "FormattedDisplayName": "Lightfused Mana Potion",
-    "Text": "Lightfused Mana Potion"
+    "Text": "Lightfused Mana Potion",
+    "Pronunciations": [
+      {
+        "Phrase": "Mana",
+        "Ipa": "\u02C8m\u00E6n\u0259"
+      }
+    ]
   },
   {
     "FileName": "linked.ogg",

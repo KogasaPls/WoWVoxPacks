@@ -78,28 +78,6 @@ public class CalloutNameVocabularyTests
     }
 
     [Fact]
-    public void SharedOverrides_PreserveMigratedLorrgsPronunciations()
-    {
-        IReadOnlyDictionary<string, PronunciationOverride> overrides =
-            CalloutPronunciation.LoadOverrides(FindRepoFile(
-                "src/WoWVoxPack.AddOns.Callouts/CalloutPronunciations.json"));
-
-        IReadOnlyList<CalloutRegistration> registrations = CalloutVocabulary.Merge(
-            [], ["Innervate", "Invoke Chi-Ji, the Red Crane", "Invoke Yu'lon, the Jade Serpent"],
-            overrides);
-
-        Assert.Contains(registrations,
-            entry => entry.SoundFile.DisplayName == "Innervate"
-                     && entry.SoundFile.Pronunciations!.Contains(new Pronunciation("Innervate", "ˈɪnɚveɪt")));
-        Assert.Contains(registrations,
-            entry => entry.SoundFile.DisplayName == "Invoke Yu'lon, the Jade Serpent"
-                     && entry.SoundFile.Pronunciations!.Contains(new Pronunciation("Yu'lon", "ˈjuːlɒn")));
-        Assert.Contains(registrations,
-            entry => entry.SoundFile.DisplayName == "Invoke Chi-Ji, the Red Crane"
-                     && entry.SoundFile.Pronunciations!.Contains(new Pronunciation("Chi-Ji", "tʃiːdʒiː")));
-    }
-
-    [Fact]
     public void TrackedRetirement_PreservesTheOldChiJiKeyWithoutDuplicateAudio()
     {
         List<string> retired = JsonSerializer.Deserialize<List<string>>(File.ReadAllText(
@@ -164,7 +142,7 @@ public class CalloutNameVocabularyTests
     }
 
     [Fact]
-    public void CuratedInitialisms_HaveExplicitLetterNameIpa()
+    public void CuratedInitialisms_KeepTheirExplicitSpokenText()
     {
         using JsonDocument curated = JsonDocument.Parse(File.ReadAllText(FindRepoFile(
             "src/WoWVoxPack.AddOns.Callouts/Callouts_Sounds.json")));
@@ -173,9 +151,9 @@ public class CalloutNameVocabularyTests
                 entry => entry.GetProperty("DisplayName").GetString()!,
                 StringComparer.Ordinal);
 
-        AssertLetterNameIpa(entries["AMS"], "AMS", "eɪ.ɛm.ɛs");
-        AssertLetterNameIpa(entries["AMZ"], "AMZ", "eɪ.ɛm.zi");
-        AssertLetterNameIpa(entries["PI"], "PI", "pi.aɪ");
+        Assert.Equal("AMS", entries["AMS"].GetProperty("Text").GetString());
+        Assert.Equal("AMZ", entries["AMZ"].GetProperty("Text").GetString());
+        Assert.Equal("PI", entries["PI"].GetProperty("Text").GetString());
         Assert.Equal("Bop", entries["BoP"].GetProperty("Text").GetString());
     }
 
@@ -267,15 +245,6 @@ public class CalloutNameVocabularyTests
             [FindRepoFile("lorrgs-vocabulary.txt"), FindRepoFile("callout-vocabulary.txt")],
             FindRepoFile("src/WoWVoxPack.AddOns.Callouts/RetiredCallouts.json"))
         .Registrations;
-
-    private static void AssertLetterNameIpa(JsonElement entry, string phrase, string ipa)
-    {
-        Assert.Equal(phrase, entry.GetProperty("Text").GetString());
-
-        JsonElement pronunciation = Assert.Single(entry.GetProperty("Pronunciations").EnumerateArray());
-        Assert.Equal(phrase, pronunciation.GetProperty("Phrase").GetString());
-        Assert.Equal(ipa, pronunciation.GetProperty("Ipa").GetString());
-    }
 
     private static string FindRepoFile(string fileName)
     {

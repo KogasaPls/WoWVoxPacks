@@ -13,6 +13,7 @@ public class AddOnBuildOrchestrator(
     IEnumerable<IAddOnService> addOnServices,
     IOptions<BuildMatrix> buildMatrix,
     ISoundFileService soundFileService,
+    PronunciationResolver pronunciationResolver,
     string outputDirectoryBase)
 {
     // The TTS client's own token bucket is the real throttle; this keeps thousands of tasks from
@@ -24,63 +25,74 @@ public class AddOnBuildOrchestrator(
     private List<IAddOnService> AddOnServices { get; } = addOnServices.ToList();
     private BuildMatrix BuildMatrix { get; } = buildMatrix.Value;
     private ISoundFileService SoundFileService { get; } = soundFileService;
+    private PronunciationResolver PronunciationResolver { get; } = pronunciationResolver;
     private string OutputDirectoryBase { get; } = outputDirectoryBase;
 
     public async Task RunAsync(CancellationToken cancellationToken)
     {
+        List<AddOnDraft> drafts = [];
         foreach ((IAddOnService addOnService, TtsSettings ttsSettings, string outputDirectory) in Matrix())
         {
-            AddOn addOn = await addOnService.BuildAddOnAsync(outputDirectory, ttsSettings, cancellationToken);
+            drafts.Add(await addOnService.BuildAddOnAsync(outputDirectory, ttsSettings, cancellationToken));
+        }
 
-            Logger.LogInformation("Building {AddOnName} addon in directory {OutputDirectory}", addOn.Title,
-                addOn.AddOnDirectory);
-
-            string soundOutputDirectory = addOn.SoundDirectory;
-
-            if (!BuildMatrix.DryRun)
-            {
-                await AddOnFileWriter.WriteAllFilesAsync(addOn, cancellationToken);
-                Directory.CreateDirectory(soundOutputDirectory);
-            }
-
-            SoundFileManifest manifest =
-                await SoundFileManifest.LoadAsync(addOn.SoundFilesJsonPath, cancellationToken);
-
-            BuildRecipe recipe = BuildRecipe.From(ttsSettings);
-            BuildRecipe? previousRecipe = await BuildRecipe.LoadAsync(addOn.BuildRecipePath, cancellationToken);
-            bool recipeChanged = previousRecipe is not null && previousRecipe != recipe;
-            if (recipeChanged)
-            {
-                Logger.LogWarning(
-                    "{AddOnName} was rendered as {PreviousRecipe} and is now {Recipe}; re-rendering every sound",
-                    addOn.Title, previousRecipe, recipe);
-            }
-
-            SoundFile[] soundFilesToCreate =
-                manifest.FilesToCreate(addOn.SoundFiles, soundOutputDirectory, recipeChanged,
-                    BuildMatrix.AllowFullRerender).ToArray();
-
-            // Asked before anything is rendered: a pack that lost most of its vocabulary is a
-            // failed build, and finding that out after paying for thousands of files is worse.
-            string[] soundFilesToRemove = manifest.FilesToRemove(addOn.SoundFiles).ToArray();
-
-            if (BuildMatrix.DryRun)
-            {
-                ReportPlan(addOn, soundFilesToCreate, soundFilesToRemove);
-                continue;
-            }
-
-            await CreateSoundFilesAsync(soundFilesToCreate, soundOutputDirectory, ttsSettings, cancellationToken);
-
-            RemoveRetiredSoundFiles(soundFilesToRemove, addOn, soundOutputDirectory);
-
-            await manifest.SaveAsync(addOn.SoundFilesJsonPath, addOn.SoundFiles, cancellationToken);
-            await recipe.SaveAsync(addOn.BuildRecipePath, cancellationToken);
-
-            Logger.LogInformation("Finished building addon: {AddOnName}", addOn.Title);
+        foreach (AddOn addOn in PronunciationResolver.Resolve(drafts))
+        {
+            await BuildResolvedAddOnAsync(addOn, cancellationToken);
         }
 
         Logger.LogInformation("Finished building add-ons");
+    }
+
+    private async Task BuildResolvedAddOnAsync(AddOn addOn, CancellationToken cancellationToken)
+    {
+        Logger.LogInformation("Building {AddOnName} addon in directory {OutputDirectory}", addOn.Title,
+            addOn.AddOnDirectory);
+
+        string soundOutputDirectory = addOn.SoundDirectory;
+
+        if (!BuildMatrix.DryRun)
+        {
+            await AddOnFileWriter.WriteAllFilesAsync(addOn, cancellationToken);
+            Directory.CreateDirectory(soundOutputDirectory);
+        }
+
+        SoundFileManifest manifest =
+            await SoundFileManifest.LoadAsync(addOn.SoundFilesJsonPath, cancellationToken);
+
+        BuildRecipe recipe = BuildRecipe.From(addOn.TtsSettings);
+        BuildRecipe? previousRecipe = await BuildRecipe.LoadAsync(addOn.BuildRecipePath, cancellationToken);
+        bool recipeChanged = previousRecipe is not null && previousRecipe != recipe;
+        if (recipeChanged)
+        {
+            Logger.LogWarning(
+                "{AddOnName} was rendered as {PreviousRecipe} and is now {Recipe}; re-rendering every sound",
+                addOn.Title, previousRecipe, recipe);
+        }
+
+        SoundFile[] soundFilesToCreate =
+            manifest.FilesToCreate(addOn.SoundFiles, soundOutputDirectory, recipeChanged,
+                BuildMatrix.AllowFullRerender).ToArray();
+
+        // Asked before anything is rendered: a pack that lost most of its vocabulary is a
+        // failed build, and finding that out after paying for thousands of files is worse.
+        string[] soundFilesToRemove = manifest.FilesToRemove(addOn.SoundFiles).ToArray();
+
+        if (BuildMatrix.DryRun)
+        {
+            ReportPlan(addOn, soundFilesToCreate, soundFilesToRemove);
+            return;
+        }
+
+        await CreateSoundFilesAsync(
+            soundFilesToCreate, soundOutputDirectory, addOn.TtsSettings, cancellationToken);
+
+        RemoveRetiredSoundFiles(soundFilesToRemove, addOn, soundOutputDirectory);
+
+        await manifest.SaveAsync(addOn.SoundFilesJsonPath, addOn.SoundFiles, cancellationToken);
+        await recipe.SaveAsync(addOn.BuildRecipePath, cancellationToken);
+
+        Logger.LogInformation("Finished building addon: {AddOnName}", addOn.Title);
     }
 
     /// <summary>

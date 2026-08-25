@@ -1526,12 +1526,12 @@
         "Ipa": "\u02C8f\u026A\u014B\u0261\u025Az"
       },
       {
-        "Phrase": "of",
-        "Ipa": "\u0259v"
-      },
-      {
         "Phrase": "Gul\u0027dan",
         "Ipa": "\u0261\u028Al\u02C8d\u0251n"
+      },
+      {
+        "Phrase": "of",
+        "Ipa": "\u0259v"
       }
     ]
   },
@@ -1645,7 +1645,13 @@
     "FileName": "1219354.ogg",
     "DisplayName": "Potent Mana Residue",
     "FormattedDisplayName": "Potent Mana Residue",
-    "Text": "Potent Mana Residue"
+    "Text": "Potent Mana Residue",
+    "Pronunciations": [
+      {
+        "Phrase": "Mana",
+        "Ipa": "\u02C8m\u00E6n\u0259"
+      }
+    ]
   },
   {
     "Key": "1219384",
@@ -2687,7 +2693,13 @@
     "FileName": "1233415.ogg",
     "DisplayName": "Mana Splinter",
     "FormattedDisplayName": "Mana Splinter",
-    "Text": "Mana Splinter"
+    "Text": "Mana Splinter",
+    "Pronunciations": [
+      {
+        "Phrase": "Mana",
+        "Ipa": "\u02C8m\u00E6n\u0259"
+      }
+    ]
   },
   {
     "Key": "1233416",
@@ -3990,12 +4002,12 @@
     "Text": "Void Tear",
     "Pronunciations": [
       {
-        "Phrase": "Void",
-        "Ipa": "v\u0254\u026Ad"
-      },
-      {
         "Phrase": "Tear",
         "Ipa": "t\u025B\u0279"
+      },
+      {
+        "Phrase": "Void",
+        "Ipa": "v\u0254\u026Ad"
       }
     ]
   },
@@ -4977,7 +4989,7 @@
     "FileName": "1283832.ogg",
     "DisplayName": "Axegrinder",
     "FormattedDisplayName": "Axegrinder",
-    "Text": "Axegrinder"
+    "Text": "Axe grinder"
   },
   {
     "Key": "1284251",
@@ -9020,7 +9032,13 @@
     "FileName": "186362.ogg",
     "DisplayName": "Wrath of Gul\u0027dan",
     "FormattedDisplayName": "Wrath of Gul\u0027dan",
-    "Text": "Wrath of Gul\u0027dan"
+    "Text": "Wrath of Gul\u0027dan",
+    "Pronunciations": [
+      {
+        "Phrase": "Gul\u0027dan",
+        "Ipa": "\u0261\u028Al\u02C8d\u0251n"
+      }
+    ]
   },
   {
     "Key": "186407",
@@ -10041,7 +10059,13 @@
     "FileName": "196392.ogg",
     "DisplayName": "Overcharge Mana",
     "FormattedDisplayName": "Overcharge Mana",
-    "Text": "Overcharge Mana"
+    "Text": "Overcharge Mana",
+    "Pronunciations": [
+      {
+        "Phrase": "Mana",
+        "Ipa": "\u02C8m\u00E6n\u0259"
+      }
+    ]
   },
   {
     "Key": "196512",
@@ -12153,7 +12177,13 @@
     "FileName": "209270.ogg",
     "DisplayName": "Eye of Gul\u0027dan",
     "FormattedDisplayName": "Eye of Gul\u0027dan",
-    "Text": "Eye of Gul\u0027dan"
+    "Text": "Eye of Gul\u0027dan",
+    "Pronunciations": [
+      {
+        "Phrase": "Gul\u0027dan",
+        "Ipa": "\u0261\u028Al\u02C8d\u0251n"
+      }
+    ]
   },
   {
     "Key": "209378",
@@ -12426,7 +12456,13 @@
     "FileName": "211152.ogg",
     "DisplayName": "Empowered Eye of Gul\u0027dan",
     "FormattedDisplayName": "Empowered Eye of Gul\u0027dan",
-    "Text": "Empowered Eye of Gul\u0027dan"
+    "Text": "Empowered Eye of Gul\u0027dan",
+    "Pronunciations": [
+      {
+        "Phrase": "Gul\u0027dan",
+        "Ipa": "\u0261\u028Al\u02C8d\u0251n"
+      }
+    ]
   },
   {
     "Key": "211192",
@@ -12608,7 +12644,13 @@
     "FileName": "212258.ogg",
     "DisplayName": "Hand of Gul\u0027dan",
     "FormattedDisplayName": "Hand of Gul\u0027dan",
-    "Text": "Hand of Gul\u0027dan"
+    "Text": "Hand of Gul\u0027dan",
+    "Pronunciations": [
+      {
+        "Phrase": "Gul\u0027dan",
+        "Ipa": "\u0261\u028Al\u02C8d\u0251n"
+      }
+    ]
   },
   {
     "Key": "212364",
@@ -13524,7 +13566,13 @@
     "FileName": "220871.ogg",
     "DisplayName": "Unstable Mana",
     "FormattedDisplayName": "Unstable Mana",
-    "Text": "Unstable Mana"
+    "Text": "Unstable Mana",
+    "Pronunciations": [
+      {
+        "Phrase": "Mana",
+        "Ipa": "\u02C8m\u00E6n\u0259"
+      }
+    ]
   },
   {
     "Key": "220957",
@@ -14062,7 +14110,13 @@
     "FileName": "227502.ogg",
     "DisplayName": "Unstable Mana",
     "FormattedDisplayName": "Unstable Mana",
-    "Text": "Unstable Mana"
+    "Text": "Unstable Mana",
+    "Pronunciations": [
+      {
+        "Phrase": "Mana",
+        "Ipa": "\u02C8m\u00E6n\u0259"
+      }
+    ]
   },
   {
     "Key": "227503",
@@ -14097,7 +14151,13 @@
     "FileName": "227545.ogg",
     "DisplayName": "Mana Drain",
     "FormattedDisplayName": "Mana Drain",
-    "Text": "Mana Drain"
+    "Text": "Mana Drain",
+    "Pronunciations": [
+      {
+        "Phrase": "Mana",
+        "Ipa": "\u02C8m\u00E6n\u0259"
+      }
+    ]
   },
   {
     "Key": "227556",
@@ -15406,7 +15466,13 @@
     "FileName": "235984.ogg",
     "DisplayName": "Mana Sting",
     "FormattedDisplayName": "Mana Sting",
-    "Text": "Mana Sting"
+    "Text": "Mana Sting",
+    "Pronunciations": [
+      {
+        "Phrase": "Mana",
+        "Ipa": "\u02C8m\u00E6n\u0259"
+      }
+    ]
   },
   {
     "Key": "236072",
@@ -16267,7 +16333,13 @@
     "FileName": "241742.ogg",
     "DisplayName": "Curse of Gul\u0027dan",
     "FormattedDisplayName": "Curse of Gul\u0027dan",
-    "Text": "Curse of Gul\u0027dan"
+    "Text": "Curse of Gul\u0027dan",
+    "Pronunciations": [
+      {
+        "Phrase": "Gul\u0027dan",
+        "Ipa": "\u0261\u028Al\u02C8d\u0251n"
+      }
+    ]
   },
   {
     "Key": "241772",
@@ -32459,7 +32531,13 @@
     "FileName": "386173.ogg",
     "DisplayName": "Mana Bombs",
     "FormattedDisplayName": "Mana Bombs",
-    "Text": "Mana Bombs"
+    "Text": "Mana Bombs",
+    "Pronunciations": [
+      {
+        "Phrase": "Mana",
+        "Ipa": "\u02C8m\u00E6n\u0259"
+      }
+    ]
   },
   {
     "Key": "386223",
@@ -39115,7 +39193,13 @@
     "FileName": "442530.ogg",
     "DisplayName": "Goresplatter",
     "FormattedDisplayName": "Goresplatter",
-    "Text": "Goresplatter"
+    "Text": "Goresplatter",
+    "Pronunciations": [
+      {
+        "Phrase": "Goresplatter",
+        "Ipa": "\u02C8\u0261\u0254r\u02CCspl\u00E6t\u0259r"
+      }
+    ]
   },
   {
     "Key": "442589",
@@ -40392,16 +40476,16 @@
     "Text": "Plant Arathi Bomb",
     "Pronunciations": [
       {
-        "Phrase": "Plant",
-        "Ipa": "pl\u00E6nt"
-      },
-      {
         "Phrase": "Arathi",
         "Ipa": "\u0259\u02C8\u0279\u0251\u03B8i"
       },
       {
         "Phrase": "Bomb",
         "Ipa": "\u02C8b\u0251m"
+      },
+      {
+        "Phrase": "Plant",
+        "Ipa": "pl\u00E6nt"
       }
     ]
   },
@@ -42095,12 +42179,12 @@
     "Text": "Unrelenting Carnage",
     "Pronunciations": [
       {
-        "Phrase": "Unrelenting",
-        "Ipa": "\u028Cn.r\u026A\u02C8l\u025Bnt.\u026A\u014B"
-      },
-      {
         "Phrase": "Carnage",
         "Ipa": "\u02C8k\u0251\u02D0rn\u026Ad\u0292"
+      },
+      {
+        "Phrase": "Unrelenting",
+        "Ipa": "\u028Cn.r\u026A\u02C8l\u025Bnt.\u026A\u014B"
       }
     ]
   },

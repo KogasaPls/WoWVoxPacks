@@ -17,18 +17,23 @@ public sealed class BigWigsVoiceAddOnService(
     private IBigWigsVoiceUpstreamClient UpstreamClient { get; } = upstreamClient;
     private AddOnSettings AddOnSettings { get; } = addOnOptions.Get("BigWigs_Voice");
 
-    public async Task<AddOn> BuildAddOnAsync(string outputDirectoryBase, TtsSettings ttsSettings,
+    public async Task<AddOnDraft> BuildAddOnAsync(string outputDirectoryBase, TtsSettings ttsSettings,
         CancellationToken cancellationToken = default)
     {
-        IEnumerable<BigWigsVoiceSoundFile> soundFiles = await GetSoundFilesAsync(cancellationToken);
+        BigWigsVoiceSoundFile[] soundFiles = (await GetSoundFilesAsync(cancellationToken)).ToArray();
+        IReadOnlyDictionary<string, BigWigsVoiceSoundFile> upstreamById = soundFiles
+            .GroupBy(sound => sound.SpellId, StringComparer.OrdinalIgnoreCase)
+            .ToDictionary(group => group.Key, group => group.First(), StringComparer.OrdinalIgnoreCase);
+        IEnumerable<SoundFile> curated = JsonSoundFiles.Value.Select(sound =>
+            CloneCurated(sound, upstreamById.GetValueOrDefault(sound.Key)));
 
-        return new AddOnBuilder(AddOnSettings, ttsSettings)
+        return new AddOnBuilder(AddOnSettings, ttsSettings, "BigWigs_Voice")
             .WithTitle($"BigWigs Voice WoWVoxPacks {ttsSettings.Voice}")
             .WithDisplayTitle($"BigWigs |cffff7f3f+|r|cffffffffVoice: WoWVoxPacks ({ttsSettings.Voice})|r")
             .AddFile("Core.lua", CoreLuaFile.Render)
-            .AddSoundFiles(JsonSoundFiles.Value, overwrite: true)
             .AddSoundFiles(soundFiles)
-            .Build(outputDirectoryBase);
+            .AddSoundFiles(curated, overwrite: true)
+            .BuildDraft(outputDirectoryBase);
     }
 
     /// <summary>
@@ -47,6 +52,23 @@ public sealed class BigWigsVoiceAddOnService(
         }
 
         return soundFiles;
+    }
+
+    private static SoundFile CloneCurated(SoundFile source, BigWigsVoiceSoundFile? upstream)
+    {
+        return new SoundFile(
+            source.FileName,
+            source.Text,
+            source.Ssml,
+            source.DisplayName,
+            source.FormattedDisplayName,
+            source.Pronunciations)
+        {
+            ExplicitKey = source.ExplicitKey,
+            CopyFromPath = source.CopyFromPath,
+            PronunciationName = upstream?.PronunciationName ?? source.PronunciationName,
+            ImportedPronunciations = upstream?.ImportedPronunciations
+        };
     }
 
     private async ValueTask<IEnumerable<BigWigsVoiceSoundFile>>

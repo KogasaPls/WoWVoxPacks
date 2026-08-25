@@ -128,19 +128,14 @@ public static class NorthernSkyRaidToolsVocabulary
         string displayName = CalloutPronunciation.ToDisplayName(mediaKey);
         string? text = @override?.Ssml is null ? @override?.Text ?? displayName : null;
         string? ssml = @override?.Ssml;
-        IReadOnlyList<Pronunciation> pronunciations = @override?.Pronunciations ?? [];
-
-        if (ssml is null && text?.Contains('=') == true)
-        {
-            (text, IReadOnlyList<Pronunciation> lifted) = SoundFile.ParseIpaHints(text);
-            pronunciations = pronunciations.Count > 0 ? pronunciations : lifted;
-        }
 
         return new SoundFile(
             @override?.FileName ?? CalloutPronunciation.ToFileName(displayName),
             text: text,
             ssml: ssml,
-            displayName: displayName,
-            pronunciations: pronunciations);
+            displayName: displayName)
+        {
+            PronunciationName = mediaKey
+        };
     }
 }

@@ -71,23 +71,6 @@ public class CalloutVocabularyTests
     }
 
     [Fact]
-    public void Merge_LiftsTheIpaConventionIntoPronunciations()
-    {
-        Dictionary<string, PronunciationOverride> overrides = new(StringComparer.OrdinalIgnoreCase)
-        {
-            ["Fung"] = new PronunciationOverride(Text: "Fung=fʌŋ")
-        };
-
-        CalloutRegistration fung = Assert.Single(CalloutVocabulary.Merge([], ["Fung"], overrides));
-
-        // Google matches the phrase against the input, so the hint cannot stay in the text.
-        Assert.Equal("Fung", fung.SoundFile.DisplayName);
-        Assert.Equal("Fung", fung.SoundFile.Text);
-        Assert.Null(fung.SoundFile.Ssml);
-        Assert.Equal([new Pronunciation("Fung", "fʌŋ")], fung.SoundFile.Pronunciations);
-    }
-
-    [Fact]
     public void Merge_LeavesPlainOverrideTextAlone()
     {
         Dictionary<string, PronunciationOverride> overrides = new(StringComparer.OrdinalIgnoreCase)
@@ -139,12 +122,12 @@ public class CalloutVocabularyTests
         // content difference as changed and re-renders it, which must cost nothing here.
         Dictionary<string, PronunciationOverride> overrides = new(StringComparer.OrdinalIgnoreCase)
         {
-            ["Fung"] = new PronunciationOverride(Text: "Fung=fʌŋ")
+            ["DropPool"] = new PronunciationOverride(Text: "Drop Pool")
         };
 
-        CalloutRegistration whileLive = Assert.Single(CalloutVocabulary.Merge([], ["Fung"], overrides));
+        CalloutRegistration whileLive = Assert.Single(CalloutVocabulary.Merge([], ["DropPool"], overrides));
         CalloutRegistration retired = Assert.Single(
-            CalloutVocabulary.Merge([], [], overrides, retiredSoundNames: ["Fung"]));
+            CalloutVocabulary.Merge([], [], overrides, retiredSoundNames: ["DropPool"]));
 
         Assert.Equal(whileLive.SoundFile.FileName, retired.SoundFile.FileName);
         Assert.Equal(whileLive.SoundFile.DisplayName, retired.SoundFile.DisplayName);

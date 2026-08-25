@@ -44,6 +44,11 @@ NSI.InitializeAlerts[1] = function(self)
 end
 '''
 
+SPECIAL_DISPLAY_WITHOUT_TTS = '''
+    local data = {internalID = "WavesLine", text = "", isSpecialDisplay = true}
+    self:AddEncounterAlert(data)
+'''
+
 DIRECT_CALLS = '''
 function NSAPI:TTS(sound, voice) -- NSAPI:TTS("Bait Frontal")
 end
@@ -124,6 +129,16 @@ class CollectSpokenTests(unittest.TestCase):
         """PlayReminderSound gates on `if info.TTS`, so nil is silent like false."""
         spoken, _ = self.collect()
         self.assertNotIn("Displayed Only", spoken)
+
+    def test_only_a_special_display_may_omit_tts(self):
+        spoken, _ = self.collect(alerts=ALERTS + SPECIAL_DISPLAY_WITHOUT_TTS)
+        self.assertNotIn("WavesLine", spoken)
+
+        with self.assertRaises(checker.UpstreamShapeError):
+            self.collect(alerts=ALERTS + '''
+                local data = {internalID = "Ordinary", text = "Speak by default"}
+                self:AddEncounterAlert(data)
+            ''')
 
     def test_an_unreadable_tts_expression_refuses_to_guess(self):
         with self.assertRaises(checker.UpstreamShapeError):

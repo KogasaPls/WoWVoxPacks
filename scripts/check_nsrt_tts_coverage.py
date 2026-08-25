@@ -17,6 +17,7 @@ ALERT_TABLE = re.compile(r"\blocal\s+data\s*=\s*\{")
 TEXT_FIELD = re.compile(r"\btext\s*=\s*\"([^\"]*)\"")
 TTS_FIELD = re.compile(r"\bTTS\s*=\s*(?:\"([^\"]*)\"|(true|false|nil))")
 TTS_FIELD_CONTINUES = re.compile(r"^\s*\.\.")
+SPECIAL_DISPLAY = re.compile(r"\bisSpecialDisplay\s*=\s*true\b")
 TEXT_REASSIGNMENT = re.compile(r"\bdata\.text\s*=\s*\"([^\"]+)\"")
 LATE_TTS_ASSIGNMENT = re.compile(r"^\s*(?:local\s+)?([\w.]*\bTTS)\s*=\s*(.+)$")
 LOCAL_BINDING = re.compile(r"^\s*local\s+(\w+)\s*=")
@@ -112,15 +113,18 @@ def spoken_in_alerts(text: str, path: str) -> tuple[Counter[str], list[Composed]
     """Count the strings each alert table in one file can speak.
 
     An alert speaks its `TTS` field when that is a string, nothing at all when it is false or
-    nil, and its `text` otherwise. A table reused for a second alert with `data.text`
-    reassigned speaks the new value under the same TTS setting. A `TTS` field concatenated
-    with something the game supplies is a site to enumerate, not a string.
+    nil, and its `text` otherwise. A special display is driven by encounter-specific code
+    instead of the alert scheduler, so it may omit TTS entirely. A table reused for a second
+    alert with `data.text` reassigned speaks the new value under the same TTS setting. A `TTS`
+    field concatenated with something the game supplies is a site to enumerate, not a string.
     """
     spoken: Counter[str] = Counter()
     for chunk in ALERT_TABLE.split(text)[1:]:
         table = chunk.split("AddEncounterAlert")[0]
         match = TTS_FIELD.search(table)
         if not match:
+            if SPECIAL_DISPLAY.search(table):
+                continue
             raise UpstreamShapeError(
                 "an alert declares no TTS field, so whether it speaks is the user's setting "
                 "and this script cannot tell; teach it that shape before trusting the result")

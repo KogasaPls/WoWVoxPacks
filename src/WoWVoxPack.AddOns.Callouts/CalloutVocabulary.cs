@@ -129,25 +129,9 @@ public static class CalloutVocabulary
         string soundName,
         IReadOnlyDictionary<string, PronunciationOverride> overrides)
     {
-        overrides.TryGetValue(soundName, out PronunciationOverride? @override);
-
         // The media key, never the override's text: a retired alias and its replacement share
         // one recording and must still register under their own LibSharedMedia names.
-        string displayName = CalloutPronunciation.ToDisplayName(soundName);
-
-        string? text = @override?.Ssml is null ? @override?.Text ?? displayName : null;
-
-        string? ssml = @override?.Ssml;
-
-        SoundFile soundFile = new(
-            @override?.FileName ?? CalloutPronunciation.ToFileName(displayName),
-            text: text,
-            ssml: ssml,
-            displayName: displayName)
-        {
-            PronunciationName = soundName
-        };
-
-        return (displayName, soundFile, [soundName]);
+        SoundFile soundFile = CalloutPronunciation.DescribeSoundFile(soundName, overrides);
+        return (soundFile.DisplayName, soundFile, [soundName]);
     }
 }

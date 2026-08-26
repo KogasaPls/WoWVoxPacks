@@ -12,7 +12,6 @@ from html.parser import HTMLParser
 from pathlib import Path
 
 REPOSITORY_ROOT = Path(__file__).resolve().parent.parent
-WORKFLOW = REPOSITORY_ROOT / ".github" / "workflows" / "publish-to-curseforge.yml"
 API = "https://api.curseforge.com/v1/mods"
 USER_AGENT = "WoWVoxPacks-description-drift"
 
@@ -21,6 +20,7 @@ spec = importlib.util.spec_from_file_location(
 )
 pages = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(pages)
+CATALOG = pages.CATALOG
 
 BLOCK_TAGS = {"p", "div", "br", "li", "tr", "h1", "h2", "h3", "h4", "h5", "h6",
               "blockquote", "pre", "hr", "ul", "ol", "table", "thead", "tbody"}
@@ -114,11 +114,7 @@ def markdown_to_lines(markdown: str) -> list[str]:
 
 
 def published_projects() -> dict[str, dict[str, int]]:
-    block = re.search(r"voice-to-addon-to-project-id-json:\s*\n\s*- '(?P<json>.*?)'\s*\n",
-                      WORKFLOW.read_text(encoding="utf-8"), re.S)
-    if block is None:
-        raise ValueError(f"{WORKFLOW} holds no project ID mapping")
-    return json.loads(block.group("json"))
+    return CATALOG.projects
 
 
 def diff(live_html: str, rendered_markdown: str, label: str) -> list[str]:

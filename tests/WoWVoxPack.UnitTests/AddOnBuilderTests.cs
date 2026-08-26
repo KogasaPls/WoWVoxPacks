@@ -85,6 +85,19 @@ public class AddOnBuilderTests
     }
 
     [Fact]
+    public void SoundDirectory_MatchesTheDirectoryUsedByTheFinalDraft()
+    {
+        AddOnBuilder builder = new AddOnBuilder(DefaultSettings, DefaultTtsSettings)
+            .WithTitle("Overridden Title");
+
+        string soundDirectory = builder.SoundDirectory("/tmp/output");
+        AddOnDraft draft = builder.BuildDraft("/tmp/output");
+
+        Assert.Equal(Path.Combine("/tmp/output", "Overridden_Title", "Sounds"), soundDirectory);
+        Assert.Equal(draft.SoundDirectory, soundDirectory);
+    }
+
+    [Fact]
     public void AddSoundFile_DoesNotOverwriteExisting_UnlessOverwriteIsTrue()
     {
         SoundFile original = new("alert.ogg", text: "Original", displayName: "Alert");

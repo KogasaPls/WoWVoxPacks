@@ -1,0 +1,76 @@
+{
+  "voices": [
+    {
+      "name": "Wavenet_E",
+      "description": "en_US female",
+      "projects": {
+        "BigWigs_Voice": 1215288,
+        "BigWigs_Countdown": 1217577,
+        "Callouts": 1520297,
+        "ExBoss": 1551653,
+        "NorthernSkyRaidTools": 1648855
+      }
+    },
+    {
+      "name": "Neural2_C",
+      "description": "en_US female",
+      "projects": {
+        "BigWigs_Voice": 1217580,
+        "BigWigs_Countdown": 1217583,
+        "Callouts": 1520293,
+        "ExBoss": 1551645,
+        "NorthernSkyRaidTools": 1648938
+      }
+    },
+    {
+      "name": "Studio_Q",
+      "description": "en_US male",
+      "projects": {
+        "BigWigs_Voice": 1218355,
+        "BigWigs_Countdown": 1218357,
+        "Callouts": 1520296,
+        "ExBoss": 1551655,
+        "NorthernSkyRaidTools": 1648940
+      }
+    }
+  ],
+  "addons": [
+    {
+      "name": "BigWigs_Voice",
+      "slug": "bigwigs-voice",
+      "relations": [
+        { "slug": "bigwigs", "type": "requiredDependency" }
+      ]
+    },
+    {
+      "name": "BigWigs_Countdown",
+      "slug": "bigwigs-countdown",
+      "relations": [
+        { "slug": "bigwigs", "type": "requiredDependency" }
+      ]
+    },
+    {
+      "name": "Callouts",
+      "slug": "callouts",
+      "relations": [
+        { "slug": "libsharedmedia-3-0", "type": "optionalDependency" }
+      ]
+    },
+    {
+      "name": "ExBoss",
+      "slug": "exboss",
+      "relations": [
+        { "slug": "exboss", "type": "requiredDependency" },
+        { "slug": "libsharedmedia-3-0", "type": "optionalDependency" }
+      ]
+    },
+    {
+      "name": "NorthernSkyRaidTools",
+      "slug": "northernskyraidtools",
+      "relations": [
+        { "slug": "northern-sky-raid-tools", "type": "optionalDependency" },
+        { "slug": "libsharedmedia-3-0", "type": "optionalDependency" }
+      ]
+    }
+  ]
+}

@@ -1,4 +1,3 @@
-import json
 import re
 import subprocess
 import sys
@@ -10,19 +9,17 @@ from pathlib import Path
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 SCRIPT = REPOSITORY_ROOT / "scripts" / "curseforge_description.py"
 PAGES = REPOSITORY_ROOT / "docs" / "curseforge"
-WORKFLOW = REPOSITORY_ROOT / ".github" / "workflows" / "publish-to-curseforge.yml"
+sys.path.insert(0, str(REPOSITORY_ROOT / "scripts"))
+
+import curseforge_packages
+
+CATALOG = curseforge_packages.load()
 # Wide enough to catch {Url:BigWigs_Voice}, the form a missing substitution leaves behind.
 PLACEHOLDER = r"\{[A-Za-z][A-Za-z0-9_:.-]*\}"
 
 
 def published_matrix() -> dict[str, dict[str, int]]:
-    """The voice and addon names publish-to-curseforge.yml holds project IDs for."""
-    workflow = WORKFLOW.read_text(encoding="utf-8")
-    block = re.search(
-        r"voice-to-addon-to-project-id-json:\s*\n\s*- '(?P<json>.*?)'\s*\n", workflow, re.S)
-    if block is None:
-        raise AssertionError("publish-to-curseforge.yml has no project ID mapping")
-    return json.loads(block.group("json"))
+    return CATALOG.projects
 
 
 def run(*arguments: str) -> str:
@@ -40,13 +37,6 @@ class CurseForgeDescriptionTests(unittest.TestCase):
         self.assertEqual(addons, {page.stem for page in PAGES.glob("*.md")
                                  if not page.stem.startswith("_")})
 
-    def test_published_voices_match_the_publish_workflow(self):
-        module = SCRIPT.read_text(encoding="utf-8")
-        declared = re.search(r"PUBLISHED_VOICES = \((?P<voices>[^)]*)\)", module)
-        self.assertIsNotNone(declared)
-        voices = set(re.findall(r'"([^"]+)"', declared.group("voices")))
-        self.assertEqual(set(published_matrix()), voices)
-
     def test_rendered_pages_carry_no_placeholder(self):
         matrix = published_matrix()
         for voice, projects in matrix.items():
@@ -60,19 +50,12 @@ class CurseForgeDescriptionTests(unittest.TestCase):
                     self.assertTrue(summary.strip())
 
     def test_every_published_voice_has_a_description(self):
-        module = SCRIPT.read_text(encoding="utf-8")
-        declared = re.search(r"VOICE_DESCRIPTIONS = \{(?P<body>[^}]*)\}", module)
-        self.assertIsNotNone(declared)
-        described = set(re.findall(r'"([^"]+)":', declared.group("body")))
-        self.assertEqual(set(published_matrix()), described)
+        for voice in CATALOG.voice_names:
+            self.assertTrue(CATALOG.voice_description(voice))
 
     def test_every_published_addon_has_a_slug(self):
-        module = SCRIPT.read_text(encoding="utf-8")
-        declared = re.search(r"ADDON_SLUGS = \{(?P<body>[^}]*)\}", module)
-        self.assertIsNotNone(declared)
-        slugged = set(re.findall(r'"([^"]+)":', declared.group("body")))
-        addons = {addon for projects in published_matrix().values() for addon in projects}
-        self.assertEqual(addons, slugged)
+        for addon in CATALOG.addon_names:
+            self.assertTrue(CATALOG.addon_slug(addon))
 
     def test_pages_link_every_pack_to_its_own_voice(self):
         for voice in published_matrix():

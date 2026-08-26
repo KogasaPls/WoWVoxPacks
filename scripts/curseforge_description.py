@@ -3,30 +3,16 @@
 
 import argparse
 import sys
-from functools import cache
 from pathlib import Path
 
-# Mirrors the voices publish-to-curseforge.yml holds project IDs for.
-PUBLISHED_VOICES = ("Wavenet_E", "Neural2_C", "Studio_Q")
+SCRIPT_DIRECTORY = Path(__file__).resolve().parent
+if str(SCRIPT_DIRECTORY) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIRECTORY))
 
-# The CurseForge slug is the voice lowercased with hyphens, plus the addon's own fragment.
-# NorthernSkyRaidTools keeps its words joined, so the fragments are listed rather than derived.
-ADDON_SLUGS = {
-    "BigWigs_Voice": "bigwigs-voice",
-    "BigWigs_Countdown": "bigwigs-countdown",
-    "Callouts": "callouts",
-    "ExBoss": "exboss",
-    "NorthernSkyRaidTools": "northernskyraidtools",
-}
+import curseforge_packages
 
-# TtsSettings.LanguageCode is en-US for every voice and appsettings.json never overrides it.
-VOICE_DESCRIPTIONS = {
-    "Wavenet_E": "en_US female",
-    "Neural2_C": "en_US female",
-    "Studio_Q": "en_US male",
-}
-
-DESCRIPTIONS = Path(__file__).resolve().parent.parent / "docs" / "curseforge"
+DESCRIPTIONS = SCRIPT_DIRECTORY.parent / "docs" / "curseforge"
+CATALOG = curseforge_packages.load()
 
 
 def split_front_matter(source: str) -> tuple[str, str]:
@@ -51,7 +37,7 @@ def render(addon: str, voice: str) -> tuple[str, str]:
 
 
 def project_url(addon: str, voice: str) -> str:
-    slug = f"wowvoxpacks-{voice.lower().replace('_', '-')}-{ADDON_SLUGS[addon]}"
+    slug = f"wowvoxpacks-{voice.lower().replace('_', '-')}-{CATALOG.addon_slug(addon)}"
     return f"https://www.curseforge.com/wow/addons/{slug}"
 
 
@@ -59,35 +45,32 @@ def substitute(text: str, voice: str) -> str:
     text = text.replace(
         "{PacksTable}",
         (DESCRIPTIONS / "_packs-table.md").read_text(encoding="utf-8").rstrip("\n"))
-    for addon in ADDON_SLUGS:
+    for addon in CATALOG.addon_names:
         text = text.replace(f"{{Url:{addon}}}", project_url(addon, voice))
     return (text
-            .replace("{VoiceDescription}", VOICE_DESCRIPTIONS[voice])
+            .replace("{VoiceDescription}", CATALOG.voice_description(voice))
             .replace("{Voice}", voice))
 
 
-@cache
-def addons() -> list[str]:
-    """Pages named for an addon. A leading underscore marks a shared fragment instead."""
-    return sorted(page.stem for page in DESCRIPTIONS.glob("*.md")
-                  if not page.stem.startswith("_"))
+def addons() -> tuple[str, ...]:
+    return CATALOG.addon_names
 
 
 def write_all(destination: Path) -> None:
-    for voice in PUBLISHED_VOICES:
+    for voice in CATALOG.voice_names:
         for addon in addons():
             summary, body = render(addon, voice)
             directory = destination / voice
             directory.mkdir(parents=True, exist_ok=True)
             (directory / f"{addon}.summary.txt").write_text(summary + "\n", encoding="utf-8")
             (directory / f"{addon}.md").write_text(body, encoding="utf-8")
-    print(f"Wrote {len(addons()) * len(PUBLISHED_VOICES)} pages to {destination}")
+    print(f"Wrote {len(addons()) * len(CATALOG.voice_names)} pages to {destination}")
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--addon", choices=addons())
-    parser.add_argument("--voice", choices=PUBLISHED_VOICES)
+    parser.add_argument("--voice", choices=CATALOG.voice_names)
     parser.add_argument("--summary", action="store_true",
                         help="print the summary field instead of the description")
     parser.add_argument("--all", type=Path, metavar="DIR",

@@ -1,6 +1,8 @@
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
+using WoWVoxPack.TTS;
+
 namespace WoWVoxPack.AddOns.Callouts;
 
 /// <summary>
@@ -26,6 +28,25 @@ public static partial class CalloutPronunciation
     {
         string slug = NonAlphanumeric().Replace(displayName.ToLowerInvariant(), "_").Trim('_');
         return $"{slug}.ogg";
+    }
+
+    /// <summary>The complete recording description derived from one upstream media key.</summary>
+    public static SoundFile DescribeSoundFile(
+        string mediaKey,
+        IReadOnlyDictionary<string, PronunciationOverride> overrides)
+    {
+        overrides.TryGetValue(mediaKey, out PronunciationOverride? @override);
+        string displayName = ToDisplayName(mediaKey);
+        string? text = @override?.Ssml is null ? @override?.Text ?? displayName : null;
+
+        return new SoundFile(
+            @override?.FileName ?? ToFileName(displayName),
+            text: text,
+            ssml: @override?.Ssml,
+            displayName: displayName)
+        {
+            PronunciationName = mediaKey
+        };
     }
 
     public static IReadOnlyDictionary<string, PronunciationOverride> LoadOverrides(string path)

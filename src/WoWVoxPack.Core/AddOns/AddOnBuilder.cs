@@ -69,6 +69,12 @@ public sealed class AddOnBuilder(AddOnSettings settings, TtsSettings ttsSettings
         return this;
     }
 
+    /// <summary>The canonical media directory for the addon this builder will produce.</summary>
+    public string SoundDirectory(string outputDirectoryBase)
+    {
+        return Path.Combine(outputDirectoryBase, EffectiveTitle().Replace(' ', '_'), "Sounds");
+    }
+
     public AddOn Build(string outputDirectoryBase)
     {
         AddOnDraft draft = BuildDraft(outputDirectoryBase);
@@ -77,7 +83,7 @@ public sealed class AddOnBuilder(AddOnSettings settings, TtsSettings ttsSettings
 
     public AddOnDraft BuildDraft(string outputDirectoryBase)
     {
-        string title = Guard.Against.NullOrWhiteSpace(_title ?? settings.Title);
+        string title = EffectiveTitle();
         string displayTitle = _displayTitle ?? settings.DisplayTitle ?? title;
         string version = Guard.Against.NullOrWhiteSpace(settings.Version);
         string author = Guard.Against.NullOrWhiteSpace(settings.Author);
@@ -102,5 +108,10 @@ public sealed class AddOnBuilder(AddOnSettings settings, TtsSettings ttsSettings
             settings.Interfaces,
             new Dictionary<string, SoundFile>(_soundFiles, StringComparer.OrdinalIgnoreCase),
             new Dictionary<string, Func<AddOn, string>>(_fileFactories, StringComparer.OrdinalIgnoreCase));
+    }
+
+    private string EffectiveTitle()
+    {
+        return Guard.Against.NullOrWhiteSpace(_title ?? settings.Title);
     }
 }

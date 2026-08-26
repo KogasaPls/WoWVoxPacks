@@ -7,6 +7,16 @@ from pathlib import Path
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 
+
+def checkout_steps(workflow: str) -> list[str]:
+    """The complete YAML mapping for each checkout step."""
+    return [
+        step
+        for step in re.split(r"(?m)(?=^      - )", workflow)
+        if "uses: actions/checkout@v7" in step
+    ]
+
+
 spec = importlib.util.spec_from_file_location(
     "game_versions", REPOSITORY_ROOT / "scripts" / "game_versions.py"
 )
@@ -83,9 +93,11 @@ class ReleaseWorkflowTests(unittest.TestCase):
         self.assertIn('for tag in $(git tag -l "${base}-r*")', release_creator)
         self.assertNotIn("release-revision.txt", release_creator)
         self.assertIn(
-            "python scripts/game_versions.py --settings appsettings.json", publisher
+            "python scripts/game_versions.py --settings release-appsettings.json", publisher
         )
-        self.assertIn("game_versions: ${{ env.RELEASE_GAME_VERSIONS }}", publisher)
+        self.assertIn(
+            "game_versions: ${{ needs.plan-release.outputs.game_versions }}", publisher
+        )
 
     def test_the_builder_and_the_updater_agree_on_how_far_a_pack_may_shrink(self):
         """Both refuse a collapsed vocabulary, and the builder runs second.
@@ -202,7 +214,8 @@ class ReleaseWorkflowTests(unittest.TestCase):
         # A multiline value only survives $GITHUB_OUTPUT behind a heredoc delimiter.
         self.assertIn('echo "changelog<<${delimiter}"', release_creator)
         self.assertIn("      changelog:\n        description:", publisher)
-        self.assertIn("changelog: ${{ env.RELEASE_CHANGELOG }}", publisher)
+        self.assertIn("changelog: ${{ needs.plan-release.outputs.changelog }}", publisher)
+        self.assertIn('echo "changelog<<${delimiter}"', publisher)
         self.assertIn("changelog_type: markdown", publisher)
 
     def test_generating_the_notes_cannot_release_a_tag_the_run_would_skip(self):
@@ -237,7 +250,7 @@ class ReleaseWorkflowTests(unittest.TestCase):
         self.assertIn("contents: read", release_creator[call - 300:call])
 
     def test_automatic_publish_requires_changed_package_contents(self):
-        """Automatic releases gate uploads; manual recovery defaults to forcing them."""
+        """Automatic releases gate one plan; manual recovery still forces the selection."""
         publisher = (
             REPOSITORY_ROOT / ".github/workflows/publish-to-curseforge.yml"
         ).read_text(encoding="utf-8")
@@ -246,84 +259,71 @@ class ReleaseWorkflowTests(unittest.TestCase):
         dispatched = publisher.split("workflow_dispatch:", 1)[1].split("concurrency:", 1)[0]
         self.assertRegex(called, r"force_publish:\n(?:        .*\n)*?        default: false")
         self.assertRegex(dispatched, r"force_publish:\n(?:        .*\n)*?        default: true")
-        self.assertIn("- name: Compare with the previous release", publisher)
-        compare = publisher.index("- name: Compare with the previous release")
-        upload = publisher.index("- name: Upload to CurseForge")
-        self.assertIn("fetch-depth: 0", publisher)
-        self.assertIn("if: inputs.force_publish != true", publisher[compare:upload])
-        self.assertIn("python scripts/compare_addon_packages.py", publisher[compare:upload])
-        self.assertIn('"0:unchanged") changed=false', publisher[compare:upload])
-        self.assertIn('"1:changed") changed=true', publisher[compare:upload])
-        self.assertIn("Unexpected package comparison result", publisher[compare:upload])
-        self.assertIn(
-            "if: inputs.force_publish == true || "
-            "steps.compare-package.outputs.changed == 'true'",
-            publisher[upload:],
-        )
+        plan = publisher.index("  plan-release:")
+        upload = publisher.index("  publish-addon:")
+        self.assertIn("python scripts/plan_curseforge_release.py", publisher[plan:upload])
+        self.assertIn("--force", publisher[plan:upload])
+        self.assertNotIn("compare_addon_packages.py", publisher[upload:])
+        self.assertIn("if: matrix.publish == true", publisher[upload:])
 
-    def test_release_checkouts_do_not_fetch_historical_audio_blobs(self):
-        """Full tag history must not imply downloading every historical sound file."""
-        for workflow in ("create-release.yml", "publish-to-curseforge.yml"):
+    def test_publisher_plans_once_before_expanding_the_upload_matrix(self):
+        publisher = (
+            REPOSITORY_ROOT / ".github/workflows/publish-to-curseforge.yml"
+        ).read_text(encoding="utf-8")
+        plan = publisher[publisher.index("  plan-release:"):publisher.index("  publish-addon:")]
+        upload = publisher[publisher.index("  publish-addon:"):]
+
+        self.assertEqual(
+            1, publisher.count('packages=$(python scripts/plan_curseforge_release.py')
+        )
+        self.assertIn("uses: actions/checkout@v7", plan)
+        self.assertIn("packages:", plan)
+        self.assertIn("needs: plan-release", upload)
+        self.assertIn("matrix: ${{ fromJSON(needs.plan-release.outputs.matrix) }}", upload)
+        self.assertNotIn("uses: actions/checkout@v7", upload)
+        self.assertNotIn("voice-to-addon-to-project-id-json", publisher)
+        self.assertIn("project_id: ${{ matrix.project_id }}", upload)
+
+    def test_non_build_checkouts_exclude_generated_output(self):
+        """Jobs that never read output must not materialize half a gigabyte of audio."""
+        for workflow in ("ci.yml", "publish-to-curseforge.yml", "update.yml"):
             contents = (REPOSITORY_ROOT / ".github/workflows" / workflow).read_text(
                 encoding="utf-8"
             )
-            full_history = contents.index("fetch-depth: 0")
-            checkout = contents.rfind("uses: actions/checkout", 0, full_history)
-            self.assertNotEqual(-1, checkout, workflow)
-            self.assertIn(
-                "filter: blob:none", contents[checkout : full_history + 100], workflow
-            )
+            steps = checkout_steps(contents)
+            self.assertTrue(steps, workflow)
+            for checkout in steps:
+                if "fetch-depth: 0" in checkout:
+                    continue
+                self.assertIn("filter: blob:none", checkout, workflow)
+                self.assertIn("sparse-checkout: |", checkout, workflow)
+                self.assertIn("          /*", checkout, workflow)
+                self.assertIn("          !/output/", checkout, workflow)
+                self.assertIn("sparse-checkout-cone-mode: false", checkout, workflow)
 
-    def test_northern_sky_raid_tools_publish_contract_uses_per_voice_matrix(self):
+    def test_update_checkout_avoids_historical_audio(self):
+        """The updater needs current output, but never the audio from older commits."""
+        updater = (REPOSITORY_ROOT / ".github/workflows/update.yml").read_text(
+            encoding="utf-8"
+        )
+        checkout = next(
+            step for step in checkout_steps(updater) if "fetch-depth: 0" in step
+        )
+
+        self.assertIn("filter: blob:none", checkout)
+        self.assertIn("fetch-depth: 0", checkout)
+        self.assertNotIn("!/output/", checkout)
+
+    def test_curseforge_project_ids_come_from_the_planned_matrix(self):
         publisher = (
             REPOSITORY_ROOT / ".github/workflows/publish-to-curseforge.yml"
         ).read_text(encoding="utf-8")
-        expected_projects = {
-            "Wavenet_E": "1648855",
-            "Neural2_C": "1648938",
-            "Studio_Q": "1648940",
-        }
-        match = re.search(
-            r"voice-to-addon-to-project-id-json:\n\s+- '(\{.*?\})'",
-            publisher,
-            re.DOTALL,
-        )
-        self.assertIsNotNone(match)
-        project_matrix = json.loads(match.group(1))
-        self.assertEqual(
-            expected_projects,
-            {
-                voice: str(addons["NorthernSkyRaidTools"])
-                for voice, addons in project_matrix.items()
-            },
-        )
-        self.assertIn('"NorthernSkyRaidTools"', publisher)
-        self.assertNotIn("publish-northern-sky-raid-tools:", publisher)
-        self.assertNotIn("Standard_D", publisher)
-        self.assertNotIn("Studio_O", publisher)
-        self.assertNotIn("CF_" + "SPEECH_PROJECT_ID", publisher)
-        self.assertNotIn("CF_NORTHERN_SKY_" + "RAID_TOOLS_PROJECT_ID", publisher)
-        self.assertNotIn("WoWVoxPacks_NorthernSkyRaidTools_${{ env.RELEASE_TAG }}.zip", publisher)
+        upload = publisher[publisher.index("  publish-addon:"):]
 
-    def test_release_addon_fallback_includes_northern_sky_raid_tools(self):
-        publisher = (
-            REPOSITORY_ROOT / ".github/workflows/publish-to-curseforge.yml"
-        ).read_text(encoding="utf-8")
-        match = re.search(
-            r"addon: .*?inputs\.addons \|\| '([^']+)'",
-            publisher,
-        )
-        self.assertIsNotNone(match)
-        self.assertEqual(
-            [
-                "BigWigs_Voice",
-                "BigWigs_Countdown",
-                "Callouts",
-                "ExBoss",
-                "NorthernSkyRaidTools",
-            ],
-            json.loads(f"[{match.group(1)}]"),
-        )
+        self.assertIn("project_id: ${{ matrix.project_id }}", upload)
+        self.assertIn("relations: ${{ matrix.relations }}", upload)
+        self.assertNotRegex(publisher, r"\b1648(?:855|938|940)\b")
+        self.assertNotIn("voice-to-addon-to-project-id-json", publisher)
 
 
 if __name__ == "__main__":

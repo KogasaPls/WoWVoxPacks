@@ -21,10 +21,10 @@ public sealed class CalloutsMediaAddOnService(
             .WithDisplayTitle($"WoWVoxPacks |cffff7f3fCallouts|r|cffffffff ({ttsSettings.Voice})|r");
 
         // A reuse-only retired key is meaningful only for a recording already present in this
-        // exact voice pack. Build once without files to derive the canonical sound directory.
-        AddOnDraft pathModel = builder.BuildDraft(outputDirectoryBase);
+        // exact voice pack.
+        string soundDirectory = builder.SoundDirectory(outputDirectoryBase);
         AddOnDraft addOn = builder
-            .AddSoundFiles(vocabulary.SoundFilesFor(pathModel.SoundDirectory), overwrite: true)
+            .AddSoundFiles(vocabulary.SoundFilesFor(soundDirectory), overwrite: true)
             .AddFile("Core.lua", CalloutsLuaFile.Render)
             .BuildDraft(outputDirectoryBase);
 

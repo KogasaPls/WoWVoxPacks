@@ -82,6 +82,12 @@ jobs:
       removed: ${{ steps.compare-vocabulary.outputs.removed }}
     steps:
       - uses: actions/checkout@v7
+        with:
+          filter: blob:none
+          sparse-checkout: |
+            /*
+            !/output/
+          sparse-checkout-cone-mode: false
       - name: Download the NSRT default branch
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -234,6 +240,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
+          filter: blob:none
           fetch-depth: 0
       - name: List files in the repository
         run: |

@@ -22,10 +22,10 @@ public sealed class NorthernSkyRaidToolsAddOnService(
             .WithDisplayTitle($"WoWVoxPacks |cffff7f3fNorthern Sky Raid Tools|r|cffffffff ({voice})|r");
 
         // A reuse-only retired key is meaningful only for a recording already present in this
-        // exact voice pack. Build once without files to derive the canonical sound directory.
-        AddOnDraft pathModel = builder.BuildDraft(outputDirectoryBase);
+        // exact voice pack.
+        string soundDirectory = builder.SoundDirectory(outputDirectoryBase);
         AddOnDraft addOn = builder
-            .AddSoundFiles(vocabulary.SoundFilesFor(pathModel.SoundDirectory))
+            .AddSoundFiles(vocabulary.SoundFilesFor(soundDirectory))
             .AddFile("Core.lua", generatedAddOn =>
                 NorthernSkyRaidToolsLuaFile.Render(generatedAddOn, vocabulary.Registrations))
             .BuildDraft(outputDirectoryBase);

@@ -13,6 +13,14 @@ on:
         description: 'Markdown notes for the uploaded files. Empty falls back to the release body.'
         type: string
         default: ''
+      voices:
+        description: 'Quoted comma-separated voices. Empty selects every published voice.'
+        type: string
+        default: ''
+      addons:
+        description: 'Quoted comma-separated addons. Empty selects every published addon.'
+        type: string
+        default: ''
       force_publish:
         description: 'Upload even when the packaged addon matches the previous release.'
         type: boolean
@@ -24,13 +32,13 @@ on:
         default: ''
         required: false
       voices:
-        description: 'Comma separated list of voices to publish e.g. "Wavenet_E,Neural2_C,Studio_Q"'
-        default: '"Wavenet_E","Neural2_C","Studio_Q"'
-        required: true
+        description: 'Quoted comma-separated voices. Empty selects every published voice.'
+        default: ''
+        required: false
       addons:
-        description: 'Comma separated list of addons to publish e.g. "BigWigs_Voice","BigWigs_Countdown","NorthernSkyRaidTools"'
-        default: '"BigWigs_Voice","BigWigs_Countdown","Callouts","ExBoss","NorthernSkyRaidTools"'
-        required: true
+        description: 'Quoted comma-separated addons. Empty selects every published addon.'
+        default: ''
+        required: false
       force_publish:
         description: 'Upload the selected packages even when their contents are unchanged'
         type: boolean
@@ -43,199 +51,176 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  publish-addon:
-    strategy:
-      # Each voice×addon publish is independent; don't cancel the rest when one
-      # fails so a single bad upload can't block every other package.
-      max-parallel: 3
-      fail-fast: false
-      matrix:
-        voice: ${{ fromJSON(format('[{0}]', inputs.voices || '"Wavenet_E","Neural2_C","Studio_Q"')) }}
-        addon: ${{ fromJSON(format('[{0}]', inputs.addons || '"BigWigs_Voice","BigWigs_Countdown","Callouts","ExBoss","NorthernSkyRaidTools"')) }}
-        voice-to-addon-to-project-id-json:
-          - '{
-            "Wavenet_E": {
-              "BigWigs_Voice": 1215288,
-              "BigWigs_Countdown": 1217577,
-              "Callouts": 1520297,
-              "ExBoss": 1551653,
-              "NorthernSkyRaidTools": 1648855
-            },
-            "Neural2_C": {
-              "BigWigs_Voice": 1217580,
-              "BigWigs_Countdown": 1217583,
-              "Callouts": 1520293,
-              "ExBoss": 1551645,
-              "NorthernSkyRaidTools": 1648938
-            },
-            "Studio_Q": {
-              "BigWigs_Voice": 1218355,
-              "BigWigs_Countdown": 1218357,
-              "Callouts": 1520296,
-              "ExBoss": 1551655,
-              "NorthernSkyRaidTools": 1648940
-            }
-          }'
-        # Mirrors what the generated TOC declares in-game: ## Dependencies becomes a
-        # requiredDependency, ## OptionalDeps an optionalDependency. Keys are CurseForge
-        # URL slugs, not addon folder names. An addon absent here uploads with no
-        # relations, so a workflow_dispatch naming a new addon still publishes.
-        # The slug is the one the project page resolves to today, not the one older file and
-        # download URLs still carry: CurseForge answers 1018 "does not exist, is not accessible,
-        # or belongs to an unrelated root category" for big-wigs, and rejects the whole upload.
-        addon-to-relations-json:
-          - '{
-            "BigWigs_Voice": "bigwigs:requiredDependency",
-            "BigWigs_Countdown": "bigwigs:requiredDependency",
-            "Callouts": "libsharedmedia-3-0:optionalDependency",
-            "ExBoss": "exboss:requiredDependency,libsharedmedia-3-0:optionalDependency",
-            "NorthernSkyRaidTools": "northern-sky-raid-tools:optionalDependency,libsharedmedia-3-0:optionalDependency"
-          }'
-
+  plan-release:
     runs-on: ubuntu-latest
-    # Downloading the release assets is all this needs; the CurseForge upload authenticates
-    # with its own token.
     permissions:
       contents: read
-    name: Publish ${{ matrix.addon }} (${{ matrix.voice }}) (Project ID ${{ fromJSON(matrix.voice-to-addon-to-project-id-json)[matrix.voice][matrix.addon] }})
+    outputs:
+      release_tag: ${{ steps.release-tag.outputs.release_tag }}
+      changelog: ${{ steps.changelog.outputs.changelog }}
+      game_versions: ${{ steps.game-versions.outputs.game_versions }}
+      packages: ${{ steps.plan.outputs.packages }}
+      matrix: ${{ steps.plan.outputs.matrix }}
     steps:
-      - name: Set release tag
-        id: set-release-tag
-        # The caller knows the tag it just cut, so it says so. Resolving the latest release is
-        # only for a manual run, where "the one I just published" is what a human means.
+      - name: Resolve release tag
+        id: release-tag
         env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_TAG_INPUT: ${{ inputs.release_tag }}
         run: |
-          RELEASE_TAG="$RELEASE_TAG_INPUT"
-          if [ -z "$RELEASE_TAG" ]; then
-            RELEASE_TAG=$(curl -sf \
-              -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-              "https://api.github.com/repos/${{ github.repository }}/releases/latest" | jq -r '.tag_name')
+          release_tag="$RELEASE_TAG_INPUT"
+          if [ -z "$release_tag" ]; then
+            release_tag=$(gh release view --repo "$GITHUB_REPOSITORY" --json tagName --jq .tagName)
           fi
-          if [ -z "$RELEASE_TAG" ] || [ "$RELEASE_TAG" = "null" ]; then
+          if [ -z "$release_tag" ] || [ "$release_tag" = "null" ]; then
             echo "Could not determine the release tag to publish" >&2
             exit 1
           fi
-          echo "Publishing ${RELEASE_TAG}"
-          echo "RELEASE_TAG=${RELEASE_TAG}" >> "$GITHUB_ENV"
-      - name: Set changelog
-        # A manual run has no caller to hand it the notes, and resolving them from history
-        # would need the full clone of output/ that this job otherwise never pays for. The
-        # release body carries the same notes for any tag this workflow released.
+          echo "Publishing ${release_tag}"
+          echo "RELEASE_TAG=${release_tag}" >> "$GITHUB_ENV"
+          echo "release_tag=${release_tag}" >> "$GITHUB_OUTPUT"
+      - name: Check out release policy
+        # Keep the current planner available when manually republishing an older tag. Its game
+        # versions still come from that tag's appsettings below. No tracked audio is needed.
+        uses: actions/checkout@v7
+        with:
+          filter: blob:none
+          fetch-depth: 0
+          sparse-checkout: |
+            /*
+            !/output/
+          sparse-checkout-cone-mode: false
+      - name: Resolve game versions
+        id: game-versions
+        # Very old tags without appsettings used their base tag as the game version.
+        run: |
+          if git show "${RELEASE_TAG}:appsettings.json" > release-appsettings.json 2>/dev/null; then
+            game_versions=$(python scripts/game_versions.py --settings release-appsettings.json)
+          else
+            game_versions="${RELEASE_TAG#v}"
+            game_versions="${game_versions%%-*}"
+          fi
+          echo "Publishing for game versions: ${game_versions}"
+          echo "game_versions=${game_versions}" >> "$GITHUB_OUTPUT"
+      - name: Resolve changelog
+        id: changelog
         env:
           CHANGELOG_INPUT: ${{ inputs.changelog }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           changelog="$CHANGELOG_INPUT"
           if [ -z "$changelog" ]; then
-            changelog=$(curl -sf \
-              -H "Authorization: Bearer ${GH_TOKEN}" \
-              "https://api.github.com/repos/${{ github.repository }}/releases/tags/${RELEASE_TAG}" \
-              | jq -r '.body // ""')
+            changelog=$(gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --json body --jq '.body // ""')
           fi
           delimiter="CHANGELOG_${RANDOM}${RANDOM}"
           {
-            echo "RELEASE_CHANGELOG<<${delimiter}"
+            echo "changelog<<${delimiter}"
             echo "$changelog"
             echo "${delimiter}"
-          } >> "$GITHUB_ENV"
-      - name: Check out the release
-        # Before the assets are downloaded: checkout cleans the workspace. The tag's own
-        # settings are what that build declared, which a manual run of an older tag needs.
-        uses: actions/checkout@v7
-        with:
-          ref: ${{ env.RELEASE_TAG }}
-          filter: blob:none
-          fetch-depth: 0
-      - name: Set release game_versions
-        id: set-release-game-versions
-        # Not from the tag: the addons support every patch they list an Interface for, and
-        # BigWigs_Voice numbers its own re-releases within a patch (v12.1.0.1), which is a
-        # version no game ever shipped. Tags cut before this workflow learned that have no
-        # script to run, and their names were already game versions.
-        run: |
-          if [ -f scripts/game_versions.py ]; then
-            RELEASE_GAME_VERSIONS=$(python scripts/game_versions.py --settings appsettings.json)
-          else
-            RELEASE_GAME_VERSIONS="${RELEASE_TAG#v}"
-            RELEASE_GAME_VERSIONS="${RELEASE_GAME_VERSIONS%%-*}"
-          fi
-          echo "Publishing for game versions: ${RELEASE_GAME_VERSIONS}"
-          echo "RELEASE_GAME_VERSIONS=${RELEASE_GAME_VERSIONS}" >> "$GITHUB_ENV"
-      - name: Download release asset
+          } >> "$GITHUB_OUTPUT"
+      - name: Download assets and plan uploads
+        id: plan
         env:
+          ADDONS_INPUT: ${{ inputs.addons }}
+          FORCE_PUBLISH: ${{ inputs.force_publish }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VOICE: ${{ matrix.voice }}
-          ADDON: ${{ matrix.addon }}
+          VOICES_INPUT: ${{ inputs.voices }}
         run: |
-          archive="WoWVoxPacks_${VOICE}_${ADDON}_${RELEASE_TAG}.zip"
+          selection_args=()
+          if [ -n "$VOICES_INPUT" ]; then
+            selection_args+=(--voices "[$VOICES_INPUT]")
+          fi
+          if [ -n "$ADDONS_INPUT" ]; then
+            selection_args+=(--addons "[$ADDONS_INPUT]")
+          fi
+
+          mkdir -p current previous
+          mapfile -t current_archives < <(
+            python scripts/plan_curseforge_release.py --current-tag "$RELEASE_TAG" \
+              --list-assets "${selection_args[@]}"
+          )
+          for archive in "${current_archives[@]}"; do
+            gh release download "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" \
+              --pattern "$archive" --dir current
+          done
+
+          plan_args=(--current-tag "$RELEASE_TAG" --current-dir current "${selection_args[@]}")
+          if [ "$FORCE_PUBLISH" = "true" ]; then
+            plan_args+=(--force)
+          else
+            previous_tag=$(git describe --tags --abbrev=0 --match 'v*' "${RELEASE_TAG}^" 2>/dev/null || true)
+            if [ -n "$previous_tag" ]; then
+              assets=$(gh release view "$previous_tag" --repo "$GITHUB_REPOSITORY" \
+                --json assets --jq '.assets[].name' 2>/dev/null || true)
+              mapfile -t previous_archives < <(
+                python scripts/plan_curseforge_release.py --current-tag "$previous_tag" \
+                  --list-assets "${selection_args[@]}"
+              )
+              for previous_archive in "${previous_archives[@]}"; do
+                if grep -Fxq "$previous_archive" <<< "$assets"; then
+                  gh release download "$previous_tag" --repo "$GITHUB_REPOSITORY" \
+                    --pattern "$previous_archive" --dir previous
+                fi
+              done
+              plan_args+=(--previous-tag "$previous_tag" --previous-dir previous)
+            fi
+          fi
+
+          packages=$(python scripts/plan_curseforge_release.py "${plan_args[@]}")
+          count=$(jq length <<< "$packages")
+          echo "Planned ${count} CurseForge upload(s)"
+          echo "packages=${packages}" >> "$GITHUB_OUTPUT"
+
+          if [ "$count" -eq 0 ]; then
+            matrix='{"include":[{"publish":false,"voice":"unchanged","addon":"unchanged","project_id":0,"relations":"","archive":""}]}'
+            echo "No package contents changed; CurseForge uploads are skipped" >> "$GITHUB_STEP_SUMMARY"
+          else
+            matrix=$(jq -cn --argjson packages "$packages" \
+              '{include: [$packages[] + {publish: true}]}')
+            {
+              echo "### CurseForge uploads"
+              echo
+              jq -r '.[] | "- \(.addon) (\(.voice))"' <<< "$packages"
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+          echo "matrix=${matrix}" >> "$GITHUB_OUTPUT"
+
+  publish-addon:
+    needs: plan-release
+    strategy:
+      # Each upload is independent; don't cancel the rest when one project fails.
+      max-parallel: 3
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.plan-release.outputs.matrix) }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    name: Publish ${{ matrix.addon }} (${{ matrix.voice }}) (Project ID ${{ matrix.project_id }})
+    steps:
+      - name: Download release asset
+        if: matrix.publish == true
+        env:
+          ARCHIVE: ${{ matrix.archive }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ needs.plan-release.outputs.release_tag }}
+        run: |
           mkdir -p current
-          gh release download "$RELEASE_TAG" --pattern "$archive" --dir current
-          if [ ! -s "current/$archive" ]; then
-            echo "Downloaded release asset is missing or empty: $archive" >&2
+          gh release download "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" \
+            --pattern "$ARCHIVE" --dir current
+          if [ ! -s "current/$ARCHIVE" ]; then
+            echo "Downloaded release asset is missing or empty: $ARCHIVE" >&2
             exit 1
           fi
-          echo "CURRENT_ARCHIVE=current/$archive" >> "$GITHUB_ENV"
-      - name: Compare with the previous release
-        id: compare-package
-        if: inputs.force_publish != true
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VOICE: ${{ matrix.voice }}
-          ADDON: ${{ matrix.addon }}
-        run: |
-          previous_tag=$(git describe --tags --abbrev=0 --match 'v*' "${RELEASE_TAG}^" 2>/dev/null || true)
-          if [ -z "$previous_tag" ]; then
-            echo "No previous release tag; publishing the package"
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-
-          previous_archive="WoWVoxPacks_${VOICE}_${ADDON}_${previous_tag}.zip"
-          assets=$(gh release view "$previous_tag" --json assets --jq '.assets[].name')
-          if ! grep -Fxq "$previous_archive" <<< "$assets"; then
-            echo "$previous_tag has no $previous_archive; publishing the new package"
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-
-          mkdir -p previous
-          gh release download "$previous_tag" --pattern "$previous_archive" --dir previous
-          set +e
-          python scripts/compare_addon_packages.py "previous/$previous_archive" "$CURRENT_ARCHIVE" \
-            | tee package-comparison.txt
-          status=${PIPESTATUS[0]}
-          set -e
-          result=$(head -n 1 package-comparison.txt)
-          case "$status:$result" in
-            "0:unchanged") changed=false ;;
-            "1:changed") changed=true ;;
-            *)
-              echo "Unexpected package comparison result (exit $status, status '$result')" >&2
-              exit 2
-              ;;
-          esac
-          echo "changed=$changed" >> "$GITHUB_OUTPUT"
-          {
-            echo "### ${ADDON} (${VOICE})"
-            echo
-            echo "Compared ${previous_tag} with ${RELEASE_TAG}: ${changed}"
-            echo '```'
-            cat package-comparison.txt
-            echo '```'
-          } >> "$GITHUB_STEP_SUMMARY"
       - name: Upload to CurseForge
-        if: inputs.force_publish == true || steps.compare-package.outputs.changed == 'true'
+        if: matrix.publish == true
         uses: itsmeow/curseforge-upload@v3
-        env:
-          CF_PROJECT_ID: ${{ fromJSON(matrix.voice-to-addon-to-project-id-json)[matrix.voice][matrix.addon] }}
         with:
-          file_path: ${{ env.CURRENT_ARCHIVE }}
+          file_path: current/${{ matrix.archive }}
           game_endpoint: 'wow'
-          project_id: ${{ env.CF_PROJECT_ID }}
+          project_id: ${{ matrix.project_id }}
           token: ${{ secrets.CURSEFORGE_API_TOKEN }}
-          display_name: ${{ matrix.addon }} (${{ matrix.voice }}) ${{ env.RELEASE_TAG }}
-          game_versions: ${{ env.RELEASE_GAME_VERSIONS }}
-          relations: ${{ fromJSON(matrix.addon-to-relations-json)[matrix.addon] }}
-          changelog: ${{ env.RELEASE_CHANGELOG }}
+          display_name: ${{ matrix.addon }} (${{ matrix.voice }}) ${{ needs.plan-release.outputs.release_tag }}
+          game_versions: ${{ needs.plan-release.outputs.game_versions }}
+          relations: ${{ matrix.relations }}
+          changelog: ${{ needs.plan-release.outputs.changelog }}
           changelog_type: markdown

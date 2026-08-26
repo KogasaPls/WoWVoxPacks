@@ -106,7 +106,7 @@ public static class NorthernSkyRaidToolsVocabulary
 
         foreach (string mediaKey in mediaKeys)
         {
-            SoundFile generated = DescribeSoundFile(mediaKey, overrides);
+            SoundFile generated = CalloutPronunciation.DescribeSoundFile(mediaKey, overrides);
             if (!soundFilesByMediaKey.TryGetValue(mediaKey, out SoundFile? soundFile))
             {
                 soundFile = generated;
@@ -117,25 +117,5 @@ public static class NorthernSkyRaidToolsVocabulary
         }
 
         return registrations;
-    }
-
-    private static SoundFile DescribeSoundFile(
-        string mediaKey,
-        IReadOnlyDictionary<string, PronunciationOverride> overrides)
-    {
-        overrides.TryGetValue(mediaKey, out PronunciationOverride? @override);
-
-        string displayName = CalloutPronunciation.ToDisplayName(mediaKey);
-        string? text = @override?.Ssml is null ? @override?.Text ?? displayName : null;
-        string? ssml = @override?.Ssml;
-
-        return new SoundFile(
-            @override?.FileName ?? CalloutPronunciation.ToFileName(displayName),
-            text: text,
-            ssml: ssml,
-            displayName: displayName)
-        {
-            PronunciationName = mediaKey
-        };
     }
 }

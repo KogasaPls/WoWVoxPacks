@@ -9,6 +9,23 @@ public class CalloutVocabularyTests
         new(StringComparer.OrdinalIgnoreCase);
 
     [Fact]
+    public void CalloutPronunciation_DescribeSoundFile_AppliesTheCompleteOverride()
+    {
+        Dictionary<string, PronunciationOverride> overrides = new(StringComparer.OrdinalIgnoreCase)
+        {
+            ["RunOut"] = new PronunciationOverride(Text: "Run Out", FileName: "move.ogg")
+        };
+
+        SoundFile soundFile = CalloutPronunciation.DescribeSoundFile("RunOut", overrides);
+
+        Assert.Equal("move.ogg", soundFile.FileName);
+        Assert.Equal("Run Out", soundFile.DisplayName);
+        Assert.Equal("Run Out", soundFile.Text);
+        Assert.Null(soundFile.Ssml);
+        Assert.Equal("RunOut", soundFile.PronunciationName);
+    }
+
+    [Fact]
     public void Merge_KeepsCuratedEntriesWithNoMediaKeys()
     {
         SoundFile tranquility = new("tranquility.ogg", text: "Tranquility", displayName: "Tranquility");

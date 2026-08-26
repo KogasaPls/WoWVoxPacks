@@ -24,6 +24,7 @@ Clear
 Collect
 Debuff
 Dispel
+Done
 DropPool
 East
 Entertainer

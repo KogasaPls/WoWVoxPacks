@@ -236,6 +236,31 @@ class ReleaseWorkflowTests(unittest.TestCase):
         self.assertIn("permissions:", release_creator[call - 300:call])
         self.assertIn("contents: read", release_creator[call - 300:call])
 
+    def test_automatic_publish_requires_changed_package_contents(self):
+        """Automatic releases gate uploads; manual recovery defaults to forcing them."""
+        publisher = (
+            REPOSITORY_ROOT / ".github/workflows/publish-to-curseforge.yml"
+        ).read_text(encoding="utf-8")
+
+        called = publisher.split("workflow_call:", 1)[1].split("workflow_dispatch:", 1)[0]
+        dispatched = publisher.split("workflow_dispatch:", 1)[1].split("concurrency:", 1)[0]
+        self.assertRegex(called, r"force_publish:\n(?:        .*\n)*?        default: false")
+        self.assertRegex(dispatched, r"force_publish:\n(?:        .*\n)*?        default: true")
+        self.assertIn("- name: Compare with the previous release", publisher)
+        compare = publisher.index("- name: Compare with the previous release")
+        upload = publisher.index("- name: Upload to CurseForge")
+        self.assertIn("fetch-depth: 0", publisher)
+        self.assertIn("if: inputs.force_publish != true", publisher[compare:upload])
+        self.assertIn("python scripts/compare_addon_packages.py", publisher[compare:upload])
+        self.assertIn('"0:unchanged") changed=false', publisher[compare:upload])
+        self.assertIn('"1:changed") changed=true', publisher[compare:upload])
+        self.assertIn("Unexpected package comparison result", publisher[compare:upload])
+        self.assertIn(
+            "if: inputs.force_publish == true || "
+            "steps.compare-package.outputs.changed == 'true'",
+            publisher[upload:],
+        )
+
     def test_northern_sky_raid_tools_publish_contract_uses_per_voice_matrix(self):
         publisher = (
             REPOSITORY_ROOT / ".github/workflows/publish-to-curseforge.yml"

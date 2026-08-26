@@ -660,6 +660,12 @@
     "Text": "Don\u0027t soak"
   },
   {
+    "FileName": "done.ogg",
+    "DisplayName": "Done",
+    "FormattedDisplayName": "Done",
+    "Text": "Done"
+  },
+  {
     "FileName": "doom_winds.ogg",
     "DisplayName": "Doom Winds",
     "FormattedDisplayName": "Doom Winds",

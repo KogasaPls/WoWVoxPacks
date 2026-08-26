@@ -145,6 +145,7 @@ jobs:
         uses: actions/checkout@v7
         with:
           ref: ${{ env.RELEASE_TAG }}
+          filter: blob:none
           fetch-depth: 0
       - name: Set release game_versions
         id: set-release-game-versions

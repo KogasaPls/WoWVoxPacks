@@ -261,6 +261,19 @@ class ReleaseWorkflowTests(unittest.TestCase):
             publisher[upload:],
         )
 
+    def test_release_checkouts_do_not_fetch_historical_audio_blobs(self):
+        """Full tag history must not imply downloading every historical sound file."""
+        for workflow in ("create-release.yml", "publish-to-curseforge.yml"):
+            contents = (REPOSITORY_ROOT / ".github/workflows" / workflow).read_text(
+                encoding="utf-8"
+            )
+            full_history = contents.index("fetch-depth: 0")
+            checkout = contents.rfind("uses: actions/checkout", 0, full_history)
+            self.assertNotEqual(-1, checkout, workflow)
+            self.assertIn(
+                "filter: blob:none", contents[checkout : full_history + 100], workflow
+            )
+
     def test_northern_sky_raid_tools_publish_contract_uses_per_voice_matrix(self):
         publisher = (
             REPOSITORY_ROOT / ".github/workflows/publish-to-curseforge.yml"

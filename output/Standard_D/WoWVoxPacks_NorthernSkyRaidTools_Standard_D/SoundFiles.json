@@ -1596,6 +1596,12 @@
     "Text": "Purple"
   },
   {
+    "FileName": "push.ogg",
+    "DisplayName": "Push",
+    "FormattedDisplayName": "Push",
+    "Text": "Push"
+  },
+  {
     "FileName": "puzzle_box.ogg",
     "DisplayName": "Puzzle Box",
     "FormattedDisplayName": "Puzzle Box",
@@ -2494,12 +2500,6 @@
     "DisplayName": "Watch Side",
     "FormattedDisplayName": "Watch Side",
     "Text": "Watch Side"
-  },
-  {
-    "FileName": "watch_spawns.ogg",
-    "DisplayName": "Watch Spawns",
-    "FormattedDisplayName": "Watch Spawns",
-    "Text": "Watch Spawns"
   },
   {
     "FileName": "waves.ogg",

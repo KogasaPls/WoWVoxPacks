@@ -4432,11 +4432,11 @@
     "Text": "Divine Guile"
   },
   {
-    "Key": "1257608",
-    "FileName": "1257608.ogg",
-    "DisplayName": "Frost Barrage",
-    "FormattedDisplayName": "Frost Barrage",
-    "Text": "Frost Barrage"
+    "Key": "1257717",
+    "FileName": "1257717.ogg",
+    "DisplayName": "Alluring Bubble",
+    "FormattedDisplayName": "Alluring Bubble",
+    "Text": "Alluring Bubble"
   },
   {
     "Key": "1257825",
@@ -4745,6 +4745,13 @@
     "DisplayName": "Null Palm",
     "FormattedDisplayName": "Null Palm",
     "Text": "Null Palm"
+  },
+  {
+    "Key": "1271545",
+    "FileName": "1271545.ogg",
+    "DisplayName": "Warding Incense",
+    "FormattedDisplayName": "Warding Incense",
+    "Text": "Warding Incense"
   },
   {
     "Key": "1271684",
@@ -5214,13 +5221,6 @@
     "DisplayName": "Hatch",
     "FormattedDisplayName": "Hatch",
     "Text": "Hatch"
-  },
-  {
-    "Key": "1289696",
-    "FileName": "1289696.ogg",
-    "DisplayName": "Tether of Awakening",
-    "FormattedDisplayName": "Tether of Awakening",
-    "Text": "Tether of Awakening"
   },
   {
     "Key": "1289900",

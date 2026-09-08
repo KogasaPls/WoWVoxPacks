@@ -21,6 +21,10 @@ SPECIAL_DISPLAY = re.compile(r"\bisSpecialDisplay\s*=\s*true\b")
 TEXT_REASSIGNMENT = re.compile(r"\bdata\.text\s*=\s*\"([^\"]+)\"")
 LATE_TTS_ASSIGNMENT = re.compile(r"^\s*(?:local\s+)?([\w.]*\bTTS)\s*=\s*(.+)$")
 LOCAL_BINDING = re.compile(r"^\s*local\s+(\w+)\s*=")
+INTERNAL_ID = re.compile(r"\binternalID\s*=\s*\"([^\"]+)\"")
+SETTING_COPY = re.compile(r"^\s*(\w+)\.TTS\s*,?\s*$")
+BINDING = re.compile(r"^\s*(?:local\s+)?([A-Za-z_]\w*(?:\s*,\s*[A-Za-z_]\w*)*)\s*=(.*)$")
+ALERT_REFERENCE = re.compile(r"\bdiffData\.(\w+)")
 CONCATENATED_TTS_FIELD = re.compile(r"\bTTS\s*=\s*\"([^\"]*)\"\s*\.\.")
 LITERAL_CALL = re.compile(r"NSAPI:TTS\(\s*\"([^\"]+)\"\s*[,)]")
 CONCATENATED_CALL = re.compile(r"NSAPI:TTS\(\s*\"([^\"]+)\"\s*\.\.")
@@ -148,15 +152,88 @@ def spoken_in_alerts(text: str, path: str) -> tuple[Counter[str], list[Composed]
     return spoken, composed_sites(text, CONCATENATED_TTS_FIELD, path)
 
 
+def declared_tts_by_alert(text: str) -> dict[str, str]:
+    """Each alert's declared TTS setting, keyed by internalID: its literal or its keyword."""
+    declared: dict[str, str] = {}
+    for chunk in ALERT_TABLE.split(text)[1:]:
+        table = chunk.split("AddEncounterAlert")[0]
+        identity = INTERNAL_ID.search(table)
+        setting = TTS_FIELD.search(table)
+        if identity and setting:
+            declared[identity.group(1)] = (
+                setting.group(1) if setting.group(1) is not None else setting.group(2))
+
+    return declared
+
+
+def copied_setting(text: str, local: str, declared: dict[str, str]) -> str | None:
+    """The declared TTS of the alerts a name is bound to from the difficulty's alert table.
+
+    NSRT keys that table by internalID, so `local x = diffData and diffData.Waves` names the
+    alert declared with internalID "Waves". Files reuse names like `alert` across functions and
+    scopes, which no line scan can follow, so every binding of the name in the file has to be
+    readable: one this script cannot read refuses the copy, and one to an alert declared true
+    reports true whatever the others say.
+    """
+    if hidden_binding(text, local):
+        return None
+
+    settings: list[str] = []
+    for line in text.splitlines():
+        match = BINDING.match(line)
+        if not match:
+            continue
+        names = [name.strip() for name in match.group(1).split(",")]
+        if local not in names:
+            continue
+        values = match.group(2).split(",")
+        if len(values) != len(names):
+            return None
+        referenced = [declared.get(key) for key in ALERT_REFERENCE.findall(values[names.index(local)])]
+        if not referenced or None in referenced:
+            return None
+        settings.extend(setting for setting in referenced if setting is not None)
+
+    if not settings:
+        return None
+
+    return "true" if "true" in settings else settings[0]
+
+
+def hidden_binding(text: str, name: str) -> bool:
+    """Whether the name is also bound somewhere the line scan cannot read.
+
+    A parameter, a loop variable, or an assignment after `then`, `do` or `;` would let a
+    readable binding elsewhere in the file answer for a value it never held.
+    """
+    word = re.escape(name)
+    if re.search(rf"\bfunction\b[^(\n]*\([^)]*\b{word}\b", text):
+        return True
+
+    patterns = [
+        re.compile(rf"\bfor\b.*\b{word}\b.*\bin\b"),
+        re.compile(rf"\bfor\s+{word}\s*="),
+        re.compile(rf"(?:\bthen\b|\belse\b|\bdo\b|\brepeat\b|;|\))[^=]*\b{word}\b[^=]*=(?!=)"),
+    ]
+    return any(
+        pattern.search(line)
+        for line in text.splitlines()
+        if name in line
+        for pattern in patterns)
+
+
 def spoken_in_late_assignments(text: str, path: str) -> tuple[Counter[str], list[Composed]]:
     """Read every `TTS = <expression>` written outside an alert's table literal.
 
     Encounters swap an alert's speech at runtime through locals of their own naming, not only
-    through `data`.
+    through `data`. A reminder built at runtime may copy another alert's TTS setting; it then
+    speaks that alert's string (already read where it was declared), nothing when that is
+    false or nil, and its own text when that is true.
     """
     spoken: Counter[str] = Counter()
     composed: list[Composed] = []
     readable: set[str] = set()
+    declared = declared_tts_by_alert(text)
     for line_number, line in enumerate(text.splitlines(), start=1):
         match = LATE_TTS_ASSIGNMENT.match(line)
         if not match:
@@ -167,9 +244,17 @@ def spoken_in_late_assignments(text: str, path: str) -> tuple[Counter[str], list
 
         if not fragments:
             # A pass-through of a local this file already spelled out is not a second value.
-            if any(re.search(rf"\b{re.escape(name)}\b", expression) for name in readable):
+            if any(re.search(rf"(?<![\w.]){re.escape(name)}\b", expression) for name in readable):
                 continue
             if expression.strip().rstrip(",").split()[0] in ("false", "nil"):
+                continue
+            copy = SETTING_COPY.match(expression)
+            setting = copied_setting(text, copy.group(1), declared) if copy else None
+            if setting == "true":
+                raise UpstreamShapeError(
+                    f"{path}:{line_number} copies the TTS setting of an alert declared true, "
+                    "so it speaks its own text; teach it that shape before trusting the result")
+            if setting is not None:
                 continue
             raise UpstreamShapeError(
                 f"{path}:{line_number} sets {target} from an expression holding no string "

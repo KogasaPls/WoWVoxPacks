@@ -49,6 +49,23 @@ SPECIAL_DISPLAY_WITHOUT_TTS = '''
     self:AddEncounterAlert(data)
 '''
 
+SETTING_COPIES = '''
+    local data = {internalID = "TransitionSoaks", text = "Soak", TTS = false, dur = 8}
+    self:AddEncounterAlert(data)
+    local diffData = NSRT.EncounterAlerts[encID][id]
+    local transitionSoakAlert = diffData and diffData.TransitionSoaks
+    local overriddenAlert = diffData and diffData.Overridden
+    local info = self:CreateReminder({
+        text = transitionSoakAlert.text.." {rt"..marker.."}",
+        TTS = transitionSoakAlert.TTS,
+        TTSTimer = transitionSoakAlert.TTSTimer,
+    }, true)
+    local info = self:CreateReminder({
+        text = "Stack Up",
+        TTS = overriddenAlert.TTS,
+    }, true)
+'''
+
 DIRECT_CALLS = '''
 function NSAPI:TTS(sound, voice) -- NSAPI:TTS("Bait Frontal")
 end
@@ -139,6 +156,76 @@ class CollectSpokenTests(unittest.TestCase):
                 local data = {internalID = "Ordinary", text = "Speak by default"}
                 self:AddEncounterAlert(data)
             ''')
+
+    def test_a_copied_setting_speaks_only_what_its_alert_declared(self):
+        """Ulatek's transition reminders copy TTS off an alert declared silent."""
+        spoken, composed = self.collect(alerts=ALERTS + SETTING_COPIES)
+        self.assertNotIn("Soak {rt1}", spoken)
+        self.assertEqual(1, spoken["Stack"])
+        self.assertNotIn("Stack Up", spoken)
+        self.assertFalse(any(" {rt" in fragment for site in composed for fragment in site.fragments))
+
+    def test_a_setting_copied_from_a_true_alert_refuses_to_guess(self):
+        """With TTS true the copy speaks its own text, which nothing here reads yet."""
+        with self.assertRaisesRegex(checker.UpstreamShapeError, "declared true"):
+            self.collect(alerts=ALERTS + SETTING_COPIES + '''
+                local tauntAlert = diffData and diffData.Taunts
+                local info = self:CreateReminder({
+                    text = "Taunt now",
+                    TTS = tauntAlert.TTS,
+                }, true)
+            ''')
+
+    def test_a_setting_copied_from_an_unknown_alert_refuses_to_guess(self):
+        with self.assertRaisesRegex(checker.UpstreamShapeError, "holding no string"):
+            self.collect(alerts=ALERTS + "\n    Alert.TTS = otherAlert.TTS\n")
+
+    def test_a_copied_setting_answers_for_every_binding_of_its_name(self):
+        """Encounter files reuse `alert` across functions and scopes, which a line scan cannot follow."""
+        reminder = '''
+                local info = self:CreateReminder({
+                    text = "Taunt now",
+                    TTS = alert.TTS,
+                })
+        '''
+        for bindings in (
+                "local alert = diffData and diffData.TransitionSoaks\nlocal alert = diffData and diffData.Taunts",
+                "local alert = diffData and diffData.Taunts\nlocal alert = diffData and diffData.TransitionSoaks",
+                "local other, alert = diffData.TransitionSoaks, diffData.Taunts"):
+            with self.assertRaisesRegex(checker.UpstreamShapeError, "declared true"):
+                self.collect(alerts=ALERTS + SETTING_COPIES + bindings + reminder)
+
+        for bindings in (
+                "local alert = diffData and diffData.TransitionSoaks\nalert = somethingElse",
+                "local alert, other = diffData.TransitionSoaks"):
+            with self.assertRaisesRegex(checker.UpstreamShapeError, "holding no string"):
+                self.collect(alerts=ALERTS + SETTING_COPIES + bindings + reminder)
+
+        with self.assertRaisesRegex(checker.UpstreamShapeError, "declared true"):
+            self.collect(alerts=ALERTS + SETTING_COPIES
+                         + "local alert = diffData and diffData.TransitionSoaks or diffData.Taunts" + reminder)
+
+    def test_a_copied_setting_refuses_a_name_bound_where_the_scan_cannot_read(self):
+        """A parameter or loop variable named like a readable silent local must not inherit its silence."""
+        silent = "local alert = diffData and diffData.TransitionSoaks\n"
+        reminder = "local info = self:CreateReminder({\n    text = \"Adds incoming\",\n    TTS = alert.TTS,\n})\n"
+        for hidden in (
+                "local function remind(alert)\n" + reminder + "end\n",
+                "local function remind(self,\n    alert)\n" + reminder + "end\n",
+                "for _, alert in pairs(diffData) do\n" + reminder + "end\n",
+                "if late then alert = diffData.Taunts end\n" + reminder,
+                "if late then x = 1 else alert = diffData.Taunts end\n" + reminder,
+                "repeat alert = diffData.Taunts until done\n" + reminder,
+                "C_Timer.After(1, function() alert = diffData.Taunts end)\n" + reminder,
+                "do local alert = diffData.Taunts end\n" + reminder):
+            with self.assertRaisesRegex(checker.UpstreamShapeError, "holding no string"):
+                self.collect(alerts=ALERTS + SETTING_COPIES + silent + hidden)
+
+        spoken, _ = self.collect(alerts=ALERTS + SETTING_COPIES
+                                 + "local alert = diffData and diffData.TransitionSoaks\n"
+                                 + "if alert == nil then return end\n" + reminder)
+        self.assertNotIn("Adds incoming", spoken)
+        self.assertNotIn("Taunt now", spoken)
 
     def test_an_unreadable_tts_expression_refuses_to_guess(self):
         with self.assertRaises(checker.UpstreamShapeError):

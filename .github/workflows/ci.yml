@@ -43,6 +43,11 @@ jobs:
       - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: '10.0.x'
+      # The runner image ships no ffmpeg, and the composition tests fail rather than skip
+      # without it in CI.
+      - uses: FedericoCarboni/setup-ffmpeg@v3
+        with:
+          ffmpeg-version: release
       - name: Python tests
         run: python -m unittest discover -s tests/scripts -p 'test_*.py' -v
       - name: Build

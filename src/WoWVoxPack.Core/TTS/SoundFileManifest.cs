@@ -48,7 +48,7 @@ public sealed class SoundFileManifest
             current.Where(f => !File.Exists(Path.Combine(soundDirectory, f.FileName)));
         IEnumerable<SoundFile> changed = current.Where(f => !IsSameContentAsManifestEntry(f));
 
-        SoundFile[] toCreate = missing.UnionBy(changed, f => f.FileName).ToArray();
+        SoundFile[] toCreate = WithDependentCompositions(current, missing.UnionBy(changed, f => f.FileName));
         GuardAgainstUnintendedFullRerender(toCreate.Length, allowFullRerender);
 
         return toCreate;
@@ -84,6 +84,17 @@ public sealed class SoundFileManifest
         string json = JsonSerializer.Serialize(soundFiles.OrderBy(s => s.FileName).ToList(),
             SoundFileJsonContext.Default.ListSoundFile);
         return AtomicFile.WriteAllTextAsync(path, json, cancellationToken);
+    }
+
+    /// <summary>A composed recording is rebuilt whenever one of its sources is, or it keeps the old take.</summary>
+    private static SoundFile[] WithDependentCompositions(IEnumerable<SoundFile> current, IEnumerable<SoundFile> toCreate)
+    {
+        SoundFile[] rendering = toCreate.ToArray();
+        HashSet<string> renderingFileNames = new(rendering.Select(f => f.FileName), StringComparer.OrdinalIgnoreCase);
+        IEnumerable<SoundFile> dependents = current.Where(f =>
+            f.Composition?.Parts.Any(part => renderingFileNames.Contains(part.FileName)) == true);
+
+        return rendering.UnionBy(dependents, f => f.FileName, StringComparer.OrdinalIgnoreCase).ToArray();
     }
 
     /// <summary>

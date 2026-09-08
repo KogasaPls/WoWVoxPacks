@@ -5,4 +5,5 @@ public sealed record PronunciationOverride(
     string? Text = null,
     string? Ssml = null,
     bool Exclude = false,
-    string? FileName = null);
+    string? FileName = null,
+    CompositionOverride? Composition = null);

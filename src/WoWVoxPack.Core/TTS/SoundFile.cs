@@ -7,12 +7,14 @@ public class SoundFile
 {
     [JsonConstructor]
     public SoundFile(string fileName, string? text = null, string? ssml = null, string? displayName = null,
-        string? formattedDisplayName = null, IReadOnlyList<Pronunciation>? pronunciations = null)
+        string? formattedDisplayName = null, IReadOnlyList<Pronunciation>? pronunciations = null,
+        SoundComposition? composition = null)
     {
         FileName = Path.ChangeExtension(fileName, ".ogg").ToLowerInvariant();
         Text = text;
         Ssml = ssml;
         Pronunciations = pronunciations is { Count: > 0 } ? pronunciations : null;
+        Composition = composition;
         DisplayName = displayName ?? Path.ChangeExtension(fileName, null);
         FormattedDisplayName = formattedDisplayName ?? DisplayName;
         PronunciationName = DisplayName;
@@ -64,6 +66,14 @@ public class SoundFile
     [JsonPropertyName("Pronunciations")]
     [JsonPropertyOrder(0)]
     public IReadOnlyList<Pronunciation>? Pronunciations { get; set; }
+
+    /// <summary>
+    /// Set when the recording is cut from other recordings in the pack rather than spoken, so
+    /// Text and SSML are null and the sources are what the manifest compares.
+    /// </summary>
+    [JsonPropertyName("Composition")]
+    [JsonPropertyOrder(1)]
+    public SoundComposition? Composition { get; set; }
 
     [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
     public string? CopyFromPath { get; set; }

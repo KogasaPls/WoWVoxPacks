@@ -22,7 +22,7 @@ public class SoundFileContentEqualityComparer : IEqualityComparer<SoundFile>
         }
 
         return x.Text == y.Text && x.Ssml == y.Ssml && x.FileName == y.FileName &&
-               x.CopyFromPath == y.CopyFromPath &&
+               x.CopyFromPath == y.CopyFromPath && Equals(x.Composition, y.Composition) &&
                SamePronunciations(x.Pronunciations, y.Pronunciations);
     }
 

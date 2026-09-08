@@ -26,6 +26,22 @@ public class PronunciationResolverTests
     }
 
     [Fact]
+    public void Resolve_LeavesAComposedRecordingUnspoken()
+    {
+        PronunciationCatalog catalog = new([], [new PhraseRule("321", "θriː tuː wʌn")], []);
+        SoundComposition composition = new(5.7, [new SoundCompositionPart("three.ogg", 2.15)]);
+        AddOnDraft draft = Draft("Callouts",
+            new SoundFile("5seconds321.ogg", displayName: "5seconds321", composition: composition));
+
+        SoundFile sound = Assert.Single(new PronunciationResolver(catalog,
+            NullLogger<PronunciationResolver>.Instance).Resolve([draft]).Single().SoundFiles);
+
+        Assert.Null(sound.Text);
+        Assert.Null(sound.Pronunciations);
+        Assert.Equal(composition, sound.Composition);
+    }
+
+    [Fact]
     public void Resolve_AppliesGlobalPhraseUsingActualAliasSpelling()
     {
         PronunciationCatalog catalog = new([], [

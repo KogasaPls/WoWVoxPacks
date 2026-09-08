@@ -288,14 +288,72 @@ public class SoundFileManifestTests : IDisposable
         Assert.Empty(manifest.FilesToRemove([kept]));
     }
 
+    [Fact]
+    public async Task FilesToCreate_RebuildsAComposedRecording_WhenOneOfItsSourcesIsRendered()
+    {
+        SoundFile three = new("three.ogg", text: "Three", displayName: "Three");
+        SoundFile two = new("two.ogg", text: "Two", displayName: "Two");
+        SoundFile countdown = Countdown();
+        await SaveRendered(three, two, countdown);
+        SoundFileManifest manifest = await SoundFileManifest.LoadAsync(ManifestPath);
+
+        SoundFile reworded = new("three.ogg", text: "Three!", displayName: "Three");
+        string[] toCreate = manifest.FilesToCreate([reworded, two, countdown], _tempDirectory)
+            .Select(f => f.FileName).Order().ToArray();
+
+        Assert.Equal(["5seconds321.ogg", "three.ogg"], toCreate);
+    }
+
+    [Fact]
+    public async Task FilesToCreate_LeavesAComposedRecording_WhoseSourcesAreUnchanged()
+    {
+        SoundFile three = new("three.ogg", text: "Three", displayName: "Three");
+        SoundFile countdown = Countdown();
+        await SaveRendered(three, countdown);
+        SoundFileManifest manifest = await SoundFileManifest.LoadAsync(ManifestPath);
+
+        Assert.Empty(manifest.FilesToCreate([three, countdown], _tempDirectory));
+    }
+
+    [Fact]
+    public async Task FilesToCreate_RebuildsAComposedRecording_WhenItsOnsetsMove()
+    {
+        SoundFile three = new("three.ogg", text: "Three", displayName: "Three");
+        await SaveRendered(three, Countdown());
+        SoundFileManifest manifest = await SoundFileManifest.LoadAsync(ManifestPath);
+
+        SoundFile moved = Countdown(firstOnset: 2.5);
+        SoundFile toCreate = Assert.Single(manifest.FilesToCreate([three, moved], _tempDirectory));
+
+        Assert.Equal("5seconds321.ogg", toCreate.FileName);
+    }
+
     public void Dispose()
     {
         Directory.Delete(_tempDirectory, true);
     }
 
+    private static SoundFile Countdown(double firstOnset = 2.15) =>
+        new("5seconds321.ogg", displayName: "5seconds321",
+            composition: new SoundComposition(5.7,
+            [
+                new SoundCompositionPart("three.ogg", firstOnset),
+                new SoundCompositionPart("two.ogg", firstOnset + 1),
+                new SoundCompositionPart("one.ogg", firstOnset + 2)
+            ]));
+
     private static IEnumerable<SoundFile> Recordings(int count, string text)
     {
         return Enumerable.Range(0, count)
             .Select(i => new SoundFile($"sound{i}.ogg", text: text, displayName: $"Sound {i}"));
+    }
+
+    private async Task SaveRendered(params SoundFile[] soundFiles)
+    {
+        await (await SoundFileManifest.LoadAsync(ManifestPath)).SaveAsync(ManifestPath, soundFiles);
+        foreach (SoundFile soundFile in soundFiles)
+        {
+            await File.WriteAllTextAsync(Path.Combine(_tempDirectory, soundFile.FileName), "audio");
+        }
     }
 }

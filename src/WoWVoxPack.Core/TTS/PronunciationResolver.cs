@@ -94,6 +94,11 @@ public sealed class PronunciationResolver(
         SoundFile sound,
         IReadOnlyDictionary<PronunciationIdentity, IReadOnlyList<Candidate>> upstream)
     {
+        if (sound.Composition is not null)
+        {
+            return sound;
+        }
+
         ExactNameRule? exact = FindExactRule(sound);
         string text = exact?.Text ?? sound.Text ?? sound.DisplayName;
         List<Candidate> candidates = [];

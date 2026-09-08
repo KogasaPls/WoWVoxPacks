@@ -238,6 +238,31 @@ public class CalloutNameVocabularyTests
         }
     }
 
+    /// <summary>
+    /// A composition is cut from recordings already in the pack. A part naming a key the
+    /// vocabulary does not carry would fail every voice's build at compose time.
+    /// </summary>
+    [Fact]
+    public void CompositionParts_NameMediaKeysTheNorthernSkyVocabularyRenders()
+    {
+        IReadOnlyDictionary<string, PronunciationOverride> overrides = CalloutPronunciation.LoadOverrides(
+            FindRepoFile("src/WoWVoxPack.AddOns.Callouts/CalloutPronunciations.json"));
+        HashSet<string> mediaKeys = new(
+            NorthernSkyRaidToolsVocabulary.VocabularyFileNames
+                .Select(FindRepoFile)
+                .SelectMany(path => NorthernSkyRaidToolsVocabulary.Parse(File.ReadLines(path))),
+            StringComparer.OrdinalIgnoreCase);
+
+        Assert.Contains(overrides, entry => entry.Value.Composition is not null);
+        foreach ((string key, PronunciationOverride @override) in overrides)
+        {
+            foreach (CompositionPartOverride part in @override.Composition?.Parts ?? [])
+            {
+                Assert.True(mediaKeys.Contains(part.Key), $"{key} is composed from {part.Key}, which the vocabulary does not render");
+            }
+        }
+    }
+
     private static IReadOnlyList<CalloutRegistration> LoadTrackedRegistrations() =>
         new CalloutsVocabularyProvider(
             FindRepoFile("src/WoWVoxPack.AddOns.Callouts/Callouts_Sounds.json"),

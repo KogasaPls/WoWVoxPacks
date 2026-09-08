@@ -1,4 +1,14 @@
 {
+  "5seconds321": {
+    "Composition": {
+      "Duration": 5.7,
+      "Parts": [
+        { "Key": "3", "At": 2.15 },
+        { "Key": "2", "At": 3.15 },
+        { "Key": "1", "At": 4.15 }
+      ]
+    }
+  },
   "DropPool": {
     "Text": "Drop Pool"
   },

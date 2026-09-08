@@ -37,6 +37,21 @@ public static partial class CalloutPronunciation
     {
         overrides.TryGetValue(mediaKey, out PronunciationOverride? @override);
         string displayName = ToDisplayName(mediaKey);
+        if (@override?.Composition is { } composition)
+        {
+            return new SoundFile(
+                @override.FileName ?? ToFileName(displayName),
+                displayName: displayName,
+                composition: new SoundComposition(
+                    composition.Duration,
+                    composition.Parts
+                        .Select(part => new SoundCompositionPart(FileNameFor(part.Key, overrides), part.At))
+                        .ToArray()))
+            {
+                PronunciationName = mediaKey
+            };
+        }
+
         string? text = @override?.Ssml is null ? @override?.Text ?? displayName : null;
 
         return new SoundFile(
@@ -62,6 +77,23 @@ public static partial class CalloutPronunciation
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? [];
 
         return new Dictionary<string, PronunciationOverride>(parsed, StringComparer.OrdinalIgnoreCase);
+    }
+
+    /// <summary>
+    /// The file a part plays, spelled the way <see cref="SoundFile"/> spells it. A part that is
+    /// itself composed is refused: the build composes everything in one pass after rendering.
+    /// </summary>
+    private static string FileNameFor(string mediaKey, IReadOnlyDictionary<string, PronunciationOverride> overrides)
+    {
+        overrides.TryGetValue(mediaKey, out PronunciationOverride? @override);
+        if (@override?.Composition is not null)
+        {
+            throw new InvalidOperationException(
+                $"'{mediaKey}' is composed, so it cannot be a part of another composition.");
+        }
+
+        return Path.ChangeExtension(@override?.FileName ?? ToFileName(ToDisplayName(mediaKey)), ".ogg")
+            .ToLowerInvariant();
     }
 
     [GeneratedRegex("(?<=[a-z0-9])(?=[A-Z])")]

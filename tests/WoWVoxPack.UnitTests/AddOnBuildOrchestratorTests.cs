@@ -237,6 +237,38 @@ public class AddOnBuildOrchestratorTests : IDisposable
             Directory.GetFiles(Path.Combine(_tempDirectory, "Neural2_C", "Test_AddOn", "Sounds")).Length);
     }
 
+    /// <summary>
+    /// A composed recording is cut from files the same build may be rendering, and renders run
+    /// many at a time, so it has to wait for every one of them rather than take its turn.
+    /// </summary>
+    [Fact]
+    public async Task RunAsync_ComposesARecording_OnlyAfterEverySourceIsRendered()
+    {
+        AddOnSettings settings = DefaultSettings("Test_AddOn");
+        FakeSoundFileService soundFileService = new();
+        const int digits = 40;
+
+        // Registered ahead of its sources, so taking the entries in order would compose it first.
+        FakeAddOnService service = new((dir, tts) =>
+        {
+            AddOnBuilder builder = new AddOnBuilder(settings, tts)
+                .AddSoundFile(new SoundFile("countdown.ogg", displayName: "Countdown",
+                    composition: new SoundComposition(digits + 1,
+                        Enumerable.Range(0, digits).Select(i => new SoundCompositionPart($"digit{i}.ogg", i)).ToArray())));
+            for (int i = 0; i < digits; i++)
+            {
+                builder.AddSoundFile(new SoundFile($"digit{i}.ogg", text: $"Digit {i}", displayName: $"Digit {i}"));
+            }
+
+            return builder.BuildDraft(dir);
+        });
+
+        await Orchestrator(service, soundFileService).RunAsync(CancellationToken.None);
+
+        Assert.Equal(digits + 1, soundFileService.CreatedSoundFiles.Count);
+        Assert.Equal("countdown.ogg", soundFileService.CreatedSoundFiles[^1].FileName);
+    }
+
     [Fact]
     public async Task RunAsync_RetriesARender_WhenTheProviderTimesOut()
     {
@@ -384,6 +416,12 @@ public class AddOnBuildOrchestratorTests : IDisposable
                 }
 
                 _createdSoundFiles.Add(soundFile);
+            }
+
+            foreach (SoundCompositionPart part in soundFile.Composition?.Parts ?? [])
+            {
+                Assert.True(File.Exists(Path.Combine(outputDirectory, part.FileName)),
+                    $"{soundFile.FileName} was composed before {part.FileName} was rendered");
             }
 
             File.WriteAllText(Path.Combine(outputDirectory, soundFile.FileName), "fake audio");

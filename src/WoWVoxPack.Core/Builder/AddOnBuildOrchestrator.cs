@@ -107,8 +107,9 @@ public class AddOnBuildOrchestrator(
 
         foreach (SoundFile soundFile in toCreate)
         {
-            Logger.LogInformation("[dry run]   render {FileName} {Spoken}", soundFile.FileName,
-                soundFile.Ssml ?? soundFile.Text);
+            Logger.LogInformation("[dry run]   {Action} {FileName} {Spoken}",
+                soundFile.Composition is null ? "render" : "compose", soundFile.FileName,
+                soundFile.Ssml ?? soundFile.Text ?? soundFile.Composition?.ToString());
         }
 
         foreach (string fileName in toRemove)
@@ -136,16 +137,31 @@ public class AddOnBuildOrchestrator(
     /// transient failure abandons the rest, so the work is bounded and each file is given a
     /// second and third chance before it takes the build down with it.
     /// </summary>
-    private Task CreateSoundFilesAsync(IReadOnlyCollection<SoundFile> soundFiles, string soundOutputDirectory,
+    private async Task CreateSoundFilesAsync(IReadOnlyCollection<SoundFile> soundFiles, string soundOutputDirectory,
+        TtsSettings ttsSettings, CancellationToken cancellationToken)
+    {
+        if (soundFiles.Count == 0)
+        {
+            return;
+        }
+
+        Logger.LogInformation("Rendering {Count} sound files into {OutputDirectory}", soundFiles.Count,
+            soundOutputDirectory);
+
+        // A composed recording reads its sources off disk, so it waits for the pass that writes them.
+        await RenderAsync(soundFiles.Where(f => f.Composition is null).ToArray(), soundOutputDirectory,
+            ttsSettings, cancellationToken);
+        await RenderAsync(soundFiles.Where(f => f.Composition is not null).ToArray(), soundOutputDirectory,
+            ttsSettings, cancellationToken);
+    }
+
+    private Task RenderAsync(IReadOnlyCollection<SoundFile> soundFiles, string soundOutputDirectory,
         TtsSettings ttsSettings, CancellationToken cancellationToken)
     {
         if (soundFiles.Count == 0)
         {
             return Task.CompletedTask;
         }
-
-        Logger.LogInformation("Rendering {Count} sound files into {OutputDirectory}", soundFiles.Count,
-            soundOutputDirectory);
 
         ParallelOptions options = new()
         {
@@ -173,7 +189,8 @@ public class AddOnBuildOrchestrator(
             // the most ordinary thing there is to retry. What ends the attempts is the token:
             // the caller giving up, or a sibling exhausting its own, which cancels the loop and
             // stops the rest paying into a build that is already lost.
-            catch (Exception exception) when (attempt < RenderAttempts && !cancellationToken.IsCancellationRequested)
+            catch (Exception exception) when (attempt < RenderAttempts && soundFile.Composition is null &&
+                                              !cancellationToken.IsCancellationRequested)
             {
                 TimeSpan delay = TimeSpan.FromSeconds(Math.Pow(2, attempt));
                 Logger.LogWarning(exception, "Rendering {FileName} failed (attempt {Attempt}); retrying in {Delay}",

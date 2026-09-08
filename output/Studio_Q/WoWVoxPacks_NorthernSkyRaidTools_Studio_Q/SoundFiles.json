@@ -3,7 +3,23 @@
     "FileName": "5seconds321.ogg",
     "DisplayName": "5seconds321",
     "FormattedDisplayName": "5seconds321",
-    "Text": "5seconds321"
+    "Composition": {
+      "Duration": 5.7,
+      "Parts": [
+        {
+          "FileName": "three.ogg",
+          "At": 2.15
+        },
+        {
+          "FileName": "two.ogg",
+          "At": 3.15
+        },
+        {
+          "FileName": "one.ogg",
+          "At": 4.15
+        }
+      ]
+    }
   },
   {
     "FileName": "adds.ogg",

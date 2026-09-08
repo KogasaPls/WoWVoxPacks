@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text;
 
 using FFMpegCore;
@@ -107,7 +108,9 @@ public class SoundFileServiceTests : IDisposable
 
     private static Task WriteTone(string path, double seconds) =>
         FFMpegArguments
-            .FromFileInput($"sine=frequency=440:sample_rate=44100:duration={seconds:0.0}", false,
+            .FromFileInput(
+                $"sine=frequency=440:sample_rate=44100:duration={seconds.ToString("0.0", CultureInfo.InvariantCulture)}",
+                false,
                 options => options.ForceFormat("lavfi"))
             .OutputToFile(path, true, options =>
             {

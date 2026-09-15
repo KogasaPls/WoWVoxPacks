@@ -200,6 +200,11 @@ def copied_setting(text: str, local: str, declared: dict[str, str]) -> str | Non
     return "true" if "true" in settings else settings[0]
 
 
+def function_parameter(text: str, name: str) -> bool:
+    """Whether the name appears as a function parameter anywhere in the file."""
+    return bool(re.search(rf"\bfunction\b[^(\n]*\([^)]*\b{re.escape(name)}\b", text))
+
+
 def hidden_binding(text: str, name: str) -> bool:
     """Whether the name is also bound somewhere the line scan cannot read.
 
@@ -207,7 +212,7 @@ def hidden_binding(text: str, name: str) -> bool:
     readable binding elsewhere in the file answer for a value it never held.
     """
     word = re.escape(name)
-    if re.search(rf"\bfunction\b[^(\n]*\([^)]*\b{word}\b", text):
+    if function_parameter(text, name):
         return True
 
     patterns = [
@@ -256,6 +261,24 @@ def spoken_in_late_assignments(text: str, path: str) -> tuple[Counter[str], list
                     "so it speaks its own text; teach it that shape before trusting the result")
             if setting is not None:
                 continue
+            if copy and function_parameter(text, copy.group(1)):
+                name = copy.group(1)
+                has_diffdata_binding = False
+                for file_line in text.splitlines():
+                    m = BINDING.match(file_line)
+                    if not m:
+                        continue
+                    names = [n.strip() for n in m.group(1).split(",")]
+                    if name not in names:
+                        continue
+                    values = m.group(2).split(",")
+                    if len(values) != len(names):
+                        continue
+                    if ALERT_REFERENCE.search(values[names.index(name)]):
+                        has_diffdata_binding = True
+                        break
+                if not has_diffdata_binding:
+                    continue
             raise UpstreamShapeError(
                 f"{path}:{line_number} sets {target} from an expression holding no string "
                 "this script can read; teach it that shape before trusting the result")

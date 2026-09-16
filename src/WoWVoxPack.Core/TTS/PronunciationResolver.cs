@@ -275,7 +275,7 @@ public sealed class PronunciationResolver(
                          item.Draft.Voice, Identity(item.Sound))))
         {
             if (group.Select(item => BaseSpokenSignature(item.Sound))
-                    .Distinct(StringComparer.Ordinal).Count() > 1)
+                    .Distinct(StringComparer.Ordinal).Skip(1).Any())
             {
                 ThrowExactNameConflict(group.Key.Name, group);
             }
@@ -305,7 +305,7 @@ public sealed class PronunciationResolver(
                     }
                 }
 
-                if (unexplained.Distinct(StringComparer.Ordinal).Count() > 1)
+                if (unexplained.Distinct(StringComparer.Ordinal).Skip(1).Any())
                 {
                     ThrowExactNameConflict(group.Key.Name, group);
                 }

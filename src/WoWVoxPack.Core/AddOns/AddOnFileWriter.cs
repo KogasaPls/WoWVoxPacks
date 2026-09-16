@@ -18,11 +18,13 @@ public static class AddOnFileWriter
 
     private static async Task WriteAddOnFilesAsync(AddOn addOn, CancellationToken cancellationToken)
     {
-        foreach (string fileName in addOn.Files)
+        IEnumerable<Task> writeTasks = addOn.Files.Select(fileName =>
         {
             string content = addOn.GetFileContent(fileName);
             string path = Path.Combine(addOn.AddOnDirectory, fileName);
-            await File.WriteAllTextAsync(path, content, cancellationToken);
-        }
+            return File.WriteAllTextAsync(path, content, cancellationToken);
+        });
+
+        await Task.WhenAll(writeTasks).ConfigureAwait(false);
     }
 }

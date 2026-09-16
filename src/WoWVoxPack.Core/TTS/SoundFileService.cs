@@ -143,7 +143,8 @@ public class SoundFileService(ITtsProvider ttsProvider, ILogger<SoundFileService
                 .OutputToFile(pendingOgg, true,
                     options =>
                     {
-                        options.WithCustomArgument($"-filter_complex \"{filter}\" -map \"[out]\"");
+                        string escapedFilter = filter.Replace("\\", "\\\\").Replace("\"", "\\\"");
+                        options.WithCustomArgument($"-filter_complex \"{escapedFilter}\" -map \"[out]\"");
                         options.WithAudioCodec("libvorbis");
                         options.WithAudioBitrate(AudioQuality.BelowNormal);
                     })

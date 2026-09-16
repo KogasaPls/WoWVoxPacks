@@ -56,11 +56,16 @@ public sealed class BigWigsVoiceUpstreamClient(
                 "BigWigs_Voice/Tools lists no spells*.txt. The upstream layout has changed.");
         }
 
-        foreach (RepositoryContent spellFile in spellFiles)
+        var tasks = spellFiles.Select(async spellFile =>
         {
             string content = await HttpClient.GetStringAsync(spellFile.DownloadUrl, cancellationToken);
-            SpellListFile spellListFile = new(spellFile.Name, content);
+            return new SpellListFile(spellFile.Name, content);
+        });
 
+        SpellListFile[] spellListFiles = await Task.WhenAll(tasks);
+
+        foreach (var spellListFile in spellListFiles)
+        {
             yield return spellListFile;
         }
     }

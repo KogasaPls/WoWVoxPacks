@@ -58,7 +58,15 @@ public sealed class BigWigsVoiceUpstreamClient(
 
         foreach (RepositoryContent spellFile in spellFiles)
         {
-            string content = await HttpClient.GetStringAsync(spellFile.DownloadUrl, cancellationToken);
+            if (!Uri.TryCreate(spellFile.DownloadUrl, UriKind.Absolute, out Uri? downloadUri) ||
+                downloadUri.Scheme != Uri.UriSchemeHttps ||
+                downloadUri.Host != "raw.githubusercontent.com")
+            {
+                throw new InvalidOperationException(
+                    $"Invalid download URL for spell file '{spellFile.Name}': {spellFile.DownloadUrl}");
+            }
+
+            string content = await HttpClient.GetStringAsync(downloadUri, cancellationToken);
             SpellListFile spellListFile = new(spellFile.Name, content);
 
             yield return spellListFile;

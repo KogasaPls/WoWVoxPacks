@@ -50,3 +50,12 @@ test("callouts: loads and registers nothing when no LibStub is present", functio
     equal(#world.recorder.printed, 0, "the media pack talked with no LibSharedMedia installed")
     falsy(_G.LibStub, "the media pack should not have created a LibStub")
 end)
+
+test("callouts: rejects registration when file is not known to the client", function()
+    local world = World.new()
+    local soundPath = "Interface\\AddOns\\WoWVoxPacks_Callouts_Neural2_C\\Sounds\\fake.ogg"
+    world.recorder.unknownFiles = { [soundPath] = true }
+    local registered = world.lsm:Register("sound", "TestKey", soundPath)
+    falsy(registered, "LSM registered a file that C_UIFileAsset.IsKnownFile rejected")
+end)
+

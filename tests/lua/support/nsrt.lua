@@ -1,10 +1,10 @@
--- Northern Sky Raid Tools, version 12.0.114 (## Version in NorthernSkyRaidTools.toc).
+-- Northern Sky Raid Tools, version 12.1.23 (## Version in NorthernSkyRaidTools.toc).
 --
 -- A verbatim excerpt of the three functions the WoWVoxPacks Northern Sky Raid Tools addon's hook
 -- sits in front of:
 --
---   * GetTTSSoundFile and NSAPI:TTS, Functions.lua lines 198 and 227
---   * NSI:CacheSounds, Reminders.lua line 1170
+--   * GetTTSSoundFile and NSAPI:TTS, Functions.lua lines 254 and 272
+--   * NSI:CacheSounds, Reminders.lua line 1515
 --
 -- Copied unchanged so the harness exercises NSRT's real lookup, normalisation and colour-code
 -- stripping. Only the surrounding scaffolding below is ours: in the addon, NSI is the private
@@ -53,18 +53,10 @@ local function GetTTSSoundFile(sound)
     end
 
     local numeric = tonumber(sound)
-    local function GetCachedKey()
-        local key = NSI.LSMSoundCache and (NSI.LSMSoundCache[sound] or NSI.LSMSoundCache[strlower(sound)])
-        if not key and numeric then
-            key = NSI.LSMSoundCache and NSI.LSMSoundCache[tostring(numeric)]
-        end
-        return key
-    end
-
-    local lsmKey = GetCachedKey()
-    if not lsmKey and NSI.CacheSounds then
-        NSI:CacheSounds()
-        lsmKey = GetCachedKey()
+    local cache = NSI.LSMSoundCache
+    local lsmKey = cache and (cache[sound] or cache[strlower(sound)])
+    if cache and not lsmKey and numeric then
+        lsmKey = cache[tostring(numeric)]
     end
     return lsmKey and NSI.LSM:Fetch("sound", lsmKey, true)
 end
@@ -80,15 +72,20 @@ function NSAPI:TTS(sound, voice) -- NSAPI:TTS("Bait Frontal")
         else
             sound = tostring(sound)
             local num = voice or NSRT.Settings["TTSVoice"]
-            local voices = C_VoiceChat.GetTtsVoices()
-            local validVoice = false
-            if voices then
-                for i, v in ipairs(voices) do
-                    if v.voiceID == num then
-                        validVoice = true
-                        break
+            NSI.TTSVoiceValidity = NSI.TTSVoiceValidity or {}
+            local validVoice = NSI.TTSVoiceValidity[num]
+            if validVoice == nil then
+                validVoice = false
+                local voices = C_VoiceChat.GetTtsVoices()
+                if voices then
+                    for i, v in ipairs(voices) do
+                        if v.voiceID == num then
+                            validVoice = true
+                            break
+                        end
                     end
                 end
+                NSI.TTSVoiceValidity[num] = validVoice
             end
             if not validVoice then num = 0 end
             C_VoiceChat.SpeakText(

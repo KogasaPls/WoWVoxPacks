@@ -10,6 +10,8 @@
 
 set -euo pipefail
 
+export MSBuildEnableWorkloadResolver="${MSBuildEnableWorkloadResolver:-false}"
+
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 root="$(cd "$here/../.." && pwd)"
 

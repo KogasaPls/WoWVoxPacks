@@ -63,6 +63,14 @@ function wow.install()
         return true, #recorder.played, channel
     end
 
+    _G.C_UIFileAsset = {
+        IsKnownFile = function(path)
+            if not path or path == "" then return false end
+            if recorder.unknownFiles and recorder.unknownFiles[path] then return false end
+            return true
+        end
+    }
+
     _G.issecretvalue = function(value) return recorder.secrets[value] == true end
 
     return recorder

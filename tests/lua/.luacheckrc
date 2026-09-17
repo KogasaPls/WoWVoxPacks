@@ -27,6 +27,7 @@ globals = {
 
 read_globals = {
     "C_AddOns",
+    "C_UIFileAsset",
     "CreateFrame",
     "LibStub",
     "PlaySoundFile",

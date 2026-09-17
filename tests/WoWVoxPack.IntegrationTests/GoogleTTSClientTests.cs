@@ -1,4 +1,4 @@
-﻿using Google.Protobuf;
+using Google.Protobuf;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;

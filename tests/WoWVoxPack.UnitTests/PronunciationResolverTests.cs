@@ -14,7 +14,7 @@ public class PronunciationResolverTests
             [new ExactNameRule("Axegrinder", Text: "Axe grinder")], [], []);
         AddOnDraft first = Draft("BigWigs_Voice",
             new SoundFile("1283832.ogg", text: "Axegrinder", displayName: "Axegrinder")
-                { ExplicitKey = "1283832" });
+            { ExplicitKey = "1283832" });
         AddOnDraft second = Draft("AnotherAddon",
             new SoundFile("axegrinder.ogg", text: "Axegrinder", displayName: "Axegrinder"));
 
@@ -121,9 +121,9 @@ public class PronunciationResolverTests
     {
         AddOnDraft draft = Draft("BigWigs_Voice",
             new SoundFile("235578.ogg", "Grasp from Beyond", displayName: "Grasp from Beyond")
-                { ExplicitKey = "235578" },
+            { ExplicitKey = "235578" },
             new SoundFile("443042.ogg", "Grasp From Beyond", displayName: "Grasp From Beyond")
-                { ExplicitKey = "443042" });
+            { ExplicitKey = "443042" });
 
         AddOn addOn = new PronunciationResolver(PronunciationCatalog.Empty,
             NullLogger<PronunciationResolver>.Instance).Resolve([draft]).Single();
@@ -136,9 +136,9 @@ public class PronunciationResolverTests
     {
         AddOnDraft draft = Draft("BigWigs_Voice",
             new SoundFile("240319.ogg", "Hatching", displayName: "Hatching")
-                { ExplicitKey = "240319" },
+            { ExplicitKey = "240319" },
             new SoundFile("453937.ogg", "Hatching...", displayName: "Hatching...")
-                { ExplicitKey = "453937" });
+            { ExplicitKey = "453937" });
 
         AddOn addOn = new PronunciationResolver(PronunciationCatalog.Empty,
             NullLogger<PronunciationResolver>.Instance).Resolve([draft]).Single();

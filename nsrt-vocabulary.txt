@@ -57,6 +57,7 @@ Right
 Root
 Rune
 RunOut
+Safe
 Server
 Shroom
 Skull

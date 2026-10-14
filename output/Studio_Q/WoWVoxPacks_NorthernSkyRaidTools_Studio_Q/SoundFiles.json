@@ -1864,6 +1864,12 @@
     "Text": "Sacred Toll"
   },
   {
+    "FileName": "safe.ogg",
+    "DisplayName": "Safe",
+    "FormattedDisplayName": "Safe",
+    "Text": "Safe"
+  },
+  {
     "FileName": "seed_drop.ogg",
     "DisplayName": "Seed Drop",
     "FormattedDisplayName": "Seed Drop",

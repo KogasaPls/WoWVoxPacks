@@ -97,6 +97,7 @@ public class AddOnBuildOrchestrator(
             // The finished renders are paid for. The update workflow keeps this folder for its
             // retry, and recording them lets that retry compare their speech instead of either
             // paying again or trusting a file it knows nothing about.
+            DeleteCompositionsOfReRenderedSources(addOn, rendered, soundOutputDirectory);
             await manifest.SaveAsync(addOn.SoundFilesJsonPath,
                 manifest.AfterPartialRender(addOn.SoundFiles, rendered), CancellationToken.None);
             throw;
@@ -216,6 +217,26 @@ public class AddOnBuildOrchestrator(
                     soundFile.FileName, attempt, delay);
                 await Task.Delay(delay, cancellationToken);
             }
+        }
+    }
+
+    /// <summary>
+    /// A composition cut from sources this build re-rendered no longer matches them, and once
+    /// those sources are recorded as current nothing would rebuild it. Composing costs nothing,
+    /// so the old take is deleted and the retry composes it again.
+    /// </summary>
+    private void DeleteCompositionsOfReRenderedSources(AddOn addOn, IEnumerable<string> rendered,
+        string soundOutputDirectory)
+    {
+        HashSet<string> finished = new(rendered, StringComparer.OrdinalIgnoreCase);
+
+        foreach (SoundFile stale in addOn.SoundFiles.Where(f =>
+                     f.Composition is not null && !finished.Contains(f.FileName) &&
+                     f.Composition.Parts.Any(part => finished.Contains(part.FileName))))
+        {
+            Logger.LogInformation("Deleting {FileName}: its sources were re-rendered before the build failed",
+                stale.FileName);
+            File.Delete(Path.Combine(soundOutputDirectory, stale.FileName));
         }
     }
 

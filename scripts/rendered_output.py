@@ -2,6 +2,7 @@
 """Keep the output a failed update build already paid for, and put it back for the retry."""
 
 import argparse
+import json
 import shutil
 import subprocess
 import sys
@@ -19,6 +20,19 @@ def inside_output(path: Path) -> Path:
     if Path(OUTPUT).resolve() not in path.resolve().parents:
         raise ValueError(f"{path} is outside {OUTPUT}/")
     return path
+
+
+def listed_in_manifest(recording: Path) -> bool:
+    """Whether the pack's manifest records this recording.
+
+    A build killed without warning writes no partial manifest, and a recording no manifest
+    describes would be trusted as current by the retry even if its spell has been renamed since.
+    """
+    manifest = recording.parent.parent / "SoundFiles.json"
+    if not manifest.is_file():
+        return False
+    entries = json.loads(manifest.read_text(encoding="utf-8"))
+    return recording.name.lower() in {entry["FileName"].lower() for entry in entries}
 
 
 def changed_paths() -> tuple[list[str], list[str]]:
@@ -57,15 +71,30 @@ def restore(source: Path) -> None:
 
     files = source / "files"
     written = [path for path in files.rglob("*") if path.is_file()] if files.is_dir() else []
+    targets = []
     for path in written:
         target = inside_output(path.relative_to(files))
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(path, target)
+        targets.append(target)
+
+    unlisted = [
+        target for target in targets
+        if target.parent.name == "Sounds" and target.suffix == ".ogg" and not listed_in_manifest(target)
+    ]
+    for target in unlisted:
+        if git("ls-files", "--error-unmatch", str(target), check=False).returncode == 0:
+            git("checkout", "--", str(target))
+        else:
+            target.unlink()
 
     deleted = (source / "deleted.txt").read_text(encoding="utf-8").splitlines()
     for path in deleted:
         inside_output(Path(path)).unlink(missing_ok=True)
-    print(f"Restored {len(written)} written and {len(deleted)} deleted output files from {base}")
+    print(
+        f"Restored {len(written) - len(unlisted)} written and {len(deleted)} deleted output files from "
+        f"{base}; dropped {len(unlisted)} recordings no manifest describes"
+    )
 
 
 def parse_args() -> argparse.Namespace:

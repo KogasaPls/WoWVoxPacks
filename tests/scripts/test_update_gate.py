@@ -55,7 +55,13 @@ class DecideTests(unittest.TestCase):
         for event in ("schedule", "workflow_dispatch"):
             with self.subTest(event=event):
                 reason = decide([], [], event, run_sha="a" * 40, main_sha="b" * 40)
-                self.assertIn("main moved", reason)
+                self.assertIn("is not main's head", reason)
+
+    def test_a_lookup_that_found_no_commit_fails_instead_of_holding_the_build(self):
+        """A scheduled run has no event payload, so a lookup keyed on one comes back empty."""
+        for main_sha in ("", "main", "HEAD"):
+            with self.subTest(main_sha=main_sha), self.assertRaises(ValueError):
+                decide([], [], "schedule", main_sha=main_sha)
 
     def test_a_manual_run_does_not_override_an_open_update_pr(self):
         reason = decide(

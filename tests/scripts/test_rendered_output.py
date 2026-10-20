@@ -1,3 +1,4 @@
+import json
 import subprocess
 import sys
 import tempfile
@@ -6,6 +7,14 @@ from pathlib import Path
 
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
+
+
+def manifest(*file_names):
+    return json.dumps([{"FileName": name, "Text": name} for name in file_names])
+
+
+BASE_MANIFEST = manifest("old.ogg", "retired.ogg")
+PARTIAL_MANIFEST = manifest("get orb.ogg", "old.ogg", "retired.ogg")
 SCRIPT_PATH = REPOSITORY_ROOT / "scripts" / "rendered_output.py"
 
 
@@ -19,7 +28,7 @@ class RenderedOutputTests(unittest.TestCase):
         self.git("init", "-q")
         self.write("output/Voice/Pack/Sounds/old.ogg", "old")
         self.write("output/Voice/Pack/Sounds/retired.ogg", "retired")
-        self.write("output/Voice/Pack/SoundFiles.json", "[old]")
+        self.write("output/Voice/Pack/SoundFiles.json", BASE_MANIFEST)
         self.commit("base")
         self.base = self.git("rev-parse", "HEAD")
 
@@ -50,7 +59,7 @@ class RenderedOutputTests(unittest.TestCase):
     def build_partway(self):
         """What a failed build leaves: a new file, a changed manifest, a retired file, a temp file."""
         self.write("output/Voice/Pack/Sounds/get orb.ogg", "new")
-        self.write("output/Voice/Pack/SoundFiles.json", "[partial]")
+        self.write("output/Voice/Pack/SoundFiles.json", PARTIAL_MANIFEST)
         (self.repo / "output/Voice/Pack/Sounds/retired.ogg").unlink()
         self.write("output/Voice/Pack/Sounds/.wvp-123.ogg", "half written")
 
@@ -60,7 +69,7 @@ class RenderedOutputTests(unittest.TestCase):
         self.run_script("collect", "--into", str(self.kept))
 
         self.assertEqual((self.kept / "files/output/Voice/Pack/Sounds/get orb.ogg").read_text(), "new")
-        self.assertEqual((self.kept / "files/output/Voice/Pack/SoundFiles.json").read_text(), "[partial]")
+        self.assertEqual((self.kept / "files/output/Voice/Pack/SoundFiles.json").read_text(), PARTIAL_MANIFEST)
         self.assertFalse((self.kept / "files/output/Voice/Pack/Sounds/.wvp-123.ogg").exists())
         self.assertEqual(
             (self.kept / "deleted.txt").read_text(), "output/Voice/Pack/Sounds/retired.ogg\n"
@@ -77,9 +86,31 @@ class RenderedOutputTests(unittest.TestCase):
 
         sounds = self.repo / "output/Voice/Pack/Sounds"
         self.assertEqual((sounds / "get orb.ogg").read_text(), "new")
-        self.assertEqual((self.repo / "output/Voice/Pack/SoundFiles.json").read_text(), "[partial]")
+        self.assertEqual((self.repo / "output/Voice/Pack/SoundFiles.json").read_text(), PARTIAL_MANIFEST)
         self.assertFalse((sounds / "retired.ogg").exists())
         self.assertEqual((sounds / "old.ogg").read_text(), "old")
+
+    def test_restore_drops_recordings_no_manifest_describes(self):
+        """A build killed without warning wrote no partial manifest for what it rendered last.
+
+        Kept anyway, such a file would count as current on the retry even after its spell was
+        renamed upstream, so it is given up instead.
+        """
+        self.build_partway()
+        self.write("output/Voice/Pack/Sounds/rendered after the kill.ogg", "unrecorded")
+        self.write("output/Voice/Pack/Sounds/old.ogg", "re-rendered, then killed")
+        self.write("output/Voice/Pack/SoundFiles.json", manifest("get orb.ogg", "retired.ogg"))
+        self.run_script("collect", "--into", str(self.kept))
+        self.git("checkout", "-q", "--", ".")
+        self.git("clean", "-qfd")
+
+        printed = self.run_script("restore", "--from", str(self.kept))
+
+        sounds = self.repo / "output/Voice/Pack/Sounds"
+        self.assertEqual((sounds / "get orb.ogg").read_text(), "new")
+        self.assertFalse((sounds / "rendered after the kill.ogg").exists())
+        self.assertEqual((sounds / "old.ogg").read_text(), "old")
+        self.assertIn("dropped 2 recordings", printed)
 
     def test_restore_skips_output_that_changed_after_the_failed_build(self):
         """Merged output is newer than the kept copy, and its manifests describe different files."""
@@ -87,13 +118,13 @@ class RenderedOutputTests(unittest.TestCase):
         self.run_script("collect", "--into", str(self.kept))
         self.git("checkout", "-q", "--", ".")
         self.git("clean", "-qfd")
-        self.write("output/Voice/Pack/SoundFiles.json", "[merged]")
+        self.write("output/Voice/Pack/SoundFiles.json", manifest("old.ogg"))
         self.commit("merged update")
 
         printed = self.run_script("restore", "--from", str(self.kept))
 
         self.assertIn("Not restoring", printed)
-        self.assertEqual((self.repo / "output/Voice/Pack/SoundFiles.json").read_text(), "[merged]")
+        self.assertEqual((self.repo / "output/Voice/Pack/SoundFiles.json").read_text(), manifest("old.ogg"))
         self.assertFalse((self.repo / "output/Voice/Pack/Sounds/get orb.ogg").exists())
 
     def test_restore_writes_nothing_outside_output(self):

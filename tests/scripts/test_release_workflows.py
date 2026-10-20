@@ -219,7 +219,9 @@ class ReleaseWorkflowTests(unittest.TestCase):
         self.assertIn("python3 scripts/update_gate.py --pulls pulls.json --issues issues.json", gate)
         self.assertIn('--event "$EVENT_NAME" --run-sha "$GITHUB_SHA" --main-sha "$main_sha"', gate)
         self.assertIn('--output "$GITHUB_OUTPUT"', gate)
-        self.assertIn('main_sha=$(gh api "repos/$GITHUB_REPOSITORY/commits/$DEFAULT_BRANCH" --jq .sha)', gate)
+        # A scheduled run has no event payload, so nothing may read the branch from github.event.
+        self.assertIn('main_sha=$(gh api "repos/$GITHUB_REPOSITORY/commits/HEAD" --jq .sha)', gate)
+        self.assertNotIn("github.event.repository", updater)
         self.assertIn("EVENT_NAME: ${{ github.event_name }}", gate)
 
         pull_request_job = updater.split("\n  create-pull-request:", 1)[1]
@@ -231,6 +233,12 @@ class ReleaseWorkflowTests(unittest.TestCase):
 
         builder = step(pull_request_job, "Run addon builder")
         self.assertIn("id: builder", builder)
+        # Only an interrupt the builder itself receives records its partial renders, and it has
+        # to arrive with time left before the job's own limit.
+        self.assertIn(
+            "run: timeout -s INT -k 2m 170m dotnet run --project src/WoWVoxPack.Builder/WoWVoxPack.Builder.csproj",
+            builder,
+        )
 
         # Renders a failed build paid for come back before anything is planned or rendered, and
         # the free plan trips the builder's limits before the paid run spends on any pack.
@@ -244,8 +252,15 @@ class ReleaseWorkflowTests(unittest.TestCase):
         positions = [pull_request_job.index(f"- name: {name}\n") for name in order]
         self.assertEqual(positions, sorted(positions))
         restore = step(pull_request_job, "Restore the renders a failed build kept")
-        self.assertIn("gh run download \"$run_id\" --name rendered-output", restore)
-        self.assertIn('python3 scripts/rendered_output.py restore --from "$RUNNER_TEMP/restore"', restore)
+        self.assertIn("id: restore", restore)
+        self.assertIn('actions/artifacts?name=rendered-output&per_page=100', restore)
+        self.assertIn('select((.expired | not) and .workflow_run.head_branch == "main")', restore)
+        self.assertIn('gh run download "$run_id" --name rendered-output --dir "$RUNNER_TEMP/restore-$artifact_id"', restore)
+        self.assertIn(
+            'python3 scripts/rendered_output.py restore --from "$RUNNER_TEMP/restore-$artifact_id"', restore
+        )
+        self.assertIn('echo "artifact_id=$artifact_id" >> "$GITHUB_OUTPUT"', restore)
+        self.assertNotIn("|| true", restore)
         self.assertIn(
             "run: dotnet run --project src/WoWVoxPack.Builder/WoWVoxPack.Builder.csproj -- --Matrix:DryRun true",
             step(pull_request_job, "Plan the build"),
@@ -257,10 +272,18 @@ class ReleaseWorkflowTests(unittest.TestCase):
             snapshot,
         )
         self.assertIn('python3 scripts/rendered_output.py collect --into "$RUNNER_TEMP/rendered-output"', snapshot)
+        self.assertLess(snapshot.index("pkill -INT -f 'WoWVoxPack\\.Builder'"), snapshot.index("rendered_output.py collect"))
         keep = step(pull_request_job, "Keep the renders this failed build paid for")
-        self.assertIn("if: (failure() || cancelled()) && steps.snapshot.outcome == 'success'", keep)
+        self.assertIn(
+            "if: (failure() || cancelled()) && steps.snapshot.outcome == 'success' && "
+            "steps.create-pull-request.outputs.pull-request-number == ''",
+            keep,
+        )
         self.assertIn("name: rendered-output", keep)
         self.assertIn("path: ${{ runner.temp }}/rendered-output", keep)
+        discard = step(pull_request_job, "Discard the kept renders this build used")
+        self.assertIn("if: success() && steps.restore.outputs.artifact_id != ''", discard)
+        self.assertIn('gh api -X DELETE "repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID"', discard)
 
         close = pull_request_job.split("- name: Close the failed-build issue", 1)[1].split("\n      - ", 1)[0]
         self.assertIn("if: success()", close)

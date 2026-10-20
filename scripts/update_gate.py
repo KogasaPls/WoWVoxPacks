@@ -3,6 +3,7 @@
 
 import argparse
 import json
+import re
 from pathlib import Path
 
 UPDATE_BRANCH_PREFIX = "ci/update-"
@@ -17,6 +18,9 @@ def decide(
     main_sha: str,
 ) -> str | None:
     """The reason the build must wait, or None when it may run."""
+    for name, sha in (("run", run_sha), ("main", main_sha)):
+        if not re.fullmatch(r"[0-9a-f]{40}", sha):
+            raise ValueError(f"the {name} commit {sha!r} is not a full commit hash")
     pending = [
         f"#{pull_request['number']}"
         for pull_request in pull_requests
@@ -29,8 +33,8 @@ def decide(
     # behind may already have rendered what this run would render again.
     if run_sha != main_sha:
         return (
-            f"main moved from {run_sha[:9]} to {main_sha[:9]} after this run started; "
-            "the next run builds on it."
+            f"This run's commit {run_sha[:9]} is not main's head {main_sha[:9]}; only a run of "
+            "main's current head builds."
         )
     if failure_issues and event_name != "workflow_dispatch":
         return (

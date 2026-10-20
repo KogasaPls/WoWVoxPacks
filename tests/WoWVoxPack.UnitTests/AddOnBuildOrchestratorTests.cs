@@ -333,26 +333,66 @@ public class AddOnBuildOrchestratorTests : IDisposable
     public async Task RunAsync_RecordsTheRendersItFinished_WhenTheBuildFailsPartway()
     {
         AddOnSettings settings = DefaultSettings("Test_AddOn");
+        string suffix = string.Empty;
         FakeAddOnService service = new((dir, tts) =>
             new AddOnBuilder(settings, tts)
-                .AddSoundFile(new SoundFile("alert.ogg", text: "Alert", displayName: "Alert"))
-                .AddSoundFile(new SoundFile("soak.ogg", text: "Soak", displayName: "Soak"))
+                .AddSoundFile(new SoundFile("alert.ogg", text: "Alert" + suffix, displayName: "Alert"))
+                .AddSoundFile(new SoundFile("soak.ogg", text: "Soak" + suffix, displayName: "Soak"))
                 .BuildDraft(dir));
-        FakeSoundFileService failing = new(failsFor: "soak.ogg");
+        await Orchestrator(service, new FakeSoundFileService()).RunAsync(CancellationToken.None);
 
-        await Assert.ThrowsAsync<HttpRequestException>(
-            () => Orchestrator(service, failing).RunAsync(CancellationToken.None));
+        // Both files change, so without a record of the one that finished the retry would pay
+        // for it again: the last complete manifest still has its old text.
+        suffix = ", reworded";
+        await Assert.ThrowsAsync<HttpRequestException>(() =>
+            Orchestrator(service, new FakeSoundFileService(failsFor: "soak.ogg")).RunAsync(CancellationToken.None));
 
         string manifestPath = Path.Combine(_tempDirectory, "Neural2_C", "Test_AddOn", "SoundFiles.json");
-        SoundFile recorded = Assert.Single(AddOnBuilder.LoadSoundFileJson(manifestPath));
-        Assert.Equal("alert.ogg", recorded.FileName);
+        Dictionary<string, string?> recorded = AddOnBuilder.LoadSoundFileJson(manifestPath)
+            .ToDictionary(f => f.FileName, f => f.Text);
+        Assert.Equal("Alert, reworded", recorded["alert.ogg"]);
+        Assert.Equal("Soak", recorded["soak.ogg"]);
 
-        // The update workflow restores this folder for its retry, which then pays only for the
-        // file that failed.
         FakeSoundFileService retry = new();
         await Orchestrator(service, retry).RunAsync(CancellationToken.None);
 
         Assert.Equal(["soak.ogg"], retry.CreatedSoundFiles.Select(f => f.FileName));
+    }
+
+    [Fact]
+    public async Task RunAsync_RecomposesARecording_WhoseSourcesAPartialBuildReRendered()
+    {
+        AddOnSettings settings = DefaultSettings("Test_AddOn");
+        string one = "One";
+        bool withSoak = false;
+        FakeAddOnService service = new((dir, tts) =>
+        {
+            AddOnBuilder builder = new AddOnBuilder(settings, tts)
+                .AddSoundFile(new SoundFile("one.ogg", text: one, displayName: "One"))
+                .AddSoundFile(new SoundFile("two.ogg", text: "Two", displayName: "Two"))
+                .AddSoundFile(new SoundFile("count.ogg", displayName: "Count",
+                    composition: new SoundComposition(2,
+                        [new SoundCompositionPart("two.ogg", 0), new SoundCompositionPart("one.ogg", 1)])));
+            if (withSoak)
+            {
+                builder.AddSoundFile(new SoundFile("soak.ogg", text: "Soak", displayName: "Soak"));
+            }
+
+            return builder.BuildDraft(dir);
+        });
+        await Orchestrator(service, new FakeSoundFileService()).RunAsync(CancellationToken.None);
+
+        // one.ogg re-renders and is recorded, but the build fails before the composing pass, so
+        // count.ogg is still cut from the old take.
+        one = "Wun";
+        withSoak = true;
+        await Assert.ThrowsAsync<HttpRequestException>(() =>
+            Orchestrator(service, new FakeSoundFileService(failsFor: "soak.ogg")).RunAsync(CancellationToken.None));
+
+        FakeSoundFileService retry = new();
+        await Orchestrator(service, retry).RunAsync(CancellationToken.None);
+
+        Assert.Equal(["count.ogg", "soak.ogg"], retry.CreatedSoundFiles.Select(f => f.FileName).Order());
     }
 
     [Fact]

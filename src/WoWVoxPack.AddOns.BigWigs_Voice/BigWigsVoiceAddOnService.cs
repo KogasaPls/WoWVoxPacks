@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 using WoWVoxPack.AddOns;
@@ -8,7 +9,8 @@ namespace WoWVoxPack.AddOns.BigWigs_Voice;
 public sealed class BigWigsVoiceAddOnService(
     IOptionsSnapshot<AddOnSettings> addOnOptions,
     IBigWigsVoiceUpstreamClient upstreamClient,
-    BigWigsVoicePendingSpells pendingSpells)
+    BigWigsVoicePendingSpells pendingSpells,
+    ILogger<BigWigsVoiceAddOnService> logger)
     : IAddOnService
 {
     private static readonly Lazy<List<SoundFile>> JsonSoundFiles = new(LoadCuratedSoundFiles);
@@ -76,6 +78,17 @@ public sealed class BigWigsVoiceAddOnService(
     private async ValueTask<IEnumerable<BigWigsVoiceSoundFile>>
         GetSoundFilesAsync(CancellationToken cancellationToken)
     {
-        return _soundFiles ??= (await UpstreamClient.GetSoundFilesAsync(cancellationToken)).ToArray();
+        if (_soundFiles is null)
+        {
+            _soundFiles = (await UpstreamClient.GetSoundFilesAsync(cancellationToken)).ToArray();
+            IReadOnlyList<BigWigsVoiceSoundFile> listed = pendingSpells.ListedUpstream(_soundFiles);
+            if (listed.Count > 0)
+            {
+                logger.LogWarning("BigWigs_Voice now lists {SpellIds} itself; delete them from {FileName}",
+                    string.Join(", ", listed.Select(sound => sound.SpellId)), BigWigsVoicePendingSpells.FileName);
+            }
+        }
+
+        return _soundFiles;
     }
 }

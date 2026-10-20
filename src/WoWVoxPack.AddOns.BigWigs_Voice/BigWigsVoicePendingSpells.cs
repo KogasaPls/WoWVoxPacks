@@ -27,4 +27,12 @@ public sealed class BigWigsVoicePendingSpells
     {
         return new BigWigsVoicePendingSpells(new SpellListFile(fileName, content, "pending").SoundFiles.ToArray());
     }
+
+    /// <summary>The pending entries upstream now lists itself, which the file should drop.</summary>
+    public IReadOnlyList<BigWigsVoiceSoundFile> ListedUpstream(IEnumerable<BigWigsVoiceSoundFile> upstream)
+    {
+        HashSet<string> upstreamIds = new(upstream.Select(sound => sound.SpellId), StringComparer.OrdinalIgnoreCase);
+
+        return SoundFiles.Where(sound => upstreamIds.Contains(sound.SpellId)).ToArray();
+    }
 }

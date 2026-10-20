@@ -161,7 +161,15 @@ class ReleaseWorkflowTests(unittest.TestCase):
             r"\nrelease=https://github\.com/BtbN/FFmpeg-Builds/releases/download/autobuild-\d{4}-\d{2}-\d{2}-\d{2}-\d{2}\n",
         )
         self.assertRegex(script, r"\nsha256=[0-9a-f]{64}\n")
-        self.assertIn('curl -sSfL --retry 5 --retry-delay 10 -o "$asset.tar.xz" "$release/$asset.tar.xz"', script)
+        self.assertEqual(script.count("sha256="), 1, "the checksum must be the one held here")
+        # The workflow runs the script through its shebang, so without -e a failed check
+        # would print FAILED and install the download anyway.
+        self.assertIn("set -euo pipefail", commands)
+        self.assertNotIn("set +", script)
+        self.assertIn(
+            'curl -sSfL --retry 5 --retry-delay 10 --retry-all-errors -o "$asset.tar.xz" "$release/$asset.tar.xz"',
+            script,
+        )
         self.assertIn('echo "$sha256  $asset.tar.xz" | sha256sum -c -\n', script + "\n")
         self.assertIn('echo "$RUNNER_TEMP/$asset/bin" >> "$GITHUB_PATH"', script)
         self.assertNotIn("||", script)

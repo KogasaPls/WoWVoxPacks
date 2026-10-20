@@ -114,7 +114,10 @@ class ReleaseWorkflowTests(unittest.TestCase):
             "python scripts/game_versions.py --settings release-appsettings.json", publisher
         )
         self.assertIn(
-            "game_versions: ${{ needs.plan-release.outputs.game_versions }}", publisher
+            "GAME_VERSIONS: ${{ steps.game-versions.outputs.game_versions }}", publisher
+        )
+        self.assertIn(
+            "GAME_VERSION_IDS: ${{ needs.plan-release.outputs.game_version_ids }}", publisher
         )
 
     def test_the_builder_and_the_updater_agree_on_how_far_a_pack_may_shrink(self):
@@ -427,9 +430,10 @@ class ReleaseWorkflowTests(unittest.TestCase):
         # A multiline value only survives $GITHUB_OUTPUT behind a heredoc delimiter.
         self.assertIn('echo "changelog<<${delimiter}"', release_creator)
         self.assertIn("      changelog:\n        description:", publisher)
-        self.assertIn("changelog: ${{ needs.plan-release.outputs.changelog }}", publisher)
+        self.assertIn("CHANGELOG: ${{ needs.plan-release.outputs.changelog }}", publisher)
+        self.assertIn('--arg changelog "$CHANGELOG"', publisher)
+        self.assertIn('changelog: $changelog, changelogType: "markdown"', publisher)
         self.assertIn('echo "changelog<<${delimiter}"', publisher)
-        self.assertIn("changelog_type: markdown", publisher)
 
     def test_generating_the_notes_cannot_release_a_tag_the_run_would_skip(self):
         """The notes step runs before packaging and must honour the same skip."""
@@ -495,7 +499,30 @@ class ReleaseWorkflowTests(unittest.TestCase):
         self.assertIn("matrix: ${{ fromJSON(needs.plan-release.outputs.matrix) }}", upload)
         self.assertNotIn("uses: actions/checkout@v7", upload)
         self.assertNotIn("voice-to-addon-to-project-id-json", publisher)
-        self.assertIn("project_id: ${{ matrix.project_id }}", upload)
+        self.assertIn("PROJECT_ID: ${{ matrix.project_id }}", upload)
+
+    def test_uploads_resolve_game_versions_once_and_refuse_an_unknown_one(self):
+        """An unknown version name used to be dropped, which uploads a file hidden from players."""
+        publisher = (
+            REPOSITORY_ROOT / ".github/workflows/publish-to-curseforge.yml"
+        ).read_text(encoding="utf-8")
+        plan = publisher[publisher.index("  plan-release:"):publisher.index("  publish-addon:")]
+        upload = publisher[publisher.index("  publish-addon:"):]
+
+        self.assertNotIn("curseforge-upload", publisher)
+        resolve = step(plan, "Resolve CurseForge game version IDs")
+        self.assertIn('ids=$(python3 scripts/curseforge_game_versions.py --versions "$GAME_VERSIONS")', resolve)
+        self.assertIn('echo "game_version_ids=${ids}" >> "$GITHUB_OUTPUT"', resolve)
+        self.assertIn("game_version_ids: ${{ steps.game-version-ids.outputs.game_version_ids }}", plan)
+
+        send = step(upload, "Upload to CurseForge")
+        self.assertIn('--argjson versions "$GAME_VERSION_IDS"', send)
+        self.assertIn("if [ \"$(jq '.gameVersions | length' metadata.json)\" -eq 0 ]; then", send)
+        self.assertIn('-F "metadata=<metadata.json"', send)
+        self.assertIn('-F "file=@current/${ARCHIVE}"', send)
+        self.assertIn('"https://wow.curseforge.com/api/projects/${PROJECT_ID}/upload-file"', send)
+        self.assertIn('if [ "$status" != "200" ]; then', send)
+        self.assertNotIn("--retry", send)
 
     def test_non_build_checkouts_exclude_generated_output(self):
         """Jobs that never read output must not materialize half a gigabyte of audio."""
@@ -533,10 +560,85 @@ class ReleaseWorkflowTests(unittest.TestCase):
         ).read_text(encoding="utf-8")
         upload = publisher[publisher.index("  publish-addon:"):]
 
-        self.assertIn("project_id: ${{ matrix.project_id }}", upload)
-        self.assertIn("relations: ${{ matrix.relations }}", upload)
+        self.assertIn("PROJECT_ID: ${{ matrix.project_id }}", upload)
+        self.assertIn("RELATIONS: ${{ matrix.relations }}", upload)
         self.assertNotRegex(publisher, r"\b1648(?:855|938|940)\b")
         self.assertNotIn("voice-to-addon-to-project-id-json", publisher)
+
+
+class HardeningTests(unittest.TestCase):
+    WORKFLOWS = REPOSITORY_ROOT / ".github/workflows"
+
+    def read(self, name):
+        return (self.WORKFLOWS / name).read_text(encoding="utf-8")
+
+    def test_no_job_is_granted_everything(self):
+        for workflow in sorted(self.WORKFLOWS.glob("*.yml")):
+            self.assertNotIn("write-all", workflow.read_text(encoding="utf-8"), workflow.name)
+
+    def test_the_pat_reaches_only_the_steps_that_need_it(self):
+        """A job-wide PAT reaches the builder, ffmpeg and every upstream parser."""
+        for workflow in sorted(self.WORKFLOWS.glob("*.yml")):
+            for line in workflow.read_text(encoding="utf-8").splitlines():
+                if "secrets.WORKFLOW_RELEASE_PAT" in line:
+                    indent = len(line) - len(line.lstrip())
+                    self.assertGreaterEqual(indent, 10, f"{workflow.name}: {line.strip()}")
+
+    def test_the_update_build_job_gets_only_what_it_uses(self):
+        build = job(self.read("update.yml"), "create-pull-request")
+        header = build.split("\n    steps:", 1)[0]
+
+        self.assertIn("    permissions:\n      contents: read\n      actions: write\n      issues: write\n", header)
+        self.assertNotIn("GH_TOKEN", header)
+
+    def test_a_live_build_waits_for_curseforge_to_list_its_version(self):
+        follow = step(job(self.read("update.yml"), "check-live-build"),
+                      "Compare the live build against the declared interfaces")
+
+        self.assertIn("CURSEFORGE_API_TOKEN: ${{ secrets.CURSEFORGE_API_TOKEN }}", follow)
+        self.assertIn('python3 scripts/curseforge_game_versions.py --versions "${game_version}" || listed=$?', follow)
+        self.assertIn('if [ "${listed}" -eq 3 ]; then', follow)
+        self.assertIn('elif [ "${listed}" -ne 0 ]; then\n              exit "${listed}"', follow)
+        self.assertLess(follow.index("listed=$?"), follow.index('echo "game_version=${game_version}"'))
+
+    def test_check_failure_issues_close_when_the_check_recovers(self):
+        updater = self.read("update.yml")
+        for name, title in (("check-nsrt-vocabulary", "The NSRT vocabulary check is failing"),
+                            ("check-live-build", "The live build check is failing")):
+            close = step(job(updater, name), "Close the issue once this check passes again")
+            self.assertIn("if: success()", close, name)
+            self.assertIn(f"TITLE: {title}", close, name)
+            self.assertIn("select(.title == env.TITLE)", close, name)
+            self.assertIn('gh issue close "$number"', close, name)
+
+    def test_upstream_file_names_cannot_end_the_vocabulary_outputs(self):
+        updater = self.read("update.yml")
+
+        self.assertNotIn("VOCAB_EOF", updater)
+        self.assertIn('delimiter="VOCAB_${RANDOM}${RANDOM}${RANDOM}"', updater)
+        self.assertNotIn("version_changed", updater)
+
+    def test_a_release_packages_and_tags_its_own_merge(self):
+        release_creator = self.read("create-release.yml")
+        commit = "${{ github.event.pull_request.merge_commit_sha || github.sha }}"
+
+        self.assertIn("concurrency:\n  group: create-release\n", release_creator)
+        self.assertIn(f"ref: {commit}", release_creator)
+        self.assertIn(f"target_commitish: {commit}", release_creator)
+        self.assertIn("    permissions:\n      contents: read\n", job(release_creator, "create-release"))
+
+    def test_the_ffmpeg_pin_moves_itself_through_a_gated_pr(self):
+        pin = self.read("ffmpeg-pin.yml")
+
+        self.assertIn('cron: "0 9 3 * *"', pin)
+        self.assertIn("python3 scripts/ffmpeg_pin.py --script scripts/install_ffmpeg.sh", pin)
+        self.assertIn("if: steps.pin.outputs.moved != ''", pin)
+        self.assertIn("scripts/install_ffmpeg.sh", pin.split("add-paths: |", 1)[1])
+        self.assertIn("branch: ci/ffmpeg-pin", pin)
+        self.assertIn('gh pr merge --merge --auto "$PR_NUMBER"', pin)
+
+    def test_the_gcp_key_file_is_never_committed(self):
+        self.assertIn("\ngha-creds-*.json\n", (REPOSITORY_ROOT / ".gitignore").read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

@@ -59,6 +59,7 @@ jobs:
       release_tag: ${{ steps.release-tag.outputs.release_tag }}
       changelog: ${{ steps.changelog.outputs.changelog }}
       game_versions: ${{ steps.game-versions.outputs.game_versions }}
+      game_version_ids: ${{ steps.game-version-ids.outputs.game_version_ids }}
       packages: ${{ steps.plan.outputs.packages }}
       matrix: ${{ steps.plan.outputs.matrix }}
     steps:
@@ -102,6 +103,17 @@ jobs:
           fi
           echo "Publishing for game versions: ${game_versions}"
           echo "game_versions=${game_versions}" >> "$GITHUB_OUTPUT"
+      - name: Resolve CurseForge game version IDs
+        # Once, before any upload: a version CurseForge does not list yet fails the plan, since
+        # a file uploaded with no game version is hidden from every player.
+        id: game-version-ids
+        env:
+          CURSEFORGE_API_TOKEN: ${{ secrets.CURSEFORGE_API_TOKEN }}
+          GAME_VERSIONS: ${{ steps.game-versions.outputs.game_versions }}
+        run: |
+          ids=$(python3 scripts/curseforge_game_versions.py --versions "$GAME_VERSIONS")
+          echo "CurseForge game version IDs: ${ids}"
+          echo "game_version_ids=${ids}" >> "$GITHUB_OUTPUT"
       - name: Resolve changelog
         id: changelog
         env:
@@ -212,15 +224,37 @@ jobs:
             exit 1
           fi
       - name: Upload to CurseForge
+        # The request BigWigs' packager makes (release.sh, upload_curseforge): metadata JSON and
+        # the archive as multipart form fields. No retry: a POST that timed out may still have
+        # created the file, and re-running this job is the safe way to try again.
         if: matrix.publish == true
-        uses: itsmeow/curseforge-upload@v3
-        with:
-          file_path: current/${{ matrix.archive }}
-          game_endpoint: 'wow'
-          project_id: ${{ matrix.project_id }}
-          token: ${{ secrets.CURSEFORGE_API_TOKEN }}
-          display_name: ${{ matrix.addon }} (${{ matrix.voice }}) ${{ needs.plan-release.outputs.release_tag }}
-          game_versions: ${{ needs.plan-release.outputs.game_versions }}
-          relations: ${{ matrix.relations }}
-          changelog: ${{ needs.plan-release.outputs.changelog }}
-          changelog_type: markdown
+        env:
+          ARCHIVE: ${{ matrix.archive }}
+          CHANGELOG: ${{ needs.plan-release.outputs.changelog }}
+          CURSEFORGE_API_TOKEN: ${{ secrets.CURSEFORGE_API_TOKEN }}
+          DISPLAY_NAME: ${{ matrix.addon }} (${{ matrix.voice }}) ${{ needs.plan-release.outputs.release_tag }}
+          GAME_VERSION_IDS: ${{ needs.plan-release.outputs.game_version_ids }}
+          PROJECT_ID: ${{ matrix.project_id }}
+          RELATIONS: ${{ matrix.relations }}
+        run: |
+          jq -n --arg name "$DISPLAY_NAME" --argjson versions "$GAME_VERSION_IDS" \
+            --arg changelog "$CHANGELOG" --arg relations "$RELATIONS" '
+            ($relations | split(",") | map(select(length > 0) | split(":") | {slug: .[0], type: .[1]})) as $projects
+            | {displayName: $name, gameVersions: $versions, releaseType: "release",
+               changelog: $changelog, changelogType: "markdown"}
+            + (if ($projects | length) > 0 then {relations: {projects: $projects}} else {} end)' > metadata.json
+          if [ "$(jq '.gameVersions | length' metadata.json)" -eq 0 ]; then
+            echo "Refusing to upload with no game version" >&2
+            exit 1
+          fi
+          status=$(curl -sS -o response.json -w '%{http_code}' \
+            -H "X-Api-Token: ${CURSEFORGE_API_TOKEN}" \
+            -F "metadata=<metadata.json" \
+            -F "file=@current/${ARCHIVE}" \
+            "https://wow.curseforge.com/api/projects/${PROJECT_ID}/upload-file")
+          if [ "$status" != "200" ]; then
+            echo "CurseForge answered HTTP ${status}:" >&2
+            cat response.json >&2
+            exit 1
+          fi
+          echo "Uploaded ${ARCHIVE} to project ${PROJECT_ID} as file $(jq -r .id response.json)"

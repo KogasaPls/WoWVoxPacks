@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # BtbN's builds are hosted on GitHub. FedericoCarboni/setup-ffmpeg downloads from
 # johnvansickle.com, which fails from runners with "fetch failed" (its issue #35).
-# BtbN keeps each month's last build for 24 months, so the pin below is deleted with its
-# first September 2028 build; move it to a newer month-end autobuild and its sha256 by 2028-08.
+# BtbN keeps each month's last build for 24 months; .github/workflows/ffmpeg-pin.yml moves the
+# pin below to a newer one, with its sha256, once it is a year old.
 set -euo pipefail
 
 release=https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2026-09-30-13-08

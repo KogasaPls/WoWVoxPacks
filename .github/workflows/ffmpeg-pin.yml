@@ -1,0 +1,55 @@
+name: Refresh ffmpeg pin
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 9 3 * *"
+
+permissions:
+  contents: read
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          filter: blob:none
+          sparse-checkout: |
+            /*
+            !/output/
+          sparse-checkout-cone-mode: false
+      - name: Move the pin to a newer month-end build once it is a year old
+        # BtbN deletes a month's build after 24 months, and CI and the update build both install
+        # this one; see scripts/ffmpeg_pin.py.
+        id: pin
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api "repos/BtbN/FFmpeg-Builds/releases?per_page=100" > releases.json
+          moved=$(python3 scripts/ffmpeg_pin.py --script scripts/install_ffmpeg.sh \
+            --releases releases.json --today "$(date -u +%F)")
+          echo "moved=${moved}" >> "$GITHUB_OUTPUT"
+      - name: Create a pull request
+        # The PR's CI installs the new build and runs the composition tests against it, and
+        # auto-merge waits for them.
+        if: steps.pin.outputs.moved != ''
+        id: create-pull-request
+        uses: peter-evans/create-pull-request@v8
+        with:
+          token: ${{ secrets.WORKFLOW_RELEASE_PAT }}
+          commit-message: "move the ffmpeg pin to ${{ steps.pin.outputs.moved }}"
+          title: Move the ffmpeg pin to ${{ steps.pin.outputs.moved }}
+          body: |
+            Automatically created by the ffmpeg pin workflow. The pinned build was a year old; BtbN deletes it after two.
+          branch: ci/ffmpeg-pin
+          delete-branch: true
+          base: main
+          add-paths: |
+            scripts/install_ffmpeg.sh
+          sign-commits: true
+      - name: Enable Pull Request Automerge
+        if: steps.create-pull-request.outputs.pull-request-number != ''
+        env:
+          GH_TOKEN: ${{ secrets.WORKFLOW_RELEASE_PAT }}
+          PR_NUMBER: ${{ steps.create-pull-request.outputs.pull-request-number }}
+        run: gh pr merge --merge --auto "$PR_NUMBER"

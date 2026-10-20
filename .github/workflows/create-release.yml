@@ -13,22 +13,29 @@ on:
   push:
     tags: [ 'v*' ]
 
+# One group for every trigger: a merged PR's ref is its own refs/pull/N/merge, so a per-ref group
+# let two merges a minute apart pick the same tag.
 concurrency:
-  group: create-release-${{ github.ref }}
+  group: create-release
   cancel-in-progress: false
 
 jobs:
   create-release:
     if: github.event.pull_request.merged == true || github.event_name  != 'pull_request'
     runs-on: ubuntu-latest
-    permissions: write-all
+    # The release itself is created with the PAT; this token only reads.
+    permissions:
+      contents: read
     outputs:
       release_tag: ${{ steps.set-release-tag.outputs.release_tag || steps.set-release-tag-push.outputs.release_tag }}
       released: ${{ steps.existing-release.outputs.skip != 'true' }}
       changelog: ${{ steps.release-notes.outputs.changelog }}
     steps:
+      # A merged PR's run checks out main's tip by default, which may already include the next
+      # merge. Its own merge commit is what it packages and tags.
       - uses: actions/checkout@v7
         with:
+          ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
           filter: blob:none
           fetch-depth: 0
       - name: List files in the repository
@@ -141,6 +148,7 @@ jobs:
         uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ env.RELEASE_TAG }}
+          target_commitish: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
           name: Release ${{ env.RELEASE_TAG }}
           body: |
             Automatically created by the release workflow.

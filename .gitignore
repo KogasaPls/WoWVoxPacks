@@ -495,3 +495,6 @@ $RECYCLE.BIN/
 
 # Half-written renders, named by SoundFileService so a hard kill leaves nothing tracked.
 .wvp-*
+
+# google-github-actions/auth writes its key file into the workspace.
+gha-creds-*.json

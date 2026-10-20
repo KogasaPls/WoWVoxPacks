@@ -429,7 +429,8 @@ jobs:
         run: |
           run_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           gh label create update-build-failed --force --color d73a4a \
-            --description "Scheduled update builds wait until this is closed"
+            --description "Scheduled update builds wait until this is closed" \
+            || echo "::warning::Could not create the update-build-failed label"
           number=$(gh issue list --state open --label update-build-failed --json number --jq '.[0].number')
           if [ -n "$number" ]; then
             gh issue comment "$number" --body "Failed again: $run_url"

@@ -211,7 +211,7 @@ class ReleaseWorkflowTests(unittest.TestCase):
         header = pull_request_job.split("\n    steps:", 1)[0]
         self.assertIn("check-earlier-build", header.split("needs:", 1)[1].split("\n", 1)[0])
         self.assertIn("if: ${{ needs.check-earlier-build.outputs.blocked == 'false' && (", header)
-        self.assertIn("timeout-minutes:", header)
+        self.assertIn("timeout-minutes: 180", header)
         self.assertIn(f"branch: {update_gate.UPDATE_BRANCH_PREFIX}", pull_request_job)
 
         builder = pull_request_job.split("- name: Run addon builder", 1)[1].split("\n      - ", 1)[0]
@@ -229,6 +229,10 @@ class ReleaseWorkflowTests(unittest.TestCase):
             report,
         )
         self.assertIn(f"gh label create {label} --force", report)
+        self.assertIn(
+            f"number=$(gh issue list --state open --label {label} --json number --jq '.[0].number')",
+            report,
+        )
         self.assertIn(f"--label {label}", report.split("gh issue create", 1)[1])
         self.assertIn('gh issue comment "$number"', report)
 

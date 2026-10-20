@@ -11,9 +11,42 @@ on:
 
 concurrency:
   group: check-for-updates
-  cancel-in-progress: true
+  # A cancelled build throws away audio it already paid for. The next run waits instead and
+  # finds this run's PR open.
+  cancel-in-progress: false
 
 jobs:
+  check-earlier-build:
+    runs-on: ubuntu-latest
+    # The builder renders on a fresh checkout of main, so it pays again for everything an
+    # unmerged update PR or a failed build already rendered. Either one holds the build until
+    # someone merges or closes the PR, or closes the issue; a manual run overrides the issue.
+    permissions:
+      pull-requests: read
+      issues: read
+    outputs:
+      blocked: ${{ steps.check.outputs.blocked }}
+    steps:
+      - name: Look for an open update PR or a failed build
+        id: check
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          pending=$(gh pr list --state open --limit 100 --json number,headRefName \
+            --jq '[.[] | select(.headRefName | startswith("ci/update-")) | "#\(.number)"] | join(" ")')
+          title="The automatic update build failed after rendering"
+          failed=$(gh issue list --state open --search "in:title \"$title\"" --json number --jq '.[0].number // empty')
+          if [ -n "$pending" ]; then
+            echo "Update PR ${pending} is still open; merge or close it to build again." | tee -a "$GITHUB_STEP_SUMMARY"
+            echo "blocked=true" >> "$GITHUB_OUTPUT"
+          elif [ -n "$failed" ] && [ "$EVENT_NAME" != "workflow_dispatch" ]; then
+            echo "Issue #${failed} records a failed build; close it or run this workflow by hand." | tee -a "$GITHUB_STEP_SUMMARY"
+            echo "blocked=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "blocked=false" >> "$GITHUB_OUTPUT"
+          fi
   check-bigwigs-voice-version:
     runs-on: ubuntu-latest
     outputs:
@@ -274,13 +307,13 @@ jobs:
             gh issue create --title "$title" --body "$run_url"
           fi
   create-pull-request:
-    needs: [ check-bigwigs-voice-version, check-nsrt-vocabulary, check-live-build ]
+    needs: [ check-earlier-build, check-bigwigs-voice-version, check-nsrt-vocabulary, check-live-build ]
     # The NSRT and live build jobs carry continue-on-error, so their upstreams may be
     # temporarily unavailable without blocking a BigWigs update. A failed BigWigs check must
     # still block this job: its version output would otherwise be committed as an empty
     # file. The lorrgs vocabulary is imported by hand (see scripts/extract_lorrgs_vocabulary.py);
     # this workflow only rebuilds from whatever is tracked.
-    if: ${{ needs.check-bigwigs-voice-version.outputs.needs_update == 'true' || needs.check-nsrt-vocabulary.outputs.needs_update == 'true' || needs.check-live-build.outputs.needs_update == 'true' }}
+    if: ${{ needs.check-earlier-build.outputs.blocked == 'false' && (needs.check-bigwigs-voice-version.outputs.needs_update == 'true' || needs.check-nsrt-vocabulary.outputs.needs_update == 'true' || needs.check-live-build.outputs.needs_update == 'true') }}
     runs-on: ubuntu-latest
     permissions: write-all
     env:
@@ -332,6 +365,7 @@ jobs:
       - name: Build new version
         run: dotnet build
       - name: Run addon builder
+        id: builder
         run: dotnet run --project src/WoWVoxPack.Builder/WoWVoxPack.Builder.csproj
       - name: Create a pull request
         uses: peter-evans/create-pull-request@v8
@@ -376,3 +410,18 @@ jobs:
           GH_TOKEN: ${{ secrets.WORKFLOW_RELEASE_PAT }}
           PR_NUMBER: ${{ steps.create-pull-request.outputs.pull-request-number }}
           PR_OPERATION: ${{ steps.create-pull-request.outputs.pull-request-operation }}
+      - name: File an issue when a build fails after rendering
+        # A failure before the builder started spent nothing, so the next run may retry it.
+        if: failure() && (steps.builder.outcome == 'success' || steps.builder.outcome == 'failure')
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          title="The automatic update build failed after rendering"
+          run_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          number=$(gh issue list --state open --search "in:title \"$title\"" --json number --jq '.[0].number')
+          if [ -n "$number" ]; then
+            gh issue comment "$number" --body "Failed again: $run_url"
+          else
+            gh issue create --title "$title" --body "Scheduled runs skip the build while this is open. $run_url"
+          fi

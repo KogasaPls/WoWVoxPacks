@@ -176,6 +176,39 @@ class ReleaseWorkflowTests(unittest.TestCase):
         add_paths = pull_request_job.split("add-paths: |", 1)[1].split("sign-commits:", 1)[0]
         self.assertIn("appsettings.json", add_paths)
 
+    def test_the_updater_never_pays_twice_for_the_same_audio(self):
+        """Each run renders on a fresh checkout of main, so anything not merged is rendered again.
+
+        An open update PR, a build that failed after rendering, or a run cancelled mid-build
+        would each have the next scheduled run pay for the same files a second time.
+        """
+        updater = (
+            REPOSITORY_ROOT / ".github/workflows/update.yml"
+        ).read_text(encoding="utf-8")
+        concurrency = updater.split("\nconcurrency:", 1)[1].split("\njobs:", 1)[0]
+        self.assertIn("cancel-in-progress: false", concurrency)
+
+        gate = updater.split("\n  check-earlier-build:", 1)[1].split("\n  check-bigwigs-voice-version:", 1)[0]
+        title = "The automatic update build failed after rendering"
+        self.assertIn('startswith("ci/update-")', gate)
+        self.assertIn(title, gate)
+        self.assertIn('[ "$EVENT_NAME" != "workflow_dispatch" ]', gate)
+
+        pull_request_job = updater.split("\n  create-pull-request:", 1)[1]
+        header = pull_request_job.split("\n    steps:", 1)[0]
+        self.assertIn("check-earlier-build", header.split("needs:", 1)[1].split("\n", 1)[0])
+        self.assertIn("if: ${{ needs.check-earlier-build.outputs.blocked == 'false' && (", header)
+        self.assertIn("branch: ci/update-", pull_request_job)
+
+        builder = pull_request_job.split("- name: Run addon builder", 1)[1].split("\n      - ", 1)[0]
+        self.assertIn("id: builder", builder)
+        report = pull_request_job.split("- name: File an issue when a build fails after rendering", 1)[1]
+        self.assertIn(
+            "if: failure() && (steps.builder.outcome == 'success' || steps.builder.outcome == 'failure')",
+            report,
+        )
+        self.assertIn(f'title="{title}"', report)
+
     def test_the_live_build_is_validated_before_the_log_prints_it(self):
         """The fetched table is untrusted; an unvalidated echo could inject workflow commands."""
         updater = (

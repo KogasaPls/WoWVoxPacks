@@ -112,6 +112,24 @@ class RenderedOutputTests(unittest.TestCase):
         self.assertEqual((sounds / "old.ogg").read_text(), "old")
         self.assertIn("dropped 2 recordings", printed)
 
+    def test_restore_trusts_no_recording_in_a_pack_whose_manifest_never_came_back(self):
+        """The shape a kill leaves: renders on disk, the pack manifest untouched since main.
+
+        main's manifest still lists old.ogg under its old text, so the re-rendered take would
+        pass as that text on the retry. Neither recording is kept.
+        """
+        self.write("output/Voice/Pack/Sounds/old.ogg", "re-rendered for new text")
+        self.write("output/Voice/Pack/Sounds/get orb.ogg", "new")
+        self.run_script("collect", "--into", str(self.kept))
+        self.git("checkout", "-q", "--", ".")
+        self.git("clean", "-qfd")
+
+        self.run_script("restore", "--from", str(self.kept))
+
+        sounds = self.repo / "output/Voice/Pack/Sounds"
+        self.assertEqual((sounds / "old.ogg").read_text(), "old")
+        self.assertFalse((sounds / "get orb.ogg").exists())
+
     def test_restore_skips_output_that_changed_after_the_failed_build(self):
         """Merged output is newer than the kept copy, and its manifests describe different files."""
         self.build_partway()

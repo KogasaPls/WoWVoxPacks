@@ -236,7 +236,7 @@ class ReleaseWorkflowTests(unittest.TestCase):
         # Only an interrupt the builder itself receives records its partial renders, and it has
         # to arrive with time left before the job's own limit.
         self.assertIn(
-            "run: timeout -s INT -k 2m 170m dotnet run --project src/WoWVoxPack.Builder/WoWVoxPack.Builder.csproj",
+            "run: timeout -s INT -k 2m 155m dotnet run --project src/WoWVoxPack.Builder/WoWVoxPack.Builder.csproj",
             builder,
         )
 
@@ -252,14 +252,15 @@ class ReleaseWorkflowTests(unittest.TestCase):
         positions = [pull_request_job.index(f"- name: {name}\n") for name in order]
         self.assertEqual(positions, sorted(positions))
         restore = step(pull_request_job, "Restore the renders a failed build kept")
-        self.assertIn("id: restore", restore)
         self.assertIn('actions/artifacts?name=rendered-output&per_page=100', restore)
-        self.assertIn('select((.expired | not) and .workflow_run.head_branch == "main")', restore)
+        self.assertIn(
+            'select((.expired | not) and .workflow_run.head_branch == "main")] | sort_by(.created_at) | reverse',
+            restore,
+        )
         self.assertIn('gh run download "$run_id" --name rendered-output --dir "$RUNNER_TEMP/restore-$artifact_id"', restore)
         self.assertIn(
             'python3 scripts/rendered_output.py restore --from "$RUNNER_TEMP/restore-$artifact_id"', restore
         )
-        self.assertIn('echo "artifact_id=$artifact_id" >> "$GITHUB_OUTPUT"', restore)
         self.assertNotIn("|| true", restore)
         self.assertIn(
             "run: dotnet run --project src/WoWVoxPack.Builder/WoWVoxPack.Builder.csproj -- --Matrix:DryRun true",
@@ -281,9 +282,13 @@ class ReleaseWorkflowTests(unittest.TestCase):
         )
         self.assertIn("name: rendered-output", keep)
         self.assertIn("path: ${{ runner.temp }}/rendered-output", keep)
-        discard = step(pull_request_job, "Discard the kept renders this build used")
-        self.assertIn("if: success() && steps.restore.outputs.artifact_id != ''", discard)
-        self.assertIn('gh api -X DELETE "repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID"', discard)
+        # Once a PR holds the audio, no kept render may come back, even if auto-merge then
+        # fails, and a failed delete must not stop the failure issue from closing.
+        discard = step(pull_request_job, "Discard kept renders once a PR has them")
+        self.assertIn("if: always() && steps.create-pull-request.outputs.pull-request-number != ''", discard)
+        self.assertIn("continue-on-error: true", discard)
+        self.assertIn('select((.expired | not) and .workflow_run.head_branch == "main") | .id', discard)
+        self.assertIn('gh api -X DELETE "repos/$GITHUB_REPOSITORY/actions/artifacts/$artifact_id"', discard)
 
         close = pull_request_job.split("- name: Close the failed-build issue", 1)[1].split("\n      - ", 1)[0]
         self.assertIn("if: success()", close)

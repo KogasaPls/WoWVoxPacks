@@ -367,13 +367,14 @@ jobs:
         run: dotnet build
       - name: Restore the renders a failed build kept
         # The newest kept renders from main, applied only onto the output they were built from;
-        # see rendered_output.py. An API or download error fails the job before anything is spent.
-        id: restore
+        # see rendered_output.py. An API or download error fails the job before anything is spent;
+        # if an artifact can never be downloaded, delete it with
+        # gh api -X DELETE repos/OWNER/REPO/actions/artifacts/ID.
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           kept=$(gh api "repos/$GITHUB_REPOSITORY/actions/artifacts?name=rendered-output&per_page=100" \
-            --jq '[.artifacts[] | select((.expired | not) and .workflow_run.head_branch == "main")][0] // empty | "\(.id) \(.workflow_run.id)"')
+            --jq '[.artifacts[] | select((.expired | not) and .workflow_run.head_branch == "main")] | sort_by(.created_at) | reverse | .[0] // empty | "\(.id) \(.workflow_run.id)"')
           if [ -z "$kept" ]; then
             echo "No kept renders"
             exit 0
@@ -381,7 +382,6 @@ jobs:
           read -r artifact_id run_id <<< "$kept"
           gh run download "$run_id" --name rendered-output --dir "$RUNNER_TEMP/restore-$artifact_id"
           python3 scripts/rendered_output.py restore --from "$RUNNER_TEMP/restore-$artifact_id"
-          echo "artifact_id=$artifact_id" >> "$GITHUB_OUTPUT"
       - name: Plan the build
         # Free, and it trips the builder's re-render and removal limits for every pack before
         # the paid run renders any of them.
@@ -389,9 +389,9 @@ jobs:
       - name: Run addon builder
         id: builder
         # Cancelling or timing out the job signals only this step's shell, never the builder, so
-        # it would never record its partial renders. timeout signals the builder itself, before
-        # the job's own limit.
-        run: timeout -s INT -k 2m 170m dotnet run --project src/WoWVoxPack.Builder/WoWVoxPack.Builder.csproj
+        # it would never record its partial renders. timeout signals the builder itself, early
+        # enough that the snapshot and its upload still fit inside the job's own limit.
+        run: timeout -s INT -k 2m 155m dotnet run --project src/WoWVoxPack.Builder/WoWVoxPack.Builder.csproj
       - name: Snapshot the rendered output
         # Taken straight after the builder, before the PR step touches the working tree.
         id: snapshot
@@ -447,13 +447,18 @@ jobs:
           GH_TOKEN: ${{ secrets.WORKFLOW_RELEASE_PAT }}
           PR_NUMBER: ${{ steps.create-pull-request.outputs.pull-request-number }}
           PR_OPERATION: ${{ steps.create-pull-request.outputs.pull-request-operation }}
-      - name: Discard the kept renders this build used
-        # Their audio is in the PR now. Kept, they would come back after the PR was closed unmerged.
-        if: success() && steps.restore.outputs.artifact_id != ''
+      - name: Discard kept renders once a PR has them
+        # A PR built from main's head supersedes every kept render. Kept, they would come back
+        # after the PR was closed unmerged, which is how a bad batch of audio gets thrown away.
+        if: always() && steps.create-pull-request.outputs.pull-request-number != ''
+        continue-on-error: true
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ARTIFACT_ID: ${{ steps.restore.outputs.artifact_id }}
-        run: gh api -X DELETE "repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID"
+        run: |
+          for artifact_id in $(gh api "repos/$GITHUB_REPOSITORY/actions/artifacts?name=rendered-output&per_page=100" \
+              --jq '.artifacts[] | select((.expired | not) and .workflow_run.head_branch == "main") | .id'); do
+            gh api -X DELETE "repos/$GITHUB_REPOSITORY/actions/artifacts/$artifact_id"
+          done
       - name: Close the failed-build issue
         if: success()
         env:

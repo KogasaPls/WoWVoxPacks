@@ -22,17 +22,21 @@ def inside_output(path: Path) -> Path:
     return path
 
 
-def listed_in_manifest(recording: Path) -> bool:
-    """Whether the pack's manifest records this recording.
+def recorded_recordings(restored: list[Path]) -> dict[Path, set[str]]:
+    """The recordings each restored pack manifest records, by pack directory.
 
-    A build killed without warning writes no partial manifest, and a recording no manifest
-    describes would be trusted as current by the retry even if its spell has been renamed since.
+    The builder writes a pack's manifest, partial or whole, after rendering into it, unless it is
+    killed without warning. A recording whose pack manifest did not come back, or does not list
+    it, would be trusted by the retry under whatever an older manifest says, even if its spell
+    has been renamed since.
     """
-    manifest = recording.parent.parent / "SoundFiles.json"
-    if not manifest.is_file():
-        return False
-    entries = json.loads(manifest.read_text(encoding="utf-8"))
-    return recording.name.lower() in {entry["FileName"].lower() for entry in entries}
+    return {
+        manifest.parent: {
+            entry["FileName"].lower() for entry in json.loads(manifest.read_text(encoding="utf-8"))
+        }
+        for manifest in restored
+        if manifest.name == "SoundFiles.json"
+    }
 
 
 def changed_paths() -> tuple[list[str], list[str]]:
@@ -78,9 +82,11 @@ def restore(source: Path) -> None:
         shutil.copy2(path, target)
         targets.append(target)
 
+    recorded = recorded_recordings(targets)
     unlisted = [
         target for target in targets
-        if target.parent.name == "Sounds" and target.suffix == ".ogg" and not listed_in_manifest(target)
+        if target.parent.name == "Sounds" and target.suffix == ".ogg"
+        and target.name.lower() not in recorded.get(target.parent.parent, set())
     ]
     for target in unlisted:
         if git("ls-files", "--error-unmatch", str(target), check=False).returncode == 0:

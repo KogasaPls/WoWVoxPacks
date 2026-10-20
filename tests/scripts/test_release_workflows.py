@@ -150,8 +150,21 @@ class ReleaseWorkflowTests(unittest.TestCase):
         """setup-ffmpeg's johnvansickle.com source failed every CI run from runners."""
         installer = REPOSITORY_ROOT / "scripts/install_ffmpeg.sh"
         self.assertTrue(installer.stat().st_mode & 0o111, "install_ffmpeg.sh must be executable")
-        self.assertIn("https://github.com/BtbN/FFmpeg-Builds/releases/download/", installer.read_text())
-        self.assertIn("sha256sum -c", installer.read_text())
+        commands = [
+            line for line in installer.read_text().splitlines() if not line.startswith("#")
+        ]
+        script = "\n".join(commands)
+        # A rolling "latest" release is deleted and re-created daily, so only a dated
+        # autobuild with a checksum held here is reproducible.
+        self.assertRegex(
+            script,
+            r"\nrelease=https://github\.com/BtbN/FFmpeg-Builds/releases/download/autobuild-\d{4}-\d{2}-\d{2}-\d{2}-\d{2}\n",
+        )
+        self.assertRegex(script, r"\nsha256=[0-9a-f]{64}\n")
+        self.assertIn('curl -sSfL --retry 5 --retry-delay 10 -o "$asset.tar.xz" "$release/$asset.tar.xz"', script)
+        self.assertIn('echo "$sha256  $asset.tar.xz" | sha256sum -c -\n', script + "\n")
+        self.assertIn('echo "$RUNNER_TEMP/$asset/bin" >> "$GITHUB_PATH"', script)
+        self.assertNotIn("||", script)
 
         for workflow in ("ci.yml", "update.yml"):
             contents = (REPOSITORY_ROOT / ".github/workflows" / workflow).read_text(

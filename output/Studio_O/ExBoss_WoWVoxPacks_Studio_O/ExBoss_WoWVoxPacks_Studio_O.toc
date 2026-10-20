@@ -1,7 +1,7 @@
-## Interface: 120007, 120100
+## Interface: 120105
 
 ## Title: ExBoss WoWVoxPacks (Studio_O)
-## Version: 12.1.0
+## Version: 12.1.5
 ## Notes: A voice pack for ExBoss.
 ## Author: KogasaPls
 

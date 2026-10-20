@@ -250,6 +250,41 @@ class ReleaseWorkflowTests(unittest.TestCase):
         )
         self.assertIn("continue-on-error: true", check)
 
+    def test_ffmpeg_comes_from_a_host_runners_can_reach(self):
+        """setup-ffmpeg's johnvansickle.com source failed every CI run from runners."""
+        installer = REPOSITORY_ROOT / "scripts/install_ffmpeg.sh"
+        self.assertTrue(installer.stat().st_mode & 0o111, "install_ffmpeg.sh must be executable")
+        commands = [
+            line for line in installer.read_text().splitlines() if not line.startswith("#")
+        ]
+        script = "\n".join(commands)
+        # A rolling "latest" release is deleted and re-created daily, so only a dated
+        # autobuild with a checksum held here is reproducible.
+        self.assertRegex(
+            script,
+            r"\nrelease=https://github\.com/BtbN/FFmpeg-Builds/releases/download/autobuild-\d{4}-\d{2}-\d{2}-\d{2}-\d{2}\n",
+        )
+        self.assertRegex(script, r"\nsha256=[0-9a-f]{64}\n")
+        self.assertEqual(script.count("sha256="), 1, "the checksum must be the one held here")
+        # The workflow runs the script through its shebang, so without -e a failed check
+        # would print FAILED and install the download anyway.
+        self.assertIn("set -euo pipefail", commands)
+        self.assertNotIn("set +", script)
+        self.assertIn(
+            'curl -sSfL --retry 5 --retry-delay 10 --retry-all-errors -o "$asset.tar.xz" "$release/$asset.tar.xz"',
+            script,
+        )
+        self.assertIn('echo "$sha256  $asset.tar.xz" | sha256sum -c -\n', script + "\n")
+        self.assertIn('echo "$RUNNER_TEMP/$asset/bin" >> "$GITHUB_PATH"', script)
+        self.assertNotIn("||", script)
+
+        for workflow in ("ci.yml", "update.yml"):
+            contents = (REPOSITORY_ROOT / ".github/workflows" / workflow).read_text(
+                encoding="utf-8"
+            )
+            self.assertNotIn("setup-ffmpeg", contents, workflow)
+            self.assertIn("run: scripts/install_ffmpeg.sh", contents, workflow)
+
     def test_a_changed_composed_site_fails_the_update_run(self):
         """Hand-enumerated strings cannot regenerate, so drift must fail, not print.
 

@@ -5684,11 +5684,32 @@
     "Text": "Boneslicer"
   },
   {
+    "Key": "1301479",
+    "FileName": "1301479.ogg",
+    "DisplayName": "Eightfold Eclipse",
+    "FormattedDisplayName": "Eightfold Eclipse",
+    "Text": "Eightfold Eclipse"
+  },
+  {
     "Key": "1301510",
     "FileName": "1301510.ogg",
     "DisplayName": "Circling Prey",
     "FormattedDisplayName": "Circling Prey",
     "Text": "Circling Prey"
+  },
+  {
+    "Key": "1301511",
+    "FileName": "1301511.ogg",
+    "DisplayName": "Voidswarm",
+    "FormattedDisplayName": "Voidswarm",
+    "Text": "Voidswarm"
+  },
+  {
+    "Key": "1302951",
+    "FileName": "1302951.ogg",
+    "DisplayName": "Suffocating Darkness",
+    "FormattedDisplayName": "Suffocating Darkness",
+    "Text": "Suffocating Darkness"
   },
   {
     "Key": "1302982",
@@ -5703,6 +5724,13 @@
     "DisplayName": "Aerial Smash",
     "FormattedDisplayName": "Aerial Smash",
     "Text": "Aerial Smash"
+  },
+  {
+    "Key": "1303169",
+    "FileName": "1303169.ogg",
+    "DisplayName": "Divine Radiance",
+    "FormattedDisplayName": "Divine Radiance",
+    "Text": "Divine Radiance"
   },
   {
     "Key": "1303230",
@@ -5726,11 +5754,53 @@
     "Text": "Quaking Leap"
   },
   {
+    "Key": "1303406",
+    "FileName": "1303406.ogg",
+    "DisplayName": "Abyssal Grasp",
+    "FormattedDisplayName": "Abyssal Grasp",
+    "Text": "Abyssal Grasp"
+  },
+  {
     "Key": "1303488",
     "FileName": "1303488.ogg",
     "DisplayName": "Savage Maul",
     "FormattedDisplayName": "Savage Maul",
     "Text": "Savage Maul"
+  },
+  {
+    "Key": "1303681",
+    "FileName": "1303681.ogg",
+    "DisplayName": "Twisted Appendage",
+    "FormattedDisplayName": "Twisted Appendage",
+    "Text": "Twisted Appendage"
+  },
+  {
+    "Key": "1304045",
+    "FileName": "1304045.ogg",
+    "DisplayName": "Unspeakable Horrors",
+    "FormattedDisplayName": "Unspeakable Horrors",
+    "Text": "Unspeakable Horrors"
+  },
+  {
+    "Key": "1304424",
+    "FileName": "1304424.ogg",
+    "DisplayName": "Extinguish",
+    "FormattedDisplayName": "Extinguish",
+    "Text": "Extinguish"
+  },
+  {
+    "Key": "1304508",
+    "FileName": "1304508.ogg",
+    "DisplayName": "Light\u0027s Embrace",
+    "FormattedDisplayName": "Light\u0027s Embrace",
+    "Text": "Light\u0027s Embrace"
+  },
+  {
+    "Key": "1304930",
+    "FileName": "1304930.ogg",
+    "DisplayName": "Dark Devastation",
+    "FormattedDisplayName": "Dark Devastation",
+    "Text": "Dark Devastation"
   },
   {
     "Key": "1305421",
@@ -5808,6 +5878,13 @@
     "DisplayName": "Submerge",
     "FormattedDisplayName": "Submerge",
     "Text": "Submerge"
+  },
+  {
+    "Key": "1308873",
+    "FileName": "1308873.ogg",
+    "DisplayName": "Null Gate",
+    "FormattedDisplayName": "Null Gate",
+    "Text": "Null Gate"
   },
   {
     "Key": "1309418",
@@ -5891,6 +5968,13 @@
     "DisplayName": "Chilling Frost",
     "FormattedDisplayName": "Chilling Frost",
     "Text": "Chilling Frost"
+  },
+  {
+    "Key": "1318467",
+    "FileName": "1318467.ogg",
+    "DisplayName": "Negation",
+    "FormattedDisplayName": "Negation",
+    "Text": "Negation"
   },
   {
     "Key": "143834",

@@ -146,6 +146,50 @@ class ReleaseWorkflowTests(unittest.TestCase):
             self.assertIn(generated, add_paths)
         self.assertNotIn(names[-1], add_paths)
 
+    def test_a_new_live_build_reaches_the_update_pull_request(self):
+        """The settings and the TOCs must land together, or every later run rebuilds for nothing.
+
+        A PR carrying the regenerated TOCs without appsettings.json would release under the
+        old interfaces' tag and game versions, and the next run would detect the same build
+        again.
+        """
+        updater = (
+            REPOSITORY_ROOT / ".github/workflows/update.yml"
+        ).read_text(encoding="utf-8")
+        pull_request_job = updater.split("\n  create-pull-request:", 1)[1]
+        header = pull_request_job.split("\n    steps:", 1)[0]
+
+        self.assertIn("check-live-build", header.split("needs:", 1)[1].split("\n", 1)[0])
+        self.assertIn("needs.check-live-build.outputs.needs_update == 'true'", header)
+
+        follow_step = pull_request_job.split("- name: Follow the live build", 1)[1].split(
+            "\n      - ", 1
+        )[0]
+        self.assertIn("if: ${{ needs.check-live-build.outputs.needs_update == 'true' }}", follow_step)
+        self.assertIn("LIVE_BUILD: ${{ needs.check-live-build.outputs.build }}", follow_step)
+        self.assertIn('--settings appsettings.json --follow "$LIVE_BUILD"', follow_step)
+        self.assertLess(
+            pull_request_job.index("- name: Follow the live build"),
+            pull_request_job.index("- name: Run addon builder"),
+        )
+
+        add_paths = pull_request_job.split("add-paths: |", 1)[1].split("sign-commits:", 1)[0]
+        self.assertIn("appsettings.json", add_paths)
+
+    def test_the_live_build_is_validated_before_the_log_prints_it(self):
+        """The fetched table is untrusted; an unvalidated echo could inject workflow commands."""
+        updater = (
+            REPOSITORY_ROOT / ".github/workflows/update.yml"
+        ).read_text(encoding="utf-8")
+        check = updater.split("\n  check-live-build:", 1)[1].split("\n  create-pull-request:", 1)[0]
+
+        self.assertIn("https://us.version.battle.net/v2/products/wow/versions", check)
+        self.assertIn('build=$(python3 scripts/game_versions.py --live-build versions.txt)', check)
+        self.assertLess(
+            check.index("--live-build versions.txt"), check.index('echo "Live build: ${build}"')
+        )
+        self.assertIn("continue-on-error: true", check)
+
     def test_a_changed_composed_site_fails_the_update_run(self):
         """Hand-enumerated strings cannot regenerate, so drift must fail, not print.
 

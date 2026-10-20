@@ -1,0 +1,23 @@
+; Spells BigWigs announces that BigWigs_Voice has not synced yet, in its Tools/spells-*.txt
+; format: the spell ID, a tab, then the spell name. BigWigs_Voice's own entry wins for any ID it
+; lists, so delete an entry once BigWigs_Voice has it.
+
+; Type: Midnight Raid
+
+; -------------------------------------
+; Zone: The Unbinding of Kith'ix
+; -------------------------------------
+
+; Boss: Kith'ix
+1301511	Voidswarm
+1304424	Extinguish
+1304508	Light's Embrace
+1304045	Unspeakable Horrors
+1303681	Twisted Appendage
+1304930	Dark Devastation
+1302951	Suffocating Darkness
+1303406	Abyssal Grasp
+1303169	Divine Radiance
+1308873	Null Gate
+1318467	Negation
+1301479	Eightfold Eclipse

@@ -4,16 +4,18 @@ internal class SpellListFile
 {
     private readonly Lazy<BigWigsVoiceSoundFile[]> _soundFiles;
 
-    public SpellListFile(string fileName, string content)
+    public SpellListFile(string fileName, string content, string source = "upstream")
     {
         FileName = fileName;
         Content = content;
+        Source = source;
 
         _soundFiles = new Lazy<BigWigsVoiceSoundFile[]>(ParseSoundFilesToArray);
     }
 
     public string FileName { get; }
     public string Content { get; }
+    public string Source { get; }
 
     public IEnumerable<BigWigsVoiceSoundFile> SoundFiles => _soundFiles.Value;
 
@@ -44,7 +46,7 @@ internal class SpellListFile
             string spellName = parts[1];
 
             yield return new BigWigsVoiceSoundFile(
-                spellId, spellName, $"upstream:{FileName}:{lineNumber}");
+                spellId, spellName, $"{Source}:{FileName}:{lineNumber}");
         }
     }
 }

@@ -62,6 +62,7 @@ services.AddSingleton(sp => new NorthernSkyRaidToolsVocabularyProvider(
 // The BigWigs pack's Lua is the same whatever the spell list holds, and fetching the real one
 // would put GitHub between the harness and a run.
 services.AddSingleton<IBigWigsVoiceUpstreamClient, NoSpellsUpstreamClient>();
+services.AddSingleton(BigWigsVoicePendingSpells.Empty);
 services.AddScoped<BigWigsVoiceAddOnService>();
 services.AddScoped<CalloutsMediaAddOnService>();
 services.AddScoped<NorthernSkyRaidToolsAddOnService>();

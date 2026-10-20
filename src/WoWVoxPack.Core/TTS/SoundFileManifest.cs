@@ -79,6 +79,20 @@ public sealed class SoundFileManifest
         return removals;
     }
 
+    /// <summary>
+    /// The entries for a pack whose build stopped partway: what the finished files now say, and
+    /// the previous entry for everything else. Keeping every previous entry means a file this
+    /// build would have retired is still found and removed by the retry.
+    /// </summary>
+    public IEnumerable<SoundFile> AfterPartialRender(IEnumerable<SoundFile> currentSoundFiles,
+        IEnumerable<string> renderedFileNames)
+    {
+        HashSet<string> rendered = new(renderedFileNames, StringComparer.OrdinalIgnoreCase);
+
+        return currentSoundFiles.Where(f => rendered.Contains(f.FileName))
+            .Concat(_recordingsByFileName.Values.Where(f => !rendered.Contains(f.FileName)));
+    }
+
     public Task SaveAsync(string path, IEnumerable<SoundFile> soundFiles, CancellationToken cancellationToken = default)
     {
         string json = JsonSerializer.Serialize(soundFiles.OrderBy(s => s.FileName).ToList(),

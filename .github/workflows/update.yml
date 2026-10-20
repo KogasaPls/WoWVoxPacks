@@ -40,11 +40,14 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           EVENT_NAME: ${{ github.event_name }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
         run: |
           gh pr list --state open --limit 100 --json number,headRefName,isCrossRepository > pulls.json
           gh issue list --state open --label update-build-failed --json number > issues.json
+          main_sha=$(gh api "repos/$GITHUB_REPOSITORY/commits/$DEFAULT_BRANCH" --jq .sha)
           python3 scripts/update_gate.py --pulls pulls.json --issues issues.json \
-            --event "$EVENT_NAME" --output "$GITHUB_OUTPUT"
+            --event "$EVENT_NAME" --run-sha "$GITHUB_SHA" --main-sha "$main_sha" \
+            --output "$GITHUB_OUTPUT"
   check-bigwigs-voice-version:
     runs-on: ubuntu-latest
     outputs:
@@ -362,9 +365,32 @@ jobs:
           dotnet-version: '10.0.x'
       - name: Build new version
         run: dotnet build
+      - name: Restore the renders a failed build kept
+        # Newest first, and only onto the output that build started from; see rendered_output.py.
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          for run_id in $(gh run list --workflow update.yml --limit 30 --json databaseId,conclusion \
+              --jq '[.[] | select(.conclusion == "failure" or .conclusion == "cancelled")][:5][].databaseId'); do
+            if gh run download "$run_id" --name rendered-output --dir "$RUNNER_TEMP/restore"; then
+              echo "Found renders kept by run $run_id"
+              python3 scripts/rendered_output.py restore --from "$RUNNER_TEMP/restore"
+              exit 0
+            fi
+          done
+          echo "No earlier renders to restore"
+      - name: Plan the build
+        # Free, and it trips the builder's re-render and removal limits for every pack before
+        # the paid run renders any of them.
+        run: dotnet run --project src/WoWVoxPack.Builder/WoWVoxPack.Builder.csproj -- --Matrix:DryRun true
       - name: Run addon builder
         id: builder
         run: dotnet run --project src/WoWVoxPack.Builder/WoWVoxPack.Builder.csproj
+      - name: Snapshot the rendered output
+        # Taken straight after the builder, before the PR step touches the working tree.
+        id: snapshot
+        if: always() && (steps.builder.outcome == 'success' || steps.builder.outcome == 'failure' || steps.builder.outcome == 'cancelled')
+        run: python3 scripts/rendered_output.py collect --into "$RUNNER_TEMP/rendered-output"
       - name: Create a pull request
         uses: peter-evans/create-pull-request@v8
         id: create-pull-request
@@ -418,10 +444,18 @@ jobs:
           for number in $(gh issue list --state open --label update-build-failed --json number --jq '.[].number'); do
             gh issue close "$number" --comment "Built successfully: $run_url"
           done
+      - name: Keep the renders this failed build paid for
+        if: (failure() || cancelled()) && steps.snapshot.outcome == 'success'
+        uses: actions/upload-artifact@v7
+        with:
+          name: rendered-output
+          path: ${{ runner.temp }}/rendered-output
+          retention-days: 30
       - name: File an issue when a build fails after rendering
-        # A failure before the builder started spent nothing, so the next run may retry it. A
-        # timeout cancels the job rather than failing it.
-        if: (failure() || cancelled()) && (steps.builder.outcome == 'success' || steps.builder.outcome == 'failure' || steps.builder.outcome == 'cancelled')
+        # A failure before the builder started spent nothing, and an open PR already holds the
+        # gate, so only a build that rendered and opened no PR files one. A timeout cancels the
+        # job rather than failing it.
+        if: (failure() || cancelled()) && (steps.builder.outcome == 'success' || steps.builder.outcome == 'failure' || steps.builder.outcome == 'cancelled') && steps.create-pull-request.outputs.pull-request-number == ''
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
@@ -435,5 +469,5 @@ jobs:
             gh issue comment "$number" --body "Failed again: $run_url"
           else
             gh issue create --title "The automatic update build failed" --label update-build-failed \
-              --body "Scheduled runs skip the build while this is open. $run_url"
+              --body "Scheduled runs skip the build while this is open. Running the workflow by hand reuses the renders this run kept. $run_url"
           fi

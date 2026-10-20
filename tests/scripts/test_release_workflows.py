@@ -8,6 +8,18 @@ from pathlib import Path
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 
 
+def job(workflow: str, name: str) -> str:
+    """One job's YAML, from its key to the next job's key."""
+    match = re.search(rf"(?ms)^  {re.escape(name)}:\n(.*?)(?=^  [\w-]+:\n|\Z)", workflow)
+    assert match, f"no job {name}"
+    return match.group(1)
+
+
+def step(job_text: str, name: str) -> str:
+    """One step's YAML, from its name to the next step."""
+    return job_text.split(f"- name: {name}\n", 1)[1].split("\n      - ", 1)[0]
+
+
 def checkout_steps(workflow: str) -> list[str]:
     """The complete YAML mapping for each checkout step."""
     return [
@@ -195,8 +207,9 @@ class ReleaseWorkflowTests(unittest.TestCase):
         self.assertIn("cancel-in-progress: false", concurrency)
 
         label = update_gate.FAILURE_LABEL
-        gate = updater.split("\n  check-earlier-build:", 1)[1].split("\n  check-bigwigs-voice-version:", 1)[0]
-        self.assertIn("continue-on-error", updater.split("\n  check-nsrt-vocabulary:", 1)[1])
+        gate = job(updater, "check-earlier-build")
+        self.assertIn("continue-on-error: true", job(updater, "check-nsrt-vocabulary"))
+        self.assertIn("continue-on-error: true", job(updater, "check-live-build"))
         self.assertNotIn("continue-on-error", gate)
         self.assertIn(
             "gh pr list --state open --limit 100 --json number,headRefName,isCrossRepository > pulls.json",
@@ -204,7 +217,9 @@ class ReleaseWorkflowTests(unittest.TestCase):
         )
         self.assertIn(f"gh issue list --state open --label {label} --json number > issues.json", gate)
         self.assertIn("python3 scripts/update_gate.py --pulls pulls.json --issues issues.json", gate)
-        self.assertIn('--event "$EVENT_NAME" --output "$GITHUB_OUTPUT"', gate)
+        self.assertIn('--event "$EVENT_NAME" --run-sha "$GITHUB_SHA" --main-sha "$main_sha"', gate)
+        self.assertIn('--output "$GITHUB_OUTPUT"', gate)
+        self.assertIn('main_sha=$(gh api "repos/$GITHUB_REPOSITORY/commits/$DEFAULT_BRANCH" --jq .sha)', gate)
         self.assertIn("EVENT_NAME: ${{ github.event_name }}", gate)
 
         pull_request_job = updater.split("\n  create-pull-request:", 1)[1]
@@ -214,8 +229,38 @@ class ReleaseWorkflowTests(unittest.TestCase):
         self.assertIn("timeout-minutes: 180", header)
         self.assertIn(f"branch: {update_gate.UPDATE_BRANCH_PREFIX}", pull_request_job)
 
-        builder = pull_request_job.split("- name: Run addon builder", 1)[1].split("\n      - ", 1)[0]
+        builder = step(pull_request_job, "Run addon builder")
         self.assertIn("id: builder", builder)
+
+        # Renders a failed build paid for come back before anything is planned or rendered, and
+        # the free plan trips the builder's limits before the paid run spends on any pack.
+        order = [
+            "Restore the renders a failed build kept",
+            "Plan the build",
+            "Run addon builder",
+            "Snapshot the rendered output",
+            "Create a pull request",
+        ]
+        positions = [pull_request_job.index(f"- name: {name}\n") for name in order]
+        self.assertEqual(positions, sorted(positions))
+        restore = step(pull_request_job, "Restore the renders a failed build kept")
+        self.assertIn("gh run download \"$run_id\" --name rendered-output", restore)
+        self.assertIn('python3 scripts/rendered_output.py restore --from "$RUNNER_TEMP/restore"', restore)
+        self.assertIn(
+            "run: dotnet run --project src/WoWVoxPack.Builder/WoWVoxPack.Builder.csproj -- --Matrix:DryRun true",
+            step(pull_request_job, "Plan the build"),
+        )
+        snapshot = step(pull_request_job, "Snapshot the rendered output")
+        self.assertIn(
+            "if: always() && (steps.builder.outcome == 'success' || "
+            "steps.builder.outcome == 'failure' || steps.builder.outcome == 'cancelled')",
+            snapshot,
+        )
+        self.assertIn('python3 scripts/rendered_output.py collect --into "$RUNNER_TEMP/rendered-output"', snapshot)
+        keep = step(pull_request_job, "Keep the renders this failed build paid for")
+        self.assertIn("if: (failure() || cancelled()) && steps.snapshot.outcome == 'success'", keep)
+        self.assertIn("name: rendered-output", keep)
+        self.assertIn("path: ${{ runner.temp }}/rendered-output", keep)
 
         close = pull_request_job.split("- name: Close the failed-build issue", 1)[1].split("\n      - ", 1)[0]
         self.assertIn("if: success()", close)
@@ -225,7 +270,8 @@ class ReleaseWorkflowTests(unittest.TestCase):
         report = pull_request_job.split("- name: File an issue when a build fails after rendering", 1)[1]
         self.assertIn(
             "if: (failure() || cancelled()) && (steps.builder.outcome == 'success' || "
-            "steps.builder.outcome == 'failure' || steps.builder.outcome == 'cancelled')",
+            "steps.builder.outcome == 'failure' || steps.builder.outcome == 'cancelled') && "
+            "steps.create-pull-request.outputs.pull-request-number == ''",
             report,
         )
         self.assertIn(f"gh label create {label} --force", report)

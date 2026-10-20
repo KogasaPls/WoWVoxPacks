@@ -9,7 +9,13 @@ UPDATE_BRANCH_PREFIX = "ci/update-"
 FAILURE_LABEL = "update-build-failed"
 
 
-def decide(pull_requests: list[dict], failure_issues: list[dict], event_name: str) -> str | None:
+def decide(
+    pull_requests: list[dict],
+    failure_issues: list[dict],
+    event_name: str,
+    run_sha: str,
+    main_sha: str,
+) -> str | None:
     """The reason the build must wait, or None when it may run."""
     pending = [
         f"#{pull_request['number']}"
@@ -19,10 +25,17 @@ def decide(pull_requests: list[dict], failure_issues: list[dict], event_name: st
     ]
     if pending:
         return f"Update PR {' '.join(pending)} is still open; merge or close it to build again."
+    # A run builds the commit it was triggered on. Once main has moved, the merge it is waiting
+    # behind may already have rendered what this run would render again.
+    if run_sha != main_sha:
+        return (
+            f"main moved from {run_sha[:9]} to {main_sha[:9]} after this run started; "
+            "the next run builds on it."
+        )
     if failure_issues and event_name != "workflow_dispatch":
         return (
             f"Issue #{failure_issues[0]['number']} records a failed build; close it, or run this "
-            "workflow by hand with force."
+            "workflow by hand, which reuses the renders the failed build kept."
         )
     return None
 
@@ -32,6 +45,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--pulls", type=Path, required=True, help="gh pr list --json output")
     parser.add_argument("--issues", type=Path, required=True, help="gh issue list --json output")
     parser.add_argument("--event", required=True)
+    parser.add_argument("--run-sha", required=True, help="the commit this run checks out")
+    parser.add_argument("--main-sha", required=True, help="the default branch's head now")
     parser.add_argument("--output", type=Path, required=True, help="the step's GITHUB_OUTPUT file")
     return parser.parse_args()
 
@@ -42,6 +57,8 @@ def main() -> int:
         json.loads(args.pulls.read_text(encoding="utf-8")),
         json.loads(args.issues.read_text(encoding="utf-8")),
         args.event,
+        args.run_sha,
+        args.main_sha,
     )
     if reason is not None:
         print(f"::warning::{reason}")

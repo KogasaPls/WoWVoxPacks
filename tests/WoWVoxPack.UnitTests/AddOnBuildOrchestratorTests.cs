@@ -329,6 +329,63 @@ public class AddOnBuildOrchestratorTests : IDisposable
         Assert.False(File.Exists(Path.Combine(_tempDirectory, "Neural2_C", "Test_AddOn", "SoundFiles.json")));
     }
 
+    [Fact]
+    public async Task RunAsync_RecordsTheRendersItFinished_WhenTheBuildFailsPartway()
+    {
+        AddOnSettings settings = DefaultSettings("Test_AddOn");
+        FakeAddOnService service = new((dir, tts) =>
+            new AddOnBuilder(settings, tts)
+                .AddSoundFile(new SoundFile("alert.ogg", text: "Alert", displayName: "Alert"))
+                .AddSoundFile(new SoundFile("soak.ogg", text: "Soak", displayName: "Soak"))
+                .BuildDraft(dir));
+        FakeSoundFileService failing = new(failsFor: "soak.ogg");
+
+        await Assert.ThrowsAsync<HttpRequestException>(
+            () => Orchestrator(service, failing).RunAsync(CancellationToken.None));
+
+        string manifestPath = Path.Combine(_tempDirectory, "Neural2_C", "Test_AddOn", "SoundFiles.json");
+        SoundFile recorded = Assert.Single(AddOnBuilder.LoadSoundFileJson(manifestPath));
+        Assert.Equal("alert.ogg", recorded.FileName);
+
+        // The update workflow restores this folder for its retry, which then pays only for the
+        // file that failed.
+        FakeSoundFileService retry = new();
+        await Orchestrator(service, retry).RunAsync(CancellationToken.None);
+
+        Assert.Equal(["soak.ogg"], retry.CreatedSoundFiles.Select(f => f.FileName));
+    }
+
+    [Fact]
+    public async Task RunAsync_RetiresAFile_AfterAPartialBuildKeptItInTheManifest()
+    {
+        AddOnSettings settings = DefaultSettings("Test_AddOn");
+        bool registerOld = true;
+        FakeAddOnService service = new((dir, tts) =>
+        {
+            AddOnBuilder builder = new AddOnBuilder(settings, tts)
+                .AddSoundFile(new SoundFile("alert.ogg", text: "Alert", displayName: "Alert"));
+            if (registerOld)
+            {
+                builder.AddSoundFile(new SoundFile("old.ogg", text: "Old", displayName: "Old"));
+            }
+            else
+            {
+                builder.AddSoundFile(new SoundFile("new.ogg", text: "New", displayName: "New"))
+                    .AddSoundFile(new SoundFile("soak.ogg", text: "Soak", displayName: "Soak"));
+            }
+
+            return builder.BuildDraft(dir);
+        });
+        await Orchestrator(service, new FakeSoundFileService()).RunAsync(CancellationToken.None);
+
+        registerOld = false;
+        await Assert.ThrowsAsync<HttpRequestException>(() =>
+            Orchestrator(service, new FakeSoundFileService(failsFor: "soak.ogg")).RunAsync(CancellationToken.None));
+        await Orchestrator(service, new FakeSoundFileService()).RunAsync(CancellationToken.None);
+
+        Assert.False(File.Exists(Path.Combine(_tempDirectory, "Neural2_C", "Test_AddOn", "Sounds", "old.ogg")));
+    }
+
     public void Dispose()
     {
         Directory.Delete(_tempDirectory, true);
@@ -385,7 +442,8 @@ public class AddOnBuildOrchestratorTests : IDisposable
     }
 
     /// <summary>Renders run in parallel, so the record of them has to survive that.</summary>
-    private sealed class FakeSoundFileService(int failuresPerFile = 0, Func<Exception>? failWith = null)
+    private sealed class FakeSoundFileService(int failuresPerFile = 0, Func<Exception>? failWith = null,
+        string? failsFor = null)
         : ISoundFileService
     {
         private readonly Lock _gate = new();
@@ -409,7 +467,8 @@ public class AddOnBuildOrchestratorTests : IDisposable
             lock (_gate)
             {
                 _failures.TryGetValue(soundFile.FileName, out int failed);
-                if (failed < failuresPerFile)
+                if (failed < failuresPerFile ||
+                    string.Equals(soundFile.FileName, failsFor, StringComparison.OrdinalIgnoreCase))
                 {
                     _failures[soundFile.FileName] = failed + 1;
                     throw failWith?.Invoke() ?? new HttpRequestException("the provider is having a moment");

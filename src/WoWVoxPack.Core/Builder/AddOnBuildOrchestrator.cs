@@ -1,3 +1,5 @@
+using System.Collections.Concurrent;
+
 using Ardalis.GuardClauses;
 
 using Microsoft.Extensions.Logging;
@@ -84,8 +86,21 @@ public class AddOnBuildOrchestrator(
             return;
         }
 
-        await CreateSoundFilesAsync(
-            soundFilesToCreate, soundOutputDirectory, addOn.TtsSettings, cancellationToken);
+        ConcurrentBag<string> rendered = [];
+        try
+        {
+            await CreateSoundFilesAsync(
+                soundFilesToCreate, soundOutputDirectory, addOn.TtsSettings, rendered, cancellationToken);
+        }
+        catch when (!rendered.IsEmpty)
+        {
+            // The finished renders are paid for. The update workflow keeps this folder for its
+            // retry, and recording them lets that retry compare their speech instead of either
+            // paying again or trusting a file it knows nothing about.
+            await manifest.SaveAsync(addOn.SoundFilesJsonPath,
+                manifest.AfterPartialRender(addOn.SoundFiles, rendered), CancellationToken.None);
+            throw;
+        }
 
         RemoveRetiredSoundFiles(soundFilesToRemove, addOn, soundOutputDirectory);
 
@@ -138,7 +153,7 @@ public class AddOnBuildOrchestrator(
     /// second and third chance before it takes the build down with it.
     /// </summary>
     private async Task CreateSoundFilesAsync(IReadOnlyCollection<SoundFile> soundFiles, string soundOutputDirectory,
-        TtsSettings ttsSettings, CancellationToken cancellationToken)
+        TtsSettings ttsSettings, ConcurrentBag<string> rendered, CancellationToken cancellationToken)
     {
         if (soundFiles.Count == 0)
         {
@@ -150,13 +165,13 @@ public class AddOnBuildOrchestrator(
 
         // A composed recording reads its sources off disk, so it waits for the pass that writes them.
         await RenderAsync(soundFiles.Where(f => f.Composition is null).ToArray(), soundOutputDirectory,
-            ttsSettings, cancellationToken);
+            ttsSettings, rendered, cancellationToken);
         await RenderAsync(soundFiles.Where(f => f.Composition is not null).ToArray(), soundOutputDirectory,
-            ttsSettings, cancellationToken);
+            ttsSettings, rendered, cancellationToken);
     }
 
     private Task RenderAsync(IReadOnlyCollection<SoundFile> soundFiles, string soundOutputDirectory,
-        TtsSettings ttsSettings, CancellationToken cancellationToken)
+        TtsSettings ttsSettings, ConcurrentBag<string> rendered, CancellationToken cancellationToken)
     {
         if (soundFiles.Count == 0)
         {
@@ -170,7 +185,11 @@ public class AddOnBuildOrchestrator(
         };
 
         return Parallel.ForEachAsync(soundFiles, options,
-            (soundFile, token) => CreateSoundFileWithRetryAsync(soundFile, soundOutputDirectory, ttsSettings, token));
+            async (soundFile, token) =>
+            {
+                await CreateSoundFileWithRetryAsync(soundFile, soundOutputDirectory, ttsSettings, token);
+                rendered.Add(soundFile.FileName);
+            });
     }
 
     private async ValueTask CreateSoundFileWithRetryAsync(SoundFile soundFile, string soundOutputDirectory,

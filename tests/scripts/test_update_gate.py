@@ -15,36 +15,50 @@ update_gate = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(update_gate)
 
 
+HEAD = "a" * 40
+
+
+def decide(pull_requests, failure_issues, event, run_sha=HEAD, main_sha=HEAD):
+    return update_gate.decide(pull_requests, failure_issues, event, run_sha, main_sha)
+
+
 def pull(number, branch, fork=False):
     return {"number": number, "headRefName": branch, "isCrossRepository": fork}
 
 
 class DecideTests(unittest.TestCase):
     def test_nothing_pending_lets_the_build_run(self):
-        self.assertIsNone(update_gate.decide([pull(52, "interface-12.1.5")], [], "schedule"))
+        self.assertIsNone(decide([pull(52, "interface-12.1.5")], [], "schedule"))
 
     def test_an_open_update_pr_holds_every_event(self):
         for event in ("schedule", "workflow_dispatch"):
             with self.subTest(event=event):
-                reason = update_gate.decide([pull(54, "ci/update-v12.1.5-123")], [], event)
+                reason = decide([pull(54, "ci/update-v12.1.5-123")], [], event)
                 self.assertIn("#54", reason)
 
     def test_a_fork_cannot_hold_the_build(self):
         """The repository is public, so anyone can open a PR from a branch named ci/update-."""
         self.assertIsNone(
-            update_gate.decide([pull(60, "ci/update-x", fork=True)], [], "schedule")
+            decide([pull(60, "ci/update-x", fork=True)], [], "schedule")
         )
 
     def test_a_failed_build_holds_scheduled_runs(self):
-        reason = update_gate.decide([], [{"number": 7}], "schedule")
+        reason = decide([], [{"number": 7}], "schedule")
 
         self.assertIn("#7", reason)
 
     def test_a_manual_run_overrides_a_failed_build(self):
-        self.assertIsNone(update_gate.decide([], [{"number": 7}], "workflow_dispatch"))
+        self.assertIsNone(decide([], [{"number": 7}], "workflow_dispatch"))
+
+    def test_a_run_whose_commit_main_has_left_waits_for_the_next(self):
+        """Its build would start from before a merge that may have rendered the same files."""
+        for event in ("schedule", "workflow_dispatch"):
+            with self.subTest(event=event):
+                reason = decide([], [], event, run_sha="a" * 40, main_sha="b" * 40)
+                self.assertIn("main moved", reason)
 
     def test_a_manual_run_does_not_override_an_open_update_pr(self):
-        reason = update_gate.decide(
+        reason = decide(
             [pull(54, "ci/update-v12.1.5-123")], [{"number": 7}], "workflow_dispatch"
         )
 
@@ -74,6 +88,10 @@ class CommandLineTests(unittest.TestCase):
                 str(self.directory / "issues.json"),
                 "--event",
                 event,
+                "--run-sha",
+                HEAD,
+                "--main-sha",
+                HEAD,
                 "--output",
                 str(self.output),
             ],

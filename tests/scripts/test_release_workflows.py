@@ -23,6 +23,12 @@ spec = importlib.util.spec_from_file_location(
 game_versions = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(game_versions)
 
+spec = importlib.util.spec_from_file_location(
+    "update_gate", REPOSITORY_ROOT / "scripts" / "update_gate.py"
+)
+update_gate = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(update_gate)
+
 
 class ReleaseWorkflowTests(unittest.TestCase):
     def test_curseforge_publish_has_one_automatic_release_path(self):
@@ -188,26 +194,43 @@ class ReleaseWorkflowTests(unittest.TestCase):
         concurrency = updater.split("\nconcurrency:", 1)[1].split("\njobs:", 1)[0]
         self.assertIn("cancel-in-progress: false", concurrency)
 
+        label = update_gate.FAILURE_LABEL
         gate = updater.split("\n  check-earlier-build:", 1)[1].split("\n  check-bigwigs-voice-version:", 1)[0]
-        title = "The automatic update build failed after rendering"
-        self.assertIn('startswith("ci/update-")', gate)
-        self.assertIn(title, gate)
-        self.assertIn('[ "$EVENT_NAME" != "workflow_dispatch" ]', gate)
+        self.assertIn("continue-on-error", updater.split("\n  check-nsrt-vocabulary:", 1)[1])
+        self.assertNotIn("continue-on-error", gate)
+        self.assertIn(
+            "gh pr list --state open --limit 100 --json number,headRefName,isCrossRepository > pulls.json",
+            gate,
+        )
+        self.assertIn(f"gh issue list --state open --label {label} --json number > issues.json", gate)
+        self.assertIn("python3 scripts/update_gate.py --pulls pulls.json --issues issues.json", gate)
+        self.assertIn('--event "$EVENT_NAME" --output "$GITHUB_OUTPUT"', gate)
+        self.assertIn("EVENT_NAME: ${{ github.event_name }}", gate)
 
         pull_request_job = updater.split("\n  create-pull-request:", 1)[1]
         header = pull_request_job.split("\n    steps:", 1)[0]
         self.assertIn("check-earlier-build", header.split("needs:", 1)[1].split("\n", 1)[0])
         self.assertIn("if: ${{ needs.check-earlier-build.outputs.blocked == 'false' && (", header)
-        self.assertIn("branch: ci/update-", pull_request_job)
+        self.assertIn("timeout-minutes:", header)
+        self.assertIn(f"branch: {update_gate.UPDATE_BRANCH_PREFIX}", pull_request_job)
 
         builder = pull_request_job.split("- name: Run addon builder", 1)[1].split("\n      - ", 1)[0]
         self.assertIn("id: builder", builder)
+
+        close = pull_request_job.split("- name: Close the failed-build issue", 1)[1].split("\n      - ", 1)[0]
+        self.assertIn("if: success()", close)
+        self.assertIn(f"gh issue list --state open --label {label}", close)
+        self.assertIn('gh issue close "$number"', close)
+
         report = pull_request_job.split("- name: File an issue when a build fails after rendering", 1)[1]
         self.assertIn(
-            "if: failure() && (steps.builder.outcome == 'success' || steps.builder.outcome == 'failure')",
+            "if: (failure() || cancelled()) && (steps.builder.outcome == 'success' || "
+            "steps.builder.outcome == 'failure' || steps.builder.outcome == 'cancelled')",
             report,
         )
-        self.assertIn(f'title="{title}"', report)
+        self.assertIn(f"gh label create {label} --force", report)
+        self.assertIn(f"--label {label}", report.split("gh issue create", 1)[1])
+        self.assertIn('gh issue comment "$number"', report)
 
     def test_the_live_build_is_validated_before_the_log_prints_it(self):
         """The fetched table is untrusted; an unvalidated echo could inject workflow commands."""

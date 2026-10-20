@@ -22,6 +22,12 @@
     }
   },
   {
+    "FileName": "add_soak.ogg",
+    "DisplayName": "Add Soak",
+    "FormattedDisplayName": "Add Soak",
+    "Text": "Add Soak"
+  },
+  {
     "FileName": "adds.ogg",
     "DisplayName": "Adds",
     "FormattedDisplayName": "Adds",
@@ -88,6 +94,18 @@
     "Text": "Anti-Magic Zone"
   },
   {
+    "FileName": "aoe.ogg",
+    "DisplayName": "Ao E",
+    "FormattedDisplayName": "Ao E",
+    "Text": "AOE",
+    "Pronunciations": [
+      {
+        "Phrase": "AOE",
+        "Ipa": "\u02CCe\u026A.jo\u028A\u02C8wi"
+      }
+    ]
+  },
+  {
     "FileName": "apotheosis.ogg",
     "DisplayName": "Apotheosis",
     "FormattedDisplayName": "Apotheosis",
@@ -152,6 +170,12 @@
     "DisplayName": "Aura Mastery",
     "FormattedDisplayName": "Aura Mastery",
     "Text": "Aura Mastery"
+  },
+  {
+    "FileName": "aura_of_wrath.ogg",
+    "DisplayName": "Aura of Wrath",
+    "FormattedDisplayName": "Aura of Wrath",
+    "Text": "Aura of Wrath"
   },
   {
     "FileName": "avatar.ogg",
@@ -286,6 +310,12 @@
     "Text": "Blessing of Summer"
   },
   {
+    "FileName": "blink_nova.ogg",
+    "DisplayName": "Blink Nova",
+    "FormattedDisplayName": "Blink Nova",
+    "Text": "Blink Nova"
+  },
+  {
     "FileName": "blistering_scales.ogg",
     "DisplayName": "Blistering Scales",
     "FormattedDisplayName": "Blistering Scales",
@@ -296,6 +326,12 @@
     "DisplayName": "Blood Fury",
     "FormattedDisplayName": "Blood Fury",
     "Text": "Blood Fury"
+  },
+  {
+    "FileName": "blood_soak.ogg",
+    "DisplayName": "Blood-Soak",
+    "FormattedDisplayName": "Blood-Soak",
+    "Text": "Blood Soak"
   },
   {
     "FileName": "bloodlust.ogg",
@@ -316,6 +352,12 @@
     "Text": "Blur"
   },
   {
+    "FileName": "bomb_inc.ogg",
+    "DisplayName": "Bomb inc",
+    "FormattedDisplayName": "Bomb inc",
+    "Text": "Bomb incoming"
+  },
+  {
     "FileName": "bomb.ogg",
     "DisplayName": "Bomb",
     "FormattedDisplayName": "Bomb",
@@ -332,6 +374,12 @@
     "DisplayName": "BoP",
     "FormattedDisplayName": "BoP",
     "Text": "Bop"
+  },
+  {
+    "FileName": "boss_spawn.ogg",
+    "DisplayName": "Boss Spawn",
+    "FormattedDisplayName": "Boss Spawn",
+    "Text": "Boss Spawn"
   },
   {
     "FileName": "boss.ogg",
@@ -526,6 +574,18 @@
     "Text": "Crimson Vial"
   },
   {
+    "FileName": "damage_amp_in.ogg",
+    "DisplayName": "Dmg amp in",
+    "FormattedDisplayName": "Dmg amp in",
+    "Text": "Damage Amp in"
+  },
+  {
+    "FileName": "damage_amp.ogg",
+    "DisplayName": "Damage Amp",
+    "FormattedDisplayName": "Damage Amp",
+    "Text": "Damage Amp"
+  },
+  {
     "FileName": "dancing_rune_weapon.ogg",
     "DisplayName": "Dancing Rune Weapon",
     "FormattedDisplayName": "Dancing Rune Weapon",
@@ -598,6 +658,12 @@
     "Text": "Deeply Rooted Elements"
   },
   {
+    "FileName": "defensives.ogg",
+    "DisplayName": "Defensives",
+    "FormattedDisplayName": "Defensives",
+    "Text": "Defensives"
+  },
+  {
     "FileName": "demo_shout.ogg",
     "DisplayName": "Demo Shout",
     "FormattedDisplayName": "Demo Shout",
@@ -628,6 +694,12 @@
     "Text": "Desperate Prayer"
   },
   {
+    "FileName": "devotion_aura.ogg",
+    "DisplayName": "Devotion Aura",
+    "FormattedDisplayName": "Devotion Aura",
+    "Text": "Devotion Aura"
+  },
+  {
     "FileName": "die_by_the_sword.ogg",
     "DisplayName": "Die by the Sword",
     "FormattedDisplayName": "Die by the Sword",
@@ -638,6 +710,12 @@
     "DisplayName": "Dispel",
     "FormattedDisplayName": "Dispel",
     "Text": "Dispel"
+  },
+  {
+    "FileName": "dispels.ogg",
+    "DisplayName": "Dispels",
+    "FormattedDisplayName": "Dispels",
+    "Text": "Dispels"
   },
   {
     "FileName": "dispersion.ogg",
@@ -700,6 +778,12 @@
     "Text": "Doomguard"
   },
   {
+    "FileName": "drag_out.ogg",
+    "DisplayName": "Drag out",
+    "FormattedDisplayName": "Drag out",
+    "Text": "Drag out"
+  },
+  {
     "FileName": "dragonrage.ogg",
     "DisplayName": "Dragonrage",
     "FormattedDisplayName": "Dragonrage",
@@ -752,6 +836,18 @@
     "DisplayName": "Ebon Might",
     "FormattedDisplayName": "Ebon Might",
     "Text": "Ebon Might"
+  },
+  {
+    "FileName": "egg_deadline.ogg",
+    "DisplayName": "Egg Deadline",
+    "FormattedDisplayName": "Egg Deadline",
+    "Text": "Egg Deadline"
+  },
+  {
+    "FileName": "eggs.ogg",
+    "DisplayName": "Eggs",
+    "FormattedDisplayName": "Eggs",
+    "Text": "Eggs"
   },
   {
     "FileName": "eight.ogg",
@@ -928,6 +1024,24 @@
     "Text": "Firestorm"
   },
   {
+    "FileName": "first_break.ogg",
+    "DisplayName": "First Break",
+    "FormattedDisplayName": "First Break",
+    "Text": "First Break"
+  },
+  {
+    "FileName": "first_soak.ogg",
+    "DisplayName": "First Soak",
+    "FormattedDisplayName": "First Soak",
+    "Text": "First Soak"
+  },
+  {
+    "FileName": "fish_spawn.ogg",
+    "DisplayName": "Fish Spawn",
+    "FormattedDisplayName": "Fish Spawn",
+    "Text": "Fish Spawn"
+  },
+  {
     "FileName": "five.ogg",
     "DisplayName": "Five",
     "FormattedDisplayName": "Five",
@@ -982,6 +1096,12 @@
     "Text": "Frost"
   },
   {
+    "FileName": "frostfire_debuffs.ogg",
+    "DisplayName": "Frostfire Debuffs",
+    "FormattedDisplayName": "Frostfire Debuffs",
+    "Text": "Frostfire Debuffs"
+  },
+  {
     "FileName": "frostwyrm_s_fury.ogg",
     "DisplayName": "Frostwyrm\u0027s Fury",
     "FormattedDisplayName": "Frostwyrm\u0027s Fury",
@@ -1034,6 +1154,18 @@
     "DisplayName": "Gateway",
     "FormattedDisplayName": "Gateway",
     "Text": "Gateway"
+  },
+  {
+    "FileName": "get_orb.ogg",
+    "DisplayName": "Get Orb",
+    "FormattedDisplayName": "Get Orb",
+    "Text": "Get Orb"
+  },
+  {
+    "FileName": "ghosts.ogg",
+    "DisplayName": "Ghosts",
+    "FormattedDisplayName": "Ghosts",
+    "Text": "Ghosts"
   },
   {
     "FileName": "glaives.ogg",
@@ -1228,6 +1360,12 @@
     "Text": "Incarnation: Tree of Life"
   },
   {
+    "FileName": "infection.ogg",
+    "DisplayName": "Infection",
+    "FormattedDisplayName": "Infection",
+    "Text": "Infection"
+  },
+  {
     "FileName": "infernal.ogg",
     "DisplayName": "Infernal",
     "FormattedDisplayName": "Infernal",
@@ -1298,6 +1436,12 @@
     "DisplayName": "Ironbark",
     "FormattedDisplayName": "Ironbark",
     "Text": "Ironbark"
+  },
+  {
+    "FileName": "jump.ogg",
+    "DisplayName": "Jump",
+    "FormattedDisplayName": "Jump",
+    "Text": "Jump"
   },
   {
     "FileName": "keep_it_rolling.ogg",
@@ -1450,6 +1594,12 @@
     "Text": "Mind Control"
   },
   {
+    "FileName": "mind_controls.ogg",
+    "DisplayName": "Mind Controls",
+    "FormattedDisplayName": "Mind Controls",
+    "Text": "Mind Controls"
+  },
+  {
     "FileName": "mirror_image.ogg",
     "DisplayName": "Mirror Image",
     "FormattedDisplayName": "Mirror Image",
@@ -1472,6 +1622,12 @@
     "DisplayName": "Move",
     "FormattedDisplayName": "Move",
     "Text": "Move"
+  },
+  {
+    "FileName": "next_hit.ogg",
+    "DisplayName": "Next Hit",
+    "FormattedDisplayName": "Next Hit",
+    "Text": "Next Hit"
   },
   {
     "FileName": "next.ogg",
@@ -1528,6 +1684,12 @@
     "Text": "Orange"
   },
   {
+    "FileName": "orb_deadline.ogg",
+    "DisplayName": "Orb deadline",
+    "FormattedDisplayName": "Orb deadline",
+    "Text": "Orb deadline"
+  },
+  {
     "FileName": "orb.ogg",
     "DisplayName": "Orb",
     "FormattedDisplayName": "Orb",
@@ -1552,6 +1714,12 @@
     "Text": "Pain Suppression"
   },
   {
+    "FileName": "peace_aura.ogg",
+    "DisplayName": "Peace Aura",
+    "FormattedDisplayName": "Peace Aura",
+    "Text": "Peace Aura"
+  },
+  {
     "FileName": "pi.ogg",
     "DisplayName": "PI",
     "FormattedDisplayName": "PI",
@@ -1564,10 +1732,28 @@
     ]
   },
   {
+    "FileName": "pick_up.ogg",
+    "DisplayName": "PICK UP",
+    "FormattedDisplayName": "PICK UP",
+    "Text": "Pick up"
+  },
+  {
     "FileName": "pillar_of_frost.ogg",
     "DisplayName": "Pillar of Frost",
     "FormattedDisplayName": "Pillar of Frost",
     "Text": "Pillar of Frost"
+  },
+  {
+    "FileName": "platform_break.ogg",
+    "DisplayName": "Platform Break",
+    "FormattedDisplayName": "Platform Break",
+    "Text": "Platform Break"
+  },
+  {
+    "FileName": "poison_add.ogg",
+    "DisplayName": "Poison Add",
+    "FormattedDisplayName": "Poison Add",
+    "Text": "Poison Add"
   },
   {
     "FileName": "potion_of_recklessness.ogg",
@@ -1870,9 +2056,21 @@
     "Text": "Safe"
   },
   {
+    "FileName": "second_break.ogg",
+    "DisplayName": "Second Break",
+    "FormattedDisplayName": "Second Break",
+    "Text": "Second Break"
+  },
+  {
+    "FileName": "second_soak.ogg",
+    "DisplayName": "Second Soak",
+    "FormattedDisplayName": "Second Soak",
+    "Text": "Second Soak"
+  },
+  {
     "FileName": "seed_drop.ogg",
-    "DisplayName": "Seed Drop",
-    "FormattedDisplayName": "Seed Drop",
+    "DisplayName": "Seed-Drop",
+    "FormattedDisplayName": "Seed-Drop",
     "Text": "Seed Drop"
   },
   {
@@ -1880,6 +2078,12 @@
     "DisplayName": "Server",
     "FormattedDisplayName": "Server",
     "Text": "Server"
+  },
+  {
+    "FileName": "set_markers.ogg",
+    "DisplayName": "Set Markers",
+    "FormattedDisplayName": "Set Markers",
+    "Text": "Set Markers"
   },
   {
     "FileName": "seven.ogg",
@@ -1916,6 +2120,12 @@
     "DisplayName": "Shield Wall",
     "FormattedDisplayName": "Shield Wall",
     "Text": "Shield Wall"
+  },
+  {
+    "FileName": "shield.ogg",
+    "DisplayName": "Shield",
+    "FormattedDisplayName": "Shield",
+    "Text": "Shield"
   },
   {
     "FileName": "shiv.ogg",
@@ -1973,8 +2183,8 @@
   },
   {
     "FileName": "soak_circle.ogg",
-    "DisplayName": "Soak Circle",
-    "FormattedDisplayName": "Soak Circle",
+    "DisplayName": "Soak {rt2}",
+    "FormattedDisplayName": "Soak {rt2}",
     "Text": "Soak Circle"
   },
   {
@@ -1982,6 +2192,12 @@
     "DisplayName": "Soak Cross",
     "FormattedDisplayName": "Soak Cross",
     "Text": "Soak Cross"
+  },
+  {
+    "FileName": "soak_diamond.ogg",
+    "DisplayName": "Soak {rt3}",
+    "FormattedDisplayName": "Soak {rt3}",
+    "Text": "Soak Diamond"
   },
   {
     "FileName": "soak_front_left.ogg",
@@ -2000,6 +2216,12 @@
     "DisplayName": "Soak Left",
     "FormattedDisplayName": "Soak Left",
     "Text": "Soak Left"
+  },
+  {
+    "FileName": "soak_moon.ogg",
+    "DisplayName": "Soak {rt5}",
+    "FormattedDisplayName": "Soak {rt5}",
+    "Text": "Soak Moon"
   },
   {
     "FileName": "soak_orange.ogg",
@@ -2021,8 +2243,8 @@
   },
   {
     "FileName": "soak_square.ogg",
-    "DisplayName": "Soak Square",
-    "FormattedDisplayName": "Soak Square",
+    "DisplayName": "Soak {rt6}",
+    "FormattedDisplayName": "Soak {rt6}",
     "Text": "Soak Square"
   },
   {
@@ -2032,9 +2254,15 @@
     "Text": "Soak Star"
   },
   {
+    "FileName": "soak_time.ogg",
+    "DisplayName": "Soak-Time",
+    "FormattedDisplayName": "Soak-Time",
+    "Text": "Soak Time"
+  },
+  {
     "FileName": "soak_triangle.ogg",
-    "DisplayName": "Soak Triangle",
-    "FormattedDisplayName": "Soak Triangle",
+    "DisplayName": "Soak {rt4}",
+    "FormattedDisplayName": "Soak {rt4}",
     "Text": "Soak Triangle"
   },
   {
@@ -2272,6 +2500,18 @@
     "Text": "Survival of the Fittest"
   },
   {
+    "FileName": "swapped.ogg",
+    "DisplayName": "SWAPPED",
+    "FormattedDisplayName": "SWAPPED",
+    "Text": "Swapped"
+  },
+  {
+    "FileName": "sweep.ogg",
+    "DisplayName": "Sweep",
+    "FormattedDisplayName": "Sweep",
+    "Text": "Sweep"
+  },
+  {
     "FileName": "sweeping_strikes.ogg",
     "DisplayName": "Sweeping Strikes",
     "FormattedDisplayName": "Sweeping Strikes",
@@ -2288,6 +2528,18 @@
     "DisplayName": "Takedown",
     "FormattedDisplayName": "Takedown",
     "Text": "Takedown"
+  },
+  {
+    "FileName": "tank_combo.ogg",
+    "DisplayName": "Tank Combo",
+    "FormattedDisplayName": "Tank Combo",
+    "Text": "Tank Combo"
+  },
+  {
+    "FileName": "tank_hit.ogg",
+    "DisplayName": "Tank-Hit",
+    "FormattedDisplayName": "Tank-Hit",
+    "Text": "Tank Hit"
   },
   {
     "FileName": "targeted.ogg",
@@ -2354,6 +2606,12 @@
     "DisplayName": "Time Spiral",
     "FormattedDisplayName": "Time Spiral",
     "Text": "Time Spiral"
+  },
+  {
+    "FileName": "time_to_throw.ogg",
+    "DisplayName": "Time to Throw",
+    "FormattedDisplayName": "Time to Throw",
+    "Text": "Time to Throw"
   },
   {
     "FileName": "tip_the_scales.ogg",
@@ -2548,6 +2806,12 @@
     "Text": "West"
   },
   {
+    "FileName": "wind_debuffs.ogg",
+    "DisplayName": "Wind-Debuffs",
+    "FormattedDisplayName": "Wind-Debuffs",
+    "Text": "Wind Debuffs"
+  },
+  {
     "FileName": "wind_rush.ogg",
     "DisplayName": "Wind Rush",
     "FormattedDisplayName": "Wind Rush",
@@ -2576,6 +2840,12 @@
     "DisplayName": "Yellow",
     "FormattedDisplayName": "Yellow",
     "Text": "Yellow"
+  },
+  {
+    "FileName": "your_interrupt.ogg",
+    "DisplayName": "Your Interrupt",
+    "FormattedDisplayName": "Your Interrupt",
+    "Text": "Your Interrupt"
   },
   {
     "FileName": "yulon.ogg",

@@ -13,6 +13,28 @@
     "FileName": "left.ogg",
     "Text": "Left"
   },
+  "AoE": {
+    "FileName": "aoe.ogg",
+    "Text": "AOE"
+  },
+  "Blood-Soak": {
+    "Text": "Blood Soak"
+  },
+  "Bomb inc": {
+    "Text": "Bomb incoming"
+  },
+  "Dmg amp": {
+    "FileName": "damage_amp.ogg",
+    "Text": "Damage Amp"
+  },
+  "Dmg amp in": {
+    "FileName": "damage_amp_in.ogg",
+    "Text": "Damage Amp in"
+  },
+  "Drop-Pool": {
+    "FileName": "drop_pool.ogg",
+    "Text": "Drop Pool"
+  },
   "DropPool": {
     "Text": "Drop Pool"
   },
@@ -27,8 +49,59 @@
     "FileName": "invoke_yulon_the_jade_serpent.ogg",
     "Text": "Invoke Yu'lon, the Jade Serpent"
   },
+  "PICK UP": {
+    "Text": "Pick up"
+  },
   "Right > + Dodge": {
     "FileName": "right.ogg",
     "Text": "Right"
+  },
+  "Seed-Drop": {
+    "FileName": "seed_drop.ogg",
+    "Text": "Seed Drop"
+  },
+  "Soak {rt1}": {
+    "FileName": "soak_star.ogg",
+    "Text": "Soak Star"
+  },
+  "Soak {rt2}": {
+    "FileName": "soak_circle.ogg",
+    "Text": "Soak Circle"
+  },
+  "Soak {rt3}": {
+    "FileName": "soak_diamond.ogg",
+    "Text": "Soak Diamond"
+  },
+  "Soak {rt4}": {
+    "FileName": "soak_triangle.ogg",
+    "Text": "Soak Triangle"
+  },
+  "Soak {rt5}": {
+    "FileName": "soak_moon.ogg",
+    "Text": "Soak Moon"
+  },
+  "Soak {rt6}": {
+    "FileName": "soak_square.ogg",
+    "Text": "Soak Square"
+  },
+  "Soak {rt7}": {
+    "FileName": "soak_cross.ogg",
+    "Text": "Soak Cross"
+  },
+  "Soak {rt8}": {
+    "FileName": "soak_skull.ogg",
+    "Text": "Soak Skull"
+  },
+  "Soak-Time": {
+    "Text": "Soak Time"
+  },
+  "SWAPPED": {
+    "Text": "Swapped"
+  },
+  "Tank-Hit": {
+    "Text": "Tank Hit"
+  },
+  "Wind-Debuffs": {
+    "Text": "Wind Debuffs"
   }
 }

@@ -5,11 +5,43 @@
 # nsrt-alert-vocabulary.txt by .github/workflows/update.yml and do not belong in this file.
 # Opt-in alerts with TTS disabled by default are not extracted; include their strings here.
 < Left + Dodge
+Add Soak
+AoE
+Aura of Wrath
+Blink Nova
+Blood-Soak
+Bomb inc
+Boss Spawn
+Damage Amp
+Defensives
+Devotion Aura
+Dispels
+Dmg amp
+Dmg amp in
+Drag out
+Drop-Pool
+Egg Deadline
+Eggs
+First Break
+First Soak
+Fish Spawn
+Frostfire Debuffs
+Get Orb
+Ghosts
 Go to Back Left
 Go to Back Right
 Go to Flex Spot
 Go to Front Left
 Go to Front Right
+Infection
+Jump
+Mind Controls
+Next Hit
+Orb deadline
+Peace Aura
+PICK UP
+Platform Break
+Poison Add
 Rebuff Arcane Intellect
 Rebuff Battle Shout
 Rebuff Blessing of the Bronze
@@ -18,6 +50,11 @@ Rebuff Power Word: Fortitude
 Rebuff Skyfury
 Rebuff Soulstone
 Right > + Dodge
+Second Break
+Second Soak
+Seed-Drop
+Set Markers
+Shield
 Soak Back Left
 Soak Back Right
 Soak Cross
@@ -26,3 +63,19 @@ Soak Front Right
 Soak Orange
 Soak Skull
 Soak Star
+Soak {rt1}
+Soak {rt2}
+Soak {rt3}
+Soak {rt4}
+Soak {rt5}
+Soak {rt6}
+Soak {rt7}
+Soak {rt8}
+Soak-Time
+SWAPPED
+Sweep
+Tank Combo
+Tank-Hit
+Time to Throw
+Wind-Debuffs
+Your Interrupt

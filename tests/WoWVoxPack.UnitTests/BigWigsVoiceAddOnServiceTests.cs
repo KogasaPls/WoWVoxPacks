@@ -37,7 +37,7 @@ public class BigWigsVoiceAddOnServiceTests
     {
         BigWigsVoiceAddOnService service = new(new StubOptions(Settings),
             new FakeUpstreamClient([new BigWigsVoiceSoundFile("111", "Shadow Bolt"),
-                new BigWigsVoiceSoundFile("222", "Shadow Bolt")]));
+                new BigWigsVoiceSoundFile("222", "Shadow Bolt")]), BigWigsVoicePendingSpells.Empty);
 
         AddOnDraft draft = await service.BuildAddOnAsync("/tmp/output", TtsSettings);
         AddOn addOn = draft.Finalize(draft.SoundFiles);
@@ -50,7 +50,7 @@ public class BigWigsVoiceAddOnServiceTests
     public async Task BuildAddOnAsync_NamesTheFolderAfterTheVoice()
     {
         BigWigsVoiceAddOnService service =
-            new(new StubOptions(Settings), new FakeUpstreamClient([]));
+            new(new StubOptions(Settings), new FakeUpstreamClient([]), BigWigsVoicePendingSpells.Empty);
 
         AddOnDraft draft = await service.BuildAddOnAsync("/tmp/output", TtsSettings);
         AddOn addOn = draft.Finalize(draft.SoundFiles);
@@ -71,7 +71,7 @@ public class BigWigsVoiceAddOnServiceTests
             .ToArray();
 
         BigWigsVoiceAddOnService service =
-            new(new StubOptions(Settings), new FakeUpstreamClient(upstream));
+            new(new StubOptions(Settings), new FakeUpstreamClient(upstream), BigWigsVoicePendingSpells.Empty);
 
         AddOnDraft draft = await service.BuildAddOnAsync("/tmp/output", TtsSettings);
         AddOn addOn = draft.Finalize(draft.SoundFiles);
@@ -90,7 +90,7 @@ public class BigWigsVoiceAddOnServiceTests
         BigWigsVoiceSoundFile upstream =
             new("338353", "Goresplatter=upstream-ipa", "upstream:spells.txt:12");
         BigWigsVoiceAddOnService service =
-            new(new StubOptions(Settings), new FakeUpstreamClient([upstream]));
+            new(new StubOptions(Settings), new FakeUpstreamClient([upstream]), BigWigsVoicePendingSpells.Empty);
 
         AddOnDraft draft = await service.BuildAddOnAsync("/tmp/output", TtsSettings);
 
@@ -111,7 +111,7 @@ public class BigWigsVoiceAddOnServiceTests
             new("442530", "Goresplatter")
         ];
         BigWigsVoiceAddOnService service =
-            new(new StubOptions(Settings), new FakeUpstreamClient(upstream));
+            new(new StubOptions(Settings), new FakeUpstreamClient(upstream), BigWigsVoicePendingSpells.Empty);
         AddOnDraft draft = await service.BuildAddOnAsync("/tmp/output", TtsSettings);
         PronunciationResolver resolver = new(
             PronunciationCatalog.Load(FindRepoFile("pronunciations.json")),
@@ -124,6 +124,52 @@ public class BigWigsVoiceAddOnServiceTests
         Assert.All(sounds.Where(sound => sound.DisplayName == "Goresplatter"),
             sound => Assert.Contains(new Pronunciation("Goresplatter", "ˈɡɔrˌsplætər"),
                 sound.Pronunciations!));
+    }
+
+    [Fact]
+    public async Task BuildAddOnAsync_AddsPendingSpellsUpstreamDoesNotList()
+    {
+        BigWigsVoicePendingSpells pending =
+            BigWigsVoicePendingSpells.Parse("pending.txt", "; Boss: Kith'ix\n1301511\tVoidswarm\n");
+        BigWigsVoiceAddOnService service = new(new StubOptions(Settings),
+            new FakeUpstreamClient([new BigWigsVoiceSoundFile("111", "Shadow Bolt")]), pending);
+
+        AddOnDraft draft = await service.BuildAddOnAsync("/tmp/output", TtsSettings);
+
+        Assert.Contains(draft.SoundFiles, sound => sound.FileName == "111.ogg");
+        SoundFile voidswarm = Assert.Single(draft.SoundFiles, sound => sound.FileName == "1301511.ogg");
+        Assert.Equal("Voidswarm", voidswarm.Text);
+    }
+
+    [Fact]
+    public async Task BuildAddOnAsync_PrefersUpstream_WhenItListsAPendingSpell()
+    {
+        BigWigsVoicePendingSpells pending =
+            BigWigsVoicePendingSpells.Parse("pending.txt", "1301511\tVoidswarm\n");
+        BigWigsVoiceAddOnService service = new(new StubOptions(Settings),
+            new FakeUpstreamClient([new BigWigsVoiceSoundFile("1301511", "Void Swarm")]), pending);
+
+        AddOnDraft draft = await service.BuildAddOnAsync("/tmp/output", TtsSettings);
+
+        SoundFile voidswarm = Assert.Single(draft.SoundFiles, sound => sound.FileName == "1301511.ogg");
+        Assert.Equal("Void Swarm", voidswarm.Text);
+    }
+
+    [Fact]
+    public void ShippedPendingSpells_ParseEveryEntry()
+    {
+        // The parser skips any line it cannot split on one tab, so a space typed in place of
+        // the tab would drop that spell without a word.
+        string path = FindRepoFile(BigWigsVoicePendingSpells.FileName);
+        string[] entries = File.ReadAllLines(path)
+            .Where(line => !string.IsNullOrWhiteSpace(line) && !line.StartsWith(';'))
+            .ToArray();
+
+        BigWigsVoicePendingSpells pending = BigWigsVoicePendingSpells.Load(path);
+
+        Assert.Equal(entries.Length, pending.SoundFiles.Count);
+        Assert.All(pending.SoundFiles, sound => Assert.Matches(@"^\d+$", sound.SpellId));
+        Assert.Equal(pending.SoundFiles.Count, pending.SoundFiles.Select(sound => sound.SpellId).Distinct().Count());
     }
 
     private static string FindRepoFile(string fileName)

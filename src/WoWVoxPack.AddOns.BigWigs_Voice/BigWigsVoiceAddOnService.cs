@@ -7,7 +7,8 @@ namespace WoWVoxPack.AddOns.BigWigs_Voice;
 
 public sealed class BigWigsVoiceAddOnService(
     IOptionsSnapshot<AddOnSettings> addOnOptions,
-    IBigWigsVoiceUpstreamClient upstreamClient)
+    IBigWigsVoiceUpstreamClient upstreamClient,
+    BigWigsVoicePendingSpells pendingSpells)
     : IAddOnService
 {
     private static readonly Lazy<List<SoundFile>> JsonSoundFiles = new(LoadCuratedSoundFiles);
@@ -32,6 +33,7 @@ public sealed class BigWigsVoiceAddOnService(
             .WithDisplayTitle($"BigWigs |cffff7f3f+|r|cffffffffVoice: WoWVoxPacks ({ttsSettings.Voice})|r")
             .AddFile("Core.lua", CoreLuaFile.Render)
             .AddSoundFiles(soundFiles)
+            .AddSoundFiles(pendingSpells.SoundFiles)
             .AddSoundFiles(curated, overwrite: true)
             .BuildDraft(outputDirectoryBase);
     }

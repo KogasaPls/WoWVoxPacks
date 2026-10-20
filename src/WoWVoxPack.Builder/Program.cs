@@ -38,6 +38,8 @@ IHostBuilder hostBuilder = Host.CreateDefaultBuilder(args)
         services.AddHttpClient<IBigWigsVoiceUpstreamClient, BigWigsVoiceUpstreamClient>();
         string solutionDirectory = Path.GetDirectoryName(
             Assembly.GetExecutingAssembly().GetCustomAttribute<SolutionFileAttribute>()!.SolutionFile)!;
+        services.AddSingleton(BigWigsVoicePendingSpells.Load(
+            Path.Combine(solutionDirectory, BigWigsVoicePendingSpells.FileName)));
         services.AddSingleton(PronunciationCatalog.Load(
             Path.Combine(solutionDirectory, "pronunciations.json")));
         services.AddSingleton<PronunciationResolver>();

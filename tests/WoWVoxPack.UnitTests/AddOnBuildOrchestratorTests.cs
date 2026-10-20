@@ -329,6 +329,103 @@ public class AddOnBuildOrchestratorTests : IDisposable
         Assert.False(File.Exists(Path.Combine(_tempDirectory, "Neural2_C", "Test_AddOn", "SoundFiles.json")));
     }
 
+    [Fact]
+    public async Task RunAsync_RecordsTheRendersItFinished_WhenTheBuildFailsPartway()
+    {
+        AddOnSettings settings = DefaultSettings("Test_AddOn");
+        string suffix = string.Empty;
+        FakeAddOnService service = new((dir, tts) =>
+            new AddOnBuilder(settings, tts)
+                .AddSoundFile(new SoundFile("alert.ogg", text: "Alert" + suffix, displayName: "Alert"))
+                .AddSoundFile(new SoundFile("soak.ogg", text: "Soak" + suffix, displayName: "Soak"))
+                .BuildDraft(dir));
+        await Orchestrator(service, new FakeSoundFileService()).RunAsync(CancellationToken.None);
+
+        // Both files change, so without a record of the one that finished the retry would pay
+        // for it again: the last complete manifest still has its old text.
+        suffix = ", reworded";
+        await Assert.ThrowsAsync<HttpRequestException>(() =>
+            Orchestrator(service, new FakeSoundFileService(failsFor: "soak.ogg")).RunAsync(CancellationToken.None));
+
+        string manifestPath = Path.Combine(_tempDirectory, "Neural2_C", "Test_AddOn", "SoundFiles.json");
+        Dictionary<string, string?> recorded = AddOnBuilder.LoadSoundFileJson(manifestPath)
+            .ToDictionary(f => f.FileName, f => f.Text);
+        Assert.Equal("Alert, reworded", recorded["alert.ogg"]);
+        Assert.Equal("Soak", recorded["soak.ogg"]);
+
+        FakeSoundFileService retry = new();
+        await Orchestrator(service, retry).RunAsync(CancellationToken.None);
+
+        Assert.Equal(["soak.ogg"], retry.CreatedSoundFiles.Select(f => f.FileName));
+    }
+
+    [Fact]
+    public async Task RunAsync_RecomposesARecording_WhoseSourcesAPartialBuildReRendered()
+    {
+        AddOnSettings settings = DefaultSettings("Test_AddOn");
+        string one = "One";
+        bool withSoak = false;
+        FakeAddOnService service = new((dir, tts) =>
+        {
+            AddOnBuilder builder = new AddOnBuilder(settings, tts)
+                .AddSoundFile(new SoundFile("one.ogg", text: one, displayName: "One"))
+                .AddSoundFile(new SoundFile("two.ogg", text: "Two", displayName: "Two"))
+                .AddSoundFile(new SoundFile("count.ogg", displayName: "Count",
+                    composition: new SoundComposition(2,
+                        [new SoundCompositionPart("two.ogg", 0), new SoundCompositionPart("one.ogg", 1)])));
+            if (withSoak)
+            {
+                builder.AddSoundFile(new SoundFile("soak.ogg", text: "Soak", displayName: "Soak"));
+            }
+
+            return builder.BuildDraft(dir);
+        });
+        await Orchestrator(service, new FakeSoundFileService()).RunAsync(CancellationToken.None);
+
+        // one.ogg re-renders and is recorded, but the build fails before the composing pass, so
+        // count.ogg is still cut from the old take.
+        one = "Wun";
+        withSoak = true;
+        await Assert.ThrowsAsync<HttpRequestException>(() =>
+            Orchestrator(service, new FakeSoundFileService(failsFor: "soak.ogg")).RunAsync(CancellationToken.None));
+
+        FakeSoundFileService retry = new();
+        await Orchestrator(service, retry).RunAsync(CancellationToken.None);
+
+        Assert.Equal(["count.ogg", "soak.ogg"], retry.CreatedSoundFiles.Select(f => f.FileName).Order());
+    }
+
+    [Fact]
+    public async Task RunAsync_RetiresAFile_AfterAPartialBuildKeptItInTheManifest()
+    {
+        AddOnSettings settings = DefaultSettings("Test_AddOn");
+        bool registerOld = true;
+        FakeAddOnService service = new((dir, tts) =>
+        {
+            AddOnBuilder builder = new AddOnBuilder(settings, tts)
+                .AddSoundFile(new SoundFile("alert.ogg", text: "Alert", displayName: "Alert"));
+            if (registerOld)
+            {
+                builder.AddSoundFile(new SoundFile("old.ogg", text: "Old", displayName: "Old"));
+            }
+            else
+            {
+                builder.AddSoundFile(new SoundFile("new.ogg", text: "New", displayName: "New"))
+                    .AddSoundFile(new SoundFile("soak.ogg", text: "Soak", displayName: "Soak"));
+            }
+
+            return builder.BuildDraft(dir);
+        });
+        await Orchestrator(service, new FakeSoundFileService()).RunAsync(CancellationToken.None);
+
+        registerOld = false;
+        await Assert.ThrowsAsync<HttpRequestException>(() =>
+            Orchestrator(service, new FakeSoundFileService(failsFor: "soak.ogg")).RunAsync(CancellationToken.None));
+        await Orchestrator(service, new FakeSoundFileService()).RunAsync(CancellationToken.None);
+
+        Assert.False(File.Exists(Path.Combine(_tempDirectory, "Neural2_C", "Test_AddOn", "Sounds", "old.ogg")));
+    }
+
     public void Dispose()
     {
         Directory.Delete(_tempDirectory, true);
@@ -385,7 +482,8 @@ public class AddOnBuildOrchestratorTests : IDisposable
     }
 
     /// <summary>Renders run in parallel, so the record of them has to survive that.</summary>
-    private sealed class FakeSoundFileService(int failuresPerFile = 0, Func<Exception>? failWith = null)
+    private sealed class FakeSoundFileService(int failuresPerFile = 0, Func<Exception>? failWith = null,
+        string? failsFor = null)
         : ISoundFileService
     {
         private readonly Lock _gate = new();
@@ -409,7 +507,8 @@ public class AddOnBuildOrchestratorTests : IDisposable
             lock (_gate)
             {
                 _failures.TryGetValue(soundFile.FileName, out int failed);
-                if (failed < failuresPerFile)
+                if (failed < failuresPerFile ||
+                    string.Equals(soundFile.FileName, failsFor, StringComparison.OrdinalIgnoreCase))
                 {
                     _failures[soundFile.FileName] = failed + 1;
                     throw failWith?.Invoke() ?? new HttpRequestException("the provider is having a moment");

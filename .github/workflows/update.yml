@@ -11,9 +11,43 @@ on:
 
 concurrency:
   group: check-for-updates
-  cancel-in-progress: true
+  # A cancelled build throws away audio it already paid for. The next run waits instead and
+  # finds this run's PR open.
+  cancel-in-progress: false
 
 jobs:
+  check-earlier-build:
+    runs-on: ubuntu-latest
+    # The builder renders on a fresh checkout of main, so it pays again for everything an
+    # unmerged update PR or a failed build already rendered. Either one holds the build until
+    # someone merges or closes the PR, or closes the issue; a manual run overrides the issue.
+    permissions:
+      contents: read
+      pull-requests: read
+      issues: read
+    outputs:
+      blocked: ${{ steps.check.outputs.blocked }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          filter: blob:none
+          sparse-checkout: |
+            /*
+            !/output/
+          sparse-checkout-cone-mode: false
+      - name: Look for an open update PR or a failed build
+        id: check
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          gh pr list --state open --limit 100 --json number,headRefName,isCrossRepository > pulls.json
+          gh issue list --state open --label update-build-failed --json number > issues.json
+          # HEAD is the default branch. A scheduled run has no event payload to name it.
+          main_sha=$(gh api "repos/$GITHUB_REPOSITORY/commits/HEAD" --jq .sha)
+          python3 scripts/update_gate.py --pulls pulls.json --issues issues.json \
+            --event "$EVENT_NAME" --run-sha "$GITHUB_SHA" --main-sha "$main_sha" \
+            --output "$GITHUB_OUTPUT"
   check-bigwigs-voice-version:
     runs-on: ubuntu-latest
     outputs:
@@ -222,15 +256,67 @@ jobs:
           else
             gh issue create --title "$title" --body "$run_url"
           fi
-  create-pull-request:
-    needs: [ check-bigwigs-voice-version, check-nsrt-vocabulary ]
-    # The NSRT job carries continue-on-error, so its upstream may be temporarily unavailable
-    # without blocking a BigWigs update. A failed BigWigs check must still block this job:
-    # its version output would otherwise be committed as an empty file. The lorrgs
-    # vocabulary is imported by hand (see scripts/extract_lorrgs_vocabulary.py); this
-    # workflow only rebuilds from whatever is tracked.
-    if: ${{ needs.check-bigwigs-voice-version.outputs.needs_update == 'true' || needs.check-nsrt-vocabulary.outputs.needs_update == 'true' }}
+  check-live-build:
     runs-on: ubuntu-latest
+    # The packs declare only the live interface, so a patch day needs a rebuild even when
+    # no upstream list moved. Like the NSRT check, a failure here reports no change.
+    continue-on-error: true
+    permissions:
+      contents: read
+      issues: write
+    outputs:
+      build: ${{ steps.follow.outputs.build }}
+      game_version: ${{ steps.follow.outputs.game_version }}
+      needs_update: ${{ steps.follow.outputs.needs_update }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          filter: blob:none
+          sparse-checkout: |
+            /*
+            !/output/
+          sparse-checkout-cone-mode: false
+      - name: Compare the live build against the declared interfaces
+        id: follow
+        run: |
+          # Blizzard's own patch service, the table the launcher reads to pick a build.
+          curl -sf --retry 3 https://us.version.battle.net/v2/products/wow/versions -o versions.txt
+          build=$(python3 scripts/game_versions.py --live-build versions.txt)
+          echo "Live build: ${build}"
+          game_version=$(python3 scripts/game_versions.py --settings appsettings.json --follow "${build}")
+          echo "build=${build}" >> "$GITHUB_OUTPUT"
+          echo "game_version=${game_version}" >> "$GITHUB_OUTPUT"
+          if [ -n "${game_version}" ]; then
+            echo "Live moved to ${game_version}"
+            echo "needs_update=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "The declared interfaces cover the live build"
+            echo "needs_update=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: File an issue when this check fails
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          title="The live build check is failing"
+          run_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          number=$(gh issue list --state open --search "in:title \"$title\"" --json number --jq '.[0].number')
+          if [ -n "$number" ]; then
+            gh issue comment "$number" --body "Still failing: $run_url"
+          else
+            gh issue create --title "$title" --body "$run_url"
+          fi
+  create-pull-request:
+    needs: [ check-earlier-build, check-bigwigs-voice-version, check-nsrt-vocabulary, check-live-build ]
+    # The NSRT and live build jobs carry continue-on-error, so their upstreams may be
+    # temporarily unavailable without blocking a BigWigs update. A failed BigWigs check must
+    # still block this job: its version output would otherwise be committed as an empty
+    # file. The lorrgs vocabulary is imported by hand (see scripts/extract_lorrgs_vocabulary.py);
+    # this workflow only rebuilds from whatever is tracked.
+    if: ${{ needs.check-earlier-build.outputs.blocked == 'false' && (needs.check-bigwigs-voice-version.outputs.needs_update == 'true' || needs.check-nsrt-vocabulary.outputs.needs_update == 'true' || needs.check-live-build.outputs.needs_update == 'true') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
     permissions: write-all
     env:
       CI: true
@@ -261,6 +347,12 @@ jobs:
         run: |
           mv nsrt-vocabulary.new nsrt-vocabulary.txt
           mv nsrt-alert-vocabulary.new nsrt-alert-vocabulary.txt
+      - name: Follow the live build
+        if: ${{ needs.check-live-build.outputs.needs_update == 'true' }}
+        env:
+          LIVE_BUILD: ${{ needs.check-live-build.outputs.build }}
+        run: |
+          python3 scripts/game_versions.py --settings appsettings.json --follow "$LIVE_BUILD"
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v3'
@@ -273,8 +365,45 @@ jobs:
           dotnet-version: '10.0.x'
       - name: Build new version
         run: dotnet build
+      - name: Restore the renders a failed build kept
+        # The newest kept renders from main, applied only onto the output they were built from;
+        # see rendered_output.py. An API or download error fails the job before anything is spent;
+        # if an artifact can never be downloaded, delete it with
+        # gh api -X DELETE repos/OWNER/REPO/actions/artifacts/ID.
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          kept=$(gh api "repos/$GITHUB_REPOSITORY/actions/artifacts?name=rendered-output&per_page=100" \
+            --jq '[.artifacts[] | select((.expired | not) and .workflow_run.head_branch == "main")] | sort_by(.created_at) | reverse | .[0] // empty | "\(.id) \(.workflow_run.id)"')
+          if [ -z "$kept" ]; then
+            echo "No kept renders"
+            exit 0
+          fi
+          read -r artifact_id run_id <<< "$kept"
+          gh run download "$run_id" --name rendered-output --dir "$RUNNER_TEMP/restore-$artifact_id"
+          python3 scripts/rendered_output.py restore --from "$RUNNER_TEMP/restore-$artifact_id"
+      - name: Plan the build
+        # Free, and it trips the builder's re-render and removal limits for every pack before
+        # the paid run renders any of them.
+        run: dotnet run --project src/WoWVoxPack.Builder/WoWVoxPack.Builder.csproj -- --Matrix:DryRun true
       - name: Run addon builder
-        run: dotnet run --project src/WoWVoxPack.Builder/WoWVoxPack.Builder.csproj
+        id: builder
+        # Cancelling or timing out the job signals only this step's shell, never the builder, so
+        # it would never record its partial renders. timeout signals the builder itself, early
+        # enough that the snapshot and its upload still fit inside the job's own limit.
+        run: timeout -s INT -k 2m 155m dotnet run --project src/WoWVoxPack.Builder/WoWVoxPack.Builder.csproj
+      - name: Snapshot the rendered output
+        # Taken straight after the builder, before the PR step touches the working tree.
+        id: snapshot
+        if: always() && (steps.builder.outcome == 'success' || steps.builder.outcome == 'failure' || steps.builder.outcome == 'cancelled')
+        run: |
+          # A cancelled job leaves the builder running; interrupt it so it records what it finished.
+          pkill -INT -f 'WoWVoxPack\.Builder' || true
+          for _ in $(seq 60); do
+            pgrep -f 'WoWVoxPack\.Builder' > /dev/null || break
+            sleep 2
+          done
+          python3 scripts/rendered_output.py collect --into "$RUNNER_TEMP/rendered-output"
       - name: Create a pull request
         uses: peter-evans/create-pull-request@v8
         id: create-pull-request
@@ -286,6 +415,7 @@ jobs:
             Automatically created by the update workflow.
 
             - BigWigs_Voice version: ${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version }}
+            - Game version: ${{ needs.check-live-build.outputs.game_version || 'unchanged' }}
 
             New callouts:
             ```
@@ -301,6 +431,7 @@ jobs:
           base: main
           add-paths: |
             output/
+            appsettings.json
             bigwigs-voice-version.txt
             nsrt-vocabulary.txt
             nsrt-alert-vocabulary.txt
@@ -316,3 +447,52 @@ jobs:
           GH_TOKEN: ${{ secrets.WORKFLOW_RELEASE_PAT }}
           PR_NUMBER: ${{ steps.create-pull-request.outputs.pull-request-number }}
           PR_OPERATION: ${{ steps.create-pull-request.outputs.pull-request-operation }}
+      - name: Discard kept renders once a PR has them
+        # A PR built from main's head supersedes every kept render. Kept, they would come back
+        # after the PR was closed unmerged, which is how a bad batch of audio gets thrown away.
+        if: always() && steps.create-pull-request.outputs.pull-request-number != ''
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          for artifact_id in $(gh api "repos/$GITHUB_REPOSITORY/actions/artifacts?name=rendered-output&per_page=100" \
+              --jq '.artifacts[] | select((.expired | not) and .workflow_run.head_branch == "main") | .id'); do
+            gh api -X DELETE "repos/$GITHUB_REPOSITORY/actions/artifacts/$artifact_id"
+          done
+      - name: Close the failed-build issue
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          run_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          for number in $(gh issue list --state open --label update-build-failed --json number --jq '.[].number'); do
+            gh issue close "$number" --comment "Built successfully: $run_url"
+          done
+      - name: Keep the renders this failed build paid for
+        if: (failure() || cancelled()) && steps.snapshot.outcome == 'success' && steps.create-pull-request.outputs.pull-request-number == ''
+        uses: actions/upload-artifact@v7
+        with:
+          name: rendered-output
+          path: ${{ runner.temp }}/rendered-output
+          retention-days: 30
+      - name: File an issue when a build fails after rendering
+        # A failure before the builder started spent nothing, and an open PR already holds the
+        # gate, so only a build that rendered and opened no PR files one. A timeout cancels the
+        # job rather than failing it.
+        if: (failure() || cancelled()) && (steps.builder.outcome == 'success' || steps.builder.outcome == 'failure' || steps.builder.outcome == 'cancelled') && steps.create-pull-request.outputs.pull-request-number == ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          run_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          gh label create update-build-failed --force --color d73a4a \
+            --description "Scheduled update builds wait until this is closed" \
+            || echo "::warning::Could not create the update-build-failed label"
+          number=$(gh issue list --state open --label update-build-failed --json number --jq '.[0].number')
+          if [ -n "$number" ]; then
+            gh issue comment "$number" --body "Failed again: $run_url"
+          else
+            gh issue create --title "The automatic update build failed" --label update-build-failed \
+              --body "Scheduled runs skip the build while this is open. Running the workflow by hand reuses the renders this run kept. $run_url"
+          fi

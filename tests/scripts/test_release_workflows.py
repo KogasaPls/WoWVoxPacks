@@ -8,6 +8,18 @@ from pathlib import Path
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 
 
+def job(workflow: str, name: str) -> str:
+    """One job's YAML, from its key to the next job's key."""
+    match = re.search(rf"(?ms)^  {re.escape(name)}:\n(.*?)(?=^  [\w-]+:\n|\Z)", workflow)
+    assert match, f"no job {name}"
+    return match.group(1)
+
+
+def step(job_text: str, name: str) -> str:
+    """One step's YAML, from its name to the next step."""
+    return job_text.split(f"- name: {name}\n", 1)[1].split("\n      - ", 1)[0]
+
+
 def checkout_steps(workflow: str) -> list[str]:
     """The complete YAML mapping for each checkout step."""
     return [
@@ -22,6 +34,12 @@ spec = importlib.util.spec_from_file_location(
 )
 game_versions = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(game_versions)
+
+spec = importlib.util.spec_from_file_location(
+    "update_gate", REPOSITORY_ROOT / "scripts" / "update_gate.py"
+)
+update_gate = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(update_gate)
 
 
 class ReleaseWorkflowTests(unittest.TestCase):
@@ -145,6 +163,166 @@ class ReleaseWorkflowTests(unittest.TestCase):
             self.assertIn(f"mv {new_name} {generated}", updater)
             self.assertIn(generated, add_paths)
         self.assertNotIn(names[-1], add_paths)
+
+    def test_a_new_live_build_reaches_the_update_pull_request(self):
+        """The settings and the TOCs must land together, or every later run rebuilds for nothing.
+
+        A PR carrying the regenerated TOCs without appsettings.json would release under the
+        old interfaces' tag and game versions, and the next run would detect the same build
+        again.
+        """
+        updater = (
+            REPOSITORY_ROOT / ".github/workflows/update.yml"
+        ).read_text(encoding="utf-8")
+        pull_request_job = updater.split("\n  create-pull-request:", 1)[1]
+        header = pull_request_job.split("\n    steps:", 1)[0]
+
+        self.assertIn("check-live-build", header.split("needs:", 1)[1].split("\n", 1)[0])
+        self.assertIn("needs.check-live-build.outputs.needs_update == 'true'", header)
+
+        follow_step = pull_request_job.split("- name: Follow the live build", 1)[1].split(
+            "\n      - ", 1
+        )[0]
+        self.assertIn("if: ${{ needs.check-live-build.outputs.needs_update == 'true' }}", follow_step)
+        self.assertIn("LIVE_BUILD: ${{ needs.check-live-build.outputs.build }}", follow_step)
+        self.assertIn('--settings appsettings.json --follow "$LIVE_BUILD"', follow_step)
+        self.assertLess(
+            pull_request_job.index("- name: Follow the live build"),
+            pull_request_job.index("- name: Run addon builder"),
+        )
+
+        add_paths = pull_request_job.split("add-paths: |", 1)[1].split("sign-commits:", 1)[0]
+        self.assertIn("appsettings.json", add_paths)
+
+    def test_the_updater_never_pays_twice_for_the_same_audio(self):
+        """Each run renders on a fresh checkout of main, so anything not merged is rendered again.
+
+        An open update PR, a build that failed after rendering, or a run cancelled mid-build
+        would each have the next scheduled run pay for the same files a second time.
+        """
+        updater = (
+            REPOSITORY_ROOT / ".github/workflows/update.yml"
+        ).read_text(encoding="utf-8")
+        concurrency = updater.split("\nconcurrency:", 1)[1].split("\njobs:", 1)[0]
+        self.assertIn("cancel-in-progress: false", concurrency)
+
+        label = update_gate.FAILURE_LABEL
+        gate = job(updater, "check-earlier-build")
+        self.assertIn("continue-on-error: true", job(updater, "check-nsrt-vocabulary"))
+        self.assertIn("continue-on-error: true", job(updater, "check-live-build"))
+        self.assertNotIn("continue-on-error", gate)
+        self.assertIn(
+            "gh pr list --state open --limit 100 --json number,headRefName,isCrossRepository > pulls.json",
+            gate,
+        )
+        self.assertIn(f"gh issue list --state open --label {label} --json number > issues.json", gate)
+        self.assertIn("python3 scripts/update_gate.py --pulls pulls.json --issues issues.json", gate)
+        self.assertIn('--event "$EVENT_NAME" --run-sha "$GITHUB_SHA" --main-sha "$main_sha"', gate)
+        self.assertIn('--output "$GITHUB_OUTPUT"', gate)
+        # A scheduled run has no event payload, so nothing may read the branch from github.event.
+        self.assertIn('main_sha=$(gh api "repos/$GITHUB_REPOSITORY/commits/HEAD" --jq .sha)', gate)
+        self.assertNotIn("github.event.repository", updater)
+        self.assertIn("EVENT_NAME: ${{ github.event_name }}", gate)
+
+        pull_request_job = updater.split("\n  create-pull-request:", 1)[1]
+        header = pull_request_job.split("\n    steps:", 1)[0]
+        self.assertIn("check-earlier-build", header.split("needs:", 1)[1].split("\n", 1)[0])
+        self.assertIn("if: ${{ needs.check-earlier-build.outputs.blocked == 'false' && (", header)
+        self.assertIn("timeout-minutes: 180", header)
+        self.assertIn(f"branch: {update_gate.UPDATE_BRANCH_PREFIX}", pull_request_job)
+
+        builder = step(pull_request_job, "Run addon builder")
+        self.assertIn("id: builder", builder)
+        # Only an interrupt the builder itself receives records its partial renders, and it has
+        # to arrive with time left before the job's own limit.
+        self.assertIn(
+            "run: timeout -s INT -k 2m 155m dotnet run --project src/WoWVoxPack.Builder/WoWVoxPack.Builder.csproj",
+            builder,
+        )
+
+        # Renders a failed build paid for come back before anything is planned or rendered, and
+        # the free plan trips the builder's limits before the paid run spends on any pack.
+        order = [
+            "Restore the renders a failed build kept",
+            "Plan the build",
+            "Run addon builder",
+            "Snapshot the rendered output",
+            "Create a pull request",
+        ]
+        positions = [pull_request_job.index(f"- name: {name}\n") for name in order]
+        self.assertEqual(positions, sorted(positions))
+        restore = step(pull_request_job, "Restore the renders a failed build kept")
+        self.assertIn('actions/artifacts?name=rendered-output&per_page=100', restore)
+        self.assertIn(
+            'select((.expired | not) and .workflow_run.head_branch == "main")] | sort_by(.created_at) | reverse',
+            restore,
+        )
+        self.assertIn('gh run download "$run_id" --name rendered-output --dir "$RUNNER_TEMP/restore-$artifact_id"', restore)
+        self.assertIn(
+            'python3 scripts/rendered_output.py restore --from "$RUNNER_TEMP/restore-$artifact_id"', restore
+        )
+        self.assertNotIn("|| true", restore)
+        self.assertIn(
+            "run: dotnet run --project src/WoWVoxPack.Builder/WoWVoxPack.Builder.csproj -- --Matrix:DryRun true",
+            step(pull_request_job, "Plan the build"),
+        )
+        snapshot = step(pull_request_job, "Snapshot the rendered output")
+        self.assertIn(
+            "if: always() && (steps.builder.outcome == 'success' || "
+            "steps.builder.outcome == 'failure' || steps.builder.outcome == 'cancelled')",
+            snapshot,
+        )
+        self.assertIn('python3 scripts/rendered_output.py collect --into "$RUNNER_TEMP/rendered-output"', snapshot)
+        self.assertLess(snapshot.index("pkill -INT -f 'WoWVoxPack\\.Builder'"), snapshot.index("rendered_output.py collect"))
+        keep = step(pull_request_job, "Keep the renders this failed build paid for")
+        self.assertIn(
+            "if: (failure() || cancelled()) && steps.snapshot.outcome == 'success' && "
+            "steps.create-pull-request.outputs.pull-request-number == ''",
+            keep,
+        )
+        self.assertIn("name: rendered-output", keep)
+        self.assertIn("path: ${{ runner.temp }}/rendered-output", keep)
+        # Once a PR holds the audio, no kept render may come back, even if auto-merge then
+        # fails, and a failed delete must not stop the failure issue from closing.
+        discard = step(pull_request_job, "Discard kept renders once a PR has them")
+        self.assertIn("if: always() && steps.create-pull-request.outputs.pull-request-number != ''", discard)
+        self.assertIn("continue-on-error: true", discard)
+        self.assertIn('select((.expired | not) and .workflow_run.head_branch == "main") | .id', discard)
+        self.assertIn('gh api -X DELETE "repos/$GITHUB_REPOSITORY/actions/artifacts/$artifact_id"', discard)
+
+        close = pull_request_job.split("- name: Close the failed-build issue", 1)[1].split("\n      - ", 1)[0]
+        self.assertIn("if: success()", close)
+        self.assertIn(f"gh issue list --state open --label {label}", close)
+        self.assertIn('gh issue close "$number"', close)
+
+        report = pull_request_job.split("- name: File an issue when a build fails after rendering", 1)[1]
+        self.assertIn(
+            "if: (failure() || cancelled()) && (steps.builder.outcome == 'success' || "
+            "steps.builder.outcome == 'failure' || steps.builder.outcome == 'cancelled') && "
+            "steps.create-pull-request.outputs.pull-request-number == ''",
+            report,
+        )
+        self.assertIn(f"gh label create {label} --force", report)
+        self.assertIn(
+            f"number=$(gh issue list --state open --label {label} --json number --jq '.[0].number')",
+            report,
+        )
+        self.assertIn(f"--label {label}", report.split("gh issue create", 1)[1])
+        self.assertIn('gh issue comment "$number"', report)
+
+    def test_the_live_build_is_validated_before_the_log_prints_it(self):
+        """The fetched table is untrusted; an unvalidated echo could inject workflow commands."""
+        updater = (
+            REPOSITORY_ROOT / ".github/workflows/update.yml"
+        ).read_text(encoding="utf-8")
+        check = updater.split("\n  check-live-build:", 1)[1].split("\n  create-pull-request:", 1)[0]
+
+        self.assertIn("https://us.version.battle.net/v2/products/wow/versions", check)
+        self.assertIn('build=$(python3 scripts/game_versions.py --live-build versions.txt)', check)
+        self.assertLess(
+            check.index("--live-build versions.txt"), check.index('echo "Live build: ${build}"')
+        )
+        self.assertIn("continue-on-error: true", check)
 
     def test_ffmpeg_comes_from_a_host_runners_can_reach(self):
         """setup-ffmpeg's johnvansickle.com source failed every CI run from runners."""

@@ -9,6 +9,10 @@
       ]
     }
   },
+  "< Left + Dodge": {
+    "FileName": "left.ogg",
+    "Text": "Left"
+  },
   "DropPool": {
     "Text": "Drop Pool"
   },
@@ -22,5 +26,9 @@
   "Invoke Yu'lon, the Jade Serpent": {
     "FileName": "invoke_yulon_the_jade_serpent.ogg",
     "Text": "Invoke Yu'lon, the Jade Serpent"
+  },
+  "Right > + Dodge": {
+    "FileName": "right.ogg",
+    "Text": "Right"
   }
 }

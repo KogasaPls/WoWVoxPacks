@@ -146,6 +146,20 @@ class ReleaseWorkflowTests(unittest.TestCase):
             self.assertIn(generated, add_paths)
         self.assertNotIn(names[-1], add_paths)
 
+    def test_ffmpeg_comes_from_a_host_runners_can_reach(self):
+        """setup-ffmpeg's johnvansickle.com source failed every CI run from runners."""
+        installer = REPOSITORY_ROOT / "scripts/install_ffmpeg.sh"
+        self.assertTrue(installer.stat().st_mode & 0o111, "install_ffmpeg.sh must be executable")
+        self.assertIn("https://github.com/BtbN/FFmpeg-Builds/releases/download/", installer.read_text())
+        self.assertIn("sha256sum -c", installer.read_text())
+
+        for workflow in ("ci.yml", "update.yml"):
+            contents = (REPOSITORY_ROOT / ".github/workflows" / workflow).read_text(
+                encoding="utf-8"
+            )
+            self.assertNotIn("setup-ffmpeg", contents, workflow)
+            self.assertIn("run: scripts/install_ffmpeg.sh", contents, workflow)
+
     def test_a_changed_composed_site_fails_the_update_run(self):
         """Hand-enumerated strings cannot regenerate, so drift must fail, not print.
 

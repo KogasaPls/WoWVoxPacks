@@ -9,6 +9,7 @@
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 
 using WoWVoxPack.AddOns;
@@ -63,6 +64,7 @@ services.AddSingleton(sp => new NorthernSkyRaidToolsVocabularyProvider(
 // would put GitHub between the harness and a run.
 services.AddSingleton<IBigWigsVoiceUpstreamClient, NoSpellsUpstreamClient>();
 services.AddSingleton(BigWigsVoicePendingSpells.Empty);
+services.AddSingleton<ILogger<BigWigsVoiceAddOnService>>(NullLogger<BigWigsVoiceAddOnService>.Instance);
 services.AddScoped<BigWigsVoiceAddOnService>();
 services.AddScoped<CalloutsMediaAddOnService>();
 services.AddScoped<NorthernSkyRaidToolsAddOnService>();

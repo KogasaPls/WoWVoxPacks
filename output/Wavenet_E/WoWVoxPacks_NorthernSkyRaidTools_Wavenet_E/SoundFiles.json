@@ -637,13 +637,25 @@
     "FileName": "debuff.ogg",
     "DisplayName": "Debuff",
     "FormattedDisplayName": "Debuff",
-    "Text": "Debuff"
+    "Text": "Debuff",
+    "Pronunciations": [
+      {
+        "Phrase": "Debuff",
+        "Ipa": "\u02C8di\u02D0b\u028Cf"
+      }
+    ]
   },
   {
     "FileName": "debuffs.ogg",
     "DisplayName": "Debuffs",
     "FormattedDisplayName": "Debuffs",
-    "Text": "Debuffs"
+    "Text": "Debuffs",
+    "Pronunciations": [
+      {
+        "Phrase": "Debuffs",
+        "Ipa": "\u02C8di\u02D0b\u028Cfs"
+      }
+    ]
   },
   {
     "FileName": "deep_breath.ogg",
@@ -1099,7 +1111,13 @@
     "FileName": "frostfire_debuffs.ogg",
     "DisplayName": "Frostfire Debuffs",
     "FormattedDisplayName": "Frostfire Debuffs",
-    "Text": "Frostfire Debuffs"
+    "Text": "Frostfire Debuffs",
+    "Pronunciations": [
+      {
+        "Phrase": "Debuffs",
+        "Ipa": "\u02C8di\u02D0b\u028Cfs"
+      }
+    ]
   },
   {
     "FileName": "frostwyrm_s_fury.ogg",
@@ -2809,7 +2827,13 @@
     "FileName": "wind_debuffs.ogg",
     "DisplayName": "Wind-Debuffs",
     "FormattedDisplayName": "Wind-Debuffs",
-    "Text": "Wind Debuffs"
+    "Text": "Wind Debuffs",
+    "Pronunciations": [
+      {
+        "Phrase": "Debuffs",
+        "Ipa": "\u02C8di\u02D0b\u028Cfs"
+      }
+    ]
   },
   {
     "FileName": "wind_rush.ogg",

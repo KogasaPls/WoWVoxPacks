@@ -24,7 +24,8 @@ jobs:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
         with:
-          python-version: '3.13'
+          python-version: '3.x'
+          check-latest: true
       - name: Compare every project page with docs/curseforge
         env:
           CURSEFORGE_CORE_API_KEY: ${{ secrets.CURSEFORGE_CORE_API_KEY }}

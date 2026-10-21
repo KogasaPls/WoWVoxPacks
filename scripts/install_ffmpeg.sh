@@ -1,18 +1,23 @@
 #!/usr/bin/env bash
 # BtbN's builds are hosted on GitHub. FedericoCarboni/setup-ffmpeg downloads from
 # johnvansickle.com, which fails from runners with "fetch failed" (its issue #35).
-# BtbN keeps each month's last build for 24 months, so the pin below is deleted with its
-# first September 2028 build; move it to a newer month-end autobuild and its sha256 by 2028-08.
+# Follow the newest release branch within this major, with the digest from the same lookup.
 set -euo pipefail
 
-release=https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2026-09-30-13-08
-asset=ffmpeg-n9.0.2-17-g2a571b6068-linux64-gpl-9.0
-sha256=68ee646831adaae2495618346f3bba94ff207ff83bbd34d643e7004730d66269
+major=9
+selected=$(gh api repos/BtbN/FFmpeg-Builds/releases/tags/latest | jq -er --arg major "$major" '
+  [.assets[] | select(.name | test("^ffmpeg-n" + $major + "\\.[0-9]+-latest-linux64-gpl-" + $major + "\\.[0-9]+\\.tar\\.xz$"))]
+  | sort_by(.name | capture("^ffmpeg-n[0-9]+\\.(?<minor>[0-9]+)-").minor | tonumber)
+  | last
+  | select((.digest // "") | test("^sha256:[0-9a-f]{64}$"))
+  | [.name, (.digest | ltrimstr("sha256:")), .browser_download_url] | @tsv')
+IFS=$'\t' read -r archive sha256 url <<< "$selected"
+asset=${archive%.tar.xz}
 
 cd "$RUNNER_TEMP"
-curl -sSfL --retry 5 --retry-delay 10 --retry-all-errors -o "$asset.tar.xz" "$release/$asset.tar.xz"
-echo "$sha256  $asset.tar.xz" | sha256sum -c -
-tar -xJf "$asset.tar.xz"
+curl -sSfL --retry 5 --retry-delay 10 --retry-all-errors -o "$archive" "$url"
+echo "$sha256  $archive" | sha256sum -c -
+tar -xJf "$archive"
 
 "$RUNNER_TEMP/$asset/bin/ffmpeg" -version | sed -n 1p
 echo "$RUNNER_TEMP/$asset/bin" >> "$GITHUB_PATH"

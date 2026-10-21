@@ -53,7 +53,6 @@ jobs:
     outputs:
       bigwigs_version: ${{ steps.compare-versions.outputs.bigwigs_version }}
       needs_update: ${{ steps.compare-versions.outputs.needs_update }}
-      version_changed: ${{ steps.compare-versions.outputs.version_changed }}
     steps:
       - name: Get latest BigWigsVoice release
         # The releases/latest endpoint returns the newest release that is neither a draft
@@ -84,22 +83,18 @@ jobs:
 
           if [ ! -s previous-version.txt ]; then
             echo "No previous version detected"
-            echo "version_changed=true" >> "$GITHUB_OUTPUT"
             echo "needs_update=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
           if [ "${new_version}" != "$(cat previous-version.txt)" ]; then
             echo "New version detected (old: $(cat previous-version.txt), new: ${new_version})"
-            echo "version_changed=true" >> "$GITHUB_OUTPUT"
             echo "needs_update=true" >> "$GITHUB_OUTPUT"
           elif [ "${FORCE}" = "true" ]; then
             echo "No new version detected, rebuilding anyway (force)"
-            echo "version_changed=false" >> "$GITHUB_OUTPUT"
             echo "needs_update=true" >> "$GITHUB_OUTPUT"
           else
             echo "No new version detected"
-            echo "version_changed=false" >> "$GITHUB_OUTPUT"
             echo "needs_update=false" >> "$GITHUB_OUTPUT"
           fi
   check-nsrt-vocabulary:
@@ -222,13 +217,15 @@ jobs:
             cat nsrt-vocabulary.txt nsrt-alert-vocabulary.txt | grep -v '^#' | sort > old.txt
             cat nsrt-vocabulary.new nsrt-alert-vocabulary.new | grep -v '^#' | sort > new.txt
             echo "needs_update=true" >> "$GITHUB_OUTPUT"
+            # The lines are upstream file names, so a fixed delimiter could be ended early by one.
+            delimiter="VOCAB_${RANDOM}${RANDOM}${RANDOM}"
             {
-              echo "added<<VOCAB_EOF"
+              echo "added<<${delimiter}"
               comm -13 old.txt new.txt
-              echo "VOCAB_EOF"
-              echo "removed<<VOCAB_EOF"
+              echo "${delimiter}"
+              echo "removed<<${delimiter}"
               comm -23 old.txt new.txt
-              echo "VOCAB_EOF"
+              echo "${delimiter}"
             } >> "$GITHUB_OUTPUT"
           fi
       - name: Upload the new vocabulary
@@ -256,6 +253,18 @@ jobs:
           else
             gh issue create --title "$title" --body "$run_url"
           fi
+      - name: Close the issue once this check passes again
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          TITLE: The NSRT vocabulary check is failing
+        run: |
+          run_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          for number in $(gh issue list --state open --search "in:title \"$TITLE\"" --json number,title \
+              --jq '.[] | select(.title == env.TITLE) | .number'); do
+            gh issue close "$number" --comment "Passing again: $run_url"
+          done
   check-live-build:
     runs-on: ubuntu-latest
     # The packs declare only the live interface, so a patch day needs a rebuild even when
@@ -278,12 +287,26 @@ jobs:
           sparse-checkout-cone-mode: false
       - name: Compare the live build against the declared interfaces
         id: follow
+        env:
+          CURSEFORGE_API_TOKEN: ${{ secrets.CURSEFORGE_API_TOKEN }}
         run: |
           # Blizzard's own patch service, the table the launcher reads to pick a build.
           curl -sf --retry 3 https://us.version.battle.net/v2/products/wow/versions -o versions.txt
           build=$(python3 scripts/game_versions.py --live-build versions.txt)
           echo "Live build: ${build}"
           game_version=$(python3 scripts/game_versions.py --settings appsettings.json --follow "${build}")
+          # Released under a version CurseForge does not list yet, every upload would carry
+          # none, so the bump waits for CurseForge and a later run follows it.
+          if [ -n "${game_version}" ]; then
+            listed=0
+            python3 scripts/curseforge_game_versions.py --versions "${game_version}" || listed=$?
+            if [ "${listed}" -eq 3 ]; then
+              echo "::warning::Live is ${game_version}, which CurseForge does not list yet; a later run follows it"
+              game_version=""
+            elif [ "${listed}" -ne 0 ]; then
+              exit "${listed}"
+            fi
+          fi
           echo "build=${build}" >> "$GITHUB_OUTPUT"
           echo "game_version=${game_version}" >> "$GITHUB_OUTPUT"
           if [ -n "${game_version}" ]; then
@@ -307,6 +330,18 @@ jobs:
           else
             gh issue create --title "$title" --body "$run_url"
           fi
+      - name: Close the issue once this check passes again
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          TITLE: The live build check is failing
+        run: |
+          run_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          for number in $(gh issue list --state open --search "in:title \"$TITLE\"" --json number,title \
+              --jq '.[] | select(.title == env.TITLE) | .number'); do
+            gh issue close "$number" --comment "Passing again: $run_url"
+          done
   create-pull-request:
     needs: [ check-earlier-build, check-bigwigs-voice-version, check-nsrt-vocabulary, check-live-build ]
     # The NSRT and live build jobs carry continue-on-error, so their upstreams may be
@@ -317,12 +352,16 @@ jobs:
     if: ${{ needs.check-earlier-build.outputs.blocked == 'false' && (needs.check-bigwigs-voice-version.outputs.needs_update == 'true' || needs.check-nsrt-vocabulary.outputs.needs_update == 'true' || needs.check-live-build.outputs.needs_update == 'true') }}
     runs-on: ubuntu-latest
     timeout-minutes: 180
-    permissions: write-all
+    # The PR and its auto-merge use the PAT, given only to those two steps. The job's own token
+    # reads the checkout, lists, downloads and deletes kept renders, and files the failure issue.
+    permissions:
+      contents: read
+      actions: write
+      issues: write
     env:
       CI: true
       DOTNET_ENVIRONMENT: Release
       DOTNET_CLI_TELEMETRY_OPTOUT: true
-      GH_TOKEN: ${{ secrets.WORKFLOW_RELEASE_PAT }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -359,6 +398,8 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
       - name: Install ffmpeg
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: scripts/install_ffmpeg.sh
       - uses: actions/setup-dotnet@v6
         with:

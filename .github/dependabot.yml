@@ -9,3 +9,12 @@ updates:
         patterns: [ "*" ]
     commit-message:
       prefix: build
+  - package-ecosystem: nuget
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      nuget:
+        patterns: [ "*" ]
+    commit-message:
+      prefix: build

@@ -398,6 +398,8 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
       - name: Install ffmpeg
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: scripts/install_ffmpeg.sh
       - uses: actions/setup-dotnet@v6
         with:

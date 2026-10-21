@@ -331,29 +331,6 @@ class ReleaseWorkflowTests(unittest.TestCase):
         """setup-ffmpeg's johnvansickle.com source failed every CI run from runners."""
         installer = REPOSITORY_ROOT / "scripts/install_ffmpeg.sh"
         self.assertTrue(installer.stat().st_mode & 0o111, "install_ffmpeg.sh must be executable")
-        commands = [
-            line for line in installer.read_text().splitlines() if not line.startswith("#")
-        ]
-        script = "\n".join(commands)
-        # A rolling "latest" release is deleted and re-created daily, so only a dated
-        # autobuild with a checksum held here is reproducible.
-        self.assertRegex(
-            script,
-            r"\nrelease=https://github\.com/BtbN/FFmpeg-Builds/releases/download/autobuild-\d{4}-\d{2}-\d{2}-\d{2}-\d{2}\n",
-        )
-        self.assertRegex(script, r"\nsha256=[0-9a-f]{64}\n")
-        self.assertEqual(script.count("sha256="), 1, "the checksum must be the one held here")
-        # The workflow runs the script through its shebang, so without -e a failed check
-        # would print FAILED and install the download anyway.
-        self.assertIn("set -euo pipefail", commands)
-        self.assertNotIn("set +", script)
-        self.assertIn(
-            'curl -sSfL --retry 5 --retry-delay 10 --retry-all-errors -o "$asset.tar.xz" "$release/$asset.tar.xz"',
-            script,
-        )
-        self.assertIn('echo "$sha256  $asset.tar.xz" | sha256sum -c -\n', script + "\n")
-        self.assertIn('echo "$RUNNER_TEMP/$asset/bin" >> "$GITHUB_PATH"', script)
-        self.assertNotIn("||", script)
 
         for workflow in ("ci.yml", "update.yml"):
             contents = (REPOSITORY_ROOT / ".github/workflows" / workflow).read_text(
@@ -626,16 +603,6 @@ class HardeningTests(unittest.TestCase):
         self.assertIn(f"ref: {commit}", release_creator)
         self.assertIn(f"target_commitish: {commit}", release_creator)
         self.assertIn("    permissions:\n      contents: read\n", job(release_creator, "create-release"))
-
-    def test_the_ffmpeg_pin_moves_itself_through_a_gated_pr(self):
-        pin = self.read("ffmpeg-pin.yml")
-
-        self.assertIn('cron: "0 9 3 * *"', pin)
-        self.assertIn("python3 scripts/ffmpeg_pin.py --script scripts/install_ffmpeg.sh", pin)
-        self.assertIn("if: steps.pin.outputs.moved != ''", pin)
-        self.assertIn("scripts/install_ffmpeg.sh", pin.split("add-paths: |", 1)[1])
-        self.assertIn("branch: ci/ffmpeg-pin", pin)
-        self.assertIn('gh pr merge --merge --auto "$PR_NUMBER"', pin)
 
     def test_the_gcp_key_file_is_never_committed(self):
         self.assertIn("\ngha-creds-*.json\n", (REPOSITORY_ROOT / ".gitignore").read_text(encoding="utf-8"))

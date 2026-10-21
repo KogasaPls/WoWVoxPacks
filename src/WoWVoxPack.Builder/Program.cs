@@ -46,14 +46,18 @@ IHostBuilder hostBuilder = Host.CreateDefaultBuilder(args)
         services.AddSingleton(_ => new CalloutsVocabularyProvider(
             Path.Combine(AppContext.BaseDirectory, "Callouts_Sounds.json"),
             Path.Combine(AppContext.BaseDirectory, "CalloutPronunciations.json"),
-            [.. CalloutVocabulary.VocabularyFileNames
-                .Select(fileName => Path.Combine(solutionDirectory, fileName))],
+            [
+                .. CalloutVocabulary.VocabularyFileNames
+                    .Select(fileName => Path.Combine(solutionDirectory, fileName)),
+            ],
             Path.Combine(AppContext.BaseDirectory, "RetiredCallouts.json")));
         services.AddSingleton(sp =>
         {
             return new NorthernSkyRaidToolsVocabularyProvider(
-                [.. NorthernSkyRaidToolsVocabulary.VocabularyFileNames
-                    .Select(fileName => Path.Combine(solutionDirectory, fileName))],
+                [
+                    .. NorthernSkyRaidToolsVocabulary.VocabularyFileNames
+                        .Select(fileName => Path.Combine(solutionDirectory, fileName)),
+                ],
                 Path.Combine(AppContext.BaseDirectory, "CalloutPronunciations.json"),
                 sp.GetRequiredService<CalloutsVocabularyProvider>());
         });

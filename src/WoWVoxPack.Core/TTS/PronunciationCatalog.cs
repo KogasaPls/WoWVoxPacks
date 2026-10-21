@@ -32,6 +32,26 @@ public sealed record PronunciationCatalog(
         return normalized.ToUpperInvariant();
     }
 
+    private static void RequireValue(string value, string description)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            throw new InvalidOperationException($"{description} cannot be empty.");
+        }
+    }
+
+    private static bool IsPunctuation(char value)
+    {
+        return CharUnicodeInfo.GetUnicodeCategory(value) is
+            UnicodeCategory.ConnectorPunctuation or
+            UnicodeCategory.DashPunctuation or
+            UnicodeCategory.OpenPunctuation or
+            UnicodeCategory.ClosePunctuation or
+            UnicodeCategory.InitialQuotePunctuation or
+            UnicodeCategory.FinalQuotePunctuation or
+            UnicodeCategory.OtherPunctuation;
+    }
+
     private void Validate()
     {
         HashSet<string> names = [];
@@ -81,25 +101,5 @@ public sealed record PronunciationCatalog(
                 RequireValue(rule.Ipa, $"Exception IPA for {rule.Addon}/{rule.Key}");
             }
         }
-    }
-
-    private static void RequireValue(string value, string description)
-    {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            throw new InvalidOperationException($"{description} cannot be empty.");
-        }
-    }
-
-    private static bool IsPunctuation(char value)
-    {
-        return CharUnicodeInfo.GetUnicodeCategory(value) is
-            UnicodeCategory.ConnectorPunctuation or
-            UnicodeCategory.DashPunctuation or
-            UnicodeCategory.OpenPunctuation or
-            UnicodeCategory.ClosePunctuation or
-            UnicodeCategory.InitialQuotePunctuation or
-            UnicodeCategory.FinalQuotePunctuation or
-            UnicodeCategory.OtherPunctuation;
     }
 }

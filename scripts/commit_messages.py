@@ -1,9 +1,10 @@
-"""Parse Conventional Commit subjects and check only the requested new commit range."""
+"""Check Conventional Commit subjects in a new commit range or a pending message."""
 
 import argparse
 import re
 import subprocess
 import sys
+from pathlib import Path
 from typing import NamedTuple
 
 SUBJECT = re.compile(
@@ -32,9 +33,26 @@ def parse_subject(subject: str) -> CommitSubject | None:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--base", required=True)
+    source = parser.add_mutually_exclusive_group(required=True)
+    source.add_argument("--base")
+    source.add_argument("--message-file", type=Path)
     parser.add_argument("--head", default="HEAD")
     args = parser.parse_args()
+    if args.message_file is not None:
+        message = subprocess.run(
+            ["git", "stripspace", "--strip-comments"],
+            input=args.message_file.read_text(encoding="utf-8"),
+            capture_output=True, text=True, check=True,
+        ).stdout
+        subject = message.splitlines()[0] if message else ""
+        if parse_subject(subject) is None:
+            print(
+                f"Use type(scope): description; see CONTRIBUTING.md.\n{subject}",
+                file=sys.stderr,
+            )
+            return 1
+        return 0
+
     result = subprocess.run(
         ["git", "log", "--no-merges", "--format=%h%x00%s", f"{args.base}..{args.head}"],
         capture_output=True,

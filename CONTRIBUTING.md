@@ -42,6 +42,17 @@ Git-generated merge subjects are exempt. Before committing, review the subject
 against the addon scopes above; CI validates syntax, not whether a description is
 useful to players.
 
+Enable the local commit check after cloning:
+
+```sh
+git config --local core.hooksPath .githooks
+```
+
+The hook uses Python 3 and the same subject parser as CI to reject malformed
+subjects before creating a commit. This local Git setting also applies to linked
+worktrees. Review the addon scope and player-facing wording yourself; the hook
+checks syntax only.
+
 Release notes include `feat`, `fix`, and `perf` descriptions when the commit changes
 that addon's distributed files and those files changed since the preceding release.
 The `packs` scope applies to several addons; an unscoped description is labelled

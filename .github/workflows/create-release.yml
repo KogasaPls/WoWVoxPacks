@@ -142,13 +142,12 @@ jobs:
         with:
           tag_name: ${{ env.RELEASE_TAG }}
           name: Release ${{ env.RELEASE_TAG }}
-          body: |
-            Automatically created by the release workflow.
+          body: ${{ steps.release-notes.outputs.changelog }}
           draft: false
           prerelease: false
           fail_on_unmatched_files: true
           make_latest: true
-          generate_release_notes: true
+          generate_release_notes: false
           preserve_order: true
           files: |
             ./dist/*.zip

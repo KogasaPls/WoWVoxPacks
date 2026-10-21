@@ -4,7 +4,6 @@ import re
 import unittest
 from pathlib import Path
 
-
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 
 
@@ -418,6 +417,9 @@ class ReleaseWorkflowTests(unittest.TestCase):
         ).read_text(encoding="utf-8")
 
         self.assertIn("python scripts/release_notes.py", release_creator)
+        github_release = step(job(release_creator, "create-release"), "Create GitHub Release")
+        self.assertIn("body: ${{ steps.release-notes.outputs.changelog }}", github_release)
+        self.assertIn("generate_release_notes: false", github_release)
         self.assertIn(
             "changelog: ${{ steps.release-notes.outputs.changelog }}", release_creator
         )
@@ -430,6 +432,16 @@ class ReleaseWorkflowTests(unittest.TestCase):
         self.assertIn("changelog: ${{ needs.plan-release.outputs.changelog }}", publisher)
         self.assertIn('echo "changelog<<${delimiter}"', publisher)
         self.assertIn("changelog_type: markdown", publisher)
+
+    def test_updater_uses_the_rendered_summary_for_both_commit_and_pr(self):
+        updater = (REPOSITORY_ROOT / ".github/workflows/update.yml").read_text()
+        description = step(updater, "Describe the rendered addon changes")
+        create_pr = step(updater, "Create a pull request")
+
+        self.assertIn("python3 scripts/update_commit.py", description)
+        self.assertIn("commit-message: ${{ steps.update-description.outputs.subject }}", create_pr)
+        self.assertIn("title: ${{ steps.update-description.outputs.subject }}", create_pr)
+        self.assertLess(updater.index("Describe the rendered addon changes"), updater.index("Create a pull request"))
 
     def test_generating_the_notes_cannot_release_a_tag_the_run_would_skip(self):
         """The notes step runs before packaging and must honour the same skip."""

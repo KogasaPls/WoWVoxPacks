@@ -404,13 +404,21 @@ jobs:
             sleep 2
           done
           python3 scripts/rendered_output.py collect --into "$RUNNER_TEMP/rendered-output"
+      - name: Describe the rendered addon changes
+        id: update-description
+        env:
+          BIGWIGS_VERSION: ${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version }}
+          GAME_VERSION: ${{ needs.check-live-build.outputs.game_version }}
+        run: |
+          subject=$(python3 scripts/update_commit.py --bigwigs-version "$BIGWIGS_VERSION" --game-version "$GAME_VERSION")
+          echo "subject=$subject" >> "$GITHUB_OUTPUT"
       - name: Create a pull request
         uses: peter-evans/create-pull-request@v8
         id: create-pull-request
         with:
           token: ${{ secrets.WORKFLOW_RELEASE_PAT }}
-          commit-message: "[ci] Automatic update"
-          title: Automatic update
+          commit-message: ${{ steps.update-description.outputs.subject }}
+          title: ${{ steps.update-description.outputs.subject }}
           body: |
             Automatically created by the update workflow.
 

@@ -15,8 +15,10 @@ on:
 
 # One group for every trigger: a merged PR's ref is its own refs/pull/N/merge, so a per-ref group
 # let two merges a minute apart pick the same tag.
+# Keep pending releases when more merges arrive while a release is still publishing.
 concurrency:
   group: create-release
+  queue: max
   cancel-in-progress: false
 
 jobs:

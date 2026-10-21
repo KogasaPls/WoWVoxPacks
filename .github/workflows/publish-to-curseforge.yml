@@ -46,8 +46,10 @@ on:
         required: true
 
 # Serialize automatic and manual runs so they don't race on the same CurseForge project.
+# Preserve waiting uploads when another manual or automatic run arrives.
 concurrency:
   group: publish-to-curseforge
+  queue: max
   cancel-in-progress: false
 
 jobs:

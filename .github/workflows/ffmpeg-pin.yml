@@ -37,8 +37,8 @@ jobs:
         uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.WORKFLOW_RELEASE_PAT }}
-          commit-message: "move the ffmpeg pin to ${{ steps.pin.outputs.moved }}"
-          title: Move the ffmpeg pin to ${{ steps.pin.outputs.moved }}
+          commit-message: "ci(deps): refresh ffmpeg pin to ${{ steps.pin.outputs.moved }}"
+          title: "ci(deps): refresh ffmpeg pin to ${{ steps.pin.outputs.moved }}"
           body: |
             Automatically created by the ffmpeg pin workflow. The pinned build was a year old; BtbN deletes it after two.
           branch: ci/ffmpeg-pin

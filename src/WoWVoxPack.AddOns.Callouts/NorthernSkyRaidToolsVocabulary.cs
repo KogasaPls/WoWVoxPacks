@@ -1,9 +1,11 @@
+using System.Text.RegularExpressions;
+
 using WoWVoxPack.TTS;
 
 namespace WoWVoxPack.AddOns.Callouts;
 
 /// <summary>Builds Northern Sky Raid Tools registrations from its literal source-key file.</summary>
-public static class NorthernSkyRaidToolsVocabulary
+public static partial class NorthernSkyRaidToolsVocabulary
 {
     /// <summary>
     /// The first two are generated: what NSRT's Media/Sounds ships, then the alert strings it
@@ -11,6 +13,9 @@ public static class NorthernSkyRaidToolsVocabulary
     /// </summary>
     public static readonly IReadOnlyList<string> VocabularyFileNames =
         ["nsrt-vocabulary.txt", "nsrt-alert-vocabulary.txt", "nsrt-extra-vocabulary.txt"];
+
+    private static readonly string[] RaidMarkerWords =
+        ["Star", "Circle", "Diamond", "Triangle", "Moon", "Square", "Cross", "Skull"];
 
     public static IReadOnlyList<CalloutRegistration> Load(
         IEnumerable<string> vocabularyPaths,
@@ -116,6 +121,33 @@ public static class NorthernSkyRaidToolsVocabulary
             registrations.Add(new CalloutRegistration(soundFile, [mediaKey]));
         }
 
-        return registrations;
+        HashSet<string> registered = new(
+            registrations.SelectMany(registration => registration.MediaKeys),
+            StringComparer.OrdinalIgnoreCase);
+        return registrations
+            .Select(registration => registration with
+            {
+                MediaKeys =
+                [
+                    .. registration.MediaKeys,
+                    .. registration.MediaKeys
+                        .Select(TimelineRemindersSpelling)
+                        .Where(registered.Add)
+                ]
+            })
+            .ToList();
     }
+
+    /// <summary>
+    /// TimelineReminders displays NSRT alerts and speaks them through C_VoiceChat.SpeakText,
+    /// which DisableTTS resolves against this pack's keys. Its FormatForTTS first replaces
+    /// {rt1}..{rt8} with marker words and leaves named tokens like {star} alone. DisableTTS
+    /// lowercases both sides, so capitalized words still match and keep the Callouts spelling.
+    /// </summary>
+    private static string TimelineRemindersSpelling(string mediaKey) =>
+        RaidTargetToken().Replace(mediaKey,
+            match => RaidMarkerWords[match.Groups[1].Value[0] - '1']);
+
+    [GeneratedRegex(@"\{rt([1-8])\}")]
+    private static partial Regex RaidTargetToken();
 }

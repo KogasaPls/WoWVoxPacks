@@ -1804,6 +1804,54 @@
     "Text": "Pre-Pot"
   },
   {
+    "FileName": "preposition_at_circle.ogg",
+    "DisplayName": "Preposition at {circle}",
+    "FormattedDisplayName": "Preposition at {circle}",
+    "Text": "Pre-position at Circle"
+  },
+  {
+    "FileName": "preposition_at_cross.ogg",
+    "DisplayName": "Preposition at {cross}",
+    "FormattedDisplayName": "Preposition at {cross}",
+    "Text": "Pre-position at Cross"
+  },
+  {
+    "FileName": "preposition_at_diamond.ogg",
+    "DisplayName": "Preposition at {diamond}",
+    "FormattedDisplayName": "Preposition at {diamond}",
+    "Text": "Pre-position at Diamond"
+  },
+  {
+    "FileName": "preposition_at_moon.ogg",
+    "DisplayName": "Preposition at {moon}",
+    "FormattedDisplayName": "Preposition at {moon}",
+    "Text": "Pre-position at Moon"
+  },
+  {
+    "FileName": "preposition_at_skull.ogg",
+    "DisplayName": "Preposition at {rt8}",
+    "FormattedDisplayName": "Preposition at {rt8}",
+    "Text": "Pre-position at Skull"
+  },
+  {
+    "FileName": "preposition_at_square.ogg",
+    "DisplayName": "Preposition at {rt6}",
+    "FormattedDisplayName": "Preposition at {rt6}",
+    "Text": "Pre-position at Square"
+  },
+  {
+    "FileName": "preposition_at_star.ogg",
+    "DisplayName": "Preposition at {rt1}",
+    "FormattedDisplayName": "Preposition at {rt1}",
+    "Text": "Pre-position at Star"
+  },
+  {
+    "FileName": "preposition_at_triangle.ogg",
+    "DisplayName": "Preposition at {rt4}",
+    "FormattedDisplayName": "Preposition at {rt4}",
+    "Text": "Pre-position at Triangle"
+  },
+  {
     "FileName": "primordial_storm.ogg",
     "DisplayName": "Primordial Storm",
     "FormattedDisplayName": "Primordial Storm",

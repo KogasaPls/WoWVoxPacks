@@ -4,6 +4,8 @@
 # stops failing on the changed site. Literal alert strings are generated into
 # nsrt-alert-vocabulary.txt by .github/workflows/update.yml and do not belong in this file.
 # Opt-in alerts with TTS disabled by default are not extracted; include their strings here.
+# Phrases from raid notes that NSRT reminders speak verbatim (Preposition at {star}) are
+# listed here too; they reach the pack only through these hand-written keys.
 < Left + Dodge
 Add Soak
 AoE
@@ -42,6 +44,22 @@ Peace Aura
 PICK UP
 Platform Break
 Poison Add
+Preposition at {circle}
+Preposition at {cross}
+Preposition at {diamond}
+Preposition at {moon}
+Preposition at {rt1}
+Preposition at {rt2}
+Preposition at {rt3}
+Preposition at {rt4}
+Preposition at {rt5}
+Preposition at {rt6}
+Preposition at {rt7}
+Preposition at {rt8}
+Preposition at {skull}
+Preposition at {square}
+Preposition at {star}
+Preposition at {triangle}
 Rebuff Arcane Intellect
 Rebuff Battle Shout
 Rebuff Blessing of the Bronze

@@ -18,6 +18,9 @@ TEXT_FIELD = re.compile(r"\btext\s*=\s*\"([^\"]*)\"")
 TTS_FIELD = re.compile(r"\bTTS\s*=\s*(?:\"([^\"]*)\"|(true|false|nil))")
 TTS_FIELD_CONTINUES = re.compile(r"^\s*\.\.")
 SPECIAL_DISPLAY = re.compile(r"\bisSpecialDisplay\s*=\s*true\b")
+NO_EDIT = re.compile(r"\bNoEdit\s*=\s*true\b")
+VERSION_TABLE = re.compile(r"(?<![\w.])Version\s*=\s*\{")
+TOP_LEVEL_TEXT = re.compile(r"(?<![\w.])text\s*=\s*\"([^\"]*)\"(\s*\.\.)?")
 TEXT_REASSIGNMENT = re.compile(r"\bdata\.text\s*=\s*\"([^\"]+)\"")
 LATE_TTS_ASSIGNMENT = re.compile(r"^\s*(?:local\s+)?([\w.]*\bTTS)\s*=\s*(.+)$")
 LOCAL_BINDING = re.compile(r"^\s*local\s+(\w+)\s*=")
@@ -142,14 +145,103 @@ def spoken_in_alerts(text: str, path: str) -> tuple[Counter[str], list[Composed]
                 continue
             spoken[literal.strip()] += 1
         else:
-            declared = TEXT_FIELD.search(table)
-            if declared and declared.group(1).strip():
-                spoken[declared.group(1).strip()] += 1
+            declared = top_level_text(table)
+            if declared:
+                spoken[declared] += 1
 
         for reassigned in TEXT_REASSIGNMENT.finditer(chunk):
             spoken[reassigned.group(1).strip()] += 1
 
     return spoken, composed_sites(text, CONCATENATED_TTS_FIELD, path)
+
+
+def top_level_text(table: str) -> str | None:
+    """The alert's own `text`, not a Version entry's or an isConditional description's.
+
+    None when it is empty or concatenated with something the game supplies.
+    """
+    depth = 0
+    in_string = False
+    index = 0
+    while index < len(table):
+        character = table[index]
+        if in_string:
+            if character == "\\":
+                index += 1
+            elif character == '"':
+                in_string = False
+        elif character == '"':
+            in_string = True
+        elif character == "{":
+            depth += 1
+        elif character == "}":
+            if depth == 0:
+                return None
+            depth -= 1
+        elif depth == 0 and (match := TOP_LEVEL_TEXT.match(table, index)):
+            if match.group(2) or not match.group(1).strip():
+                return None
+            return match.group(1).strip()
+        index += 1
+    return None
+
+
+def balanced_table(text: str, start: int) -> str:
+    """The table literal opening at text[start], braces inside strings ignored."""
+    depth = 0
+    in_string = False
+    index = start
+    while index < len(text):
+        character = text[index]
+        if in_string:
+            if character == "\\":
+                index += 1
+            elif character == '"':
+                in_string = False
+        elif character == '"':
+            in_string = True
+        elif character == "{":
+            depth += 1
+        elif character == "}":
+            depth -= 1
+            if depth == 0:
+                return text[start:index + 1]
+        index += 1
+    raise UpstreamShapeError("an alert's Version table never closes")
+
+
+def optional_texts(text: str) -> Counter[str]:
+    """The texts of alerts a player can make speak by ticking TTS with no TTS text.
+
+    NSRT's alert editor saves TTS = true in that case, and a true TTS speaks the alert's text,
+    whatever the source default was. Special displays and NoEdit alerts have no such editor.
+    A Version step's text is what NSRT writes into an older saved alert on upgrade, so a player
+    may hold that text instead.
+    """
+    optional: Counter[str] = Counter()
+    for chunk in ALERT_TABLE.split(text)[1:]:
+        table = chunk.split("AddEncounterAlert")[0]
+        if SPECIAL_DISPLAY.search(table) or NO_EDIT.search(table):
+            continue
+        declared = top_level_text(table)
+        if declared:
+            optional[declared] += 1
+        version = VERSION_TABLE.search(table)
+        if version:
+            for upgraded in TEXT_FIELD.finditer(balanced_table(table, version.end() - 1)):
+                if upgraded.group(1).strip():
+                    optional[upgraded.group(1).strip()] += 1
+        for reassigned in TEXT_REASSIGNMENT.finditer(chunk):
+            optional[reassigned.group(1).strip()] += 1
+    return optional
+
+
+def collect_optional(source: Path) -> Counter[str]:
+    optional: Counter[str] = Counter()
+    for path in iter_alert_files(source):
+        optional.update(optional_texts(
+            strip_lua_comments(path.read_text(encoding="utf-8", errors="replace"))))
+    return optional
 
 
 def declared_tts_by_alert(text: str) -> dict[str, str]:
@@ -419,6 +511,9 @@ def main(argv: list[str] | None = None) -> int:
 
     try:
         spoken, composed = collect_spoken(args.source)
+        optional = Counter({
+            string: count for string, count in collect_optional(args.source).items()
+            if string not in spoken})
         covered = load_vocabulary(args.vocabulary)
         signatures = (
             composed_signatures(args.source, composed)
@@ -457,8 +552,18 @@ def main(argv: list[str] | None = None) -> int:
          if string.casefold() not in covered),
         key=lambda pair: (-pair[0], pair[1].casefold()))
 
+    uncovered_optional = sorted(
+        ((count, string) for string, count in optional.items()
+         if string.casefold() not in covered),
+        key=lambda pair: (-pair[0], pair[1].casefold()))
+
     print(f"{len(spoken)} strings can be spoken, {len(spoken) - len(uncovered)} recorded")
     for count, string in uncovered:
+        print(f"  {count:>3} alert(s)  {string}")
+
+    print(f"{len(optional)} more alert texts speak once a player ticks TTS, "
+          f"{len(optional) - len(uncovered_optional)} recorded")
+    for count, string in uncovered_optional:
         print(f"  {count:>3} alert(s)  {string}")
 
     if composed:
@@ -469,9 +574,10 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.output:
         args.output.write_text(
-            "".join(f"{string}\n" for _, string in uncovered), encoding="utf-8")
+            "".join(f"{string}\n" for _, string in uncovered + uncovered_optional),
+            encoding="utf-8")
 
-    return 0 if args.exit_zero or not uncovered else 1
+    return 0 if args.exit_zero or not (uncovered or uncovered_optional) else 1
 
 
 if __name__ == "__main__":

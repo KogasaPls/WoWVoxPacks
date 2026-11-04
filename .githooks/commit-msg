@@ -1,0 +1,9 @@
+#!/bin/sh
+set -eu
+
+# Merge commits are also exempt from the CI range check.
+if test -f "$(git rev-parse --git-path MERGE_HEAD)"; then
+    exit 0
+fi
+
+exec python3 scripts/commit_messages.py --message-file "$1"

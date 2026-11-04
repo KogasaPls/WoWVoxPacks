@@ -196,6 +196,12 @@
     "Text": "Avenging Wrath"
   },
   {
+    "FileName": "bait_orbs.ogg",
+    "DisplayName": "Bait Orbs",
+    "FormattedDisplayName": "Bait Orbs",
+    "Text": "Bait Orbs"
+  },
+  {
     "FileName": "bait.ogg",
     "DisplayName": "Bait",
     "FormattedDisplayName": "Bait",
@@ -637,13 +643,25 @@
     "FileName": "debuff.ogg",
     "DisplayName": "Debuff",
     "FormattedDisplayName": "Debuff",
-    "Text": "Debuff"
+    "Text": "Debuff",
+    "Pronunciations": [
+      {
+        "Phrase": "Debuff",
+        "Ipa": "\u02C8di\u02D0b\u028Cf"
+      }
+    ]
   },
   {
     "FileName": "debuffs.ogg",
     "DisplayName": "Debuffs",
     "FormattedDisplayName": "Debuffs",
-    "Text": "Debuffs"
+    "Text": "Debuffs",
+    "Pronunciations": [
+      {
+        "Phrase": "Debuffs",
+        "Ipa": "\u02C8di\u02D0b\u028Cfs"
+      }
+    ]
   },
   {
     "FileName": "deep_breath.ogg",
@@ -1099,7 +1117,13 @@
     "FileName": "frostfire_debuffs.ogg",
     "DisplayName": "Frostfire Debuffs",
     "FormattedDisplayName": "Frostfire Debuffs",
-    "Text": "Frostfire Debuffs"
+    "Text": "Frostfire Debuffs",
+    "Pronunciations": [
+      {
+        "Phrase": "Debuffs",
+        "Ipa": "\u02C8di\u02D0b\u028Cfs"
+      }
+    ]
   },
   {
     "FileName": "frostwyrm_s_fury.ogg",
@@ -1286,6 +1310,12 @@
     "DisplayName": "Hit Demiar",
     "FormattedDisplayName": "Hit Demiar",
     "Text": "Hit Demiar"
+  },
+  {
+    "FileName": "hit_knock.ogg",
+    "DisplayName": "Hit\u002BKnock",
+    "FormattedDisplayName": "Hit\u002BKnock",
+    "Text": "Hit and Knock"
   },
   {
     "FileName": "hit_morium.ogg",
@@ -1654,6 +1684,12 @@
     "Text": "North"
   },
   {
+    "FileName": "number_game.ogg",
+    "DisplayName": "Number Game",
+    "FormattedDisplayName": "Number Game",
+    "Text": "Number Game"
+  },
+  {
     "FileName": "obelisk.ogg",
     "DisplayName": "Obelisk",
     "FormattedDisplayName": "Obelisk",
@@ -1784,6 +1820,60 @@
     "DisplayName": "Pre-Pot",
     "FormattedDisplayName": "Pre-Pot",
     "Text": "Pre-Pot"
+  },
+  {
+    "FileName": "pre_spread.ogg",
+    "DisplayName": "Pre-Spread",
+    "FormattedDisplayName": "Pre-Spread",
+    "Text": "Pre-Spread"
+  },
+  {
+    "FileName": "preposition_at_circle.ogg",
+    "DisplayName": "Preposition at {circle}",
+    "FormattedDisplayName": "Preposition at {circle}",
+    "Text": "Pre-position at Circle"
+  },
+  {
+    "FileName": "preposition_at_cross.ogg",
+    "DisplayName": "Preposition at {cross}",
+    "FormattedDisplayName": "Preposition at {cross}",
+    "Text": "Pre-position at Cross"
+  },
+  {
+    "FileName": "preposition_at_diamond.ogg",
+    "DisplayName": "Preposition at {diamond}",
+    "FormattedDisplayName": "Preposition at {diamond}",
+    "Text": "Pre-position at Diamond"
+  },
+  {
+    "FileName": "preposition_at_moon.ogg",
+    "DisplayName": "Preposition at {moon}",
+    "FormattedDisplayName": "Preposition at {moon}",
+    "Text": "Pre-position at Moon"
+  },
+  {
+    "FileName": "preposition_at_skull.ogg",
+    "DisplayName": "Preposition at {rt8}",
+    "FormattedDisplayName": "Preposition at {rt8}",
+    "Text": "Pre-position at Skull"
+  },
+  {
+    "FileName": "preposition_at_square.ogg",
+    "DisplayName": "Preposition at {rt6}",
+    "FormattedDisplayName": "Preposition at {rt6}",
+    "Text": "Pre-position at Square"
+  },
+  {
+    "FileName": "preposition_at_star.ogg",
+    "DisplayName": "Preposition at {rt1}",
+    "FormattedDisplayName": "Preposition at {rt1}",
+    "Text": "Pre-position at Star"
+  },
+  {
+    "FileName": "preposition_at_triangle.ogg",
+    "DisplayName": "Preposition at {rt4}",
+    "FormattedDisplayName": "Preposition at {rt4}",
+    "Text": "Pre-position at Triangle"
   },
   {
     "FileName": "primordial_storm.ogg",
@@ -2398,6 +2488,12 @@
     "Text": "Spread"
   },
   {
+    "FileName": "stack_up.ogg",
+    "DisplayName": "Stack Up",
+    "FormattedDisplayName": "Stack Up",
+    "Text": "Stack Up"
+  },
+  {
     "FileName": "stack.ogg",
     "DisplayName": "Stack",
     "FormattedDisplayName": "Stack",
@@ -2809,7 +2905,13 @@
     "FileName": "wind_debuffs.ogg",
     "DisplayName": "Wind-Debuffs",
     "FormattedDisplayName": "Wind-Debuffs",
-    "Text": "Wind Debuffs"
+    "Text": "Wind Debuffs",
+    "Pronunciations": [
+      {
+        "Phrase": "Debuffs",
+        "Ipa": "\u02C8di\u02D0b\u028Cfs"
+      }
+    ]
   },
   {
     "FileName": "wind_rush.ogg",

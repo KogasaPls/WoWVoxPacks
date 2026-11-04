@@ -237,6 +237,72 @@ class CollectSpokenTests(unittest.TestCase):
 
 
 
+FULL_VOCABULARY = (
+    "Taunt\nBreath\nStack\nSoulstone\nSoak\nDon't soak\n"
+    "Drop-Pool\nStack Up\nDisplayed Only\nSoak {rt1}\n")
+
+
+class OptionalTextTests(unittest.TestCase):
+    """NSRT's editor saves TTS = true for a ticked box with no TTS text, which speaks the text."""
+
+    def optional(self, alerts):
+        return checker.optional_texts(alerts)
+
+    def test_an_opt_in_or_overridden_alert_offers_its_text(self):
+        optional = self.optional(ALERTS)
+        for text in ("Drop-Pool", "Stack Up", "Displayed Only", "Taunt", "Breath"):
+            self.assertIn(text, optional)
+
+    def test_a_version_entry_is_offered_but_is_not_the_alert_text(self):
+        alerts = ('local data = {Version = {versionNumber = 1, [1] = {text = "Orbs"}}, '
+                  'internalID = "OrbSpawn", text = "Bait Orbs", TTS = true}\n'
+                  'self:AddEncounterAlert(data)\n')
+        self.assertEqual({"Bait Orbs": 1, "Orbs": 1}, dict(self.optional(alerts)))
+        spoken, _ = checker.spoken_in_alerts(alerts, "Boss.lua")
+        self.assertEqual({"Bait Orbs": 1}, dict(spoken))
+
+    def test_a_special_display_or_locked_alert_offers_nothing(self):
+        alerts = ('local data = {internalID = "A", text = "Wrong Target", TTS = false, '
+                  'isSpecialDisplay = true}\nself:AddEncounterAlert(data)\n'
+                  'local data = {internalID = "B", text = "Auto Release", TTS = false, '
+                  'NoEdit = true}\nself:AddEncounterAlert(data)\n')
+        self.assertEqual({}, dict(self.optional(alerts)))
+
+    def test_a_concatenated_text_is_not_offered_as_its_prefix(self):
+        alerts = ('local data = {internalID = "Soak", text = "Soak {rt"..i.."}", '
+                  'TTS = "Soak"}\nself:AddEncounterAlert(data)\n')
+        self.assertEqual({}, dict(self.optional(alerts)))
+
+    def test_an_uncovered_optional_text_fails_main(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = write_source(directory)
+            vocabulary = root / "vocabulary.txt"
+            vocabulary.write_text(FULL_VOCABULARY.replace("Stack Up\n", ""), encoding="utf-8")
+            output = root / "uncovered.txt"
+            self.assertEqual(1, checker.main(
+                ["--source", str(root), "--vocabulary", str(vocabulary),
+                 "--output", str(output)]))
+            self.assertEqual("Stack Up\n", output.read_text(encoding="utf-8"))
+
+
+class OptionalOutputTests(unittest.TestCase):
+    def test_a_text_both_spoken_and_optional_is_written_once(self):
+        alerts = ALERTS + ('\n    local data = {internalID = "Again", text = "Taunt", TTS = false}\n'
+                           '    self:AddEncounterAlert(data)\n'
+                           '    local data = {internalID = "Thrice", text = "Taunt", TTS = false}\n'
+                           '    self:AddEncounterAlert(data)\n')
+        with tempfile.TemporaryDirectory() as directory:
+            root = write_source(directory, alerts=alerts)
+            vocabulary = root / "vocabulary.txt"
+            vocabulary.write_text("Stack\n", encoding="utf-8")
+            output = root / "uncovered.txt"
+            checker.main(["--source", str(root), "--vocabulary", str(vocabulary),
+                          "--output", str(output), "--exit-zero"])
+            lines = output.read_text(encoding="utf-8").splitlines()
+            self.assertEqual(1, lines.count("Taunt"))
+            self.assertEqual(len(lines), len(set(lines)))
+
+
 class MainTests(unittest.TestCase):
     def run_main(self, vocabulary, *extra):
         with tempfile.TemporaryDirectory() as directory:
@@ -251,7 +317,7 @@ class MainTests(unittest.TestCase):
 
     def test_full_coverage_passes(self):
         self.assertEqual(0, self.run_main(
-            "Taunt\nBreath\nStack\nSoulstone\nSoak\nDon't soak\n"))
+            FULL_VOCABULARY))
 
     def test_exit_zero_reports_without_failing(self):
         self.assertEqual(0, self.run_main("Stack\n", "--exit-zero"))
@@ -274,7 +340,7 @@ class ComposedSnapshotTests(unittest.TestCase):
             root = write_source(directory, direct=direct)
             vocabulary_path = root / "vocabulary.txt"
             vocabulary_path.write_text(
-                "Taunt\nBreath\nStack\nSoulstone\nSoak\nDon't soak\n", encoding="utf-8")
+                FULL_VOCABULARY, encoding="utf-8")
             snapshot_path = root / "composed.txt"
             return checker.main(
                 ["--source", str(root), "--vocabulary", str(vocabulary_path),

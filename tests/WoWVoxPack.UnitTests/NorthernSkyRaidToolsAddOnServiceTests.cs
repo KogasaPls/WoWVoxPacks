@@ -72,6 +72,38 @@ public sealed class NorthernSkyRaidToolsAddOnServiceTests : IDisposable
     }
 
     [Fact]
+    public async Task BuildAddOnAsync_RegistersTheTimelineRemindersSpellingOfARaidMarkerKey()
+    {
+        string vocabularyPath = Path.Combine(_temporaryDirectory, "nsrt-vocabulary.txt");
+        string overridesPath = Path.Combine(_temporaryDirectory, "CalloutPronunciations.json");
+        File.WriteAllText(vocabularyPath, "Soak Star\nSoak {rt1}\nSoak {rt3}\n");
+        string overrides =
+            "{\"Soak {rt1}\":{\"FileName\":\"soak_star.ogg\",\"Text\":\"Soak Star\"},"
+            + "\"Soak {rt3}\":{\"FileName\":\"soak_diamond.ogg\",\"Text\":\"Soak Diamond\"}}";
+        File.WriteAllText(overridesPath, overrides);
+        NorthernSkyRaidToolsAddOnService service = new(
+            new StubOptions(new AddOnSettings
+            {
+                Title = "unused",
+                Version = "12.0.7",
+                Author = "Tester"
+            }),
+            new NorthernSkyRaidToolsVocabularyProvider([vocabularyPath], overridesPath));
+
+        AddOnDraft draft = await service.BuildAddOnAsync(
+            _temporaryDirectory, new TtsSettings { Voice = VoiceName.Studio_O });
+        AddOn addOn = draft.Finalize(draft.SoundFiles);
+        string lua = addOn.GetFileContent("Core.lua");
+
+        Assert.Equal(["soak_diamond.ogg", "soak_star.ogg"],
+            addOn.SoundFiles.Select(f => f.FileName).Order());
+        Assert.Contains("LSM:Register(\"sound\", \"Soak Diamond\", path .. \"soak_diamond.ogg\")",
+            lua, StringComparison.Ordinal);
+        Assert.Single(lua.Split('\n'),
+            line => line.Contains("\"Soak Star\"", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
     public async Task BuildAddOnAsync_RegistersARetiredCalloutKeyOnlyWhileItsRecordingShips()
     {
         string vocabularyPath = Path.Combine(_temporaryDirectory, "nsrt-vocabulary.txt");

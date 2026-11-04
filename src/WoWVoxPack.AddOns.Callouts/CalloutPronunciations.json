@@ -41,6 +41,10 @@
   "HealAbsorb": {
     "Text": "Heal Absorb"
   },
+  "Hit+Knock": {
+    "FileName": "hit_knock.ogg",
+    "Text": "Hit and Knock"
+  },
   "Invoke Chi-Ji, the Red Crane": {
     "FileName": "invoke_chiji_the_red_crane.ogg",
     "Text": "Invoke Chi-Ji, the Red Crane"
@@ -51,6 +55,70 @@
   },
   "PICK UP": {
     "Text": "Pick up"
+  },
+  "Preposition at {circle}": {
+    "FileName": "preposition_at_circle.ogg",
+    "Text": "Pre-position at Circle"
+  },
+  "Preposition at {cross}": {
+    "FileName": "preposition_at_cross.ogg",
+    "Text": "Pre-position at Cross"
+  },
+  "Preposition at {diamond}": {
+    "FileName": "preposition_at_diamond.ogg",
+    "Text": "Pre-position at Diamond"
+  },
+  "Preposition at {moon}": {
+    "FileName": "preposition_at_moon.ogg",
+    "Text": "Pre-position at Moon"
+  },
+  "Preposition at {rt1}": {
+    "FileName": "preposition_at_star.ogg",
+    "Text": "Pre-position at Star"
+  },
+  "Preposition at {rt2}": {
+    "FileName": "preposition_at_circle.ogg",
+    "Text": "Pre-position at Circle"
+  },
+  "Preposition at {rt3}": {
+    "FileName": "preposition_at_diamond.ogg",
+    "Text": "Pre-position at Diamond"
+  },
+  "Preposition at {rt4}": {
+    "FileName": "preposition_at_triangle.ogg",
+    "Text": "Pre-position at Triangle"
+  },
+  "Preposition at {rt5}": {
+    "FileName": "preposition_at_moon.ogg",
+    "Text": "Pre-position at Moon"
+  },
+  "Preposition at {rt6}": {
+    "FileName": "preposition_at_square.ogg",
+    "Text": "Pre-position at Square"
+  },
+  "Preposition at {rt7}": {
+    "FileName": "preposition_at_cross.ogg",
+    "Text": "Pre-position at Cross"
+  },
+  "Preposition at {rt8}": {
+    "FileName": "preposition_at_skull.ogg",
+    "Text": "Pre-position at Skull"
+  },
+  "Preposition at {skull}": {
+    "FileName": "preposition_at_skull.ogg",
+    "Text": "Pre-position at Skull"
+  },
+  "Preposition at {square}": {
+    "FileName": "preposition_at_square.ogg",
+    "Text": "Pre-position at Square"
+  },
+  "Preposition at {star}": {
+    "FileName": "preposition_at_star.ogg",
+    "Text": "Pre-position at Star"
+  },
+  "Preposition at {triangle}": {
+    "FileName": "preposition_at_triangle.ogg",
+    "Text": "Pre-position at Triangle"
   },
   "Right > + Dodge": {
     "FileName": "right.ogg",

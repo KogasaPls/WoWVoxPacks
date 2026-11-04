@@ -41,6 +41,10 @@
   "HealAbsorb": {
     "Text": "Heal Absorb"
   },
+  "Hit+Knock": {
+    "FileName": "hit_knock.ogg",
+    "Text": "Hit and Knock"
+  },
   "Invoke Chi-Ji, the Red Crane": {
     "FileName": "invoke_chiji_the_red_crane.ogg",
     "Text": "Invoke Chi-Ji, the Red Crane"

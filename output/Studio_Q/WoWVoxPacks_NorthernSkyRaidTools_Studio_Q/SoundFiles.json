@@ -196,6 +196,12 @@
     "Text": "Avenging Wrath"
   },
   {
+    "FileName": "bait_orbs.ogg",
+    "DisplayName": "Bait Orbs",
+    "FormattedDisplayName": "Bait Orbs",
+    "Text": "Bait Orbs"
+  },
+  {
     "FileName": "bait.ogg",
     "DisplayName": "Bait",
     "FormattedDisplayName": "Bait",
@@ -1306,6 +1312,12 @@
     "Text": "Hit Demiar"
   },
   {
+    "FileName": "hit_knock.ogg",
+    "DisplayName": "Hit\u002BKnock",
+    "FormattedDisplayName": "Hit\u002BKnock",
+    "Text": "Hit and Knock"
+  },
+  {
     "FileName": "hit_morium.ogg",
     "DisplayName": "Hit Morium",
     "FormattedDisplayName": "Hit Morium",
@@ -1672,6 +1684,12 @@
     "Text": "North"
   },
   {
+    "FileName": "number_game.ogg",
+    "DisplayName": "Number Game",
+    "FormattedDisplayName": "Number Game",
+    "Text": "Number Game"
+  },
+  {
     "FileName": "obelisk.ogg",
     "DisplayName": "Obelisk",
     "FormattedDisplayName": "Obelisk",
@@ -1802,6 +1820,12 @@
     "DisplayName": "Pre-Pot",
     "FormattedDisplayName": "Pre-Pot",
     "Text": "Pre-Pot"
+  },
+  {
+    "FileName": "pre_spread.ogg",
+    "DisplayName": "Pre-Spread",
+    "FormattedDisplayName": "Pre-Spread",
+    "Text": "Pre-Spread"
   },
   {
     "FileName": "preposition_at_circle.ogg",
@@ -2462,6 +2486,12 @@
     "DisplayName": "Spread",
     "FormattedDisplayName": "Spread",
     "Text": "Spread"
+  },
+  {
+    "FileName": "stack_up.ogg",
+    "DisplayName": "Stack Up",
+    "FormattedDisplayName": "Stack Up",
+    "Text": "Stack Up"
   },
   {
     "FileName": "stack.ogg",

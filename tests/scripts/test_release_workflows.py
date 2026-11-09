@@ -203,11 +203,12 @@ class ReleaseWorkflowTests(unittest.TestCase):
         add_paths = pull_request_job.split("add-paths: |", 1)[1].split("sign-commits:", 1)[0]
         self.assertIn("appsettings.json", add_paths)
 
-    def test_check_live_build_follows_forever(self):
+    def test_check_forever_live_build_follows_forever(self):
         check = job((REPOSITORY_ROOT / ".github/workflows/update.yml").read_text(encoding="utf-8"),
-                    "check-live-build")
-        follow = step(check, "Compare the live build against the declared interfaces")
+                    "check-forever-live-build")
+        follow = step(check, "Compare the Forever live build against the declared interface")
 
+        self.assertIn("continue-on-error: true", check.split("\n    steps:", 1)[0])
         self.assertIn("https://us.version.battle.net/v2/products/wowf/versions", follow)
         self.assertIn(
             'forever_game_version=$(python3 scripts/game_versions.py --settings appsettings.json'
@@ -220,36 +221,55 @@ class ReleaseWorkflowTests(unittest.TestCase):
             follow,
         )
         forever_wait = follow.split('if [ "${forever_listed}" -eq 3 ]; then', 1)[1].split("elif", 1)[0]
-        self.assertIn('forever_game_version=""', forever_wait)
-        self.assertNotIn('game_version=""', forever_wait.replace('forever_game_version=""', ""))
+        self.assertEqual(forever_wait.strip().splitlines()[-1].strip(), 'forever_game_version=""')
+        self.assertNotRegex(follow, r"(?m)^\s*game_version=")
         self.assertIn('elif [ "${forever_listed}" -ne 0 ]; then\n              exit "${forever_listed}"', follow)
         self.assertLess(follow.index("forever_listed=$?"),
                         follow.index('echo "forever_game_version=${forever_game_version}"'))
-        outputs = follow.split("          {\n", 1)[1].split('          } >> "$GITHUB_OUTPUT"', 1)[0]
-        self.assertIn('echo "forever_build=${forever_build}"', outputs)
-        self.assertIn('echo "forever_game_version=${forever_game_version}"', outputs)
-        self.assertIn('if [ -n "${game_version}" ] || [ -n "${forever_game_version}" ]; then', follow)
+        self.assertIn('echo "forever_build=${forever_build}" >> "$GITHUB_OUTPUT"', follow)
+        self.assertIn('if [ -n "${forever_game_version}" ]; then\n            echo', follow)
 
         self.assertIn("forever_build: ${{ steps.follow.outputs.forever_build }}", check)
         self.assertIn("forever_game_version: ${{ steps.follow.outputs.forever_game_version }}", check)
         self.assertIn("needs_update: ${{ steps.follow.outputs.needs_update }}", check)
+
+    def test_retail_live_build_never_waits_on_forever(self):
+        """A Forever outage must not hold back a retail patch-day bump."""
+        retail = job((REPOSITORY_ROOT / ".github/workflows/update.yml").read_text(encoding="utf-8"),
+                     "check-live-build")
+
+        self.assertNotIn("products/wowf", retail)
+        self.assertNotIn("--follow-forever", retail)
+        self.assertNotIn("--type forever", retail)
+        self.assertNotIn("forever_", retail)
+
+    def test_create_pull_request_needs_and_gates_on_both_live_builds(self):
+        pull_request_job = job((REPOSITORY_ROOT / ".github/workflows/update.yml").read_text(encoding="utf-8"),
+                               "create-pull-request")
+        header = pull_request_job.split("\n    steps:", 1)[0]
+        needs = header.split("needs:", 1)[1].split("\n", 1)[0]
+
+        self.assertIn(" check-live-build,", needs)
+        self.assertIn(" check-forever-live-build ", needs)
+        self.assertIn("needs.check-live-build.outputs.needs_update == 'true'", header)
+        self.assertIn("needs.check-forever-live-build.outputs.needs_update == 'true'", header)
 
     def test_create_pull_request_follows_forever(self):
         updater = (REPOSITORY_ROOT / ".github/workflows/update.yml").read_text(encoding="utf-8")
         pull_request_job = job(updater, "create-pull-request")
         follow = step(pull_request_job, "Follow the Forever live build")
 
-        self.assertIn("if: ${{ needs.check-live-build.outputs.forever_game_version != '' }}", follow)
-        self.assertIn("FOREVER_LIVE_BUILD: ${{ needs.check-live-build.outputs.forever_build }}", follow)
+        self.assertIn("if: ${{ needs.check-forever-live-build.outputs.forever_game_version != '' }}", follow)
+        self.assertIn("FOREVER_LIVE_BUILD: ${{ needs.check-forever-live-build.outputs.forever_build }}", follow)
         self.assertIn('--settings appsettings.json --follow-forever "$FOREVER_LIVE_BUILD"', follow)
         self.assertLess(pull_request_job.index("- name: Follow the Forever live build"),
                         pull_request_job.index("- name: Run addon builder"))
 
         describe = step(pull_request_job, "Describe the rendered addon changes")
-        self.assertIn("FOREVER_VERSION: ${{ needs.check-live-build.outputs.forever_game_version }}", describe)
+        self.assertIn("FOREVER_VERSION: ${{ needs.check-forever-live-build.outputs.forever_game_version }}", describe)
         self.assertIn('--forever-version "$FOREVER_VERSION"', describe)
         self.assertIn(
-            "- Forever game version: ${{ needs.check-live-build.outputs.forever_game_version || 'unchanged' }}",
+            "- Forever game version: ${{ needs.check-forever-live-build.outputs.forever_game_version || 'unchanged' }}",
             pull_request_job,
         )
 
@@ -269,6 +289,7 @@ class ReleaseWorkflowTests(unittest.TestCase):
         gate = job(updater, "check-earlier-build")
         self.assertIn("continue-on-error: true", job(updater, "check-nsrt-vocabulary"))
         self.assertIn("continue-on-error: true", job(updater, "check-live-build"))
+        self.assertIn("continue-on-error: true", job(updater, "check-forever-live-build"))
         self.assertNotIn("continue-on-error", gate)
         self.assertIn(
             "gh pr list --state open --limit 100 --json number,headRefName,isCrossRepository > pulls.json",
@@ -374,7 +395,7 @@ class ReleaseWorkflowTests(unittest.TestCase):
         updater = (
             REPOSITORY_ROOT / ".github/workflows/update.yml"
         ).read_text(encoding="utf-8")
-        check = updater.split("\n  check-live-build:", 1)[1].split("\n  create-pull-request:", 1)[0]
+        check = job(updater, "check-live-build")
 
         self.assertIn("https://us.version.battle.net/v2/products/wow/versions", check)
         self.assertIn('build=$(python3 scripts/game_versions.py --live-build versions.txt)', check)
@@ -733,7 +754,8 @@ class HardeningTests(unittest.TestCase):
     def test_check_failure_issues_close_when_the_check_recovers(self):
         updater = self.read("update.yml")
         for name, title in (("check-nsrt-vocabulary", "The NSRT vocabulary check is failing"),
-                            ("check-live-build", "The live build check is failing")):
+                            ("check-live-build", "The live build check is failing"),
+                            ("check-forever-live-build", "The Forever live build check is failing")):
             close = step(job(updater, name), "Close the issue once this check passes again")
             self.assertIn("if: success()", close, name)
             self.assertIn(f"TITLE: {title}", close, name)

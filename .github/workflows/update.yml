@@ -279,8 +279,6 @@ jobs:
     outputs:
       build: ${{ steps.follow.outputs.build }}
       game_version: ${{ steps.follow.outputs.game_version }}
-      forever_build: ${{ steps.follow.outputs.forever_build }}
-      forever_game_version: ${{ steps.follow.outputs.forever_game_version }}
       needs_update: ${{ steps.follow.outputs.needs_update }}
     steps:
       - uses: actions/checkout@v7
@@ -313,32 +311,13 @@ jobs:
               exit "${listed}"
             fi
           fi
-          curl -sf --retry 3 https://us.version.battle.net/v2/products/wowf/versions -o forever-versions.txt
-          forever_build=$(python3 scripts/game_versions.py --live-build forever-versions.txt)
-          echo "Forever live build: ${forever_build}"
-          forever_game_version=$(python3 scripts/game_versions.py --settings appsettings.json --follow-forever "${forever_build}")
-          # The release refuses a Forever version CurseForge does not list, so this one waits too.
-          if [ -n "${forever_game_version}" ]; then
-            forever_listed=0
-            python3 scripts/curseforge_game_versions.py --type forever --versions "${forever_game_version}" || forever_listed=$?
-            if [ "${forever_listed}" -eq 3 ]; then
-              echo "::warning::Forever live is ${forever_game_version}, which CurseForge does not list yet; a later run follows it"
-              forever_game_version=""
-            elif [ "${forever_listed}" -ne 0 ]; then
-              exit "${forever_listed}"
-            fi
-          fi
-          {
-            echo "build=${build}"
-            echo "game_version=${game_version}"
-            echo "forever_build=${forever_build}"
-            echo "forever_game_version=${forever_game_version}"
-          } >> "$GITHUB_OUTPUT"
-          if [ -n "${game_version}" ] || [ -n "${forever_game_version}" ]; then
-            echo "Live moved: retail ${game_version:-unchanged}, Forever ${forever_game_version:-unchanged}"
+          echo "build=${build}" >> "$GITHUB_OUTPUT"
+          echo "game_version=${game_version}" >> "$GITHUB_OUTPUT"
+          if [ -n "${game_version}" ]; then
+            echo "Live moved to ${game_version}"
             echo "needs_update=true" >> "$GITHUB_OUTPUT"
           else
-            echo "The declared interfaces cover the live builds"
+            echo "The declared interfaces cover the live build"
             echo "needs_update=false" >> "$GITHUB_OUTPUT"
           fi
       - name: File an issue when this check fails
@@ -367,14 +346,89 @@ jobs:
               --jq '.[] | select(.title == env.TITLE) | .number'); do
             gh issue close "$number" --comment "Passing again: $run_url"
           done
+  check-forever-live-build:
+    runs-on: ubuntu-latest
+    # Kept apart from check-live-build so a Forever outage never holds back a retail bump.
+    continue-on-error: true
+    permissions:
+      contents: read
+      issues: write
+    outputs:
+      forever_build: ${{ steps.follow.outputs.forever_build }}
+      forever_game_version: ${{ steps.follow.outputs.forever_game_version }}
+      needs_update: ${{ steps.follow.outputs.needs_update }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          filter: blob:none
+          sparse-checkout: |
+            /*
+            !/output/
+            !/output-forever/
+          sparse-checkout-cone-mode: false
+      - name: Compare the Forever live build against the declared interface
+        id: follow
+        env:
+          CURSEFORGE_API_TOKEN: ${{ secrets.CURSEFORGE_API_TOKEN }}
+        run: |
+          curl -sf --retry 3 https://us.version.battle.net/v2/products/wowf/versions -o forever-versions.txt
+          forever_build=$(python3 scripts/game_versions.py --live-build forever-versions.txt)
+          echo "Forever live build: ${forever_build}"
+          forever_game_version=$(python3 scripts/game_versions.py --settings appsettings.json --follow-forever "${forever_build}")
+          # The release refuses a Forever version CurseForge does not list, so the bump waits too.
+          if [ -n "${forever_game_version}" ]; then
+            forever_listed=0
+            python3 scripts/curseforge_game_versions.py --type forever --versions "${forever_game_version}" || forever_listed=$?
+            if [ "${forever_listed}" -eq 3 ]; then
+              echo "::warning::Forever live is ${forever_game_version}, which CurseForge does not list yet; a later run follows it"
+              forever_game_version=""
+            elif [ "${forever_listed}" -ne 0 ]; then
+              exit "${forever_listed}"
+            fi
+          fi
+          echo "forever_build=${forever_build}" >> "$GITHUB_OUTPUT"
+          echo "forever_game_version=${forever_game_version}" >> "$GITHUB_OUTPUT"
+          if [ -n "${forever_game_version}" ]; then
+            echo "Forever live moved to ${forever_game_version}"
+            echo "needs_update=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "The declared Forever interface covers the live build"
+            echo "needs_update=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: File an issue when this check fails
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          title="The Forever live build check is failing"
+          run_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          number=$(gh issue list --state open --search "in:title \"$title\"" --json number --jq '.[0].number')
+          if [ -n "$number" ]; then
+            gh issue comment "$number" --body "Still failing: $run_url"
+          else
+            gh issue create --title "$title" --body "$run_url"
+          fi
+      - name: Close the issue once this check passes again
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          TITLE: The Forever live build check is failing
+        run: |
+          run_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          for number in $(gh issue list --state open --search "in:title \"$TITLE\"" --json number,title \
+              --jq '.[] | select(.title == env.TITLE) | .number'); do
+            gh issue close "$number" --comment "Passing again: $run_url"
+          done
   create-pull-request:
-    needs: [ check-earlier-build, check-bigwigs-voice-version, check-nsrt-vocabulary, check-live-build ]
+    needs: [ check-earlier-build, check-bigwigs-voice-version, check-nsrt-vocabulary, check-live-build, check-forever-live-build ]
     # The NSRT and live build jobs carry continue-on-error, so their upstreams may be
     # temporarily unavailable without blocking a BigWigs update. A failed BigWigs check must
     # still block this job: its version output would otherwise be committed as an empty
     # file. The lorrgs vocabulary is imported by hand (see scripts/extract_lorrgs_vocabulary.py);
     # this workflow only rebuilds from whatever is tracked.
-    if: ${{ needs.check-earlier-build.outputs.blocked == 'false' && (needs.check-bigwigs-voice-version.outputs.needs_update == 'true' || needs.check-nsrt-vocabulary.outputs.needs_update == 'true' || needs.check-live-build.outputs.needs_update == 'true') }}
+    if: ${{ needs.check-earlier-build.outputs.blocked == 'false' && (needs.check-bigwigs-voice-version.outputs.needs_update == 'true' || needs.check-nsrt-vocabulary.outputs.needs_update == 'true' || needs.check-live-build.outputs.needs_update == 'true' || needs.check-forever-live-build.outputs.needs_update == 'true') }}
     runs-on: ubuntu-latest
     timeout-minutes: 180
     # The PR and its auto-merge use the PAT, given only to those two steps. The job's own token
@@ -412,16 +466,15 @@ jobs:
           mv nsrt-vocabulary.new nsrt-vocabulary.txt
           mv nsrt-alert-vocabulary.new nsrt-alert-vocabulary.txt
       - name: Follow the live build
-        # Each flavor moves only when its own version is listed; needs_update covers either.
         if: ${{ needs.check-live-build.outputs.game_version != '' }}
         env:
           LIVE_BUILD: ${{ needs.check-live-build.outputs.build }}
         run: |
           python3 scripts/game_versions.py --settings appsettings.json --follow "$LIVE_BUILD"
       - name: Follow the Forever live build
-        if: ${{ needs.check-live-build.outputs.forever_game_version != '' }}
+        if: ${{ needs.check-forever-live-build.outputs.forever_game_version != '' }}
         env:
-          FOREVER_LIVE_BUILD: ${{ needs.check-live-build.outputs.forever_build }}
+          FOREVER_LIVE_BUILD: ${{ needs.check-forever-live-build.outputs.forever_build }}
         run: |
           python3 scripts/game_versions.py --settings appsettings.json --follow-forever "$FOREVER_LIVE_BUILD"
       - id: 'auth'
@@ -482,7 +535,7 @@ jobs:
         env:
           BIGWIGS_VERSION: ${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version }}
           GAME_VERSION: ${{ needs.check-live-build.outputs.game_version }}
-          FOREVER_VERSION: ${{ needs.check-live-build.outputs.forever_game_version }}
+          FOREVER_VERSION: ${{ needs.check-forever-live-build.outputs.forever_game_version }}
         run: |
           subject=$(python3 scripts/update_commit.py --bigwigs-version "$BIGWIGS_VERSION" --game-version "$GAME_VERSION" \
             --forever-version "$FOREVER_VERSION")
@@ -499,7 +552,7 @@ jobs:
 
             - BigWigs_Voice version: ${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version }}
             - Game version: ${{ needs.check-live-build.outputs.game_version || 'unchanged' }}
-            - Forever game version: ${{ needs.check-live-build.outputs.forever_game_version || 'unchanged' }}
+            - Forever game version: ${{ needs.check-forever-live-build.outputs.forever_game_version || 'unchanged' }}
 
             New callouts:
             ```

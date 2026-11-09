@@ -11,12 +11,15 @@ public sealed class CalloutsMediaAddOnService(
     CalloutsVocabularyProvider vocabulary)
     : IAddOnService
 {
+    public string AddOnId => "Callouts";
+
     private AddOnSettings AddOnSettings { get; } = addOnOptions.Get("Callouts");
 
     public Task<AddOnDraft> BuildAddOnAsync(string outputDirectoryBase, TtsSettings ttsSettings,
-        CancellationToken cancellationToken = default)
+        GameFlavor flavor, CancellationToken cancellationToken = default)
     {
-        AddOnBuilder builder = new AddOnBuilder(AddOnSettings, ttsSettings, "Callouts")
+        AddOnBuilder builder = new AddOnBuilder(AddOnSettings, ttsSettings, AddOnId)
+            .ForFlavor(flavor)
             .WithTitle($"WoWVoxPacks Callouts {ttsSettings.Voice}")
             .WithDisplayTitle($"WoWVoxPacks |cffff7f3fCallouts|r|cffffffff ({ttsSettings.Voice})|r");
 

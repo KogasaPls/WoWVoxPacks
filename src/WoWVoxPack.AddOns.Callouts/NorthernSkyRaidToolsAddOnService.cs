@@ -11,13 +11,16 @@ public sealed class NorthernSkyRaidToolsAddOnService(
     NorthernSkyRaidToolsVocabularyProvider vocabulary)
     : IAddOnService
 {
+    public string AddOnId => "NorthernSkyRaidTools";
+
     private AddOnSettings AddOnSettings { get; } = addOnOptions.Get("NorthernSkyRaidTools");
 
     public Task<AddOnDraft> BuildAddOnAsync(string outputDirectoryBase, TtsSettings ttsSettings,
-        CancellationToken cancellationToken = default)
+        GameFlavor flavor, CancellationToken cancellationToken = default)
     {
         string voice = ttsSettings.Voice?.ToString() ?? string.Empty;
-        AddOnBuilder builder = new AddOnBuilder(AddOnSettings, ttsSettings, "NorthernSkyRaidTools")
+        AddOnBuilder builder = new AddOnBuilder(AddOnSettings, ttsSettings, AddOnId)
+            .ForFlavor(flavor)
             .WithTitle($"WoWVoxPacks_NorthernSkyRaidTools_{voice}")
             .WithDisplayTitle($"WoWVoxPacks |cffff7f3fNorthern Sky Raid Tools|r|cffffffff ({voice})|r");
 

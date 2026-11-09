@@ -101,7 +101,7 @@ return 0;
 
 async Task AddDraft(IAddOnService service, VoiceName voice)
 {
-    drafts.Add(await service.BuildAddOnAsync(outputRoot, new TtsSettings { Voice = voice }));
+    drafts.Add(await service.BuildAddOnAsync(outputRoot, new TtsSettings { Voice = voice }, GameFlavor.Retail));
 }
 
 async Task Emit(AddOn addOn)

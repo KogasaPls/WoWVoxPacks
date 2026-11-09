@@ -25,7 +25,7 @@ public sealed class CalloutsMediaAddOnServiceTests : IDisposable
     {
         CalloutsMediaAddOnService service = CreateService(["LiveCallout"], ["OldCallout"]);
 
-        AddOnDraft draft = await service.BuildAddOnAsync(_temporaryDirectory, TtsSettings);
+        AddOnDraft draft = await service.BuildAddOnAsync(_temporaryDirectory, TtsSettings, GameFlavor.Retail);
         AddOn addOn = draft.Finalize(draft.SoundFiles);
 
         Assert.Contains(addOn.SoundFiles, sound => sound.DisplayName == "Live Callout");
@@ -44,7 +44,7 @@ public sealed class CalloutsMediaAddOnServiceTests : IDisposable
         File.WriteAllText(Path.Combine(soundDirectory, "old_callout.ogg"), "existing audio");
         CalloutsMediaAddOnService service = CreateService([], ["OldCallout"]);
 
-        AddOnDraft draft = await service.BuildAddOnAsync(_temporaryDirectory, TtsSettings);
+        AddOnDraft draft = await service.BuildAddOnAsync(_temporaryDirectory, TtsSettings, GameFlavor.Retail);
         AddOn addOn = draft.Finalize(draft.SoundFiles);
 
         Assert.Contains(addOn.SoundFiles, sound => sound.DisplayName == "Old Callout");
@@ -56,7 +56,7 @@ public sealed class CalloutsMediaAddOnServiceTests : IDisposable
     {
         CalloutsMediaAddOnService service = CreateService(["soak"], ["Soak"]);
 
-        AddOnDraft draft = await service.BuildAddOnAsync(_temporaryDirectory, TtsSettings);
+        AddOnDraft draft = await service.BuildAddOnAsync(_temporaryDirectory, TtsSettings, GameFlavor.Retail);
         AddOn addOn = draft.Finalize(draft.SoundFiles);
 
         SoundFile sound = Assert.Single(addOn.SoundFiles);

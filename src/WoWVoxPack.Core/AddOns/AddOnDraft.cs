@@ -65,6 +65,7 @@ public sealed class AddOnDraft
         GuardAgainstConflictingRecordings(resolved.Values);
 
         return new AddOn(
+            AddOnId,
             _outputDirectoryBase,
             _title,
             _displayTitle,

@@ -12,6 +12,8 @@ public sealed class AddOnBuilder(AddOnSettings settings, TtsSettings ttsSettings
     private readonly Dictionary<string, Func<AddOn, string>> _fileFactories = new(StringComparer.OrdinalIgnoreCase);
     private string? _title;
     private string? _displayTitle;
+    private IReadOnlyCollection<string>? _interfaces;
+    private string? _allowLoadGameType;
 
     /// <summary>
     /// Deserializes a list of <see cref="SoundFile"/> from a JSON manifest file. Exposed
@@ -35,6 +37,13 @@ public sealed class AddOnBuilder(AddOnSettings settings, TtsSettings ttsSettings
     public AddOnBuilder WithDisplayTitle(string displayTitle)
     {
         _displayTitle = displayTitle;
+        return this;
+    }
+
+    public AddOnBuilder ForFlavor(GameFlavor flavor)
+    {
+        _interfaces = flavor.Interfaces ?? _interfaces;
+        _allowLoadGameType = flavor.AllowLoadGameType ?? _allowLoadGameType;
         return this;
     }
 
@@ -105,8 +114,8 @@ public sealed class AddOnBuilder(AddOnSettings settings, TtsSettings ttsSettings
             primaryNote,
             additionalNotes,
             additionalProperties,
-            settings.Interfaces,
-            settings.AllowLoadGameType,
+            _interfaces ?? settings.Interfaces,
+            _allowLoadGameType ?? settings.AllowLoadGameType,
             new Dictionary<string, SoundFile>(_soundFiles, StringComparer.OrdinalIgnoreCase),
             new Dictionary<string, Func<AddOn, string>>(_fileFactories, StringComparer.OrdinalIgnoreCase));
     }

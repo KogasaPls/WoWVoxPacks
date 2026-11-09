@@ -17,16 +17,6 @@ using WoWVoxPack.Builder;
 using WoWVoxPack.Core.Builder;
 using WoWVoxPack.TTS;
 
-static string ResolveOutputDirectoryBase()
-{
-    string solutionFile =
-        Assembly.GetExecutingAssembly().GetCustomAttribute<SolutionFileAttribute>()?.SolutionFile ??
-        throw new Exception("Solution file not found.");
-    return Path.Combine(
-        Path.GetDirectoryName(solutionFile) ?? throw new Exception("Solution file not found."),
-        "output");
-}
-
 IHostBuilder hostBuilder = Host.CreateDefaultBuilder(args)
     .UseConsoleLifetime()
     .ConfigureServices((_, services) =>
@@ -68,6 +58,7 @@ IHostBuilder hostBuilder = Host.CreateDefaultBuilder(args)
             ServiceDescriptor.Singleton<IAddOnService, NorthernSkyRaidToolsAddOnService>());
         services.TryAddEnumerable(ServiceDescriptor.Singleton<IAddOnService, ExBossAddOnService>());
         services.AddOptionsWithValidateOnStart<BuildMatrix>().BindConfiguration("Matrix");
+        services.AddOptionsWithValidateOnStart<ForeverSettings>().BindConfiguration("Forever");
 
         // Each addon binds its own AddOn:{Name} section and then the AddOn root. The binder
         // appends to a List<T>, so Interfaces is root-only: a per-addon list would be
@@ -92,7 +83,8 @@ IHostBuilder hostBuilder = Host.CreateDefaultBuilder(args)
             sp.GetRequiredService<IOptions<BuildMatrix>>(),
             sp.GetRequiredService<ISoundFileService>(),
             sp.GetRequiredService<PronunciationResolver>(),
-            ResolveOutputDirectoryBase()));
+            solutionDirectory,
+            [GameFlavor.Retail, GameFlavor.Forever(sp.GetRequiredService<IOptions<ForeverSettings>>().Value)]));
         services.AddHostedService<Worker>();
     }).ConfigureLogging((_, logging) =>
     {

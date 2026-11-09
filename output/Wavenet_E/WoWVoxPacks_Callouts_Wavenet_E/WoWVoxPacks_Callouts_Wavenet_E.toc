@@ -1,4 +1,5 @@
 ## Interface: 120105
+## AllowLoadGameType: standard
 
 ## Title: WoWVoxPacks |cffff7f3fCallouts|r|cffffffff (Wavenet_E)|r
 ## Version: 12.1.5

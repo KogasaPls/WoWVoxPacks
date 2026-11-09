@@ -23,6 +23,7 @@ public sealed partial class AddOn
         IReadOnlyCollection<Note> additionalNotes,
         IReadOnlyDictionary<string, string> additionalProperties,
         IReadOnlyCollection<string>? interfaces,
+        string? allowLoadGameType,
         IReadOnlyDictionary<string, SoundFile> soundFiles,
         IReadOnlyDictionary<string, Func<AddOn, string>> fileFactories)
     {
@@ -41,6 +42,7 @@ public sealed partial class AddOn
         Interfaces = interfaces is { Count: > 0 }
             ? NormalizeInterfaces(interfaces)
             : [ToInterfaceNumber(Version)];
+        AllowLoadGameType = allowLoadGameType;
         _soundFiles = soundFiles;
         _fileFactories = fileFactories;
     }
@@ -54,6 +56,7 @@ public sealed partial class AddOn
     public IReadOnlyCollection<Note> AdditionalNotes { get; }
     public IReadOnlyDictionary<string, string> AdditionalProperties { get; }
     public IReadOnlyCollection<string> Interfaces { get; }
+    public string? AllowLoadGameType { get; }
 
     public IEnumerable<SoundFile> SoundFiles => _soundFiles.Values;
 

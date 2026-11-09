@@ -9,6 +9,44 @@ public class AddOnFileWriterTests : IDisposable
         Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString())).FullName;
 
     [Fact]
+    public void TocFile_WritesAllowLoadGameTypeAfterInterface()
+    {
+        AddOnSettings settings = new()
+        {
+            Title = "Test_AddOn",
+            Version = "12.0.7",
+            Author = "Tester",
+            Notes = "A test addon.",
+            Interfaces = ["120105"],
+            AllowLoadGameType = "standard"
+        };
+
+        AddOn addOn = new AddOnBuilder(settings, new TtsSettings { Voice = VoiceName.Neural2_C })
+            .Build(_tempDirectory);
+
+        Assert.StartsWith(
+            "## Interface: 120105\n## AllowLoadGameType: standard\n\n## Title:",
+            AddOnTocFile.Render(addOn));
+    }
+
+    [Fact]
+    public void TocFile_OmitsAllowLoadGameTypeWhenUnset()
+    {
+        AddOnSettings settings = new()
+        {
+            Title = "Test_AddOn",
+            Version = "12.0.7",
+            Author = "Tester",
+            Notes = "A test addon."
+        };
+
+        AddOn addOn = new AddOnBuilder(settings, new TtsSettings { Voice = VoiceName.Neural2_C })
+            .Build(_tempDirectory);
+
+        Assert.DoesNotContain("AllowLoadGameType", AddOnTocFile.Render(addOn));
+    }
+
+    [Fact]
     public async Task WriteAllFilesAsync_WritesTocFileAndRegisteredFiles()
     {
         AddOnSettings settings = new()

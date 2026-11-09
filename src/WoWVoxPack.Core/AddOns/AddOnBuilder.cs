@@ -106,6 +106,7 @@ public sealed class AddOnBuilder(AddOnSettings settings, TtsSettings ttsSettings
             additionalNotes,
             additionalProperties,
             settings.Interfaces,
+            settings.AllowLoadGameType,
             new Dictionary<string, SoundFile>(_soundFiles, StringComparer.OrdinalIgnoreCase),
             new Dictionary<string, Func<AddOn, string>>(_fileFactories, StringComparer.OrdinalIgnoreCase));
     }

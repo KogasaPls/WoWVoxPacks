@@ -17,7 +17,7 @@ No configuration is required, just install and load the addon. Two NSRT settings
 
 ## World of Warcraft: Forever
 
-A separate World of Warcraft: Forever file is available from this project. It carries only sounds that can play on Forever: NSRT's own sound names and the generic raid note phrases such as `Preposition at`, `Soak` and `Go to` with markers and positions. It leaves out the Midnight encounter alerts and the ready-check reminders.
+A separate World of Warcraft: Forever file is available from this project. It carries only sounds that can play on Forever: NSRT's own sound names and the generic raid note phrases such as `Preposition at`, `Soak` and `Go to` with markers and positions. It leaves out the Midnight encounter alerts and the ready-check reminders. It includes the Forever Callouts names, the generic mechanic callouts, under plain keys so NSRT plays them automatically.
 
 ## Requirements
 

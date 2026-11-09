@@ -1,6 +1,8 @@
 import importlib.util
 import json
 import re
+import subprocess
+import sys
 import unittest
 from pathlib import Path
 
@@ -664,6 +666,40 @@ class ReleaseWorkflowTests(unittest.TestCase):
         self.assertIn("selection_args+=(--flavors '[\"retail\"]')", plan_step)
         self.assertLess(
             plan_step.index("selection_args+=(--flavors"), plan_step.index("--list-assets")
+        )
+
+    def test_a_manual_publish_can_choose_the_game_flavor(self):
+        publisher = (
+            REPOSITORY_ROOT / ".github/workflows/publish-to-curseforge.yml"
+        ).read_text(encoding="utf-8")
+        for trigger in ("workflow_call", "workflow_dispatch"):
+            inputs = publisher.split(f"\n  {trigger}:\n", 1)[1].split("\n  workflow_dispatch:", 1)[0]
+            if trigger == "workflow_dispatch":
+                inputs = publisher.split("\n  workflow_dispatch:\n", 1)[1].split("\nconcurrency:", 1)[0]
+            self.assertIn("\n      flavors:\n", inputs, trigger)
+        plan = job(publisher, "plan-release")
+        for name in ("Resolve selection", "Download assets and plan uploads"):
+            selection = step(plan, name)
+            self.assertIn("FLAVORS_INPUT: ${{ inputs.flavors }}", selection, name)
+            self.assertIn('selection_args+=(--flavors "[$FLAVORS_INPUT]")', selection, name)
+
+        retail_only = subprocess.run(
+            [sys.executable, "scripts/plan_curseforge_release.py", "--current-tag", "v1",
+             "--list-flavors", "--flavors", '["retail"]'],
+            cwd=REPOSITORY_ROOT, capture_output=True, text=True, check=True,
+        ).stdout.split()
+        self.assertEqual(retail_only, ["retail"])
+        self.assertIn(
+            'if grep -Fxq forever <<< "$flavors"; then',
+            step(plan, "Resolve selection"),
+        )
+        self.assertIn(
+            "if: steps.selection.outputs.forever == 'true'",
+            step(plan, "Resolve Forever game versions"),
+        )
+        self.assertIn(
+            "if: steps.forever-game-versions.outputs.game_versions != ''",
+            step(plan, "Resolve CurseForge Forever game version IDs"),
         )
 
     def test_non_build_checkouts_exclude_generated_output(self):

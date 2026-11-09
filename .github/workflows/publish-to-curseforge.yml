@@ -21,6 +21,10 @@ on:
         description: 'Quoted comma-separated addons. Empty selects every published addon.'
         type: string
         default: ''
+      flavors:
+        description: 'Quoted comma-separated flavors, "retail" or "forever". Empty selects every flavor.'
+        type: string
+        default: ''
       force_publish:
         description: 'Upload even when the packaged addon matches the previous release.'
         type: boolean
@@ -37,6 +41,10 @@ on:
         required: false
       addons:
         description: 'Quoted comma-separated addons. Empty selects every published addon.'
+        default: ''
+        required: false
+      flavors:
+        description: 'Quoted comma-separated flavors, "retail" or "forever". Empty selects every flavor.'
         default: ''
         required: false
       force_publish:
@@ -100,6 +108,7 @@ jobs:
         id: selection
         env:
           ADDONS_INPUT: ${{ inputs.addons }}
+          FLAVORS_INPUT: ${{ inputs.flavors }}
           VOICES_INPUT: ${{ inputs.voices }}
         run: |
           selection_args=()
@@ -108,6 +117,9 @@ jobs:
           fi
           if [ -n "$ADDONS_INPUT" ]; then
             selection_args+=(--addons "[$ADDONS_INPUT]")
+          fi
+          if [ -n "$FLAVORS_INPUT" ]; then
+            selection_args+=(--flavors "[$FLAVORS_INPUT]")
           fi
           flavors=$(python scripts/plan_curseforge_release.py --current-tag "$RELEASE_TAG" \
             --list-flavors "${selection_args[@]}")
@@ -183,6 +195,7 @@ jobs:
         id: plan
         env:
           ADDONS_INPUT: ${{ inputs.addons }}
+          FLAVORS_INPUT: ${{ inputs.flavors }}
           FORCE_PUBLISH: ${{ inputs.force_publish }}
           FOREVER_GAME_VERSIONS: ${{ steps.forever-game-versions.outputs.game_versions }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -194,6 +207,9 @@ jobs:
           fi
           if [ -n "$ADDONS_INPUT" ]; then
             selection_args+=(--addons "[$ADDONS_INPUT]")
+          fi
+          if [ -n "$FLAVORS_INPUT" ]; then
+            selection_args+=(--flavors "[$FLAVORS_INPUT]")
           fi
           if [ -z "$FOREVER_GAME_VERSIONS" ]; then
             selection_args+=(--flavors '["retail"]')

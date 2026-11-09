@@ -1,6 +1,8 @@
 import importlib.util
 import json
 import re
+import subprocess
+import sys
 import unittest
 from pathlib import Path
 
@@ -116,7 +118,7 @@ class ReleaseWorkflowTests(unittest.TestCase):
             "GAME_VERSIONS: ${{ steps.game-versions.outputs.game_versions }}", publisher
         )
         self.assertIn(
-            "GAME_VERSION_IDS: ${{ needs.plan-release.outputs.game_version_ids }}", publisher
+            "RETAIL_GAME_VERSION_IDS: ${{ needs.plan-release.outputs.game_version_ids }}", publisher
         )
 
     def test_the_builder_and_the_updater_agree_on_how_far_a_pack_may_shrink(self):
@@ -149,7 +151,12 @@ class ReleaseWorkflowTests(unittest.TestCase):
         ).read_text(encoding="utf-8")
         names = re.findall(r'"(nsrt-[\w-]+\.txt)"', source)
         self.assertEqual(
-            ["nsrt-vocabulary.txt", "nsrt-alert-vocabulary.txt", "nsrt-extra-vocabulary.txt"],
+            [
+                "nsrt-vocabulary.txt",
+                "nsrt-alert-vocabulary.txt",
+                "nsrt-extra-vocabulary.txt",
+                "nsrt-note-vocabulary.txt",
+            ],
             names,
         )
 
@@ -160,11 +167,13 @@ class ReleaseWorkflowTests(unittest.TestCase):
         add_paths = updater.split("add-paths: |", 1)[1].split("sign-commits:", 1)[0]
         for name in names:
             self.assertTrue((REPOSITORY_ROOT / name).is_file(), name)
-        for generated in names[:-1]:
+        for generated in names[:-2]:
             new_name = generated.replace(".txt", ".new")
             self.assertIn(f"mv {new_name} {generated}", updater)
             self.assertIn(generated, add_paths)
-        self.assertNotIn(names[-1], add_paths)
+        for handwritten in names[-2:]:
+            self.assertNotIn(handwritten, add_paths)
+            self.assertIn(f"--vocabulary {handwritten}", updater)
 
     def test_a_new_live_build_reaches_the_update_pull_request(self):
         """The settings and the TOCs must land together, or every later run rebuilds for nothing.
@@ -185,7 +194,7 @@ class ReleaseWorkflowTests(unittest.TestCase):
         follow_step = pull_request_job.split("- name: Follow the live build", 1)[1].split(
             "\n      - ", 1
         )[0]
-        self.assertIn("if: ${{ needs.check-live-build.outputs.needs_update == 'true' }}", follow_step)
+        self.assertIn("if: ${{ needs.check-live-build.outputs.game_version != '' }}", follow_step)
         self.assertIn("LIVE_BUILD: ${{ needs.check-live-build.outputs.build }}", follow_step)
         self.assertIn('--settings appsettings.json --follow "$LIVE_BUILD"', follow_step)
         self.assertLess(
@@ -195,6 +204,76 @@ class ReleaseWorkflowTests(unittest.TestCase):
 
         add_paths = pull_request_job.split("add-paths: |", 1)[1].split("sign-commits:", 1)[0]
         self.assertIn("appsettings.json", add_paths)
+
+    def test_check_forever_live_build_follows_forever(self):
+        check = job((REPOSITORY_ROOT / ".github/workflows/update.yml").read_text(encoding="utf-8"),
+                    "check-forever-live-build")
+        follow = step(check, "Compare the Forever live build against the declared interface")
+
+        self.assertIn("continue-on-error: true", check.split("\n    steps:", 1)[0])
+        self.assertIn("https://us.version.battle.net/v2/products/wowf/versions", follow)
+        self.assertIn(
+            'forever_game_version=$(python3 scripts/game_versions.py --settings appsettings.json'
+            ' --follow-forever "${forever_build}")',
+            follow,
+        )
+        self.assertIn(
+            'python3 scripts/curseforge_game_versions.py --type forever --versions "${forever_game_version}"'
+            " || forever_listed=$?",
+            follow,
+        )
+        forever_wait = follow.split('if [ "${forever_listed}" -eq 3 ]; then', 1)[1].split("elif", 1)[0]
+        self.assertEqual(forever_wait.strip().splitlines()[-1].strip(), 'forever_game_version=""')
+        self.assertNotRegex(follow, r"(?m)^\s*game_version=")
+        self.assertIn('elif [ "${forever_listed}" -ne 0 ]; then\n              exit "${forever_listed}"', follow)
+        self.assertLess(follow.index("forever_listed=$?"),
+                        follow.index('echo "forever_game_version=${forever_game_version}"'))
+        self.assertIn('echo "forever_build=${forever_build}" >> "$GITHUB_OUTPUT"', follow)
+        self.assertIn('if [ -n "${forever_game_version}" ]; then\n            echo', follow)
+
+        self.assertIn("forever_build: ${{ steps.follow.outputs.forever_build }}", check)
+        self.assertIn("forever_game_version: ${{ steps.follow.outputs.forever_game_version }}", check)
+        self.assertIn("needs_update: ${{ steps.follow.outputs.needs_update }}", check)
+
+    def test_retail_live_build_never_waits_on_forever(self):
+        """A Forever outage must not hold back a retail patch-day bump."""
+        retail = job((REPOSITORY_ROOT / ".github/workflows/update.yml").read_text(encoding="utf-8"),
+                     "check-live-build")
+
+        self.assertNotIn("products/wowf", retail)
+        self.assertNotIn("--follow-forever", retail)
+        self.assertNotIn("--type forever", retail)
+        self.assertNotIn("forever_", retail)
+
+    def test_create_pull_request_needs_and_gates_on_both_live_builds(self):
+        pull_request_job = job((REPOSITORY_ROOT / ".github/workflows/update.yml").read_text(encoding="utf-8"),
+                               "create-pull-request")
+        header = pull_request_job.split("\n    steps:", 1)[0]
+        needs = header.split("needs:", 1)[1].split("\n", 1)[0]
+
+        self.assertIn(" check-live-build,", needs)
+        self.assertIn(" check-forever-live-build ", needs)
+        self.assertIn("needs.check-live-build.outputs.needs_update == 'true'", header)
+        self.assertIn("needs.check-forever-live-build.outputs.needs_update == 'true'", header)
+
+    def test_create_pull_request_follows_forever(self):
+        updater = (REPOSITORY_ROOT / ".github/workflows/update.yml").read_text(encoding="utf-8")
+        pull_request_job = job(updater, "create-pull-request")
+        follow = step(pull_request_job, "Follow the Forever live build")
+
+        self.assertIn("if: ${{ needs.check-forever-live-build.outputs.forever_game_version != '' }}", follow)
+        self.assertIn("FOREVER_LIVE_BUILD: ${{ needs.check-forever-live-build.outputs.forever_build }}", follow)
+        self.assertIn('--settings appsettings.json --follow-forever "$FOREVER_LIVE_BUILD"', follow)
+        self.assertLess(pull_request_job.index("- name: Follow the Forever live build"),
+                        pull_request_job.index("- name: Run addon builder"))
+
+        describe = step(pull_request_job, "Describe the rendered addon changes")
+        self.assertIn("FOREVER_VERSION: ${{ needs.check-forever-live-build.outputs.forever_game_version }}", describe)
+        self.assertIn('--forever-version "$FOREVER_VERSION"', describe)
+        self.assertIn(
+            "- Forever game version: ${{ needs.check-forever-live-build.outputs.forever_game_version || 'unchanged' }}",
+            pull_request_job,
+        )
 
     def test_the_updater_never_pays_twice_for_the_same_audio(self):
         """Each run renders on a fresh checkout of main, so anything not merged is rendered again.
@@ -212,6 +291,7 @@ class ReleaseWorkflowTests(unittest.TestCase):
         gate = job(updater, "check-earlier-build")
         self.assertIn("continue-on-error: true", job(updater, "check-nsrt-vocabulary"))
         self.assertIn("continue-on-error: true", job(updater, "check-live-build"))
+        self.assertIn("continue-on-error: true", job(updater, "check-forever-live-build"))
         self.assertNotIn("continue-on-error", gate)
         self.assertIn(
             "gh pr list --state open --limit 100 --json number,headRefName,isCrossRepository > pulls.json",
@@ -317,7 +397,7 @@ class ReleaseWorkflowTests(unittest.TestCase):
         updater = (
             REPOSITORY_ROOT / ".github/workflows/update.yml"
         ).read_text(encoding="utf-8")
-        check = updater.split("\n  check-live-build:", 1)[1].split("\n  create-pull-request:", 1)[0]
+        check = job(updater, "check-live-build")
 
         self.assertIn("https://us.version.battle.net/v2/products/wow/versions", check)
         self.assertIn('build=$(python3 scripts/game_versions.py --live-build versions.txt)', check)
@@ -505,13 +585,122 @@ class ReleaseWorkflowTests(unittest.TestCase):
         self.assertIn("game_version_ids: ${{ steps.game-version-ids.outputs.game_version_ids }}", plan)
 
         send = step(upload, "Upload to CurseForge")
-        self.assertIn('--argjson versions "$GAME_VERSION_IDS"', send)
+        self.assertIn('--argjson versions "$game_version_ids"', send)
         self.assertIn("if [ \"$(jq '.gameVersions | length' metadata.json)\" -eq 0 ]; then", send)
         self.assertIn('-F "metadata=<metadata.json"', send)
         self.assertIn('-F "file=@current/${ARCHIVE}"', send)
         self.assertIn('"https://wow.curseforge.com/api/projects/${PROJECT_ID}/upload-file"', send)
         self.assertIn('if [ "$status" != "200" ]; then', send)
         self.assertNotIn("--retry", send)
+
+    def test_upload_uses_flavor_game_versions(self):
+        """A Forever file tagged with a retail version, or the reverse, reaches the wrong client."""
+        publisher = (
+            REPOSITORY_ROOT / ".github/workflows/publish-to-curseforge.yml"
+        ).read_text(encoding="utf-8")
+        plan = publisher[publisher.index("  plan-release:"):publisher.index("  publish-addon:")]
+        upload = publisher[publisher.index("  publish-addon:"):]
+
+        self.assertIn("game_version_ids: ${{ steps.game-version-ids.outputs.game_version_ids }}", plan)
+        self.assertIn(
+            "forever_game_version_ids: ${{ steps.forever-game-version-ids.outputs.game_version_ids }}",
+            plan,
+        )
+        forever_versions = step(plan, "Resolve Forever game versions")
+        self.assertIn("if: steps.selection.outputs.forever == 'true'", forever_versions)
+        self.assertIn(
+            "python scripts/game_versions.py --settings release-appsettings.json --flavor forever",
+            forever_versions,
+        )
+        forever_ids = step(plan, "Resolve CurseForge Forever game version IDs")
+        self.assertIn("if: steps.forever-game-versions.outputs.game_versions != ''", forever_ids)
+        self.assertIn(
+            'ids=$(python3 scripts/curseforge_game_versions.py --type forever --versions "$GAME_VERSIONS")',
+            forever_ids,
+        )
+        self.assertNotIn("--type", step(plan, "Resolve CurseForge game version IDs"))
+
+        send = step(upload, "Upload to CurseForge")
+        self.assertIn("FLAVOR: ${{ matrix.flavor }}", send)
+        self.assertIn("RETAIL_GAME_VERSION_IDS: ${{ needs.plan-release.outputs.game_version_ids }}", send)
+        self.assertIn(
+            "FOREVER_GAME_VERSION_IDS: ${{ needs.plan-release.outputs.forever_game_version_ids }}", send
+        )
+        # An expression fallback (a && b || c) would hand an empty Forever list the retail IDs.
+        self.assertNotIn("GAME_VERSION_IDS: ${{", send.replace("RETAIL_GAME_VERSION_IDS", "").replace(
+            "FOREVER_GAME_VERSION_IDS", ""))
+        self.assertIn('forever) game_version_ids="$FOREVER_GAME_VERSION_IDS" ;;', send)
+        self.assertIn('retail) game_version_ids="$RETAIL_GAME_VERSION_IDS" ;;', send)
+        self.assertIn('--argjson versions "$game_version_ids"', send)
+        self.assertIn(
+            "DISPLAY_NAME: ${{ matrix.addon }} (${{ matrix.voice }})"
+            "${{ matrix.flavor == 'forever' && ' Forever' || '' }}"
+            " ${{ needs.plan-release.outputs.release_tag }}",
+            send,
+        )
+
+    def test_forever_flavor_reaches_every_matrix_entry(self):
+        publisher = (
+            REPOSITORY_ROOT / ".github/workflows/publish-to-curseforge.yml"
+        ).read_text(encoding="utf-8")
+        plan_step = step(job(publisher, "plan-release"), "Download assets and plan uploads")
+
+        self.assertIn('"flavor":"unchanged"', plan_step)
+        self.assertIn('{include: [$packages[] + {publish: true}]}', plan_step)
+
+    def test_a_tag_without_forever_settings_publishes_retail_only(self):
+        """Older tags have no Forever section, archives or game version to upload under."""
+        publisher = (
+            REPOSITORY_ROOT / ".github/workflows/publish-to-curseforge.yml"
+        ).read_text(encoding="utf-8")
+        plan = job(publisher, "plan-release")
+        forever_versions = step(plan, "Resolve Forever game versions")
+        plan_step = step(plan, "Download assets and plan uploads")
+
+        self.assertIn("jq -e '.Forever.Interface' release-appsettings.json", forever_versions)
+        self.assertIn(
+            "FOREVER_GAME_VERSIONS: ${{ steps.forever-game-versions.outputs.game_versions }}",
+            plan_step,
+        )
+        self.assertIn('if [ -z "$FOREVER_GAME_VERSIONS" ]; then', plan_step)
+        self.assertIn("selection_args+=(--no-forever)", plan_step)
+        self.assertLess(
+            plan_step.index("selection_args+=(--flavors"), plan_step.index("--list-assets")
+        )
+
+    def test_a_manual_publish_can_choose_the_game_flavor(self):
+        publisher = (
+            REPOSITORY_ROOT / ".github/workflows/publish-to-curseforge.yml"
+        ).read_text(encoding="utf-8")
+        for trigger in ("workflow_call", "workflow_dispatch"):
+            inputs = publisher.split(f"\n  {trigger}:\n", 1)[1].split("\n  workflow_dispatch:", 1)[0]
+            if trigger == "workflow_dispatch":
+                inputs = publisher.split("\n  workflow_dispatch:\n", 1)[1].split("\nconcurrency:", 1)[0]
+            self.assertIn("\n      flavors:\n", inputs, trigger)
+        plan = job(publisher, "plan-release")
+        for name in ("Resolve selection", "Download assets and plan uploads"):
+            selection = step(plan, name)
+            self.assertIn("FLAVORS_INPUT: ${{ inputs.flavors }}", selection, name)
+            self.assertIn('selection_args+=(--flavors "[$FLAVORS_INPUT]")', selection, name)
+
+        retail_only = subprocess.run(
+            [sys.executable, "scripts/plan_curseforge_release.py", "--current-tag", "v1",
+             "--list-flavors", "--flavors", '["retail"]'],
+            cwd=REPOSITORY_ROOT, capture_output=True, text=True, check=True,
+        ).stdout.split()
+        self.assertEqual(retail_only, ["retail"])
+        self.assertIn(
+            'if grep -Fxq forever <<< "$flavors"; then',
+            step(plan, "Resolve selection"),
+        )
+        self.assertIn(
+            "if: steps.selection.outputs.forever == 'true'",
+            step(plan, "Resolve Forever game versions"),
+        )
+        self.assertIn(
+            "if: steps.forever-game-versions.outputs.game_versions != ''",
+            step(plan, "Resolve CurseForge Forever game version IDs"),
+        )
 
     def test_non_build_checkouts_exclude_generated_output(self):
         """Jobs that never read output must not materialize half a gigabyte of audio."""
@@ -528,7 +717,15 @@ class ReleaseWorkflowTests(unittest.TestCase):
                 self.assertIn("sparse-checkout: |", checkout, workflow)
                 self.assertIn("          /*", checkout, workflow)
                 self.assertIn("          !/output/", checkout, workflow)
+                self.assertIn("          !/output-forever/", checkout, workflow)
                 self.assertIn("sparse-checkout-cone-mode: false", checkout, workflow)
+
+    def test_release_runs_when_forever_output_changes(self):
+        release = (REPOSITORY_ROOT / ".github/workflows/create-release.yml").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn("      - 'output-forever/**'", release)
 
     def test_update_checkout_avoids_historical_audio(self):
         """The updater needs current output, but never the audio from older commits."""
@@ -593,12 +790,21 @@ class HardeningTests(unittest.TestCase):
     def test_check_failure_issues_close_when_the_check_recovers(self):
         updater = self.read("update.yml")
         for name, title in (("check-nsrt-vocabulary", "The NSRT vocabulary check is failing"),
-                            ("check-live-build", "The live build check is failing")):
+                            ("check-live-build", "The live build check is failing"),
+                            ("check-forever-live-build", "The Forever live build check is failing")):
             close = step(job(updater, name), "Close the issue once this check passes again")
             self.assertIn("if: success()", close, name)
             self.assertIn(f"TITLE: {title}", close, name)
             self.assertIn("select(.title == env.TITLE)", close, name)
             self.assertIn('gh issue close "$number"', close, name)
+
+    def test_check_failure_issues_are_found_by_exact_title(self):
+        updater = self.read("update.yml")
+        for name in ("check-nsrt-vocabulary", "check-live-build", "check-forever-live-build"):
+            file = step(job(updater, name), "File an issue when this check fails")
+            self.assertIn('number=$(TITLE="$title" gh issue list', file, name)
+            self.assertIn("--json number,title", file, name)
+            self.assertIn("select(.title == env.TITLE)", file, name)
 
     def test_upstream_file_names_cannot_end_the_vocabulary_outputs(self):
         updater = self.read("update.yml")

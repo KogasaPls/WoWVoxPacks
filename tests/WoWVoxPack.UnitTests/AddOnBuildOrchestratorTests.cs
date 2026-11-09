@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 
@@ -9,8 +10,15 @@ namespace WoWVoxPack.UnitTests;
 
 public class AddOnBuildOrchestratorTests : IDisposable
 {
-    private readonly string _tempDirectory =
+    private readonly string _solutionDirectory =
         Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString())).FullName;
+
+    private readonly string _tempDirectory;
+
+    public AddOnBuildOrchestratorTests()
+    {
+        _tempDirectory = Directory.CreateDirectory(Path.Combine(_solutionDirectory, "output")).FullName;
+    }
 
     [Fact]
     public async Task RunAsync_CallsBuildAddOnAsync_ForEveryServiceAndTtsSettingsCombination()
@@ -33,7 +41,8 @@ public class AddOnBuildOrchestratorTests : IDisposable
             Options.Create(buildMatrix),
             soundFileService,
             EmptyResolver(),
-            _tempDirectory);
+            _solutionDirectory,
+            [GameFlavor.Retail]);
 
         await orchestrator.RunAsync(CancellationToken.None);
 
@@ -426,9 +435,91 @@ public class AddOnBuildOrchestratorTests : IDisposable
         Assert.False(File.Exists(Path.Combine(_tempDirectory, "Neural2_C", "Test_AddOn", "Sounds", "old.ogg")));
     }
 
+    [Fact]
+    public async Task RunAsync_BuildsForeverOnlyForIncludedAddOns()
+    {
+        FakeAddOnService serviceA = AlertService("A");
+        FakeAddOnService serviceB = AlertService("B");
+        BuildMatrix buildMatrix = new()
+        {
+            TtsSettings =
+            [
+                new TtsSettings { Voice = VoiceName.Neural2_C },
+                new TtsSettings { Voice = VoiceName.Wavenet_A }
+            ]
+        };
+
+        AddOnBuildOrchestrator orchestrator = new(
+            NullLogger<AddOnBuildOrchestrator>.Instance,
+            [serviceA, serviceB],
+            Options.Create(buildMatrix),
+            new FakeSoundFileService(),
+            EmptyResolver(),
+            _solutionDirectory,
+            [GameFlavor.Retail, ForeverFor("A")]);
+
+        await orchestrator.RunAsync(CancellationToken.None);
+
+        Assert.Equal(
+            [
+                ("Retail", VoiceName.Neural2_C), ("Retail", VoiceName.Wavenet_A),
+                ("Forever", VoiceName.Neural2_C), ("Forever", VoiceName.Wavenet_A)
+            ],
+            serviceA.Calls);
+        Assert.Equal([("Retail", VoiceName.Neural2_C), ("Retail", VoiceName.Wavenet_A)], serviceB.Calls);
+    }
+
+    [Fact]
+    public async Task RunAsync_ForeverReusesRetailRecordingsWithoutRendering()
+    {
+        FakeSoundFileService soundFileService = new();
+
+        await Orchestrator([AlertService("A")], soundFileService, [GameFlavor.Retail, ForeverFor("A")])
+            .RunAsync(CancellationToken.None);
+
+        Assert.Equal(["alert.ogg", "soak.ogg"], soundFileService.CreatedSoundFiles.Select(f => f.FileName).Order());
+        string retailSounds = Path.Combine(_tempDirectory, "Neural2_C", "A_AddOn", "Sounds");
+        string foreverSounds = Path.Combine(_solutionDirectory, "output-forever", "Neural2_C", "A_AddOn", "Sounds");
+        foreach (string fileName in new[] { "alert.ogg", "soak.ogg" })
+        {
+            Assert.Equal(await File.ReadAllBytesAsync(Path.Combine(retailSounds, fileName)),
+                await File.ReadAllBytesAsync(Path.Combine(foreverSounds, fileName)));
+        }
+
+        string foreverToc = Path.Combine(_solutionDirectory, "output-forever", "Neural2_C", "A_AddOn", "A_AddOn.toc");
+        Assert.StartsWith("## Interface: 16001\n## AllowLoadGameType: camelot\n",
+            await File.ReadAllTextAsync(foreverToc));
+    }
+
+    [Fact]
+    public async Task RunAsync_DryRunPlansZeroForeverRendersWhenRetailCovers()
+    {
+        await Orchestrator([AlertService("A")], new FakeSoundFileService(), [GameFlavor.Retail])
+            .RunAsync(CancellationToken.None);
+
+        ListLogger logger = new();
+        FakeSoundFileService dryRunSoundFileService = new();
+        await Orchestrator([AlertService("A")], dryRunSoundFileService, [GameFlavor.Retail, ForeverFor("A")],
+            dryRun: true, logger: logger).RunAsync(CancellationToken.None);
+
+        Assert.Empty(dryRunSoundFileService.CreatedSoundFiles);
+        Assert.Equal(2, logger.Messages.Count(m => m == "[dry run] A_AddOn: 0 to render, 0 to remove"));
+        Assert.Contains("[dry run]   reuse alert.ogg", logger.Messages);
+        Assert.Contains("[dry run]   reuse soak.ogg", logger.Messages);
+        Assert.False(Directory.Exists(Path.Combine(_solutionDirectory, "output-forever")));
+    }
+
+    [Fact]
+    public async Task RunAsync_Throws_WhenAForeverAddOnHasNoRetailPartner()
+    {
+        await Assert.ThrowsAsync<InvalidOperationException>(() =>
+            Orchestrator([AlertService("A")], new FakeSoundFileService(), [ForeverFor("A")])
+                .RunAsync(CancellationToken.None));
+    }
+
     public void Dispose()
     {
-        Directory.Delete(_tempDirectory, true);
+        Directory.Delete(_solutionDirectory, true);
     }
 
     private static AddOnSettings DefaultSettings(string title)
@@ -453,31 +544,101 @@ public class AddOnBuildOrchestratorTests : IDisposable
             NullLogger<PronunciationResolver>.Instance);
     }
 
+    private static GameFlavor ForeverFor(params string[] addOnIds)
+    {
+        return GameFlavor.Forever(new ForeverSettings
+        {
+            Interface = "16001",
+            AllowLoadGameType = "camelot",
+            AddOns = [.. addOnIds]
+        });
+    }
+
+    private static FakeAddOnService AlertService(string addOnId)
+    {
+        AddOnSettings settings = DefaultSettings($"{addOnId}_AddOn");
+        return new FakeAddOnService(addOnId, (dir, tts, flavor) =>
+            new AddOnBuilder(settings, tts, addOnId)
+                .ForFlavor(flavor)
+                .AddSoundFile(new SoundFile("alert.ogg", text: "Alert", displayName: "Alert"))
+                .AddSoundFile(new SoundFile("soak.ogg", text: "Soak", displayName: "Soak"))
+                .BuildDraft(dir));
+    }
+
     private AddOnBuildOrchestrator Orchestrator(IAddOnService service, ISoundFileService soundFileService,
         TtsSettings? ttsSettings = null)
     {
+        return Orchestrator([service], soundFileService, [GameFlavor.Retail], ttsSettings: ttsSettings);
+    }
+
+    private AddOnBuildOrchestrator Orchestrator(IEnumerable<IAddOnService> services,
+        ISoundFileService soundFileService, IReadOnlyList<GameFlavor> flavors, bool dryRun = false,
+        ILogger<AddOnBuildOrchestrator>? logger = null, TtsSettings? ttsSettings = null)
+    {
         return new AddOnBuildOrchestrator(
-            NullLogger<AddOnBuildOrchestrator>.Instance,
-            [service],
+            logger ?? NullLogger<AddOnBuildOrchestrator>.Instance,
+            services,
             Options.Create(new BuildMatrix
             {
+                DryRun = dryRun,
                 TtsSettings = [ttsSettings ?? new TtsSettings { Voice = VoiceName.Neural2_C }]
             }),
             soundFileService,
             EmptyResolver(),
-            _tempDirectory);
+            _solutionDirectory,
+            flavors);
     }
 
-    private sealed class FakeAddOnService(Func<string, TtsSettings, AddOnDraft> buildAddOn)
+    private sealed class FakeAddOnService(string addOnId, Func<string, TtsSettings, GameFlavor, AddOnDraft> buildAddOn)
         : IAddOnService
     {
-        public int CallCount { get; private set; }
+        public FakeAddOnService(Func<string, TtsSettings, AddOnDraft> buildAddOn)
+            : this("Test_AddOn", (dir, tts, _) => buildAddOn(dir, tts))
+        {
+        }
+
+        public string AddOnId { get; } = addOnId;
+
+        public List<(string Flavor, VoiceName? Voice)> Calls { get; } = [];
+
+        public int CallCount => Calls.Count;
 
         public Task<AddOnDraft> BuildAddOnAsync(string outputDirectoryBase, TtsSettings ttsSettings,
-            CancellationToken cancellationToken = default)
+            GameFlavor flavor, CancellationToken cancellationToken = default)
         {
-            CallCount++;
-            return Task.FromResult(buildAddOn(outputDirectoryBase, ttsSettings));
+            Calls.Add((flavor.Name, ttsSettings.Voice));
+            return Task.FromResult(buildAddOn(outputDirectoryBase, ttsSettings, flavor));
+        }
+    }
+
+    private sealed class ListLogger : ILogger<AddOnBuildOrchestrator>
+    {
+        private readonly Lock _gate = new();
+        private readonly List<string> _messages = [];
+
+        public IReadOnlyList<string> Messages
+        {
+            get
+            {
+                lock (_gate)
+                {
+                    return _messages.ToArray();
+                }
+            }
+        }
+
+        public IDisposable? BeginScope<TState>(TState state)
+            where TState : notnull => null;
+
+        public bool IsEnabled(LogLevel logLevel) => true;
+
+        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception,
+            Func<TState, Exception?, string> formatter)
+        {
+            lock (_gate)
+            {
+                _messages.Add(formatter(state, exception));
+            }
         }
     }
 

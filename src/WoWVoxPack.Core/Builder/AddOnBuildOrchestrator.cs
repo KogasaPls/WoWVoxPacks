@@ -16,7 +16,8 @@ public class AddOnBuildOrchestrator(
     IOptions<BuildMatrix> buildMatrix,
     ISoundFileService soundFileService,
     PronunciationResolver pronunciationResolver,
-    string outputDirectoryBase)
+    string solutionDirectory,
+    IReadOnlyList<GameFlavor> flavors)
 {
     // The TTS client's own token bucket is the real throttle; this keeps thousands of tasks from
     // piling up behind it, each holding a request body and a response buffer.
@@ -28,25 +29,41 @@ public class AddOnBuildOrchestrator(
     private BuildMatrix BuildMatrix { get; } = buildMatrix.Value;
     private ISoundFileService SoundFileService { get; } = soundFileService;
     private PronunciationResolver PronunciationResolver { get; } = pronunciationResolver;
-    private string OutputDirectoryBase { get; } = outputDirectoryBase;
+    private string SolutionDirectory { get; } = solutionDirectory;
+    private IReadOnlyList<GameFlavor> Flavors { get; } = flavors;
 
     public async Task RunAsync(CancellationToken cancellationToken)
     {
         List<AddOnDraft> drafts = [];
-        foreach ((IAddOnService addOnService, TtsSettings ttsSettings, string outputDirectory) in Matrix())
+        List<GameFlavor> draftFlavors = [];
+        foreach ((IAddOnService addOnService, TtsSettings ttsSettings, GameFlavor flavor, string outputDirectory)
+                 in Matrix())
         {
-            drafts.Add(await addOnService.BuildAddOnAsync(outputDirectory, ttsSettings, cancellationToken));
+            drafts.Add(await addOnService.BuildAddOnAsync(outputDirectory, ttsSettings, flavor, cancellationToken));
+            draftFlavors.Add(flavor);
         }
 
-        foreach (AddOn addOn in PronunciationResolver.Resolve(drafts))
+        IReadOnlyList<AddOn> addOns = PronunciationResolver.Resolve(drafts);
+        Dictionary<(string AddOnId, VoiceName? Voice), AddOn> retailAddOns = addOns
+            .Where((_, index) => draftFlavors[index] == GameFlavor.Retail)
+            .ToDictionary(addOn => (addOn.AddOnId, addOn.Voice));
+
+        for (int index = 0; index < addOns.Count; index++)
         {
-            await BuildResolvedAddOnAsync(addOn, cancellationToken);
+            AddOn addOn = addOns[index];
+            AddOn? retail = draftFlavors[index] == GameFlavor.Retail
+                ? null
+                : retailAddOns.GetValueOrDefault((addOn.AddOnId, addOn.Voice)) ??
+                  throw new InvalidOperationException(
+                      $"{addOn.Title} ({draftFlavors[index].Name}) has no retail {addOn.AddOnId} " +
+                      $"pack for {addOn.Voice} to take its recordings from.");
+            await BuildResolvedAddOnAsync(addOn, retail, cancellationToken);
         }
 
         Logger.LogInformation("Finished building add-ons");
     }
 
-    private async Task BuildResolvedAddOnAsync(AddOn addOn, CancellationToken cancellationToken)
+    private async Task BuildResolvedAddOnAsync(AddOn addOn, AddOn? retail, CancellationToken cancellationToken)
     {
         Logger.LogInformation("Building {AddOnName} addon in directory {OutputDirectory}", addOn.Title,
             addOn.AddOnDirectory);
@@ -72,9 +89,12 @@ public class AddOnBuildOrchestrator(
                 addOn.Title, previousRecipe, recipe);
         }
 
+        string[] reused = ReuseRetailRecordings(addOn, retail);
+        HashSet<string> reusedNames = new(reused, StringComparer.OrdinalIgnoreCase);
+
         SoundFile[] soundFilesToCreate =
-            manifest.FilesToCreate(addOn.SoundFiles, soundOutputDirectory, recipeChanged,
-                BuildMatrix.AllowFullRerender).ToArray();
+            manifest.FilesToCreate(addOn.SoundFiles.Where(sound => !reusedNames.Contains(sound.FileName)),
+                soundOutputDirectory, recipeChanged, BuildMatrix.AllowFullRerender).ToArray();
 
         // Asked before anything is rendered: a pack that lost most of its vocabulary is a
         // failed build, and finding that out after paying for thousands of files is worse.
@@ -82,8 +102,13 @@ public class AddOnBuildOrchestrator(
 
         if (BuildMatrix.DryRun)
         {
-            ReportPlan(addOn, soundFilesToCreate, soundFilesToRemove);
+            ReportPlan(addOn, reused, soundFilesToCreate, soundFilesToRemove);
             return;
+        }
+
+        if (reused.Length > 0)
+        {
+            Logger.LogInformation("Reused {Count} retail recordings for {AddOnName}", reused.Length, addOn.Title);
         }
 
         ConcurrentBag<string> rendered = [];
@@ -111,15 +136,33 @@ public class AddOnBuildOrchestrator(
         Logger.LogInformation("Finished building addon: {AddOnName}", addOn.Title);
     }
 
+    private string[] ReuseRetailRecordings(AddOn addOn, AddOn? retail)
+    {
+        if (retail is null)
+        {
+            return [];
+        }
+
+        return BuildMatrix.DryRun
+            ? RetailRecordings.Matching(retail, addOn).Select(sound => sound.FileName).ToArray()
+            : RetailRecordings.CopyMatching(retail, addOn).ToArray();
+    }
+
     /// <summary>
     /// What a real run would spend, before it spends it. Two runs in a row have re-rendered a
     /// whole pack because a field the manifest compares changed shape, so the plan is worth
     /// reading rather than predicting.
     /// </summary>
-    private void ReportPlan(AddOn addOn, IReadOnlyCollection<SoundFile> toCreate, IReadOnlyCollection<string> toRemove)
+    private void ReportPlan(AddOn addOn, IReadOnlyCollection<string> reused, IReadOnlyCollection<SoundFile> toCreate,
+        IReadOnlyCollection<string> toRemove)
     {
         Logger.LogInformation("[dry run] {AddOnName}: {CreateCount} to render, {RemoveCount} to remove",
             addOn.Title, toCreate.Count, toRemove.Count);
+
+        foreach (string fileName in reused)
+        {
+            Logger.LogInformation("[dry run]   reuse {FileName}", fileName);
+        }
 
         foreach (SoundFile soundFile in toCreate)
         {
@@ -134,15 +177,19 @@ public class AddOnBuildOrchestrator(
         }
     }
 
-    private IEnumerable<(IAddOnService AddOnService, TtsSettings TtsSettings, string OutputDirectory)> Matrix()
+    private IEnumerable<(IAddOnService AddOnService, TtsSettings TtsSettings, GameFlavor Flavor,
+        string OutputDirectory)> Matrix()
     {
-        foreach (IAddOnService addOnService in AddOnServices)
+        foreach (GameFlavor flavor in Flavors)
         {
-            foreach (TtsSettings ttsSettings in BuildMatrix.TtsSettings)
+            foreach (IAddOnService addOnService in AddOnServices.Where(service => flavor.Includes(service.AddOnId)))
             {
-                string outputDirectory =
-                    Path.Combine(OutputDirectoryBase, Guard.Against.Null(ttsSettings.Voice).ToString());
-                yield return (addOnService, ttsSettings, outputDirectory);
+                foreach (TtsSettings ttsSettings in BuildMatrix.TtsSettings)
+                {
+                    string outputDirectory = Path.Combine(SolutionDirectory, flavor.OutputDirectoryName,
+                        Guard.Against.Null(ttsSettings.Voice).ToString());
+                    yield return (addOnService, ttsSettings, flavor, outputDirectory);
+                }
             }
         }
     }

@@ -17,6 +17,12 @@ public static class CalloutVocabulary
     public static readonly IReadOnlyList<string> VocabularyFileNames =
         ["lorrgs-vocabulary.txt", "callout-vocabulary.txt"];
 
+    /// <summary>
+    /// WoW Forever has no player-reminder spells, curated entries or retired keys, so it carries
+    /// only the generic mechanics and instructions.
+    /// </summary>
+    public static readonly IReadOnlyList<string> ForeverVocabularyFileNames = ["callout-vocabulary.txt"];
+
     public static IReadOnlyList<CalloutRegistration> Merge(
         IEnumerable<SoundFile> curated,
         IEnumerable<string> upstreamSoundNames,

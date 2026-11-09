@@ -29,6 +29,25 @@ class VersionIdsTests(unittest.TestCase):
         """Uploading a retail pack under a Classic version would list it for the wrong game."""
         self.assertEqual(curseforge_game_versions.version_ids(["12.1.7"], LISTED), ([], ["12.1.7"]))
 
+    def test_version_ids_forever_type(self):
+        listed = LISTED + [
+            {"id": 9, "gameVersionTypeID": 88568, "name": "1.60.1", "slug": "1-60-1"},
+            {"id": 8, "gameVersionTypeID": 517, "name": "1.60.1", "slug": "1-60-1"},
+        ]
+
+        self.assertEqual(
+            curseforge_game_versions.version_ids(
+                ["1.60.1"], listed, curseforge_game_versions.FOREVER
+            ),
+            ([9], []),
+        )
+        self.assertEqual(curseforge_game_versions.version_ids(["1.60.1"], listed), ([8], []))
+
+    def test_the_type_names_the_version_type(self):
+        self.assertEqual(
+            {"retail": 517, "forever": 88568}, curseforge_game_versions.TYPES
+        )
+
     def test_a_slug_is_not_a_name(self):
         self.assertEqual(curseforge_game_versions.version_ids(["12-1-5"], LISTED), ([], ["12-1-5"]))
 

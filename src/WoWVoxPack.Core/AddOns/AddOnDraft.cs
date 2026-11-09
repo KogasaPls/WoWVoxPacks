@@ -14,6 +14,7 @@ public sealed class AddOnDraft
     private readonly IReadOnlyCollection<AddOn.Note> _additionalNotes;
     private readonly IReadOnlyDictionary<string, string> _additionalProperties;
     private readonly IReadOnlyCollection<string>? _interfaces;
+    private readonly string? _allowLoadGameType;
     private readonly IReadOnlyDictionary<string, SoundFile> _soundFiles;
     private readonly IReadOnlyDictionary<string, Func<AddOn, string>> _fileFactories;
 
@@ -29,6 +30,7 @@ public sealed class AddOnDraft
         IReadOnlyCollection<AddOn.Note> additionalNotes,
         IReadOnlyDictionary<string, string> additionalProperties,
         IReadOnlyCollection<string>? interfaces,
+        string? allowLoadGameType,
         IReadOnlyDictionary<string, SoundFile> soundFiles,
         IReadOnlyDictionary<string, Func<AddOn, string>> fileFactories)
     {
@@ -43,6 +45,7 @@ public sealed class AddOnDraft
         _additionalNotes = additionalNotes;
         _additionalProperties = additionalProperties;
         _interfaces = interfaces;
+        _allowLoadGameType = allowLoadGameType;
         _soundFiles = soundFiles;
         _fileFactories = fileFactories;
     }
@@ -62,6 +65,7 @@ public sealed class AddOnDraft
         GuardAgainstConflictingRecordings(resolved.Values);
 
         return new AddOn(
+            AddOnId,
             _outputDirectoryBase,
             _title,
             _displayTitle,
@@ -72,6 +76,7 @@ public sealed class AddOnDraft
             _additionalNotes,
             _additionalProperties,
             _interfaces,
+            _allowLoadGameType,
             resolved,
             _fileFactories);
     }

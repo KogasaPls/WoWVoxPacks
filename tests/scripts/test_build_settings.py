@@ -1,11 +1,14 @@
 import json
 import re
+import subprocess
+import sys
 import unittest
 from pathlib import Path
 
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 SETTINGS = REPOSITORY_ROOT / "targets/Settings.props"
+APPSETTINGS = REPOSITORY_ROOT / "appsettings.json"
 
 
 def _property(name: str) -> str:
@@ -48,6 +51,38 @@ class BuildSettingsTests(unittest.TestCase):
         ci = (REPOSITORY_ROOT / ".github/workflows/ci.yml").read_text(encoding="utf-8")
 
         self.assertIn("dotnet build -v q --nologo -warnaserror", ci)
+
+
+class ForeverSettingsTests(unittest.TestCase):
+    def setUp(self):
+        self.settings = json.loads(APPSETTINGS.read_text(encoding="utf-8"))
+
+    def test_forever_packs_target_the_forever_client(self):
+        forever = self.settings["Forever"]
+
+        self.assertEqual("16001", forever["Interface"])
+        self.assertEqual("camelot", forever["AllowLoadGameType"])
+        self.assertIn("BigWigs_Countdown", forever["AddOns"])
+
+    def test_game_versions_still_reports_only_the_retail_versions(self):
+        """The Forever interface sits outside AddOn.Interfaces, so retail uploads never claim it."""
+        result = subprocess.run(
+            [
+                sys.executable,
+                str(REPOSITORY_ROOT / "scripts/game_versions.py"),
+                "--settings",
+                str(APPSETTINGS),
+            ],
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+
+        retail = {
+            f"{int(interface[:-4])}.{int(interface[-4:-2])}.{int(interface[-2:])}"
+            for interface in self.settings["AddOn"]["Interfaces"]
+        }
+        self.assertEqual(retail, set(result.stdout.strip().split(",")))
 
 
 if __name__ == "__main__":

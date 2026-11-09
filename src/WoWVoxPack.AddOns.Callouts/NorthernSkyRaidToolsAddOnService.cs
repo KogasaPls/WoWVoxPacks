@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
 using WoWVoxPack.AddOns;
@@ -8,16 +9,22 @@ namespace WoWVoxPack.AddOns.Callouts;
 /// <summary>Builds a self-contained Northern Sky Raid Tools media pack for one voice.</summary>
 public sealed class NorthernSkyRaidToolsAddOnService(
     IOptionsSnapshot<AddOnSettings> addOnOptions,
-    NorthernSkyRaidToolsVocabularyProvider vocabulary)
+    [FromKeyedServices("Retail")] NorthernSkyRaidToolsVocabularyProvider retailVocabulary,
+    [FromKeyedServices("Forever")] NorthernSkyRaidToolsVocabularyProvider foreverVocabulary)
     : IAddOnService
 {
+    public string AddOnId => "NorthernSkyRaidTools";
+
     private AddOnSettings AddOnSettings { get; } = addOnOptions.Get("NorthernSkyRaidTools");
 
     public Task<AddOnDraft> BuildAddOnAsync(string outputDirectoryBase, TtsSettings ttsSettings,
-        CancellationToken cancellationToken = default)
+        GameFlavor flavor, CancellationToken cancellationToken = default)
     {
+        NorthernSkyRaidToolsVocabularyProvider vocabulary =
+            flavor.Name == GameFlavor.Retail.Name ? retailVocabulary : foreverVocabulary;
         string voice = ttsSettings.Voice?.ToString() ?? string.Empty;
-        AddOnBuilder builder = new AddOnBuilder(AddOnSettings, ttsSettings, "NorthernSkyRaidTools")
+        AddOnBuilder builder = new AddOnBuilder(AddOnSettings, ttsSettings, AddOnId)
+            .ForFlavor(flavor)
             .WithTitle($"WoWVoxPacks_NorthernSkyRaidTools_{voice}")
             .WithDisplayTitle($"WoWVoxPacks |cffff7f3fNorthern Sky Raid Tools|r|cffffffff ({voice})|r");
 

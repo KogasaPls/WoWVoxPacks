@@ -17,11 +17,13 @@ public sealed class BigWigsVoiceAddOnService(
 
     private BigWigsVoiceSoundFile[]? _soundFiles;
 
+    public string AddOnId => "BigWigs_Voice";
+
     private IBigWigsVoiceUpstreamClient UpstreamClient { get; } = upstreamClient;
     private AddOnSettings AddOnSettings { get; } = addOnOptions.Get("BigWigs_Voice");
 
     public async Task<AddOnDraft> BuildAddOnAsync(string outputDirectoryBase, TtsSettings ttsSettings,
-        CancellationToken cancellationToken = default)
+        GameFlavor flavor, CancellationToken cancellationToken = default)
     {
         BigWigsVoiceSoundFile[] soundFiles = (await GetSoundFilesAsync(cancellationToken)).ToArray();
         IReadOnlyDictionary<string, BigWigsVoiceSoundFile> upstreamById = soundFiles
@@ -30,7 +32,8 @@ public sealed class BigWigsVoiceAddOnService(
         IEnumerable<SoundFile> curated = JsonSoundFiles.Value.Select(sound =>
             CloneCurated(sound, upstreamById.GetValueOrDefault(sound.Key)));
 
-        return new AddOnBuilder(AddOnSettings, ttsSettings, "BigWigs_Voice")
+        return new AddOnBuilder(AddOnSettings, ttsSettings, AddOnId)
+            .ForFlavor(flavor)
             .WithTitle($"BigWigs Voice WoWVoxPacks {ttsSettings.Voice}")
             .WithDisplayTitle($"BigWigs |cffff7f3f+|r|cffffffffVoice: WoWVoxPacks ({ttsSettings.Voice})|r")
             .AddFile("Core.lua", CoreLuaFile.Render)

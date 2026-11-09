@@ -3,7 +3,7 @@
 import argparse
 from pathlib import Path
 
-from release_notes import ADDONS, git, packaged_addons, registered_callouts
+from release_notes import ADDONS, OUTPUT_ROOTS, git, packaged_addons, registered_callouts
 
 
 def callout_list(names: list[str]) -> str:
@@ -13,14 +13,16 @@ def callout_list(names: list[str]) -> str:
     return f"{displayed} callout{'s' if len(names) != 1 else ''}"
 
 
-def subject(repository: Path, bigwigs_version: str, game_version: str) -> str:
-    paths = git("diff", "--name-only", "HEAD", "--", "output", repository=repository)
+def subject(
+    repository: Path, bigwigs_version: str, game_version: str, forever_version: str = ""
+) -> str:
+    paths = git("diff", "--name-only", "HEAD", "--", *OUTPUT_ROOTS, repository=repository)
     paths += git(
         "ls-files",
         "--others",
         "--exclude-standard",
         "--",
-        "output",
+        *OUTPUT_ROOTS,
         repository=repository,
     )
     changed_paths = paths.splitlines()
@@ -50,8 +52,11 @@ def subject(repository: Path, bigwigs_version: str, game_version: str) -> str:
         if details:
             prefix = f"{ADDONS[addon][0]}: " if len(affected) > 1 else ""
             descriptions.append(prefix + "; ".join(details))
-    if affected and game_version:
-        descriptions.append(f"support WoW {game_version}")
+    supported = [f"WoW {game_version}"] if game_version else []
+    if forever_version:
+        supported.append(f"WoW Forever {forever_version}")
+    if affected and supported:
+        descriptions.append(f"support {' and '.join(supported)}")
     if not descriptions:
         if not affected:
             return "chore(packs): update voice pack build inputs"
@@ -65,12 +70,14 @@ def main() -> None:
     parser.add_argument("--repository", type=Path, default=Path.cwd())
     parser.add_argument("--bigwigs-version", default="")
     parser.add_argument("--game-version", default="")
+    parser.add_argument("--forever-version", default="")
     args = parser.parse_args()
     print(
         subject(
             args.repository,
             " ".join(args.bigwigs_version.split()),
             " ".join(args.game_version.split()),
+            " ".join(args.forever_version.split()),
         )
     )
 

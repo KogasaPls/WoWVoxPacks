@@ -1,4 +1,5 @@
 ## Interface: 120105
+## AllowLoadGameType: standard
 
 ## Title: WoWVoxPacks |cffff7f3fNorthern Sky Raid Tools|r|cffffffff (Studio_O)|r
 ## Version: 12.1.5

@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
 using WoWVoxPack.AddOns;
@@ -8,15 +9,21 @@ namespace WoWVoxPack.AddOns.Callouts;
 /// <summary>Builds the media folder: all audio, registered with LibSharedMedia.</summary>
 public sealed class CalloutsMediaAddOnService(
     IOptionsSnapshot<AddOnSettings> addOnOptions,
-    CalloutsVocabularyProvider vocabulary)
+    [FromKeyedServices("Retail")] CalloutsVocabularyProvider retailVocabulary,
+    [FromKeyedServices("Forever")] CalloutsVocabularyProvider foreverVocabulary)
     : IAddOnService
 {
+    public string AddOnId => "Callouts";
+
     private AddOnSettings AddOnSettings { get; } = addOnOptions.Get("Callouts");
 
     public Task<AddOnDraft> BuildAddOnAsync(string outputDirectoryBase, TtsSettings ttsSettings,
-        CancellationToken cancellationToken = default)
+        GameFlavor flavor, CancellationToken cancellationToken = default)
     {
-        AddOnBuilder builder = new AddOnBuilder(AddOnSettings, ttsSettings, "Callouts")
+        CalloutsVocabularyProvider vocabulary =
+            flavor.Name == GameFlavor.Retail.Name ? retailVocabulary : foreverVocabulary;
+        AddOnBuilder builder = new AddOnBuilder(AddOnSettings, ttsSettings, AddOnId)
+            .ForFlavor(flavor)
             .WithTitle($"WoWVoxPacks Callouts {ttsSettings.Voice}")
             .WithDisplayTitle($"WoWVoxPacks |cffff7f3fCallouts|r|cffffffff ({ttsSettings.Voice})|r");
 

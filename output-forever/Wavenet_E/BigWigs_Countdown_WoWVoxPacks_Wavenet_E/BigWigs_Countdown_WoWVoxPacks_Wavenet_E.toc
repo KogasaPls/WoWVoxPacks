@@ -1,0 +1,16 @@
+## Interface: 16001
+## AllowLoadGameType: camelot
+
+## Title: BigWigs |cffff7f3f+|r|cffffffffCountdown: WoWVoxPacks (Wavenet_E)|r
+## Version: 12.1.5
+## Notes: A BigWigs plugin that adds a new countdown voice pack.
+## Author: KogasaPls
+
+## Dependencies: BigWigs
+## IconTexture: Interface\AddOns\BigWigs\Media\Icons\core-enabled
+## LoadOnDemand: 1
+## X-BigWigs-LoadOn-CoreEnabled: 1
+## X-Category: Raid
+## X-License: Apache-2.0
+
+Countdown.lua

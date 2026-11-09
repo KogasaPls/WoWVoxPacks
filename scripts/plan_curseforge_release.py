@@ -11,8 +11,25 @@ import compare_addon_packages
 import curseforge_packages
 
 
-def archive_name(voice: str, addon: str, tag: str) -> str:
-    return f"WoWVoxPacks_{voice}_{addon}_{tag}.zip"
+def archive_name(voice: str, addon: str, tag: str, flavor: str = "retail") -> str:
+    suffix = "_Forever" if flavor == "forever" else ""
+    return f"WoWVoxPacks_{voice}_{addon}{suffix}_{tag}.zip"
+
+
+def selected_flavors(
+    catalog: curseforge_packages.Catalog,
+    *,
+    voices: Sequence[str] | None = None,
+    addons: Sequence[str] | None = None,
+    flavors: Sequence[str] | None = None,
+) -> tuple[str, ...]:
+    present = {
+        flavor
+        for _, _, flavor in _selected_files(
+            catalog, voices=voices, addons=addons, flavors=flavors
+        )
+    }
+    return tuple(flavor for flavor in curseforge_packages.FLAVORS if flavor in present)
 
 
 def selected_archives(
@@ -21,13 +38,13 @@ def selected_archives(
     *,
     voices: Sequence[str] | None = None,
     addons: Sequence[str] | None = None,
+    flavors: Sequence[str] | None = None,
 ) -> list[str]:
-    selected_voices = _selection("voice", voices, catalog.voice_names)
-    selected_addons = _selection("addon", addons, catalog.addon_names)
     return [
-        archive_name(voice, addon, tag)
-        for voice in selected_voices
-        for addon in selected_addons
+        archive_name(voice, addon, tag, flavor)
+        for voice, addon, flavor in _selected_files(
+            catalog, voices=voices, addons=addons, flavors=flavors
+        )
     ]
 
 
@@ -40,41 +57,61 @@ def plan_release(
     *,
     voices: Sequence[str] | None = None,
     addons: Sequence[str] | None = None,
+    flavors: Sequence[str] | None = None,
     force: bool = False,
 ) -> list[dict[str, str | int]]:
-    selected_voices = _selection("voice", voices, catalog.voice_names)
-    selected_addons = _selection("addon", addons, catalog.addon_names)
     packages = []
 
-    for voice in selected_voices:
-        for addon in selected_addons:
-            current_archive = archive_name(voice, addon, current_tag)
-            current_path = current_directory / current_archive
-            if not current_path.is_file() or current_path.stat().st_size == 0:
-                raise FileNotFoundError(
-                    f"missing or empty current release asset: {current_archive}"
-                )
+    for voice, addon, flavor in _selected_files(
+        catalog, voices=voices, addons=addons, flavors=flavors
+    ):
+        current_archive = archive_name(voice, addon, current_tag, flavor)
+        current_path = current_directory / current_archive
+        if not current_path.is_file() or current_path.stat().st_size == 0:
+            raise FileNotFoundError(
+                f"missing or empty current release asset: {current_archive}"
+            )
 
-            publish = force or previous_tag is None or previous_directory is None
+        publish = force or previous_tag is None or previous_directory is None
+        if not publish:
+            previous_archive = archive_name(voice, addon, previous_tag, flavor)
+            previous_path = previous_directory / previous_archive
+            publish = not previous_path.is_file() or previous_path.stat().st_size == 0
             if not publish:
-                previous_archive = archive_name(voice, addon, previous_tag)
-                previous_path = previous_directory / previous_archive
-                publish = not previous_path.is_file() or previous_path.stat().st_size == 0
-                if not publish:
-                    publish = compare_addon_packages.compare(
-                        previous_path, current_path
-                    ).changed
+                publish = compare_addon_packages.compare(
+                    previous_path, current_path
+                ).changed
 
-            if publish:
-                packages.append({
-                    "voice": voice,
-                    "addon": addon,
-                    "project_id": catalog.project_id(voice, addon),
-                    "relations": catalog.relations(addon),
-                    "archive": current_archive,
-                })
+        if publish:
+            packages.append({
+                "voice": voice,
+                "addon": addon,
+                "project_id": catalog.project_id(voice, addon),
+                "relations": catalog.relations(addon),
+                "archive": current_archive,
+                "flavor": flavor,
+            })
 
     return packages
+
+
+def _selected_files(
+    catalog: curseforge_packages.Catalog,
+    *,
+    voices: Sequence[str] | None = None,
+    addons: Sequence[str] | None = None,
+    flavors: Sequence[str] | None = None,
+) -> list[tuple[str, str, str]]:
+    selected_voices = _selection("voice", voices, catalog.voice_names)
+    selected_addons = _selection("addon", addons, catalog.addon_names)
+    selected_flavors = _selection("flavor", flavors, curseforge_packages.FLAVORS)
+    return [
+        (voice, addon, flavor)
+        for voice in selected_voices
+        for addon in selected_addons
+        for flavor in catalog.flavors(addon)
+        if flavor in selected_flavors
+    ]
 
 
 def _selection(
@@ -102,21 +139,44 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--previous-dir", type=Path)
     parser.add_argument("--voices", type=json.loads, metavar="JSON")
     parser.add_argument("--addons", type=json.loads, metavar="JSON")
+    parser.add_argument("--flavors", type=json.loads, metavar="JSON")
+    parser.add_argument("--no-forever", action="store_true")
     parser.add_argument("--force", action="store_true")
-    parser.add_argument("--list-assets", action="store_true")
+    listing = parser.add_mutually_exclusive_group()
+    listing.add_argument("--list-assets", action="store_true")
+    listing.add_argument("--list-flavors", action="store_true")
     return parser.parse_args()
 
 
 def main() -> int:
     arguments = parse_args()
+    if arguments.no_forever:
+        if arguments.flavors is None:
+            arguments.flavors = ["retail"]
+        elif "forever" in arguments.flavors:
+            print(
+                f"Cannot publish Forever: {arguments.current_tag} has no Forever settings",
+                file=sys.stderr,
+            )
+            return 1
     try:
         catalog = curseforge_packages.load(arguments.catalog)
+        if arguments.list_flavors:
+            for flavor in selected_flavors(
+                catalog,
+                voices=arguments.voices,
+                addons=arguments.addons,
+                flavors=arguments.flavors,
+            ):
+                print(flavor)
+            return 0
         if arguments.list_assets:
             for archive in selected_archives(
                 catalog,
                 arguments.current_tag,
                 voices=arguments.voices,
                 addons=arguments.addons,
+                flavors=arguments.flavors,
             ):
                 print(archive)
             return 0
@@ -130,6 +190,7 @@ def main() -> int:
             arguments.previous_dir,
             voices=arguments.voices,
             addons=arguments.addons,
+            flavors=arguments.flavors,
             force=arguments.force,
         )
     except (OSError, ValueError, compare_addon_packages.PackageComparisonError) as error:

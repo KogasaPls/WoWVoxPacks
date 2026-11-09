@@ -17,7 +17,7 @@ public sealed class NorthernSkyRaidToolsAddOnServiceTests : IDisposable
         string overridesPath = Path.Combine(_temporaryDirectory, "CalloutPronunciations.json");
         File.WriteAllText(vocabularyPath, "DropPool\n");
         File.WriteAllText(overridesPath, "{\"DropPool\":{\"Text\":\"Drop Pool\"}}");
-        NorthernSkyRaidToolsAddOnService service = new(
+        NorthernSkyRaidToolsAddOnService service = CreateService(
             new StubOptions(new AddOnSettings
             {
                 Title = "unused",
@@ -29,7 +29,8 @@ public sealed class NorthernSkyRaidToolsAddOnServiceTests : IDisposable
 
         AddOnDraft draft = await service.BuildAddOnAsync(
             _temporaryDirectory,
-            new TtsSettings { Voice = VoiceName.Studio_O });
+            new TtsSettings { Voice = VoiceName.Studio_O },
+            GameFlavor.Retail);
         AddOn addOn = draft.Finalize(draft.SoundFiles);
 
         Assert.Equal("WoWVoxPacks_NorthernSkyRaidTools_Studio_O", addOn.Title);
@@ -49,7 +50,7 @@ public sealed class NorthernSkyRaidToolsAddOnServiceTests : IDisposable
         string overridesPath = Path.Combine(_temporaryDirectory, "CalloutPronunciations.json");
         File.WriteAllText(vocabularyPath, "Soak\nsoak\n");
         File.WriteAllText(overridesPath, "{}");
-        NorthernSkyRaidToolsAddOnService service = new(
+        NorthernSkyRaidToolsAddOnService service = CreateService(
             new StubOptions(new AddOnSettings
             {
                 Title = "unused",
@@ -60,7 +61,8 @@ public sealed class NorthernSkyRaidToolsAddOnServiceTests : IDisposable
 
         AddOnDraft draft = await service.BuildAddOnAsync(
             _temporaryDirectory,
-            new TtsSettings { Voice = VoiceName.Studio_O });
+            new TtsSettings { Voice = VoiceName.Studio_O },
+            GameFlavor.Retail);
         AddOn addOn = draft.Finalize(draft.SoundFiles);
 
         Assert.Single(addOn.SoundFiles);
@@ -81,7 +83,7 @@ public sealed class NorthernSkyRaidToolsAddOnServiceTests : IDisposable
             "{\"Soak {rt1}\":{\"FileName\":\"soak_star.ogg\",\"Text\":\"Soak Star\"},"
             + "\"Soak {rt3}\":{\"FileName\":\"soak_diamond.ogg\",\"Text\":\"Soak Diamond\"}}";
         File.WriteAllText(overridesPath, overrides);
-        NorthernSkyRaidToolsAddOnService service = new(
+        NorthernSkyRaidToolsAddOnService service = CreateService(
             new StubOptions(new AddOnSettings
             {
                 Title = "unused",
@@ -91,7 +93,7 @@ public sealed class NorthernSkyRaidToolsAddOnServiceTests : IDisposable
             new NorthernSkyRaidToolsVocabularyProvider([vocabularyPath], overridesPath));
 
         AddOnDraft draft = await service.BuildAddOnAsync(
-            _temporaryDirectory, new TtsSettings { Voice = VoiceName.Studio_O });
+            _temporaryDirectory, new TtsSettings { Voice = VoiceName.Studio_O }, GameFlavor.Retail);
         AddOn addOn = draft.Finalize(draft.SoundFiles);
         string lua = addOn.GetFileContent("Core.lua");
 
@@ -113,7 +115,7 @@ public sealed class NorthernSkyRaidToolsAddOnServiceTests : IDisposable
         File.WriteAllText(Path.Combine(_temporaryDirectory, "Callouts_Sounds.json"), "[]");
         File.WriteAllText(Path.Combine(_temporaryDirectory, "lorrgs-vocabulary.txt"), string.Empty);
         File.WriteAllText(Path.Combine(_temporaryDirectory, "RetiredCallouts.json"), "[\"OldCallout\"]");
-        NorthernSkyRaidToolsAddOnService service = new(
+        NorthernSkyRaidToolsAddOnService service = CreateService(
             new StubOptions(new AddOnSettings
             {
                 Title = "unused",
@@ -128,7 +130,8 @@ public sealed class NorthernSkyRaidToolsAddOnServiceTests : IDisposable
                     Path.Combine(_temporaryDirectory, "RetiredCallouts.json"))));
         TtsSettings ttsSettings = new() { Voice = VoiceName.Studio_O };
 
-        AddOnDraft withoutRecordingDraft = await service.BuildAddOnAsync(_temporaryDirectory, ttsSettings);
+        AddOnDraft withoutRecordingDraft = await service.BuildAddOnAsync(
+            _temporaryDirectory, ttsSettings, GameFlavor.Retail);
         AddOn withoutRecording = withoutRecordingDraft.Finalize(withoutRecordingDraft.SoundFiles);
 
         Assert.DoesNotContain("OldCallout", withoutRecording.GetFileContent("Core.lua"),
@@ -136,7 +139,8 @@ public sealed class NorthernSkyRaidToolsAddOnServiceTests : IDisposable
 
         Directory.CreateDirectory(withoutRecording.SoundDirectory);
         File.WriteAllBytes(Path.Combine(withoutRecording.SoundDirectory, "old_callout.ogg"), [1]);
-        AddOnDraft withRecordingDraft = await service.BuildAddOnAsync(_temporaryDirectory, ttsSettings);
+        AddOnDraft withRecordingDraft = await service.BuildAddOnAsync(
+            _temporaryDirectory, ttsSettings, GameFlavor.Retail);
         AddOn withRecording = withRecordingDraft.Finalize(withRecordingDraft.SoundFiles);
 
         Assert.Contains("LSM:Register(\"sound\", \"OldCallout\", path .. \"old_callout.ogg\")",
@@ -157,7 +161,7 @@ public sealed class NorthernSkyRaidToolsAddOnServiceTests : IDisposable
         File.WriteAllText(Path.Combine(_temporaryDirectory, "lorrgs-vocabulary.txt"), string.Empty);
         File.WriteAllText(Path.Combine(_temporaryDirectory, "RetiredCallouts.json"),
             "[\"Anti-Magic Shell\"]");
-        NorthernSkyRaidToolsAddOnService service = new(
+        NorthernSkyRaidToolsAddOnService service = CreateService(
             new StubOptions(new AddOnSettings
             {
                 Title = "unused",
@@ -172,7 +176,7 @@ public sealed class NorthernSkyRaidToolsAddOnServiceTests : IDisposable
                     Path.Combine(_temporaryDirectory, "RetiredCallouts.json"))));
 
         AddOnDraft draft = await service.BuildAddOnAsync(
-            _temporaryDirectory, new TtsSettings { Voice = VoiceName.Studio_O });
+            _temporaryDirectory, new TtsSettings { Voice = VoiceName.Studio_O }, GameFlavor.Retail);
         AddOn addOn = draft.Finalize(draft.SoundFiles);
 
         Assert.Equal("anti_magic_shell.ogg", Assert.Single(addOn.SoundFiles).FileName);
@@ -182,6 +186,11 @@ public sealed class NorthernSkyRaidToolsAddOnServiceTests : IDisposable
     }
 
     public void Dispose() => Directory.Delete(_temporaryDirectory, recursive: true);
+
+    private static NorthernSkyRaidToolsAddOnService CreateService(
+        IOptionsSnapshot<AddOnSettings> options,
+        NorthernSkyRaidToolsVocabularyProvider vocabulary) =>
+        new(options, vocabulary, vocabulary);
 
     private sealed class StubOptions(AddOnSettings settings) : IOptionsSnapshot<AddOnSettings>
     {

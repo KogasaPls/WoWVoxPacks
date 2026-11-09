@@ -9,10 +9,21 @@ public static partial class NorthernSkyRaidToolsVocabulary
 {
     /// <summary>
     /// The first two are generated: what NSRT's Media/Sounds ships, then the alert strings it
-    /// has no file for. Strings its code composes at runtime are hand-enumerated in the third.
+    /// has no file for. Strings its code composes at runtime are hand-enumerated in the third,
+    /// and the raid-note phrases its reminders speak verbatim in the fourth.
     /// </summary>
     public static readonly IReadOnlyList<string> VocabularyFileNames =
-        ["nsrt-vocabulary.txt", "nsrt-alert-vocabulary.txt", "nsrt-extra-vocabulary.txt"];
+        [
+            "nsrt-vocabulary.txt", "nsrt-alert-vocabulary.txt", "nsrt-extra-vocabulary.txt",
+            "nsrt-note-vocabulary.txt"
+        ];
+
+    /// <summary>
+    /// WoW Forever speaks only the shipped sounds and the raid-note phrases: no alert-only or
+    /// runtime-composed names.
+    /// </summary>
+    public static readonly IReadOnlyList<string> ForeverVocabularyFileNames =
+        [VocabularyFileNames[0], VocabularyFileNames[3]];
 
     private static readonly string[] RaidMarkerWords =
         ["Star", "Circle", "Diamond", "Triangle", "Moon", "Square", "Cross", "Skull"];

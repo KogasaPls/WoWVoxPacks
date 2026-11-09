@@ -1,5 +1,6 @@
 import importlib.util
 import json
+import re
 import subprocess
 import sys
 import tempfile
@@ -157,6 +158,49 @@ class FollowTests(unittest.TestCase):
         self.assertEqual(after, before)
 
 
+class FollowForeverTests(unittest.TestCase):
+    SETTINGS = (
+        '{\n  "AddOn": {\n    "Version": "12.1.5",\n    "Interfaces": [ "120105" ]\n  },\n'
+        '  "Forever": {\n    "Interface": "16001"\n  }\n}\n'
+    )
+
+    def setUp(self):
+        self.temporary_directory = tempfile.TemporaryDirectory()
+        self.settings = Path(self.temporary_directory.name) / "appsettings.json"
+        self.settings.write_text(self.SETTINGS, encoding="utf-8")
+
+    def tearDown(self):
+        self.temporary_directory.cleanup()
+
+    def test_follow_forever_bumps_interface(self):
+        self.assertEqual(game_versions.follow_forever(self.settings, "1.60.2.71000"), "1.60.2")
+
+        self.assertEqual(
+            self.settings.read_text(encoding="utf-8"),
+            self.SETTINGS.replace('"Interface": "16001"', '"Interface": "16002"'),
+        )
+
+    def test_follow_forever_ignores_older_build(self):
+        for build in ("1.60.1.70862", "1.60.0.69000"):
+            with self.subTest(build=build):
+                self.assertIsNone(game_versions.follow_forever(self.settings, build))
+                self.assertEqual(self.settings.read_text(encoding="utf-8"), self.SETTINGS)
+
+    def test_follow_forever_leaves_retail_interfaces_alone(self):
+        shipped = (REPOSITORY_ROOT / "appsettings.json").read_text(encoding="utf-8")
+        self.settings.write_text(shipped, encoding="utf-8")
+
+        self.assertEqual(game_versions.follow_forever(self.settings, "1.99.9.99999"), "1.99.9")
+
+        after = self.settings.read_text(encoding="utf-8")
+        retail = re.compile(r'"(?:Interfaces|Version)": (?:\[[^\]]*\]|"[^"]*")')
+        self.assertEqual(retail.findall(after), retail.findall(shipped))
+        before, after = json.loads(shipped), json.loads(after)
+        self.assertEqual(after["Forever"]["Interface"], "19909")
+        after["Forever"]["Interface"] = before["Forever"]["Interface"]
+        self.assertEqual(after, before)
+
+
 class CommandLineTests(unittest.TestCase):
     """The update workflow rebuilds whenever --follow prints anything."""
 
@@ -186,6 +230,33 @@ class CommandLineTests(unittest.TestCase):
         output = self.run_script("--settings", str(self.settings), "--follow", "12.1.0.68000")
 
         self.assertEqual(output, "")
+
+    def test_game_versions_forever_flavor(self):
+        self.settings.write_text(
+            json.dumps({"AddOn": {"Interfaces": ["120100"]}, "Forever": {"Interface": "16001"}}),
+            encoding="utf-8",
+        )
+
+        self.assertEqual(self.run_script("--settings", str(self.settings), "--flavor", "forever"), "1.60.1\n")
+        self.assertEqual(self.run_script("--settings", str(self.settings)), "12.1.0\n")
+        self.assertEqual(self.run_script("--settings", str(self.settings), "--flavor", "retail"), "12.1.0\n")
+
+    def test_the_shipped_forever_settings_name_the_forever_patch(self):
+        self.assertEqual(
+            self.run_script("--settings", str(REPOSITORY_ROOT / "appsettings.json"), "--flavor", "forever"),
+            "1.60.1\n",
+        )
+
+    def test_follow_forever_prints_the_new_forever_version(self):
+        self.settings.write_text(FollowForeverTests.SETTINGS, encoding="utf-8")
+
+        self.assertEqual(
+            self.run_script("--settings", str(self.settings), "--follow-forever", "1.60.2.71000"),
+            "1.60.2\n",
+        )
+        self.assertEqual(
+            self.run_script("--settings", str(self.settings), "--follow-forever", "1.60.2.71000"), ""
+        )
 
     def test_live_build_prints_the_us_build(self):
         versions = self.directory / "versions.txt"
@@ -224,6 +295,12 @@ class GameVersionsTests(unittest.TestCase):
 
         with self.assertRaises(ValueError):
             game_versions.game_versions(self.settings)
+
+    def test_settings_without_forever_are_an_error_for_forever(self):
+        self.write_interfaces(["120100"])
+
+        with self.assertRaisesRegex(ValueError, "Forever.Interface"):
+            game_versions.game_versions(self.settings, "forever")
 
     def test_the_shipped_settings_name_real_patches(self):
         versions = game_versions.game_versions(REPOSITORY_ROOT / "appsettings.json")

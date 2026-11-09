@@ -526,7 +526,8 @@ def main(argv: list[str] | None = None) -> int:
         args.write_composed.write_text(
             "# Runtime-composed TTS sites in Northern Sky Raid Tools, and the buff table the\n"
             "# Rebuff site reads. On a mismatch: enumerate what the new or changed site can\n"
-            "# speak into nsrt-extra-vocabulary.txt, then regenerate this file by rerunning\n"
+            "# speak into nsrt-extra-vocabulary.txt (note phrases into nsrt-note-vocabulary.txt),\n"
+            "# then regenerate this file by rerunning\n"
             "# scripts/check_nsrt_tts_coverage.py with --write-composed nsrt-composed-sites.txt.\n"
             + "".join(f"{signature}\n" for signature in signatures),
             encoding="utf-8")
@@ -539,7 +540,8 @@ def main(argv: list[str] | None = None) -> int:
         }
         if expected != set(signatures):
             print("error: the composed-site snapshot no longer holds; enumerate what each "
-                  "new or changed site can speak into nsrt-extra-vocabulary.txt, then "
+                  "new or changed site can speak into nsrt-extra-vocabulary.txt (note phrases "
+                  "into nsrt-note-vocabulary.txt), then "
                   "regenerate it with --write-composed", file=sys.stderr)
             for signature in sorted(set(signatures) - expected):
                 print(f"  new:  {signature}", file=sys.stderr)

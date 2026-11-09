@@ -212,7 +212,7 @@ jobs:
             selection_args+=(--flavors "[$FLAVORS_INPUT]")
           fi
           if [ -z "$FOREVER_GAME_VERSIONS" ]; then
-            selection_args+=(--flavors '["retail"]')
+            selection_args+=(--no-forever)
           fi
 
           mkdir -p current previous

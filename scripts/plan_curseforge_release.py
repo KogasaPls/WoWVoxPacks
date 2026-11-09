@@ -140,6 +140,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--voices", type=json.loads, metavar="JSON")
     parser.add_argument("--addons", type=json.loads, metavar="JSON")
     parser.add_argument("--flavors", type=json.loads, metavar="JSON")
+    parser.add_argument("--no-forever", action="store_true")
     parser.add_argument("--force", action="store_true")
     listing = parser.add_mutually_exclusive_group()
     listing.add_argument("--list-assets", action="store_true")
@@ -149,6 +150,15 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> int:
     arguments = parse_args()
+    if arguments.no_forever:
+        if arguments.flavors is None:
+            arguments.flavors = ["retail"]
+        elif "forever" in arguments.flavors:
+            print(
+                f"Cannot publish Forever: {arguments.current_tag} has no Forever settings",
+                file=sys.stderr,
+            )
+            return 1
     try:
         catalog = curseforge_packages.load(arguments.catalog)
         if arguments.list_flavors:

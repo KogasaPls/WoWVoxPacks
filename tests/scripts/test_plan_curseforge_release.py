@@ -1,8 +1,11 @@
+import contextlib
+import io
 import json
 import sys
 import tempfile
 import unittest
 import zipfile
+from unittest import mock
 from pathlib import Path
 
 
@@ -25,6 +28,26 @@ class PlanCurseForgeReleaseTests(unittest.TestCase):
 
     def tearDown(self):
         self.temporary_directory.cleanup()
+
+    def run_main(self, *arguments):
+        stdout, stderr = io.StringIO(), io.StringIO()
+        argv = ["plan", "--current-tag", "v1", "--list-flavors", *arguments]
+        with mock.patch.object(sys, "argv", argv), \
+                contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr):
+            code = plan_curseforge_release.main()
+        return code, stdout.getvalue().split(), stderr.getvalue()
+
+    def test_a_tag_without_forever_settings_refuses_a_requested_forever_flavor(self):
+        for flavors in ('["forever"]', '["retail","forever"]'):
+            code, output, error = self.run_main("--no-forever", "--flavors", flavors)
+            self.assertEqual(code, 1, flavors)
+            self.assertEqual(output, [], flavors)
+            self.assertIn("v1", error)
+
+    def test_a_tag_without_forever_settings_defaults_to_retail_only(self):
+        self.assertEqual(self.run_main("--no-forever")[:2], (0, ["retail"]))
+        self.assertEqual(self.run_main("--no-forever", "--flavors", '["retail"]')[:2], (0, ["retail"]))
+        self.assertEqual(self.run_main()[1], ["retail", "forever"])
 
     def test_forced_plan_contains_every_selected_package_in_catalog_order(self):
         for voice in self.catalog.voice_names:

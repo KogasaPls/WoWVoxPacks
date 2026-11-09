@@ -663,7 +663,7 @@ class ReleaseWorkflowTests(unittest.TestCase):
             plan_step,
         )
         self.assertIn('if [ -z "$FOREVER_GAME_VERSIONS" ]; then', plan_step)
-        self.assertIn("selection_args+=(--flavors '[\"retail\"]')", plan_step)
+        self.assertIn("selection_args+=(--no-forever)", plan_step)
         self.assertLess(
             plan_step.index("selection_args+=(--flavors"), plan_step.index("--list-assets")
         )

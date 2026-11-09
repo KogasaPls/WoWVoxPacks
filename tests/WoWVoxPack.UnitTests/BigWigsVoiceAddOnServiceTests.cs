@@ -36,8 +36,10 @@ public class BigWigsVoiceAddOnServiceTests
     public async Task BuildAddOnAsync_KeepsBothSpells_WhenTheyShareAName()
     {
         BigWigsVoiceAddOnService service = new(new StubOptions(Settings),
-            new FakeUpstreamClient([new BigWigsVoiceSoundFile("111", "Shadow Bolt"),
-                new BigWigsVoiceSoundFile("222", "Shadow Bolt")]), BigWigsVoicePendingSpells.Empty, NullLogger<BigWigsVoiceAddOnService>.Instance);
+            new FakeUpstreamClient([
+                new BigWigsVoiceSoundFile("111", "Shadow Bolt"),
+                new BigWigsVoiceSoundFile("222", "Shadow Bolt"),
+            ]), BigWigsVoicePendingSpells.Empty, NullLogger<BigWigsVoiceAddOnService>.Instance);
 
         AddOnDraft draft = await service.BuildAddOnAsync("/tmp/output", TtsSettings, GameFlavor.Retail);
         AddOn addOn = draft.Finalize(draft.SoundFiles);
@@ -162,8 +164,10 @@ public class BigWigsVoiceAddOnServiceTests
             BigWigsVoicePendingSpells.Parse("pending.txt", "1301511\tVoidswarm\n1304424\tExtinguish\n");
 
         IReadOnlyList<BigWigsVoiceSoundFile> listed =
-            pending.ListedUpstream([new BigWigsVoiceSoundFile("1304424", "Extinguish"),
-                new BigWigsVoiceSoundFile("111", "Shadow Bolt")]);
+            pending.ListedUpstream([
+                new BigWigsVoiceSoundFile("1304424", "Extinguish"),
+                new BigWigsVoiceSoundFile("111", "Shadow Bolt"),
+            ]);
 
         Assert.Equal(["1304424"], listed.Select(sound => sound.SpellId));
     }

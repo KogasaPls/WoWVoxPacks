@@ -14,8 +14,6 @@ mkdir -p dist
 # archives from an older tag also match create-release.yml's ./dist/*.zip glob.
 rm -f dist/*.zip
 
-cd output || exit 1
-
 # SoundFiles.json is build metadata for the regular addons, so it does not ship in those
 # archives. Northern Sky Raid Tools loads its manifest at runtime to keep each voice pack
 # self-contained, so that addon is the intentional exception.
@@ -40,31 +38,45 @@ zip_addon_dirs() {
   zip -r -q -9 "$archive" "$@" "${excludes[@]}"
 }
 
-while IFS= read -r -d '' file; do
-  voice_name=$(basename "$(dirname "$file")")
-  addon_dir=$(basename "$file")
+# Package every voice/addon directory under $1; $2 is inserted before the release tag in
+# archive names.
+package_tree() {
+  local root="$1" suffix="$2" file voice_name addon_dir addon_name archive_name
+  cd "$root" || exit 1
 
-  echo "Processing directory: $file"
+  while IFS= read -r -d '' file; do
+    voice_name=$(basename "$(dirname "$file")")
+    addon_dir=$(basename "$file")
 
-  cd "$voice_name" || exit 1
+    echo "Processing directory: $file"
 
-  # Trim _${voice_name} out of addon_name if it exists
-  addon_name=${addon_dir%"_$voice_name"}
+    cd "$voice_name" || exit 1
 
-  # Trim _WoWVoxPacks / WoWVoxPacks_ out of addon_name if it exists
-  addon_name=${addon_name%"_WoWVoxPacks"}
-  addon_name=${addon_name#"WoWVoxPacks_"}
+    # Trim _${voice_name} out of addon_name if it exists
+    addon_name=${addon_dir%"_$voice_name"}
 
-  echo "Creating archive for voice: $voice_name, addon: $addon_name"
+    # Trim _WoWVoxPacks / WoWVoxPacks_ out of addon_name if it exists
+    addon_name=${addon_name%"_WoWVoxPacks"}
+    addon_name=${addon_name#"WoWVoxPacks_"}
 
-  archive_name="WoWVoxPacks_${voice_name}_${addon_name}_${RELEASE_TAG}.zip"
+    echo "Creating archive for voice: $voice_name, addon: $addon_name"
 
-  zip_addon_dirs "../../dist/$archive_name" "$addon_dir" || {
-    echo "Failed to create archive for $file"
-    exit 1
-  }
+    archive_name="WoWVoxPacks_${voice_name}_${addon_name}${suffix}_${RELEASE_TAG}.zip"
 
-  echo "Created archive: dist/$archive_name"
+    zip_addon_dirs "$repo_root/dist/$archive_name" "$addon_dir" || {
+      echo "Failed to create archive for $file"
+      exit 1
+    }
 
-  cd .. || exit 1
-done < <(find . -mindepth 2 -maxdepth 2 -type d -print0)
+    echo "Created archive: dist/$archive_name"
+
+    cd .. || exit 1
+  done < <(find . -mindepth 2 -maxdepth 2 -type d -print0)
+  cd "$repo_root" || exit 1
+}
+
+repo_root=$(pwd)
+package_tree output ""
+if [ -d output-forever ]; then
+  package_tree output-forever "_Forever"
+fi

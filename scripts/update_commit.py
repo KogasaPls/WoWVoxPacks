@@ -3,7 +3,7 @@
 import argparse
 from pathlib import Path
 
-from release_notes import ADDONS, git, packaged_addons, registered_callouts
+from release_notes import ADDONS, OUTPUT_ROOTS, git, packaged_addons, registered_callouts
 
 
 def callout_list(names: list[str]) -> str:
@@ -14,13 +14,13 @@ def callout_list(names: list[str]) -> str:
 
 
 def subject(repository: Path, bigwigs_version: str, game_version: str) -> str:
-    paths = git("diff", "--name-only", "HEAD", "--", "output", repository=repository)
+    paths = git("diff", "--name-only", "HEAD", "--", *OUTPUT_ROOTS, repository=repository)
     paths += git(
         "ls-files",
         "--others",
         "--exclude-standard",
         "--",
-        "output",
+        *OUTPUT_ROOTS,
         repository=repository,
     )
     changed_paths = paths.splitlines()

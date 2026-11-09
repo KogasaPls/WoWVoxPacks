@@ -535,7 +535,15 @@ class ReleaseWorkflowTests(unittest.TestCase):
                 self.assertIn("sparse-checkout: |", checkout, workflow)
                 self.assertIn("          /*", checkout, workflow)
                 self.assertIn("          !/output/", checkout, workflow)
+                self.assertIn("          !/output-forever/", checkout, workflow)
                 self.assertIn("sparse-checkout-cone-mode: false", checkout, workflow)
+
+    def test_release_runs_when_forever_output_changes(self):
+        release = (REPOSITORY_ROOT / ".github/workflows/create-release.yml").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn("      - 'output-forever/**'", release)
 
     def test_update_checkout_avoids_historical_audio(self):
         """The updater needs current output, but never the audio from older commits."""

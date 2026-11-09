@@ -106,6 +106,13 @@ class GitTests(unittest.TestCase):
         self.assertNotIn("Kith'ix", notes)
         self.assertNotIn("generate files faster", notes)
 
+    def test_forever_output_counts_as_the_same_addon(self):
+        self.commit("Add initial Callouts", **{"output-forever/Test/WoWVoxPacks_Callouts_Test/Core.lua": "old"})
+        self.git("tag", "v1.0.0-r1")
+        self.commit("feat(packs): add Wipe callout", **{"output-forever/Test/WoWVoxPacks_Callouts_Test/Core.lua": "new"})
+
+        self.assertIn("- Callouts: add Wipe callout", self.notes())
+
     def test_the_render_commit_describes_a_change_whose_source_was_committed_earlier(self):
         self.commit("Add initial NSRT raid callouts", **{"output/Test/WoWVoxPacks_NorthernSkyRaidTools_Test/Core.lua": "old"})
         self.git("tag", "v1.0.0-r1")

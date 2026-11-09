@@ -76,6 +76,42 @@ class RenderedOutputTests(unittest.TestCase):
         )
         self.assertEqual((self.kept / "base-sha").read_text().strip(), self.base)
 
+    def test_forever_output_is_kept_and_restored_with_retail(self):
+        self.write("output-forever/Voice/Pack/Sounds/old.ogg", "old")
+        self.write("output-forever/Voice/Pack/SoundFiles.json", BASE_MANIFEST)
+        self.commit("forever base")
+        self.write("output-forever/Voice/Pack/Sounds/get orb.ogg", "new")
+        self.write("output-forever/Voice/Pack/SoundFiles.json", PARTIAL_MANIFEST)
+        (self.repo / "output-forever/Voice/Pack/Sounds/old.ogg").unlink()
+        self.run_script("collect", "--into", str(self.kept))
+        self.git("checkout", "-q", "--", ".")
+        self.git("clean", "-qfd")
+
+        self.assertEqual(
+            "new", (self.kept / "files/output-forever/Voice/Pack/Sounds/get orb.ogg").read_text()
+        )
+        self.assertEqual("output-forever/Voice/Pack/Sounds/old.ogg\n", (self.kept / "deleted.txt").read_text())
+
+        self.run_script("restore", "--from", str(self.kept))
+
+        sounds = self.repo / "output-forever/Voice/Pack/Sounds"
+        self.assertEqual("new", (sounds / "get orb.ogg").read_text())
+        self.assertFalse((sounds / "old.ogg").exists())
+
+    def test_restore_skips_forever_output_that_changed_after_the_failed_build(self):
+        self.write("output-forever/Voice/Pack/Core.lua", "base")
+        self.commit("forever base")
+        self.build_partway()
+        self.run_script("collect", "--into", str(self.kept))
+        self.git("checkout", "-q", "--", ".")
+        self.git("clean", "-qfd")
+        self.write("output-forever/Voice/Pack/Core.lua", "merged")
+        self.commit("merged forever update")
+
+        printed = self.run_script("restore", "--from", str(self.kept))
+
+        self.assertIn("Not restoring", printed)
+
     def test_restore_puts_a_fresh_checkout_back_where_the_failed_build_stopped(self):
         self.build_partway()
         self.run_script("collect", "--into", str(self.kept))

@@ -8,6 +8,7 @@ on:
     # fifteen CurseForge projects. workflow_dispatch still releases whatever is on main.
     paths:
       - 'output/**'
+      - 'output-forever/**'
       - 'bigwigs-voice-version.txt'
   workflow_dispatch:
   push:

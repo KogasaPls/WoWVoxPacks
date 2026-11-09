@@ -34,6 +34,7 @@ jobs:
           sparse-checkout: |
             /*
             !/output/
+            !/output-forever/
           sparse-checkout-cone-mode: false
       - name: Look for an open update PR or a failed build
         id: check
@@ -116,6 +117,7 @@ jobs:
           sparse-checkout: |
             /*
             !/output/
+            !/output-forever/
           sparse-checkout-cone-mode: false
       - name: Download the NSRT default branch
         env:
@@ -285,6 +287,7 @@ jobs:
           sparse-checkout: |
             /*
             !/output/
+            !/output-forever/
           sparse-checkout-cone-mode: false
       - name: Compare the live build against the declared interfaces
         id: follow
@@ -481,6 +484,7 @@ jobs:
           base: main
           add-paths: |
             output/
+            output-forever/
             appsettings.json
             bigwigs-voice-version.txt
             nsrt-vocabulary.txt

@@ -92,6 +92,7 @@ jobs:
           sparse-checkout: |
             /*
             !/output/
+            !/output-forever/
           sparse-checkout-cone-mode: false
       - name: Resolve game versions
         id: game-versions

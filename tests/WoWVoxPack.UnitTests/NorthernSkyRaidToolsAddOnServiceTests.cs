@@ -17,7 +17,7 @@ public sealed class NorthernSkyRaidToolsAddOnServiceTests : IDisposable
         string overridesPath = Path.Combine(_temporaryDirectory, "CalloutPronunciations.json");
         File.WriteAllText(vocabularyPath, "DropPool\n");
         File.WriteAllText(overridesPath, "{\"DropPool\":{\"Text\":\"Drop Pool\"}}");
-        NorthernSkyRaidToolsAddOnService service = new(
+        NorthernSkyRaidToolsAddOnService service = CreateService(
             new StubOptions(new AddOnSettings
             {
                 Title = "unused",
@@ -50,7 +50,7 @@ public sealed class NorthernSkyRaidToolsAddOnServiceTests : IDisposable
         string overridesPath = Path.Combine(_temporaryDirectory, "CalloutPronunciations.json");
         File.WriteAllText(vocabularyPath, "Soak\nsoak\n");
         File.WriteAllText(overridesPath, "{}");
-        NorthernSkyRaidToolsAddOnService service = new(
+        NorthernSkyRaidToolsAddOnService service = CreateService(
             new StubOptions(new AddOnSettings
             {
                 Title = "unused",
@@ -83,7 +83,7 @@ public sealed class NorthernSkyRaidToolsAddOnServiceTests : IDisposable
             "{\"Soak {rt1}\":{\"FileName\":\"soak_star.ogg\",\"Text\":\"Soak Star\"},"
             + "\"Soak {rt3}\":{\"FileName\":\"soak_diamond.ogg\",\"Text\":\"Soak Diamond\"}}";
         File.WriteAllText(overridesPath, overrides);
-        NorthernSkyRaidToolsAddOnService service = new(
+        NorthernSkyRaidToolsAddOnService service = CreateService(
             new StubOptions(new AddOnSettings
             {
                 Title = "unused",
@@ -115,7 +115,7 @@ public sealed class NorthernSkyRaidToolsAddOnServiceTests : IDisposable
         File.WriteAllText(Path.Combine(_temporaryDirectory, "Callouts_Sounds.json"), "[]");
         File.WriteAllText(Path.Combine(_temporaryDirectory, "lorrgs-vocabulary.txt"), string.Empty);
         File.WriteAllText(Path.Combine(_temporaryDirectory, "RetiredCallouts.json"), "[\"OldCallout\"]");
-        NorthernSkyRaidToolsAddOnService service = new(
+        NorthernSkyRaidToolsAddOnService service = CreateService(
             new StubOptions(new AddOnSettings
             {
                 Title = "unused",
@@ -161,7 +161,7 @@ public sealed class NorthernSkyRaidToolsAddOnServiceTests : IDisposable
         File.WriteAllText(Path.Combine(_temporaryDirectory, "lorrgs-vocabulary.txt"), string.Empty);
         File.WriteAllText(Path.Combine(_temporaryDirectory, "RetiredCallouts.json"),
             "[\"Anti-Magic Shell\"]");
-        NorthernSkyRaidToolsAddOnService service = new(
+        NorthernSkyRaidToolsAddOnService service = CreateService(
             new StubOptions(new AddOnSettings
             {
                 Title = "unused",
@@ -186,6 +186,11 @@ public sealed class NorthernSkyRaidToolsAddOnServiceTests : IDisposable
     }
 
     public void Dispose() => Directory.Delete(_temporaryDirectory, recursive: true);
+
+    private static NorthernSkyRaidToolsAddOnService CreateService(
+        IOptionsSnapshot<AddOnSettings> options,
+        NorthernSkyRaidToolsVocabularyProvider vocabulary) =>
+        new(options, vocabulary, vocabulary);
 
     private sealed class StubOptions(AddOnSettings settings) : IOptionsSnapshot<AddOnSettings>
     {

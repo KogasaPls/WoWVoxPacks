@@ -4,6 +4,8 @@ namespace WoWVoxPack.UnitTests;
 
 public class CalloutVocabularyProviderTests
 {
+    private const string OverridesPath = "src/WoWVoxPack.AddOns.Callouts/CalloutPronunciations.json";
+
     [Fact]
     public void Callouts_UsesCuratedPlayerReminderAndRetiredSourcesOnly()
     {
@@ -218,5 +220,112 @@ public class CalloutVocabularyProviderTests
             Path.Combine(directory, "RetiredCallouts.json"));
 
         Assert.Empty(provider.Registrations);
+    }
+
+    [Fact]
+    public void ForeverNsrt_RegistersNoAlertOnlyName()
+    {
+        IReadOnlyDictionary<string, PronunciationOverride> overrides =
+            CalloutPronunciation.LoadOverrides(FindRepoFile(OverridesPath));
+        HashSet<string> sharedFiles = new(StringComparer.OrdinalIgnoreCase);
+        foreach (string fileName in (string[])["nsrt-vocabulary.txt", "nsrt-note-vocabulary.txt", "callout-vocabulary.txt"])
+        {
+            sharedFiles.UnionWith(NorthernSkyRaidToolsVocabulary.Parse(File.ReadLines(FindRepoFile(fileName)))
+                .Select(name => CalloutPronunciation.DescribeSoundFile(name, overrides).FileName));
+        }
+
+        HashSet<string> alertOnly = new(
+            NorthernSkyRaidToolsVocabulary.Parse(File.ReadLines(FindRepoFile("nsrt-alert-vocabulary.txt")))
+                .Where(name => !sharedFiles.Contains(CalloutPronunciation.DescribeSoundFile(name, overrides).FileName)),
+            StringComparer.OrdinalIgnoreCase);
+        Assert.NotEmpty(alertOnly);
+
+        IEnumerable<string> registered = ForeverNsrt().Registrations
+            .SelectMany(r => r.MediaKeys);
+
+        Assert.DoesNotContain(registered, alertOnly.Contains);
+    }
+
+    [Fact]
+    public void ForeverNsrt_RegistersNoRebuffOrDodge()
+    {
+        string[] displayNames = [.. ForeverNsrt().Registrations.Select(r => r.SoundFile.DisplayName)];
+
+        Assert.DoesNotContain(displayNames, name => name.StartsWith("Rebuff ", StringComparison.Ordinal));
+        Assert.DoesNotContain(displayNames, name => name != "Dodge" && name.Contains("Dodge", StringComparison.Ordinal));
+        Assert.DoesNotContain("Drop-Pool", displayNames);
+    }
+
+    [Fact]
+    public void ForeverNsrt_RegistersNotePhrases()
+    {
+        string[] displayNames = [.. ForeverNsrt().Registrations.Select(r => r.SoundFile.DisplayName)];
+
+        Assert.Contains("Preposition at {star}", displayNames);
+        Assert.Contains("Soak {rt1}", displayNames);
+    }
+
+    [Fact]
+    public void ForeverCallouts_ExcludesCuratedAndLorrgs()
+    {
+        string[] displayNames = [.. ForeverCallouts().Registrations.Select(r => r.SoundFile.DisplayName)];
+
+        Assert.DoesNotContain("Convoke", displayNames);
+        Assert.DoesNotContain("Anti-Magic Zone", displayNames);
+        Assert.Contains("Adds", displayNames);
+    }
+
+    [Fact]
+    public void RetailProviders_Unchanged()
+    {
+        CalloutsVocabularyProvider callouts = RetailCallouts();
+        IReadOnlyList<CalloutRegistration> retail = new NorthernSkyRaidToolsVocabularyProvider(
+            [.. NorthernSkyRaidToolsVocabulary.VocabularyFileNames.Select(FindRepoFile)],
+            FindRepoFile(OverridesPath),
+            callouts).Registrations;
+        IReadOnlyList<CalloutRegistration> expected = NorthernSkyRaidToolsVocabulary.Load(
+            [.. NorthernSkyRaidToolsVocabulary.VocabularyFileNames.Select(FindRepoFile)],
+            CalloutPronunciation.LoadOverrides(FindRepoFile(OverridesPath)),
+            callouts.Registrations);
+
+        Assert.Equal(expected.Count, retail.Count);
+        Assert.Equal(
+            expected.SelectMany(r => r.MediaKeys),
+            retail.SelectMany(r => r.MediaKeys));
+        Assert.Contains(retail, r => r.SoundFile.DisplayName.StartsWith("Rebuff ", StringComparison.Ordinal));
+        Assert.Contains(callouts.Registrations, r => r.SoundFile.DisplayName == "Convoke");
+    }
+
+    private static CalloutsVocabularyProvider RetailCallouts() =>
+        new(
+            FindRepoFile("src/WoWVoxPack.AddOns.Callouts/Callouts_Sounds.json"),
+            FindRepoFile(OverridesPath),
+            [.. CalloutVocabulary.VocabularyFileNames.Select(FindRepoFile)],
+            FindRepoFile("src/WoWVoxPack.AddOns.Callouts/RetiredCallouts.json"));
+
+    private static CalloutsVocabularyProvider ForeverCallouts() =>
+        new(
+            null,
+            FindRepoFile(OverridesPath),
+            [.. CalloutVocabulary.ForeverVocabularyFileNames.Select(FindRepoFile)],
+            null);
+
+    private static NorthernSkyRaidToolsVocabularyProvider ForeverNsrt() =>
+        new(
+            [.. NorthernSkyRaidToolsVocabulary.ForeverVocabularyFileNames.Select(FindRepoFile)],
+            FindRepoFile(OverridesPath),
+            ForeverCallouts());
+
+    private static string FindRepoFile(string fileName)
+    {
+        DirectoryInfo? directory = new(AppContext.BaseDirectory);
+
+        while (directory is not null && !File.Exists(Path.Combine(directory.FullName, fileName)))
+        {
+            directory = directory.Parent;
+        }
+
+        Assert.NotNull(directory);
+        return Path.Combine(directory.FullName, fileName);
     }
 }

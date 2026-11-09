@@ -83,7 +83,7 @@ public sealed class CalloutsMediaAddOnServiceTests : IDisposable
 
         CalloutsVocabularyProvider vocabulary =
             new(curatedPath, overridesPath, [lorrgsPath], retiredPath);
-        return new CalloutsMediaAddOnService(new StubOptions(Settings), vocabulary);
+        return new CalloutsMediaAddOnService(new StubOptions(Settings), vocabulary, vocabulary);
     }
 
     private sealed class StubOptions(AddOnSettings settings) : IOptionsSnapshot<AddOnSettings>

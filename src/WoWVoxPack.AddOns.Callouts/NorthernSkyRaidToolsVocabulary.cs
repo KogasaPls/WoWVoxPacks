@@ -18,6 +18,13 @@ public static partial class NorthernSkyRaidToolsVocabulary
             "nsrt-note-vocabulary.txt"
         ];
 
+    /// <summary>
+    /// WoW Forever speaks only the shipped sounds and the raid-note phrases: no alert-only or
+    /// runtime-composed names.
+    /// </summary>
+    public static readonly IReadOnlyList<string> ForeverVocabularyFileNames =
+        [VocabularyFileNames[0], VocabularyFileNames[3]];
+
     private static readonly string[] RaidMarkerWords =
         ["Star", "Circle", "Diamond", "Triangle", "Moon", "Square", "Cross", "Skull"];
 

@@ -46,19 +46,21 @@ foreach (string name in (string[])["Callouts", "NorthernSkyRaidTools", "ExBoss",
         .BindConfiguration("AddOn");
 }
 
-services.AddSingleton(_ => new CalloutsVocabularyProvider(
+services.AddKeyedSingleton("Retail", (_, _) => new CalloutsVocabularyProvider(
     Path.Combine(AppContext.BaseDirectory, "Callouts_Sounds.json"),
     Path.Combine(AppContext.BaseDirectory, "CalloutPronunciations.json"),
     CalloutVocabulary.VocabularyFileNames
         .Select(fileName => Path.Combine(repoRoot, fileName))
         .ToArray(),
     Path.Combine(AppContext.BaseDirectory, "RetiredCallouts.json")));
-services.AddSingleton(sp => new NorthernSkyRaidToolsVocabularyProvider(
+services.AddKeyedSingleton("Retail", (sp, key) => new NorthernSkyRaidToolsVocabularyProvider(
     NorthernSkyRaidToolsVocabulary.VocabularyFileNames
         .Select(fileName => Path.Combine(repoRoot, fileName))
         .ToArray(),
     Path.Combine(AppContext.BaseDirectory, "CalloutPronunciations.json"),
-    sp.GetRequiredService<CalloutsVocabularyProvider>()));
+    sp.GetRequiredKeyedService<CalloutsVocabularyProvider>(key)));
+services.AddKeyedSingleton("Forever", (sp, _) => sp.GetRequiredKeyedService<CalloutsVocabularyProvider>("Retail"));
+services.AddKeyedSingleton("Forever", (sp, _) => sp.GetRequiredKeyedService<NorthernSkyRaidToolsVocabularyProvider>("Retail"));
 
 // The BigWigs pack's Lua is the same whatever the spell list holds, and fetching the real one
 // would put GitHub between the harness and a run.

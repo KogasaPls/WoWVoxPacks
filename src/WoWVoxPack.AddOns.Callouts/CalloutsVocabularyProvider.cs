@@ -15,14 +15,14 @@ public sealed class CalloutsVocabularyProvider
     private readonly Lazy<IReadOnlyList<CalloutRegistration>> _registrations;
 
     public CalloutsVocabularyProvider(
-        string curatedJsonPath,
+        string? curatedJsonPath,
         string overridesPath,
         IReadOnlyList<string> vocabularyPaths,
-        string retiredJsonPath)
+        string? retiredJsonPath)
     {
         _registrations = new Lazy<IReadOnlyList<CalloutRegistration>>(() =>
             CalloutVocabulary.Merge(
-                AddOnBuilder.LoadSoundFileJson(curatedJsonPath),
+                curatedJsonPath is null ? [] : AddOnBuilder.LoadSoundFileJson(curatedJsonPath),
                 vocabularyPaths.SelectMany(CalloutNameVocabulary.Load),
                 CalloutPronunciation.LoadOverrides(overridesPath),
                 LoadRetiredNames(retiredJsonPath)));
@@ -37,9 +37,9 @@ public sealed class CalloutsVocabularyProvider
                 || File.Exists(Path.Combine(soundDirectory, registration.SoundFile.FileName)))
             .Select(registration => registration.SoundFile);
 
-    private static IReadOnlyList<string> LoadRetiredNames(string path)
+    private static IReadOnlyList<string> LoadRetiredNames(string? path)
     {
-        if (!File.Exists(path))
+        if (path is null || !File.Exists(path))
         {
             return [];
         }

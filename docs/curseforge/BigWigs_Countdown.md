@@ -11,7 +11,7 @@ Nothing changes until you select it. In the BigWigs options, set **Countdown > C
 
 ## World of Warcraft: Forever
 
-A separate World of Warcraft: Forever file is available from this project. It carries only sounds that can play on Forever.
+A separate World of Warcraft: Forever file is available from this project. It has the same countdown voice as the retail file, built for the Forever client.
 
 ## Requirements
 

@@ -13,6 +13,11 @@ A collection of modern TTS voices for World of Warcraft addons.
   its own recordings, including the Callouts spell names under plain keys so NSRT plays them automatically for
   assignments and alerts, and needs neither Callouts nor an in-game setting.
 
+World of Warcraft: Forever has its own files for BigWigs_Countdown, Callouts and Northern Sky Raid Tools, published in
+the same CurseForge projects. They carry only sounds that can play on Forever. The Callouts file leaves out the retail
+cooldown names, and the Northern Sky Raid Tools file leaves out the Midnight encounter alerts and the Rebuff
+reminders. There is no Forever BigWigs_Voice or ExBoss pack.
+
 <video src='https://github.com/user-attachments/assets/8bceffae-2e57-49cb-bb74-aab43ac65ae7' width=180></video>
 
 ## Voices

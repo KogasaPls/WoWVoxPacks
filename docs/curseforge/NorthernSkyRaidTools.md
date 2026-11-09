@@ -15,6 +15,10 @@ No configuration is required, just install and load the addon. Two NSRT settings
 - Encounter alerts ("Don't soak", "Stop Cast", "Watch Spawns") and the mechanic words NSRT uses: `Soak`, `Dispel`, `Frontal`, directions, and the numbers `1` through `10`
 - The ready-check reminders NSRT emits as fixed phrases, such as `Soulstone` and `Source of Magic`
 
+## World of Warcraft: Forever
+
+A separate World of Warcraft: Forever file is available from this project. It carries only sounds that can play on Forever: NSRT's own sound names and the generic raid note phrases such as `Preposition at`, `Soak` and `Go to` with markers and positions. It leaves out the Midnight encounter alerts and the Rebuff reminders.
+
 ## Requirements
 
 Northern Sky Raid Tools, and LibSharedMedia-3.0, which comes bundled with almost every raid addon.

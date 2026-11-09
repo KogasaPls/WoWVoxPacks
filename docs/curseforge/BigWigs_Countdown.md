@@ -9,6 +9,10 @@ A TTS countdown voice for BigWigs. It adds **WoWVoxPacks: {Voice}** ({VoiceDescr
 
 Nothing changes until you select it. In the BigWigs options, set **Countdown > Countdown voice** to `WoWVoxPacks: {Voice}`. BigWigs keeps this per profile.
 
+## World of Warcraft: Forever
+
+A separate World of Warcraft: Forever file is available from this project. It carries only sounds that can play on Forever.
+
 ## Requirements
 
 BigWigs.

@@ -52,7 +52,17 @@ def declared_interfaces(settings: Path) -> list[str]:
     return interfaces
 
 
-def game_versions(settings: Path) -> list[str]:
+def forever_interface(settings: Path) -> str:
+    parsed = json.loads(settings.read_text(encoding="utf-8"))
+    interface = parsed.get("Forever", {}).get("Interface")
+    if not interface:
+        raise ValueError(f"{settings} declares no Forever.Interface")
+    return interface
+
+
+def game_versions(settings: Path, flavor: str = "retail") -> list[str]:
+    if flavor == "forever":
+        return [to_game_version(forever_interface(settings))]
     versions = {to_game_version(interface) for interface in declared_interfaces(settings)}
     return sorted(versions, key=lambda version: [int(part) for part in version.split(".")])
 
@@ -81,6 +91,7 @@ def follow(settings: Path, build: str) -> str | None:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--settings", type=Path)
+    parser.add_argument("--flavor", choices=("retail", "forever"), default="retail")
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--highest", action="store_true")
     mode.add_argument(
@@ -97,6 +108,8 @@ def parse_args() -> argparse.Namespace:
     args = parser.parse_args()
     if args.live_build is None and args.settings is None:
         parser.error("--settings is required")
+    if args.flavor != "retail" and (args.follow is not None or args.live_build is not None):
+        parser.error("--flavor only applies to listing game versions")
     return args
 
 
@@ -112,7 +125,7 @@ def main() -> int:
             print(version)
         return 0
 
-    versions = game_versions(args.settings)
+    versions = game_versions(args.settings, args.flavor)
     print(versions[-1] if args.highest else ",".join(versions))
     return 0
 

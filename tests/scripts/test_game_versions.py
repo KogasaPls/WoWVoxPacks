@@ -187,6 +187,22 @@ class CommandLineTests(unittest.TestCase):
 
         self.assertEqual(output, "")
 
+    def test_game_versions_forever_flavor(self):
+        self.settings.write_text(
+            json.dumps({"AddOn": {"Interfaces": ["120100"]}, "Forever": {"Interface": "16001"}}),
+            encoding="utf-8",
+        )
+
+        self.assertEqual(self.run_script("--settings", str(self.settings), "--flavor", "forever"), "1.60.1\n")
+        self.assertEqual(self.run_script("--settings", str(self.settings)), "12.1.0\n")
+        self.assertEqual(self.run_script("--settings", str(self.settings), "--flavor", "retail"), "12.1.0\n")
+
+    def test_the_shipped_forever_settings_name_the_forever_patch(self):
+        self.assertEqual(
+            self.run_script("--settings", str(REPOSITORY_ROOT / "appsettings.json"), "--flavor", "forever"),
+            "1.60.1\n",
+        )
+
     def test_live_build_prints_the_us_build(self):
         versions = self.directory / "versions.txt"
         versions.write_text(VERSIONS, encoding="utf-8")
@@ -224,6 +240,12 @@ class GameVersionsTests(unittest.TestCase):
 
         with self.assertRaises(ValueError):
             game_versions.game_versions(self.settings)
+
+    def test_settings_without_forever_are_an_error_for_forever(self):
+        self.write_interfaces(["120100"])
+
+        with self.assertRaisesRegex(ValueError, "Forever.Interface"):
+            game_versions.game_versions(self.settings, "forever")
 
     def test_the_shipped_settings_name_real_patches(self):
         versions = game_versions.game_versions(REPOSITORY_ROOT / "appsettings.json")

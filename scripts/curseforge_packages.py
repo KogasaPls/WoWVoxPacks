@@ -10,6 +10,7 @@ from typing import Mapping
 
 DEFAULT_CATALOG = Path(__file__).resolve().parent.parent / "curseforge-packages.json"
 RELATION_TYPES = frozenset({"requiredDependency", "optionalDependency"})
+FLAVORS = ("retail", "forever")
 
 
 @dataclass(frozen=True)
@@ -26,6 +27,7 @@ class Addon:
     name: str
     slug: str
     relations: tuple[Relation, ...]
+    flavors: tuple[str, ...]
 
 
 @dataclass(frozen=True)
@@ -66,6 +68,9 @@ class Catalog:
     def relations(self, addon: str) -> str:
         return ",".join(relation.render() for relation in self._addons[addon].relations)
 
+    def flavors(self, addon: str) -> tuple[str, ...]:
+        return self._addons[addon].flavors
+
 
 def load(path: Path = DEFAULT_CATALOG) -> Catalog:
     source = json.loads(path.read_text(encoding="utf-8"))
@@ -105,8 +110,18 @@ def _load_addons(raw_addons: list[object]) -> list[Addon]:
                     f"{name} has unsupported relation type '{relation_type}'"
                 )
             relations.append(Relation(relation_slug, relation_type))
-        addons.append(Addon(name, slug, tuple(relations)))
+        addons.append(Addon(name, slug, tuple(relations), _flavors(raw, name)))
     return addons
+
+
+def _flavors(raw: dict, name: str) -> tuple[str, ...]:
+    flavors = raw.get("flavors", ["retail"])
+    if not isinstance(flavors, list) or not flavors or len(flavors) != len(set(flavors)):
+        raise ValueError(f"{name} flavors must be a nonempty array without duplicates")
+    for flavor in flavors:
+        if flavor not in FLAVORS:
+            raise ValueError(f"{name} has unsupported flavor '{flavor}'")
+    return tuple(flavor for flavor in FLAVORS if flavor in flavors)
 
 
 def _load_voices(raw_voices: list[object], addon_names: set[str]) -> list[Voice]:

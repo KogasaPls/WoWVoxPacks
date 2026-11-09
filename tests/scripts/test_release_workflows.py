@@ -116,7 +116,7 @@ class ReleaseWorkflowTests(unittest.TestCase):
             "GAME_VERSIONS: ${{ steps.game-versions.outputs.game_versions }}", publisher
         )
         self.assertIn(
-            "GAME_VERSION_IDS: ${{ needs.plan-release.outputs.game_version_ids }}", publisher
+            "RETAIL_GAME_VERSION_IDS: ${{ needs.plan-release.outputs.game_version_ids }}", publisher
         )
 
     def test_the_builder_and_the_updater_agree_on_how_far_a_pack_may_shrink(self):
@@ -512,13 +512,88 @@ class ReleaseWorkflowTests(unittest.TestCase):
         self.assertIn("game_version_ids: ${{ steps.game-version-ids.outputs.game_version_ids }}", plan)
 
         send = step(upload, "Upload to CurseForge")
-        self.assertIn('--argjson versions "$GAME_VERSION_IDS"', send)
+        self.assertIn('--argjson versions "$game_version_ids"', send)
         self.assertIn("if [ \"$(jq '.gameVersions | length' metadata.json)\" -eq 0 ]; then", send)
         self.assertIn('-F "metadata=<metadata.json"', send)
         self.assertIn('-F "file=@current/${ARCHIVE}"', send)
         self.assertIn('"https://wow.curseforge.com/api/projects/${PROJECT_ID}/upload-file"', send)
         self.assertIn('if [ "$status" != "200" ]; then', send)
         self.assertNotIn("--retry", send)
+
+    def test_upload_uses_flavor_game_versions(self):
+        """A Forever file tagged with a retail version, or the reverse, reaches the wrong client."""
+        publisher = (
+            REPOSITORY_ROOT / ".github/workflows/publish-to-curseforge.yml"
+        ).read_text(encoding="utf-8")
+        plan = publisher[publisher.index("  plan-release:"):publisher.index("  publish-addon:")]
+        upload = publisher[publisher.index("  publish-addon:"):]
+
+        self.assertIn("game_version_ids: ${{ steps.game-version-ids.outputs.game_version_ids }}", plan)
+        self.assertIn(
+            "forever_game_version_ids: ${{ steps.forever-game-version-ids.outputs.game_version_ids }}",
+            plan,
+        )
+        forever_versions = step(plan, "Resolve Forever game versions")
+        self.assertIn("if: steps.selection.outputs.forever == 'true'", forever_versions)
+        self.assertIn(
+            "python scripts/game_versions.py --settings release-appsettings.json --flavor forever",
+            forever_versions,
+        )
+        forever_ids = step(plan, "Resolve CurseForge Forever game version IDs")
+        self.assertIn("if: steps.forever-game-versions.outputs.game_versions != ''", forever_ids)
+        self.assertIn(
+            'ids=$(python3 scripts/curseforge_game_versions.py --type forever --versions "$GAME_VERSIONS")',
+            forever_ids,
+        )
+        self.assertNotIn("--type", step(plan, "Resolve CurseForge game version IDs"))
+
+        send = step(upload, "Upload to CurseForge")
+        self.assertIn("FLAVOR: ${{ matrix.flavor }}", send)
+        self.assertIn("RETAIL_GAME_VERSION_IDS: ${{ needs.plan-release.outputs.game_version_ids }}", send)
+        self.assertIn(
+            "FOREVER_GAME_VERSION_IDS: ${{ needs.plan-release.outputs.forever_game_version_ids }}", send
+        )
+        # An expression fallback (a && b || c) would hand an empty Forever list the retail IDs.
+        self.assertNotIn("GAME_VERSION_IDS: ${{", send.replace("RETAIL_GAME_VERSION_IDS", "").replace(
+            "FOREVER_GAME_VERSION_IDS", ""))
+        self.assertIn('forever) game_version_ids="$FOREVER_GAME_VERSION_IDS" ;;', send)
+        self.assertIn('retail) game_version_ids="$RETAIL_GAME_VERSION_IDS" ;;', send)
+        self.assertIn('--argjson versions "$game_version_ids"', send)
+        self.assertIn(
+            "DISPLAY_NAME: ${{ matrix.addon }} (${{ matrix.voice }})"
+            "${{ matrix.flavor == 'forever' && ' Forever' || '' }}"
+            " ${{ needs.plan-release.outputs.release_tag }}",
+            send,
+        )
+
+    def test_forever_flavor_reaches_every_matrix_entry(self):
+        publisher = (
+            REPOSITORY_ROOT / ".github/workflows/publish-to-curseforge.yml"
+        ).read_text(encoding="utf-8")
+        plan_step = step(job(publisher, "plan-release"), "Download assets and plan uploads")
+
+        self.assertIn('"flavor":"unchanged"', plan_step)
+        self.assertIn('{include: [$packages[] + {publish: true}]}', plan_step)
+
+    def test_a_tag_without_forever_settings_publishes_retail_only(self):
+        """Older tags have no Forever section, archives or game version to upload under."""
+        publisher = (
+            REPOSITORY_ROOT / ".github/workflows/publish-to-curseforge.yml"
+        ).read_text(encoding="utf-8")
+        plan = job(publisher, "plan-release")
+        forever_versions = step(plan, "Resolve Forever game versions")
+        plan_step = step(plan, "Download assets and plan uploads")
+
+        self.assertIn("jq -e '.Forever.Interface' release-appsettings.json", forever_versions)
+        self.assertIn(
+            "FOREVER_GAME_VERSIONS: ${{ steps.forever-game-versions.outputs.game_versions }}",
+            plan_step,
+        )
+        self.assertIn('if [ -z "$FOREVER_GAME_VERSIONS" ]; then', plan_step)
+        self.assertIn("selection_args+=(--flavors '[\"retail\"]')", plan_step)
+        self.assertLess(
+            plan_step.index("selection_args+=(--flavors"), plan_step.index("--list-assets")
+        )
 
     def test_non_build_checkouts_exclude_generated_output(self):
         """Jobs that never read output must not materialize half a gigabyte of audio."""

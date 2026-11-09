@@ -62,6 +62,8 @@ jobs:
       changelog: ${{ steps.changelog.outputs.changelog }}
       game_versions: ${{ steps.game-versions.outputs.game_versions }}
       game_version_ids: ${{ steps.game-version-ids.outputs.game_version_ids }}
+      forever_game_versions: ${{ steps.forever-game-versions.outputs.game_versions }}
+      forever_game_version_ids: ${{ steps.forever-game-version-ids.outputs.game_version_ids }}
       packages: ${{ steps.plan.outputs.packages }}
       matrix: ${{ steps.plan.outputs.matrix }}
     steps:
@@ -94,6 +96,27 @@ jobs:
             !/output/
             !/output-forever/
           sparse-checkout-cone-mode: false
+      - name: Resolve selection
+        id: selection
+        env:
+          ADDONS_INPUT: ${{ inputs.addons }}
+          VOICES_INPUT: ${{ inputs.voices }}
+        run: |
+          selection_args=()
+          if [ -n "$VOICES_INPUT" ]; then
+            selection_args+=(--voices "[$VOICES_INPUT]")
+          fi
+          if [ -n "$ADDONS_INPUT" ]; then
+            selection_args+=(--addons "[$ADDONS_INPUT]")
+          fi
+          flavors=$(python scripts/plan_curseforge_release.py --current-tag "$RELEASE_TAG" \
+            --list-flavors "${selection_args[@]}")
+          forever=false
+          if grep -Fxq forever <<< "$flavors"; then
+            forever=true
+          fi
+          echo "Selected flavors: $(paste -sd, - <<< "$flavors")"
+          echo "forever=${forever}" >> "$GITHUB_OUTPUT"
       - name: Resolve game versions
         id: game-versions
         # Very old tags without appsettings used their base tag as the game version.
@@ -117,6 +140,29 @@ jobs:
           ids=$(python3 scripts/curseforge_game_versions.py --versions "$GAME_VERSIONS")
           echo "CurseForge game version IDs: ${ids}"
           echo "game_version_ids=${ids}" >> "$GITHUB_OUTPUT"
+      - name: Resolve Forever game versions
+        id: forever-game-versions
+        if: steps.selection.outputs.forever == 'true'
+        # Tags cut before Forever shipped have no Forever section; they publish retail only.
+        run: |
+          if [ -s release-appsettings.json ] && jq -e '.Forever.Interface' release-appsettings.json > /dev/null; then
+            game_versions=$(python scripts/game_versions.py --settings release-appsettings.json --flavor forever)
+            echo "Publishing Forever for game versions: ${game_versions}"
+          else
+            game_versions=""
+            echo "${RELEASE_TAG} has no Forever settings; Forever files are skipped"
+          fi
+          echo "game_versions=${game_versions}" >> "$GITHUB_OUTPUT"
+      - name: Resolve CurseForge Forever game version IDs
+        id: forever-game-version-ids
+        if: steps.forever-game-versions.outputs.game_versions != ''
+        env:
+          CURSEFORGE_API_TOKEN: ${{ secrets.CURSEFORGE_API_TOKEN }}
+          GAME_VERSIONS: ${{ steps.forever-game-versions.outputs.game_versions }}
+        run: |
+          ids=$(python3 scripts/curseforge_game_versions.py --type forever --versions "$GAME_VERSIONS")
+          echo "CurseForge Forever game version IDs: ${ids}"
+          echo "game_version_ids=${ids}" >> "$GITHUB_OUTPUT"
       - name: Resolve changelog
         id: changelog
         env:
@@ -138,6 +184,7 @@ jobs:
         env:
           ADDONS_INPUT: ${{ inputs.addons }}
           FORCE_PUBLISH: ${{ inputs.force_publish }}
+          FOREVER_GAME_VERSIONS: ${{ steps.forever-game-versions.outputs.game_versions }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VOICES_INPUT: ${{ inputs.voices }}
         run: |
@@ -147,6 +194,9 @@ jobs:
           fi
           if [ -n "$ADDONS_INPUT" ]; then
             selection_args+=(--addons "[$ADDONS_INPUT]")
+          fi
+          if [ -z "$FOREVER_GAME_VERSIONS" ]; then
+            selection_args+=(--flavors '["retail"]')
           fi
 
           mkdir -p current previous
@@ -187,7 +237,7 @@ jobs:
           echo "packages=${packages}" >> "$GITHUB_OUTPUT"
 
           if [ "$count" -eq 0 ]; then
-            matrix='{"include":[{"publish":false,"voice":"unchanged","addon":"unchanged","project_id":0,"relations":"","archive":""}]}'
+            matrix='{"include":[{"publish":false,"voice":"unchanged","addon":"unchanged","flavor":"unchanged","project_id":0,"relations":"","archive":""}]}'
             echo "No package contents changed; CurseForge uploads are skipped" >> "$GITHUB_STEP_SUMMARY"
           else
             matrix=$(jq -cn --argjson packages "$packages" \
@@ -195,7 +245,7 @@ jobs:
             {
               echo "### CurseForge uploads"
               echo
-              jq -r '.[] | "- \(.addon) (\(.voice))"' <<< "$packages"
+              jq -r '.[] | "- \(.addon) (\(.voice))\(if .flavor == "forever" then " Forever" else "" end)"' <<< "$packages"
             } >> "$GITHUB_STEP_SUMMARY"
           fi
           echo "matrix=${matrix}" >> "$GITHUB_OUTPUT"
@@ -210,7 +260,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    name: Publish ${{ matrix.addon }} (${{ matrix.voice }}) (Project ID ${{ matrix.project_id }})
+    name: Publish ${{ matrix.addon }} (${{ matrix.voice }}) ${{ matrix.flavor }} (Project ID ${{ matrix.project_id }})
     steps:
       - name: Download release asset
         if: matrix.publish == true
@@ -235,12 +285,25 @@ jobs:
           ARCHIVE: ${{ matrix.archive }}
           CHANGELOG: ${{ needs.plan-release.outputs.changelog }}
           CURSEFORGE_API_TOKEN: ${{ secrets.CURSEFORGE_API_TOKEN }}
-          DISPLAY_NAME: ${{ matrix.addon }} (${{ matrix.voice }}) ${{ needs.plan-release.outputs.release_tag }}
-          GAME_VERSION_IDS: ${{ needs.plan-release.outputs.game_version_ids }}
+          DISPLAY_NAME: ${{ matrix.addon }} (${{ matrix.voice }})${{ matrix.flavor == 'forever' && ' Forever' || '' }} ${{ needs.plan-release.outputs.release_tag }}
+          FLAVOR: ${{ matrix.flavor }}
+          FOREVER_GAME_VERSION_IDS: ${{ needs.plan-release.outputs.forever_game_version_ids }}
           PROJECT_ID: ${{ matrix.project_id }}
           RELATIONS: ${{ matrix.relations }}
+          RETAIL_GAME_VERSION_IDS: ${{ needs.plan-release.outputs.game_version_ids }}
         run: |
-          jq -n --arg name "$DISPLAY_NAME" --argjson versions "$GAME_VERSION_IDS" \
+          # Each flavor takes only its own IDs: a retail fallback would list a Forever file for
+          # the wrong client.
+          case "$FLAVOR" in
+            retail) game_version_ids="$RETAIL_GAME_VERSION_IDS" ;;
+            forever) game_version_ids="$FOREVER_GAME_VERSION_IDS" ;;
+            *) echo "Unknown flavor: ${FLAVOR}" >&2; exit 1 ;;
+          esac
+          if [ -z "$game_version_ids" ]; then
+            echo "Refusing to upload with no ${FLAVOR} game version" >&2
+            exit 1
+          fi
+          jq -n --arg name "$DISPLAY_NAME" --argjson versions "$game_version_ids" \
             --arg changelog "$CHANGELOG" --arg relations "$RELATIONS" '
             ($relations | split(",") | map(select(length > 0) | split(":") | {slug: .[0], type: .[1]})) as $projects
             | {displayName: $name, gameVersions: $versions, releaseType: "release",

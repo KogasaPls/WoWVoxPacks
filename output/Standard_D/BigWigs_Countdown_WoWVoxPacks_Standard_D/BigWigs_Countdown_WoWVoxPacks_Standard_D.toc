@@ -1,4 +1,5 @@
 ## Interface: 120105
+## AllowLoadGameType: standard
 
 ## Title: BigWigs |cffff7f3f+|r|cffffffffCountdown: WoWVoxPacks (Standard_D)|r
 ## Version: 12.1.5

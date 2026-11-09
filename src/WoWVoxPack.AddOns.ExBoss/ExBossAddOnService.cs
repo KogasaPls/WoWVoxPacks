@@ -11,12 +11,15 @@ public sealed class ExBossAddOnService(IOptionsSnapshot<AddOnSettings> addOnOpti
     private static readonly Lazy<List<SoundFile>> JsonSoundFiles = new(() =>
         AddOnBuilder.LoadSoundFileJson(Path.Combine(AppContext.BaseDirectory, "Labels.json")));
 
+    public string AddOnId => "ExBoss";
+
     private AddOnSettings AddOnSettings { get; } = addOnOptions.Get("ExBoss");
 
     public Task<AddOnDraft> BuildAddOnAsync(string outputDirectoryBase, TtsSettings ttsSettings,
-        CancellationToken cancellationToken = default)
+        GameFlavor flavor, CancellationToken cancellationToken = default)
     {
-        AddOnDraft addOn = new AddOnBuilder(AddOnSettings, ttsSettings, "ExBoss")
+        AddOnDraft addOn = new AddOnBuilder(AddOnSettings, ttsSettings, AddOnId)
+            .ForFlavor(flavor)
             .WithTitle($"ExBoss WoWVoxPacks {ttsSettings.Voice}")
             .WithDisplayTitle($"ExBoss WoWVoxPacks ({ttsSettings.Voice})")
             .AddSoundFiles(JsonSoundFiles.Value, overwrite: true)

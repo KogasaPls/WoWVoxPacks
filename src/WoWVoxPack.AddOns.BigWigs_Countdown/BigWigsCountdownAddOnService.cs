@@ -10,12 +10,15 @@ public sealed class BigWigsCountdownAddOnService(IOptionsSnapshot<AddOnSettings>
 {
     private static readonly Lazy<List<SoundFile>> CountdownSoundFiles = new(GetCountdownSoundFiles);
 
+    public string AddOnId => "BigWigs_Countdown";
+
     private AddOnSettings AddOnSettings { get; } = addOnOptions.Get("BigWigs_Countdown");
 
     public Task<AddOnDraft> BuildAddOnAsync(string outputDirectoryBase, TtsSettings ttsSettings,
-        CancellationToken cancellationToken = default)
+        GameFlavor flavor, CancellationToken cancellationToken = default)
     {
-        AddOnDraft addOn = new AddOnBuilder(AddOnSettings, ttsSettings, "BigWigs_Countdown")
+        AddOnDraft addOn = new AddOnBuilder(AddOnSettings, ttsSettings, AddOnId)
+            .ForFlavor(flavor)
             .WithTitle($"BigWigs Countdown WoWVoxPacks {ttsSettings.Voice}")
             .WithDisplayTitle($"BigWigs |cffff7f3f+|r|cffffffffCountdown: WoWVoxPacks ({ttsSettings.Voice})|r")
             .AddSoundFiles(CountdownSoundFiles.Value)

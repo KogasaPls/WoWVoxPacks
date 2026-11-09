@@ -17,16 +17,6 @@ using WoWVoxPack.Builder;
 using WoWVoxPack.Core.Builder;
 using WoWVoxPack.TTS;
 
-static string ResolveOutputDirectoryBase()
-{
-    string solutionFile =
-        Assembly.GetExecutingAssembly().GetCustomAttribute<SolutionFileAttribute>()?.SolutionFile ??
-        throw new Exception("Solution file not found.");
-    return Path.Combine(
-        Path.GetDirectoryName(solutionFile) ?? throw new Exception("Solution file not found."),
-        "output");
-}
-
 IHostBuilder hostBuilder = Host.CreateDefaultBuilder(args)
     .UseConsoleLifetime()
     .ConfigureServices((_, services) =>
@@ -43,24 +33,27 @@ IHostBuilder hostBuilder = Host.CreateDefaultBuilder(args)
         services.AddSingleton(PronunciationCatalog.Load(
             Path.Combine(solutionDirectory, "pronunciations.json")));
         services.AddSingleton<PronunciationResolver>();
-        services.AddSingleton(_ => new CalloutsVocabularyProvider(
+        string overridesPath = Path.Combine(AppContext.BaseDirectory, "CalloutPronunciations.json");
+        string[] VocabularyPaths(IEnumerable<string> fileNames) =>
+            [.. fileNames.Select(fileName => Path.Combine(solutionDirectory, fileName))];
+        services.AddKeyedSingleton(GameFlavor.Retail.Name, (_, _) => new CalloutsVocabularyProvider(
             Path.Combine(AppContext.BaseDirectory, "Callouts_Sounds.json"),
-            Path.Combine(AppContext.BaseDirectory, "CalloutPronunciations.json"),
-            [
-                .. CalloutVocabulary.VocabularyFileNames
-                    .Select(fileName => Path.Combine(solutionDirectory, fileName)),
-            ],
+            overridesPath,
+            VocabularyPaths(CalloutVocabulary.VocabularyFileNames),
             Path.Combine(AppContext.BaseDirectory, "RetiredCallouts.json")));
-        services.AddSingleton(sp =>
-        {
-            return new NorthernSkyRaidToolsVocabularyProvider(
-                [
-                    .. NorthernSkyRaidToolsVocabulary.VocabularyFileNames
-                        .Select(fileName => Path.Combine(solutionDirectory, fileName)),
-                ],
-                Path.Combine(AppContext.BaseDirectory, "CalloutPronunciations.json"),
-                sp.GetRequiredService<CalloutsVocabularyProvider>());
-        });
+        services.AddKeyedSingleton("Forever", (_, _) => new CalloutsVocabularyProvider(
+            null,
+            overridesPath,
+            VocabularyPaths(CalloutVocabulary.ForeverVocabularyFileNames),
+            null));
+        services.AddKeyedSingleton(GameFlavor.Retail.Name, (sp, key) => new NorthernSkyRaidToolsVocabularyProvider(
+            VocabularyPaths(NorthernSkyRaidToolsVocabulary.VocabularyFileNames),
+            overridesPath,
+            sp.GetRequiredKeyedService<CalloutsVocabularyProvider>(key)));
+        services.AddKeyedSingleton("Forever", (sp, key) => new NorthernSkyRaidToolsVocabularyProvider(
+            VocabularyPaths(NorthernSkyRaidToolsVocabulary.ForeverVocabularyFileNames),
+            overridesPath,
+            sp.GetRequiredKeyedService<CalloutsVocabularyProvider>(key)));
         services.TryAddEnumerable(ServiceDescriptor.Singleton<IAddOnService, BigWigsVoiceAddOnService>());
         services.TryAddEnumerable(ServiceDescriptor.Singleton<IAddOnService, BigWigsCountdownAddOnService>());
         services.TryAddEnumerable(ServiceDescriptor.Singleton<IAddOnService, CalloutsMediaAddOnService>());
@@ -68,6 +61,7 @@ IHostBuilder hostBuilder = Host.CreateDefaultBuilder(args)
             ServiceDescriptor.Singleton<IAddOnService, NorthernSkyRaidToolsAddOnService>());
         services.TryAddEnumerable(ServiceDescriptor.Singleton<IAddOnService, ExBossAddOnService>());
         services.AddOptionsWithValidateOnStart<BuildMatrix>().BindConfiguration("Matrix");
+        services.AddOptionsWithValidateOnStart<ForeverSettings>().BindConfiguration("Forever");
 
         // Each addon binds its own AddOn:{Name} section and then the AddOn root. The binder
         // appends to a List<T>, so Interfaces is root-only: a per-addon list would be
@@ -92,7 +86,8 @@ IHostBuilder hostBuilder = Host.CreateDefaultBuilder(args)
             sp.GetRequiredService<IOptions<BuildMatrix>>(),
             sp.GetRequiredService<ISoundFileService>(),
             sp.GetRequiredService<PronunciationResolver>(),
-            ResolveOutputDirectoryBase()));
+            solutionDirectory,
+            [GameFlavor.Retail, GameFlavor.Forever(sp.GetRequiredService<IOptions<ForeverSettings>>().Value)]));
         services.AddHostedService<Worker>();
     }).ConfigureLogging((_, logging) =>
     {

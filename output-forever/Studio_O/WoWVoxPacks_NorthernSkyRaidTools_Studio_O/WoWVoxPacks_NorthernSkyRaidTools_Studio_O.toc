@@ -1,0 +1,12 @@
+## Interface: 16001
+## AllowLoadGameType: camelot
+
+## Title: WoWVoxPacks |cffff7f3fNorthern Sky Raid Tools|r|cffffffff (Studio_O)|r
+## Version: 12.1.5
+## Notes: A Northern Sky Raid Tools sound pack for one WoWVoxPacks voice.
+## Author: KogasaPls
+
+## OptionalDeps: LibSharedMedia-3.0, NorthernSkyRaidTools
+## X-License: Apache-2.0
+
+Core.lua

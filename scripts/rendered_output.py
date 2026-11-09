@@ -8,7 +8,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-OUTPUT = "output"
+OUTPUTS = ("output", "output-forever")
 TEMPORARY_PREFIX = ".wvp-"
 
 
@@ -17,8 +17,9 @@ def git(*arguments: str, check: bool = True) -> subprocess.CompletedProcess:
 
 
 def inside_output(path: Path) -> Path:
-    if Path(OUTPUT).resolve() not in path.resolve().parents:
-        raise ValueError(f"{path} is outside {OUTPUT}/")
+    parents = path.resolve().parents
+    if not any(Path(root).resolve() in parents for root in OUTPUTS):
+        raise ValueError(f"{path} is outside {' and '.join(root + '/' for root in OUTPUTS)}")
     return path
 
 
@@ -41,7 +42,7 @@ def recorded_recordings(restored: list[Path]) -> dict[Path, set[str]]:
 
 def changed_paths() -> tuple[list[str], list[str]]:
     """The output files the build wrote or created, and the ones it deleted."""
-    status = git("status", "--porcelain=v1", "-z", "--untracked-files=all", "--", OUTPUT).stdout
+    status = git("status", "--porcelain=v1", "-z", "--untracked-files=all", "--", *OUTPUTS).stdout
     written, deleted = [], []
     for entry in filter(None, status.split("\0")):
         code, path = entry[:2], entry[3:]
@@ -69,7 +70,7 @@ def restore(source: Path) -> None:
     if git("cat-file", "-e", f"{base}^{{commit}}", check=False).returncode != 0:
         print(f"Not restoring: {base} is not in this checkout")
         return
-    if git("diff", "--quiet", base, "HEAD", "--", OUTPUT, check=False).returncode != 0:
+    if git("diff", "--quiet", base, "HEAD", "--", *OUTPUTS, check=False).returncode != 0:
         print(f"Not restoring: output changed on main after {base}")
         return
 

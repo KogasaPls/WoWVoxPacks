@@ -9,6 +9,7 @@ from pathlib import Path
 
 from commit_messages import parse_subject
 
+OUTPUT_ROOTS = ("output", "output-forever")
 ADDONS = {
     "bigwigs_voice": ("BigWigs Voice", "BigWigs_Voice_WoWVoxPacks"),
     "bigwigs_countdown": ("BigWigs Countdown", "BigWigs_Countdown_WoWVoxPacks"),
@@ -57,7 +58,7 @@ def packaged_addons(paths: list[str]) -> set[str]:
     addons = set()
     for path in paths:
         parts = Path(path).parts
-        if len(parts) < 4 or parts[0] != "output":
+        if len(parts) < 4 or parts[0] not in OUTPUT_ROOTS:
             continue
         if parts[-1].lower().endswith(".wav") or parts[-1].startswith(".wvp-"):
             continue
@@ -71,8 +72,8 @@ def packaged_addons(paths: list[str]) -> set[str]:
 
 
 def changed_addons(previous: str | None, ref: str, repository: Path | None) -> set[str]:
-    paths = (git("diff", "--name-only", f"{previous}..{ref}", "--", "output", repository=repository)
-             if previous else git("ls-tree", "-r", "--name-only", ref, "--", "output", repository=repository))
+    paths = (git("diff", "--name-only", f"{previous}..{ref}", "--", *OUTPUT_ROOTS, repository=repository)
+             if previous else git("ls-tree", "-r", "--name-only", ref, "--", *OUTPUT_ROOTS, repository=repository))
     return packaged_addons(paths.splitlines())
 
 
@@ -87,7 +88,7 @@ def release_changes(previous: str | None, ref: str, repository: Path | None,
         if commit is None or commit.kind not in {"feat", "fix", "perf"}:
             continue
         paths = git("diff-tree", "--root", "--no-commit-id", "--name-only", "-r", sha,
-                    "--", "output", repository=repository)
+                    "--", *OUTPUT_ROOTS, repository=repository)
         affected = packaged_addons(paths.splitlines()) & shipped
         if commit.scope in ADDONS:
             affected &= {commit.scope}
@@ -104,9 +105,9 @@ def release_changes(previous: str | None, ref: str, repository: Path | None,
 def registered_callouts(ref: str | None, repository: Path | None, scope: str) -> dict[str, str]:
     """Distributed names, keyed without case; None reads the builder's working tree."""
     keys = {}
-    paths = (git("ls-tree", "-r", "--name-only", ref, "--", "output", repository=repository)
+    paths = (git("ls-tree", "-r", "--name-only", ref, "--", *OUTPUT_ROOTS, repository=repository)
              if ref else git("ls-files", "--cached", "--others", "--exclude-standard",
-                             "--", "output", repository=repository))
+                             "--", *OUTPUT_ROOTS, repository=repository))
     for path in paths.splitlines():
         if not path.endswith("/Core.lua") or scope not in packaged_addons([path]):
             continue

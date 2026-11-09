@@ -13,6 +13,7 @@ public sealed partial class AddOn
     private readonly IReadOnlyDictionary<string, Func<AddOn, string>> _fileFactories;
 
     internal AddOn(
+        string addOnId,
         string outputDirectoryBase,
         string title,
         string displayTitle,
@@ -23,9 +24,11 @@ public sealed partial class AddOn
         IReadOnlyCollection<Note> additionalNotes,
         IReadOnlyDictionary<string, string> additionalProperties,
         IReadOnlyCollection<string>? interfaces,
+        string? allowLoadGameType,
         IReadOnlyDictionary<string, SoundFile> soundFiles,
         IReadOnlyDictionary<string, Func<AddOn, string>> fileFactories)
     {
+        AddOnId = addOnId;
         _outputDirectoryBase = outputDirectoryBase;
         Title = Guard.Against.NullOrWhiteSpace(title);
         DisplayTitle = displayTitle;
@@ -41,19 +44,23 @@ public sealed partial class AddOn
         Interfaces = interfaces is { Count: > 0 }
             ? NormalizeInterfaces(interfaces)
             : [ToInterfaceNumber(Version)];
+        AllowLoadGameType = allowLoadGameType;
         _soundFiles = soundFiles;
         _fileFactories = fileFactories;
     }
 
+    public string AddOnId { get; }
     public string Title { get; }
     public string DisplayTitle { get; }
     public string Version { get; }
     public string Author { get; }
     public TtsSettings TtsSettings { get; }
+    public VoiceName? Voice => TtsSettings.Voice;
     public Note? PrimaryNote { get; }
     public IReadOnlyCollection<Note> AdditionalNotes { get; }
     public IReadOnlyDictionary<string, string> AdditionalProperties { get; }
     public IReadOnlyCollection<string> Interfaces { get; }
+    public string? AllowLoadGameType { get; }
 
     public IEnumerable<SoundFile> SoundFiles => _soundFiles.Values;
 

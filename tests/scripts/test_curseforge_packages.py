@@ -29,6 +29,33 @@ class CurseForgePackageTests(unittest.TestCase):
             catalog.relations("ExBoss"),
         )
 
+    def test_production_catalog_ships_forever_files_for_three_addons(self):
+        catalog = curseforge_packages.load()
+
+        self.assertEqual(
+            {addon: ("retail", "forever")
+             for addon in ("BigWigs_Countdown", "Callouts", "NorthernSkyRaidTools")}
+            | {addon: ("retail",) for addon in ("BigWigs_Voice", "ExBoss")},
+            {addon: catalog.flavors(addon) for addon in catalog.addon_names},
+        )
+
+    def test_flavors_default_to_retail(self):
+        self.assertEqual(("retail",), load_temporary(valid_catalog()).flavors("Addon"))
+
+    def test_unknown_flavor_is_rejected(self):
+        data = valid_catalog()
+        data["addons"][0]["flavors"] = ["retail", "classic"]
+
+        with self.assertRaisesRegex(ValueError, "Addon.*unsupported flavor.*classic"):
+            load_temporary(data)
+
+    def test_empty_or_duplicate_flavors_are_rejected(self):
+        for flavors in ([], ["forever", "forever"], "forever"):
+            data = valid_catalog()
+            data["addons"][0]["flavors"] = flavors
+            with self.subTest(flavors=flavors), self.assertRaisesRegex(ValueError, "Addon flavors"):
+                load_temporary(data)
+
     def test_duplicate_voice_is_rejected(self):
         data = valid_catalog()
         data["voices"].append(data["voices"][0])

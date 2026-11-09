@@ -19,6 +19,10 @@ Any addon whose sound dropdown reads from LibSharedMedia, including:
 
 Raid cooldown spell names (`Tranquility`, `Rallying Cry`, `Anti-Magic Zone`), some common abbreviations (`Tranq`, `Rally`, `AMZ`, `BoP`, `Lust`, `PI`), and some common raid callouts (`Soak Skull`, `Frontal`, `Interrupt`, `Spread`).
 
+## World of Warcraft: Forever
+
+A separate World of Warcraft: Forever file is available from this project. It carries only sounds that can play on Forever, so it leaves out the retail raid cooldown names and keeps the generic mechanic callouts.
+
 ## Requirements
 
 LibSharedMedia-3.0, which comes bundled with almost every raid addon, and something to play the sounds from.

@@ -11,6 +11,10 @@ No configuration is required, just install and load the addon.
 
 Only one BigWigs voice pack can be enabled at once, BigWigs_Voice included.
 
+## World of Warcraft: Forever
+
+There is no World of Warcraft: Forever edition yet, because BigWigs has no Forever boss modules.
+
 ## Requirements
 
 BigWigs.

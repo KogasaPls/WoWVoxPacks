@@ -45,6 +45,7 @@
     {
       "name": "BigWigs_Countdown",
       "slug": "bigwigs-countdown",
+      "flavors": ["retail", "forever"],
       "relations": [
         { "slug": "bigwigs", "type": "requiredDependency" }
       ]
@@ -52,6 +53,7 @@
     {
       "name": "Callouts",
       "slug": "callouts",
+      "flavors": ["retail", "forever"],
       "relations": [
         { "slug": "libsharedmedia-3-0", "type": "optionalDependency" }
       ]
@@ -67,6 +69,7 @@
     {
       "name": "NorthernSkyRaidTools",
       "slug": "northernskyraidtools",
+      "flavors": ["retail", "forever"],
       "relations": [
         { "slug": "northern-sky-raid-tools", "type": "optionalDependency" },
         { "slug": "libsharedmedia-3-0", "type": "optionalDependency" }

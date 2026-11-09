@@ -42,4 +42,6 @@ public class AddOnSettings
     /// <see cref="AddOn"/> deduplicates and validates what it is handed.
     /// </summary>
     public List<string>? Interfaces { get; set; }
+
+    public string? AllowLoadGameType { get; set; }
 }

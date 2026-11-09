@@ -13,6 +13,12 @@ public static class AddOnTocFile
     {
         StringBuilder toc = new();
         toc.Append($"## Interface: {string.Join(", ", addOn.Interfaces)}\n");
+
+        if (addOn.AllowLoadGameType is not null)
+        {
+            toc.Append($"## AllowLoadGameType: {addOn.AllowLoadGameType}\n");
+        }
+
         toc.Append('\n');
         toc.Append($"## Title: {addOn.DisplayTitle}\n");
         toc.Append($"## Version: {addOn.Version}\n");

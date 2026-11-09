@@ -193,6 +193,7 @@ jobs:
             --vocabulary nsrt-vocabulary.new \
             --vocabulary nsrt-alert-vocabulary.new \
             --vocabulary nsrt-extra-vocabulary.txt \
+            --vocabulary nsrt-note-vocabulary.txt \
             --composed nsrt-composed-sites.txt
       - name: Compare against the tracked vocabulary
         id: compare-vocabulary

@@ -149,7 +149,12 @@ class ReleaseWorkflowTests(unittest.TestCase):
         ).read_text(encoding="utf-8")
         names = re.findall(r'"(nsrt-[\w-]+\.txt)"', source)
         self.assertEqual(
-            ["nsrt-vocabulary.txt", "nsrt-alert-vocabulary.txt", "nsrt-extra-vocabulary.txt"],
+            [
+                "nsrt-vocabulary.txt",
+                "nsrt-alert-vocabulary.txt",
+                "nsrt-extra-vocabulary.txt",
+                "nsrt-note-vocabulary.txt",
+            ],
             names,
         )
 
@@ -160,11 +165,13 @@ class ReleaseWorkflowTests(unittest.TestCase):
         add_paths = updater.split("add-paths: |", 1)[1].split("sign-commits:", 1)[0]
         for name in names:
             self.assertTrue((REPOSITORY_ROOT / name).is_file(), name)
-        for generated in names[:-1]:
+        for generated in names[:-2]:
             new_name = generated.replace(".txt", ".new")
             self.assertIn(f"mv {new_name} {generated}", updater)
             self.assertIn(generated, add_paths)
-        self.assertNotIn(names[-1], add_paths)
+        for handwritten in names[-2:]:
+            self.assertNotIn(handwritten, add_paths)
+            self.assertIn(f"--vocabulary {handwritten}", updater)
 
     def test_a_new_live_build_reaches_the_update_pull_request(self):
         """The settings and the TOCs must land together, or every later run rebuilds for nothing.

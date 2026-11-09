@@ -1,0 +1,40 @@
+# Hand-written raid-note phrases that Northern Sky Raid Tools reminders speak verbatim
+# (Preposition at {star}). They hold on any game flavor and reach the pack only through
+# these hand-written keys.
+Go to Back Left
+Go to Back Right
+Go to Flex Spot
+Go to Front Left
+Go to Front Right
+Preposition at {circle}
+Preposition at {cross}
+Preposition at {diamond}
+Preposition at {moon}
+Preposition at {rt1}
+Preposition at {rt2}
+Preposition at {rt3}
+Preposition at {rt4}
+Preposition at {rt5}
+Preposition at {rt6}
+Preposition at {rt7}
+Preposition at {rt8}
+Preposition at {skull}
+Preposition at {square}
+Preposition at {star}
+Preposition at {triangle}
+Soak Back Left
+Soak Back Right
+Soak Cross
+Soak Front Left
+Soak Front Right
+Soak Orange
+Soak Skull
+Soak Star
+Soak {rt1}
+Soak {rt2}
+Soak {rt3}
+Soak {rt4}
+Soak {rt5}
+Soak {rt6}
+Soak {rt7}
+Soak {rt8}

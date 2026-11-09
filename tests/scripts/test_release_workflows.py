@@ -798,6 +798,14 @@ class HardeningTests(unittest.TestCase):
             self.assertIn("select(.title == env.TITLE)", close, name)
             self.assertIn('gh issue close "$number"', close, name)
 
+    def test_check_failure_issues_are_found_by_exact_title(self):
+        updater = self.read("update.yml")
+        for name in ("check-nsrt-vocabulary", "check-live-build", "check-forever-live-build"):
+            file = step(job(updater, name), "File an issue when this check fails")
+            self.assertIn('number=$(TITLE="$title" gh issue list', file, name)
+            self.assertIn("--json number,title", file, name)
+            self.assertIn("select(.title == env.TITLE)", file, name)
+
     def test_upstream_file_names_cannot_end_the_vocabulary_outputs(self):
         updater = self.read("update.yml")
 

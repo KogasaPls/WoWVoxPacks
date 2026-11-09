@@ -192,7 +192,7 @@ class ReleaseWorkflowTests(unittest.TestCase):
         follow_step = pull_request_job.split("- name: Follow the live build", 1)[1].split(
             "\n      - ", 1
         )[0]
-        self.assertIn("if: ${{ needs.check-live-build.outputs.needs_update == 'true' }}", follow_step)
+        self.assertIn("if: ${{ needs.check-live-build.outputs.game_version != '' }}", follow_step)
         self.assertIn("LIVE_BUILD: ${{ needs.check-live-build.outputs.build }}", follow_step)
         self.assertIn('--settings appsettings.json --follow "$LIVE_BUILD"', follow_step)
         self.assertLess(
@@ -202,6 +202,56 @@ class ReleaseWorkflowTests(unittest.TestCase):
 
         add_paths = pull_request_job.split("add-paths: |", 1)[1].split("sign-commits:", 1)[0]
         self.assertIn("appsettings.json", add_paths)
+
+    def test_check_live_build_follows_forever(self):
+        check = job((REPOSITORY_ROOT / ".github/workflows/update.yml").read_text(encoding="utf-8"),
+                    "check-live-build")
+        follow = step(check, "Compare the live build against the declared interfaces")
+
+        self.assertIn("https://us.version.battle.net/v2/products/wowf/versions", follow)
+        self.assertIn(
+            'forever_game_version=$(python3 scripts/game_versions.py --settings appsettings.json'
+            ' --follow-forever "${forever_build}")',
+            follow,
+        )
+        self.assertIn(
+            'python3 scripts/curseforge_game_versions.py --type forever --versions "${forever_game_version}"'
+            " || forever_listed=$?",
+            follow,
+        )
+        forever_wait = follow.split('if [ "${forever_listed}" -eq 3 ]; then', 1)[1].split("elif", 1)[0]
+        self.assertIn('forever_game_version=""', forever_wait)
+        self.assertNotIn('game_version=""', forever_wait.replace('forever_game_version=""', ""))
+        self.assertIn('elif [ "${forever_listed}" -ne 0 ]; then\n              exit "${forever_listed}"', follow)
+        self.assertLess(follow.index("forever_listed=$?"),
+                        follow.index('echo "forever_game_version=${forever_game_version}"'))
+        outputs = follow.split("          {\n", 1)[1].split('          } >> "$GITHUB_OUTPUT"', 1)[0]
+        self.assertIn('echo "forever_build=${forever_build}"', outputs)
+        self.assertIn('echo "forever_game_version=${forever_game_version}"', outputs)
+        self.assertIn('if [ -n "${game_version}" ] || [ -n "${forever_game_version}" ]; then', follow)
+
+        self.assertIn("forever_build: ${{ steps.follow.outputs.forever_build }}", check)
+        self.assertIn("forever_game_version: ${{ steps.follow.outputs.forever_game_version }}", check)
+        self.assertIn("needs_update: ${{ steps.follow.outputs.needs_update }}", check)
+
+    def test_create_pull_request_follows_forever(self):
+        updater = (REPOSITORY_ROOT / ".github/workflows/update.yml").read_text(encoding="utf-8")
+        pull_request_job = job(updater, "create-pull-request")
+        follow = step(pull_request_job, "Follow the Forever live build")
+
+        self.assertIn("if: ${{ needs.check-live-build.outputs.forever_game_version != '' }}", follow)
+        self.assertIn("FOREVER_LIVE_BUILD: ${{ needs.check-live-build.outputs.forever_build }}", follow)
+        self.assertIn('--settings appsettings.json --follow-forever "$FOREVER_LIVE_BUILD"', follow)
+        self.assertLess(pull_request_job.index("- name: Follow the Forever live build"),
+                        pull_request_job.index("- name: Run addon builder"))
+
+        describe = step(pull_request_job, "Describe the rendered addon changes")
+        self.assertIn("FOREVER_VERSION: ${{ needs.check-live-build.outputs.forever_game_version }}", describe)
+        self.assertIn('--forever-version "$FOREVER_VERSION"', describe)
+        self.assertIn(
+            "- Forever game version: ${{ needs.check-live-build.outputs.forever_game_version || 'unchanged' }}",
+            pull_request_job,
+        )
 
     def test_the_updater_never_pays_twice_for_the_same_audio(self):
         """Each run renders on a fresh checkout of main, so anything not merged is rendered again.

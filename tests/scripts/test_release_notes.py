@@ -234,6 +234,30 @@ class GitTests(unittest.TestCase):
             self.update_subject("--bigwigs-version", "v12.1.0.3", "--game-version", "12.1.5"),
         )
 
+    def test_subject_names_forever_version(self):
+        self.commit("fix(packs): support WoW Forever 1.60.1", **{
+            "output-forever/Test/WoWVoxPacks_Callouts_Test/pack.toc": "## Interface: 16001\n",
+        })
+        (self.directory / "output-forever/Test/WoWVoxPacks_Callouts_Test/pack.toc").write_text("## Interface: 16002\n")
+
+        self.assertEqual(
+            "fix(callouts): support WoW Forever 1.60.2",
+            self.update_subject("--forever-version", "1.60.2"),
+        )
+
+    def test_subject_names_both_game_versions(self):
+        self.commit("fix(packs): support WoW 12.1.0", **{
+            "output/Test/WoWVoxPacks_Callouts_Test/pack.toc": "## Interface: 120100\n",
+            "output-forever/Test/WoWVoxPacks_Callouts_Test/pack.toc": "## Interface: 16001\n",
+        })
+        (self.directory / "output/Test/WoWVoxPacks_Callouts_Test/pack.toc").write_text("## Interface: 120105\n")
+        (self.directory / "output-forever/Test/WoWVoxPacks_Callouts_Test/pack.toc").write_text("## Interface: 16002\n")
+
+        self.assertEqual(
+            "fix(callouts): support WoW 12.1.5 and WoW Forever 1.60.2",
+            self.update_subject("--game-version", "12.1.5", "--forever-version", "1.60.2"),
+        )
+
     def test_updater_does_not_label_a_source_only_update_as_a_shipped_feature(self):
         self.commit("chore(nsrt): track Ula'tek egg deadline phrase", **{
             "nsrt__extra-vocabulary.txt": "Egg Deadline\n",

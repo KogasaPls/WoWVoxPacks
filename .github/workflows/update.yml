@@ -279,6 +279,8 @@ jobs:
     outputs:
       build: ${{ steps.follow.outputs.build }}
       game_version: ${{ steps.follow.outputs.game_version }}
+      forever_build: ${{ steps.follow.outputs.forever_build }}
+      forever_game_version: ${{ steps.follow.outputs.forever_game_version }}
       needs_update: ${{ steps.follow.outputs.needs_update }}
     steps:
       - uses: actions/checkout@v7
@@ -311,13 +313,32 @@ jobs:
               exit "${listed}"
             fi
           fi
-          echo "build=${build}" >> "$GITHUB_OUTPUT"
-          echo "game_version=${game_version}" >> "$GITHUB_OUTPUT"
-          if [ -n "${game_version}" ]; then
-            echo "Live moved to ${game_version}"
+          curl -sf --retry 3 https://us.version.battle.net/v2/products/wowf/versions -o forever-versions.txt
+          forever_build=$(python3 scripts/game_versions.py --live-build forever-versions.txt)
+          echo "Forever live build: ${forever_build}"
+          forever_game_version=$(python3 scripts/game_versions.py --settings appsettings.json --follow-forever "${forever_build}")
+          # The release refuses a Forever version CurseForge does not list, so this one waits too.
+          if [ -n "${forever_game_version}" ]; then
+            forever_listed=0
+            python3 scripts/curseforge_game_versions.py --type forever --versions "${forever_game_version}" || forever_listed=$?
+            if [ "${forever_listed}" -eq 3 ]; then
+              echo "::warning::Forever live is ${forever_game_version}, which CurseForge does not list yet; a later run follows it"
+              forever_game_version=""
+            elif [ "${forever_listed}" -ne 0 ]; then
+              exit "${forever_listed}"
+            fi
+          fi
+          {
+            echo "build=${build}"
+            echo "game_version=${game_version}"
+            echo "forever_build=${forever_build}"
+            echo "forever_game_version=${forever_game_version}"
+          } >> "$GITHUB_OUTPUT"
+          if [ -n "${game_version}" ] || [ -n "${forever_game_version}" ]; then
+            echo "Live moved: retail ${game_version:-unchanged}, Forever ${forever_game_version:-unchanged}"
             echo "needs_update=true" >> "$GITHUB_OUTPUT"
           else
-            echo "The declared interfaces cover the live build"
+            echo "The declared interfaces cover the live builds"
             echo "needs_update=false" >> "$GITHUB_OUTPUT"
           fi
       - name: File an issue when this check fails
@@ -391,11 +412,18 @@ jobs:
           mv nsrt-vocabulary.new nsrt-vocabulary.txt
           mv nsrt-alert-vocabulary.new nsrt-alert-vocabulary.txt
       - name: Follow the live build
-        if: ${{ needs.check-live-build.outputs.needs_update == 'true' }}
+        # Each flavor moves only when its own version is listed; needs_update covers either.
+        if: ${{ needs.check-live-build.outputs.game_version != '' }}
         env:
           LIVE_BUILD: ${{ needs.check-live-build.outputs.build }}
         run: |
           python3 scripts/game_versions.py --settings appsettings.json --follow "$LIVE_BUILD"
+      - name: Follow the Forever live build
+        if: ${{ needs.check-live-build.outputs.forever_game_version != '' }}
+        env:
+          FOREVER_LIVE_BUILD: ${{ needs.check-live-build.outputs.forever_build }}
+        run: |
+          python3 scripts/game_versions.py --settings appsettings.json --follow-forever "$FOREVER_LIVE_BUILD"
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v3'
@@ -454,8 +482,10 @@ jobs:
         env:
           BIGWIGS_VERSION: ${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version }}
           GAME_VERSION: ${{ needs.check-live-build.outputs.game_version }}
+          FOREVER_VERSION: ${{ needs.check-live-build.outputs.forever_game_version }}
         run: |
-          subject=$(python3 scripts/update_commit.py --bigwigs-version "$BIGWIGS_VERSION" --game-version "$GAME_VERSION")
+          subject=$(python3 scripts/update_commit.py --bigwigs-version "$BIGWIGS_VERSION" --game-version "$GAME_VERSION" \
+            --forever-version "$FOREVER_VERSION")
           echo "subject=$subject" >> "$GITHUB_OUTPUT"
       - name: Create a pull request
         uses: peter-evans/create-pull-request@v8
@@ -469,6 +499,7 @@ jobs:
 
             - BigWigs_Voice version: ${{ needs.check-bigwigs-voice-version.outputs.bigwigs_version }}
             - Game version: ${{ needs.check-live-build.outputs.game_version || 'unchanged' }}
+            - Forever game version: ${{ needs.check-live-build.outputs.forever_game_version || 'unchanged' }}
 
             New callouts:
             ```

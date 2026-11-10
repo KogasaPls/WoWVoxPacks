@@ -491,7 +491,7 @@ jobs:
         run: scripts/install_ffmpeg.sh
       - uses: actions/setup-dotnet@v6
         with:
-          dotnet-version: '10.0.x'
+          dotnet-version: '11.0.x'
       - name: Build new version
         run: dotnet build
       - name: Restore the renders a failed build kept

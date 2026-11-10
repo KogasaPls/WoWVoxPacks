@@ -18,12 +18,12 @@ def _property(name: str) -> str:
 
 
 class BuildSettingsTests(unittest.TestCase):
-    def test_the_sdk_may_roll_forward_but_only_within_dotnet_10(self):
+    def test_the_sdk_may_roll_forward_but_only_within_dotnet_11(self):
         sdk = json.loads(
             (REPOSITORY_ROOT / "global.json").read_text(encoding="utf-8")
         )["sdk"]
 
-        self.assertTrue(sdk["version"].startswith("10."))
+        self.assertTrue(sdk["version"].startswith("11."))
         self.assertNotIn(sdk["rollForward"], ("major", "latestMajor"))
 
     def test_the_diagnostic_surface_is_pinned_to_the_framework(self):
@@ -32,9 +32,9 @@ class BuildSettingsTests(unittest.TestCase):
         Left at the default of "latest", AnalysisLevel enables whatever rules the newest SDK
         ships, so a release with a new rule fails a pull request that changed nothing.
         """
-        self.assertEqual("net10.0", _property("TargetFramework"))
-        self.assertEqual("10.0", _property("AnalysisLevel"))
-        self.assertEqual("10", _property("WarningLevel"))
+        self.assertEqual("net11.0", _property("TargetFramework"))
+        self.assertEqual("11.0", _property("AnalysisLevel"))
+        self.assertEqual("11", _property("WarningLevel"))
 
     def test_a_new_advisory_cannot_fail_an_unrelated_build(self):
         """NuGet audits transitive packages against advisories published after the fact.

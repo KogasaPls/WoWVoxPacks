@@ -7,17 +7,16 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="Ardalis.GuardClauses" Version="5.*"/>
-    <PackageVersion Include="FFMpegCore" Version="5.*"/>
+    <PackageVersion Include="FFMpegCore" Version="6.*"/>
     <PackageVersion Include="JetBrains.Annotations" Version="2026.*"/>
     <PackageVersion Include="MartinCostello.Logging.XUnit" Version="0.*"/>
-    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.*"/>
-    <PackageVersion Include="Microsoft.Extensions.Http" Version="10.*"/>
-    <PackageVersion Include="Microsoft.Extensions.Logging" Version="10.*"/>
-    <PackageVersion Include="Microsoft.Extensions.Options" Version="10.*"/>
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="11.*"/>
+    <PackageVersion Include="Microsoft.Extensions.Http" Version="11.*"/>
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="11.*"/>
     <PackageVersion Include="Octokit" Version="14.*"/>
     <!-- StyleCop's current releases are prereleases, as was our previous pin. -->
     <PackageVersion Include="StyleCop.Analyzers" Version="1.*-*"/>
-    <PackageVersion Include="System.Threading.RateLimiting" Version="10.*"/>
+    <PackageVersion Include="System.Threading.RateLimiting" Version="11.*"/>
   </ItemGroup>
   <ItemGroup>
     <PackageVersion Include="Google.Cloud.TextToSpeech.V1" Version="3.*"/>

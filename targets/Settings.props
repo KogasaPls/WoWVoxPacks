@@ -4,9 +4,9 @@
   <PropertyGroup>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <LangVersion>14.0</LangVersion>
+    <LangVersion>15.0</LangVersion>
     <Deterministic>true</Deterministic>
-    <TargetFramework>net10.0</TargetFramework>
+    <TargetFramework>net11.0</TargetFramework>
   </PropertyGroup>
 
   <!--
@@ -16,8 +16,8 @@
     pull request that changed nothing. Raising either number is a deliberate edit.
   -->
   <PropertyGroup>
-    <AnalysisLevel>10.0</AnalysisLevel>
-    <WarningLevel>10</WarningLevel>
+    <AnalysisLevel>11.0</AnalysisLevel>
+    <WarningLevel>11</WarningLevel>
   </PropertyGroup>
 
   <!--

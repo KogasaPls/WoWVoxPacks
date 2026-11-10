@@ -53,7 +53,7 @@ jobs:
           sparse-checkout-cone-mode: false
       - uses: actions/setup-dotnet@v6
         with:
-          dotnet-version: '10.0.x'
+          dotnet-version: '11.0.x'
       - uses: actions/setup-python@v7
         with:
           python-version: '3.x'
@@ -88,7 +88,7 @@ jobs:
           sparse-checkout-cone-mode: false
       - uses: actions/setup-dotnet@v6
         with:
-          dotnet-version: '10.0.x'
+          dotnet-version: '11.0.x'
       - name: Install LuaJIT and luacheck
         # Both from apt: building luacheck through luarocks compiles luafilesystem on every
         # run, which has taken anywhere from 13 seconds to over 20 minutes.

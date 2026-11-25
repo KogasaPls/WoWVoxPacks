@@ -6,7 +6,7 @@
     <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="Ardalis.GuardClauses" Version="5.*"/>
+    <PackageVersion Include="Ardalis.GuardClauses" Version="6.*"/>
     <PackageVersion Include="FFMpegCore" Version="6.*"/>
     <PackageVersion Include="JetBrains.Annotations" Version="2026.*"/>
     <PackageVersion Include="MartinCostello.Logging.XUnit" Version="0.*"/>
